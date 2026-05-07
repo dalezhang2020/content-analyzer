@@ -1,0 +1,9 @@
+.venv/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+dist/
+.DS_Store
+.env
+web/node_modules/
+web/.next/
