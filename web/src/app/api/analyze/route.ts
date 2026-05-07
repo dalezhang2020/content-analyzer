@@ -50,8 +50,14 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const projectRoot = path.resolve(process.cwd(), "..");
+  // PROJECT_ROOT env var allows flexible deployment; defaults to the parent of web/
+  const projectRoot =
+    process.env.PROJECT_ROOT ??
+    path.resolve(process.cwd(), process.cwd().endsWith("/web") ? ".." : "../content-analyzer");
   const analyzeCmd = path.join(projectRoot, ".venv", "bin", "analyze");
+  console.log("[analyze] cwd:", process.cwd());
+  console.log("[analyze] projectRoot:", projectRoot);
+  console.log("[analyze] analyzeCmd:", analyzeCmd);
 
   const stream = new ReadableStream({
     start(controller) {
