@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       let stderrBuf = "";
       let lastStageIdx = -1;
 
-      const proc = spawn(analyzeCmd, ["--staged", trimmedUrl], {
+      const proc = spawn(analyzeCmd, ["analyze", "--staged", trimmedUrl], {
         cwd: projectRoot,
         env: {
           ...process.env,

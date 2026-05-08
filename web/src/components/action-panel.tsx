@@ -2,6 +2,10 @@
 
 import { AnalysisResult } from "@/lib/types";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { VideoProgress } from "@/components/video-progress";
+import { VideoPlayer } from "@/components/video-player";
 
 interface ActionPanelProps {
   result: AnalysisResult;
@@ -103,21 +107,108 @@ function generateTopicOpportunities(result: AnalysisResult): string[] {
 }
 
 export function ActionPanel({ result }: ActionPanelProps) {
-  const [activeSection, setActiveSection] = useState<"angles" | "script" | "topics">("angles");
+  const router = useRouter();
+  const [activeSection, setActiveSection] = useState<"angles" | "script" | "topics" | "video">("angles");
   const [selectedAngleIdx, setSelectedAngleIdx] = useState(0);
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [videoLoading, setVideoLoading] = useState(false);
+  const [videoError, setVideoError] = useState<string | null>(null);
+  const [planLoading, setPlanLoading] = useState(false);
+  const [planError, setPlanError] = useState<string | null>(null);
 
   const angles = generateAngles(result);
   const topics = generateTopicOpportunities(result);
   const script = generateScript(result, angles[selectedAngleIdx]);
 
+  const handleCreatePlan = async () => {
+    setPlanLoading(true);
+    setPlanError(null);
+
+    try {
+      const res = await fetch("/api/plans", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: result.metadata.title || "Untitled Plan",
+          sourceAnalyses: [],
+          angles,
+          script,
+          topics,
+          notes: "",
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to create plan");
+      }
+      router.push(`/plans/${data.id}`);
+    } catch (err) {
+      setPlanError(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setPlanLoading(false);
+    }
+  };
+
+  const VIDEO_TIMEOUT_MS = 120_000; // 120 seconds
+
+  const handleGenerateVideo = async () => {
+    setVideoLoading(true);
+    setVideoError(null);
+    setVideoUrl(null);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), VIDEO_TIMEOUT_MS);
+
+    try {
+      const res = await fetch("/api/video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ result }),
+        signal: controller.signal,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Video generation failed");
+      }
+      setVideoUrl(data.url);
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        setVideoError("__TIMEOUT__");
+      } else {
+        setVideoError(err instanceof Error ? err.message : "Unknown error");
+      }
+    } finally {
+      clearTimeout(timeoutId);
+      setVideoLoading(false);
+    }
+  };
+
   const sections = [
     { key: "angles" as const, label: "Content Angles" },
     { key: "script" as const, label: "Script Starter" },
     { key: "topics" as const, label: "Topic Ideas" },
+    { key: "video" as const, label: "🎬 Video" },
   ];
 
   return (
     <div className="space-y-4">
+      {/* Create Content Plan action */}
+      <div className="flex items-center gap-3">
+        <Button
+          onClick={handleCreatePlan}
+          disabled={planLoading}
+          variant="outline"
+          className="border-amber-600/50 text-amber-700 hover:bg-amber-600/10"
+        >
+          {planLoading ? "Creating plan…" : "📋 Create Content Plan"}
+        </Button>
+        {planError && (
+          <span className="text-sm text-red-600">{planError}</span>
+        )}
+      </div>
+
       {/* Section switcher */}
       <div className="flex gap-4 border-b border-border">
         {sections.map((s) => (
@@ -194,6 +285,65 @@ export function ActionPanel({ result }: ActionPanelProps) {
                 </li>
               ))}
             </ul>
+          )}
+        </div>
+      )}
+
+      {/* Video */}
+      {activeSection === "video" && (
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">
+              Generate a short video from this analysis — an original &ldquo;content teardown&rdquo; with hook, insights, and action steps.
+            </p>
+          </div>
+
+          {!videoUrl && !videoError && (
+            <Button
+              onClick={handleGenerateVideo}
+              disabled={videoLoading}
+              className="bg-foreground text-background hover:bg-foreground/90"
+            >
+              {videoLoading ? "Rendering video…" : "Generate Video"}
+            </Button>
+          )}
+
+          {videoLoading && (
+            <VideoProgress isLoading={videoLoading} />
+          )}
+
+          {videoError && (
+            <div className="flex items-start gap-3 p-3 rounded-md border border-red-300 bg-red-50 dark:border-red-800 dark:bg-red-950/30">
+              <span className="text-red-600 shrink-0 mt-0.5">⚠️</span>
+              <div className="flex-1 space-y-2">
+                <p className="text-sm text-red-700 dark:text-red-400">
+                  {videoError === "__TIMEOUT__"
+                    ? "Video generation timed out (120s limit). Try again or use a shorter analysis."
+                    : videoError}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGenerateVideo}
+                  className="border-red-300 text-red-700 hover:bg-red-100 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950/50"
+                >
+                  Retry
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {videoUrl && (
+            <div className="space-y-3">
+              <VideoPlayer src={videoUrl} autoPlay={true} />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleGenerateVideo}
+              >
+                Regenerate
+              </Button>
+            </div>
           )}
         </div>
       )}

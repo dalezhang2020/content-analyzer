@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    #title-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0f1117;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+
+    .glow-top {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .glow-bottom {
+      position: absolute;
+      bottom: -30%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    .accent-line {
+      position: absolute;
+      top: 50%;
+      left: 120px;
+      width: 4px;
+      height: 160px;
+      transform: translateY(-50%);
+      background: linear-gradient(180deg, #6366f1, #a855f7);
+      border-radius: 2px;
+    }
+
+    .scene-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 120px 180px;
+      gap: 20px;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 96px;
+      font-weight: 800;
+      color: #f0f0f5;
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 36px;
+      font-weight: 300;
+      color: rgba(240, 240, 245, 0.6);
+      letter-spacing: 0.5px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 20px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #a5b4fc;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+  </style>
+</head>
+<body>
+  <div id="title-card" data-composition-id="title-card" data-start="0" data-duration="5" data-width="1920" data-height="1080" data-track-index="0">
+    <!-- Background decoratives -->
+    <div class="glow-top" data-layout-ignore></div>
+    <div class="glow-bottom" data-layout-ignore></div>
+    <div class="grid-overlay" data-layout-ignore></div>
+    <div class="accent-line" data-layout-ignore></div>
+
+    <!-- Content -->
+    <div class="scene-content">
+      <div class="title">HyperFrames</div>
+      <div class="subtitle">Write HTML. Render Video.</div>
+      <div class="tag">Built for AI Agents</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+
+    const tl = gsap.timeline({ paused: true });
+
+    // Background decoratives breathing in
+    tl.from(".glow-top", { scale: 0.8, opacity: 0, duration: 1.5, ease: "power1.out" }, 0);
+    tl.from(".glow-bottom", { scale: 0.7, opacity: 0, duration: 1.8, ease: "power1.out" }, 0.2);
+    tl.from(".grid-overlay", { opacity: 0, duration: 1.2, ease: "power2.out" }, 0.1);
+
+    // Accent line scales in
+    tl.from(".accent-line", { scaleY: 0, opacity: 0, duration: 0.6, ease: "expo.out", transformOrigin: "center center" }, 0.3);
+
+    // Title slides up
+    tl.from(".title", { y: 50, opacity: 0, duration: 0.7, ease: "power3.out" }, 0.5);
+
+    // Subtitle follows
+    tl.from(".subtitle", { y: 30, opacity: 0, duration: 0.5, ease: "power2.out" }, 0.9);
+
+    // Tag bounces in
+    tl.from(".tag", { y: 20, opacity: 0, duration: 0.4, ease: "back.out(1.7)" }, 1.2);
+
+    // Ambient glow pulse (finite — 2 cycles fits within 5s)
+    tl.to(".glow-top", { scale: 1.05, duration: 2, ease: "sine.inOut", repeat: 1, yoyo: true }, 1.5);
+
+    // Final fade out (single scene — exit allowed)
+    tl.to(".title", { y: -30, opacity: 0, duration: 0.5, ease: "power2.in" }, 4.0);
+    tl.to(".subtitle", { y: -20, opacity: 0, duration: 0.4, ease: "power2.in" }, 4.1);
+    tl.to(".tag", { y: -15, opacity: 0, duration: 0.3, ease: "power2.in" }, 4.2);
+    tl.to(".accent-line", { scaleY: 0, opacity: 0, duration: 0.4, ease: "power2.in" }, 4.3);
+
+    window.__timelines["title-card"] = tl;
+  </script>
+</body>
+</html>

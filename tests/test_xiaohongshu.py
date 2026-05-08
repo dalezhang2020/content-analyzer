@@ -73,12 +73,15 @@ def test_analyze_xiaohongshu_graceful_no_requests(monkeypatch):
 def test_analyze_xiaohongshu_with_mocked_content(monkeypatch):
     """Pipeline produces analysis when content is available."""
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    from content_analyzer.adapters import xiaohongshu_adapter
 
     def mock_fetch(url):
         meta = Metadata(video_id="abc123", title="测试笔记", channel="TestUser")
-        return meta, "这是一篇关于旅行的笔记内容", []
+        return meta, "这是一篇关于旅行的笔记内容", [], 0, 0
 
-    monkeypatch.setattr(pipeline, "fetch_note", mock_fetch)
+    # Disable xhs-cli so it falls through to built-in fetcher
+    monkeypatch.setattr(xiaohongshu_adapter, "_xhs_cli_available", lambda: False)
+    monkeypatch.setattr(xiaohongshu_adapter, "fetch_note", mock_fetch)
 
     result = pipeline.analyze_xiaohongshu("https://www.xiaohongshu.com/explore/abc123")
     assert result.metadata.title == "测试笔记"
@@ -90,12 +93,14 @@ def test_analyze_xiaohongshu_with_mocked_content(monkeypatch):
 def test_analyze_xiaohongshu_blocked_page(monkeypatch):
     """Pipeline surfaces warnings when page is blocked."""
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    from content_analyzer.adapters import xiaohongshu_adapter
 
     def mock_fetch(url):
         meta = Metadata(video_id="abc123", title=None)
-        return meta, None, ["Xiaohongshu returned a login/captcha wall."]
+        return meta, None, ["Xiaohongshu returned a login/captcha wall."], 0, 0
 
-    monkeypatch.setattr(pipeline, "fetch_note", mock_fetch)
+    monkeypatch.setattr(xiaohongshu_adapter, "_xhs_cli_available", lambda: False)
+    monkeypatch.setattr(xiaohongshu_adapter, "fetch_note", mock_fetch)
 
     result = pipeline.analyze_xiaohongshu("https://www.xiaohongshu.com/explore/abc123")
     assert any("login" in w or "captcha" in w for w in result.warnings)
@@ -106,17 +111,19 @@ def test_cli_routes_xhs_url(monkeypatch):
     """CLI routes Xiaohongshu URLs to the correct pipeline."""
     from typer.testing import CliRunner
     from content_analyzer.cli import app
+    from content_analyzer.adapters import xiaohongshu_adapter
 
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
 
     def mock_fetch(url):
         meta = Metadata(video_id="note1", title="CLI Test")
-        return meta, "Content text", []
+        return meta, "Content text", [], 0, 0
 
-    monkeypatch.setattr(pipeline, "fetch_note", mock_fetch)
+    monkeypatch.setattr(xiaohongshu_adapter, "_xhs_cli_available", lambda: False)
+    monkeypatch.setattr(xiaohongshu_adapter, "fetch_note", mock_fetch)
 
     runner = CliRunner()
-    result = runner.invoke(app, ["https://www.xiaohongshu.com/explore/note1"])
+    result = runner.invoke(app, ["analyze", "https://www.xiaohongshu.com/explore/note1"])
     assert result.exit_code == 0
     data = json.loads(result.output)
     assert data["metadata"]["video_id"] == "note1"

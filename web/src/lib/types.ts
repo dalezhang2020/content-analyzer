@@ -45,6 +45,35 @@ export interface AnalysisResult {
   engagement_hooks: string[] | null;
   cta_signals: string[] | null;
   adaptation_ideas: string[] | null;
+  // Deep content extraction (LLM-enhanced)
+  summary: string | null;
+  key_points: string[] | null;
+  data_points: string[] | null;
+  content_breakdown: { section: string; points: string[] }[] | null;
+  target_audience: string | null;
+  unique_angle: string | null;
+  warnings: string[];
+}
+
+/** Search result item from /api/search */
+export interface SearchResultItem {
+  note_id: string;
+  title: string;
+  url: string;
+  author: string;
+  likes: number;
+  comments?: number;
+  collects?: number;
+  content_type: "normal" | "video";
+  snippet?: string;
+}
+
+/** Response from POST /api/search */
+export interface SearchResponse {
+  keyword: string;
+  platform: "xiaohongshu" | "youtube";
+  total: number;
+  items: SearchResultItem[];
   warnings: string[];
 }
 

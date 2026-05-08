@@ -53,12 +53,22 @@ function ListSection({ title, items }: { title: string; items: string[] }) {
 function TeardownTab({ result }: { result: AnalysisResult }) {
   return (
     <div className="space-y-6">
+      {/* Summary */}
+      {result.summary && (
+        <div className="space-y-1 p-3 rounded-md bg-muted/50 border border-border">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Summary
+          </h3>
+          <p className="text-sm leading-relaxed">{result.summary}</p>
+        </div>
+      )}
+
       {result.hook && (
         <div className="space-y-1">
           <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
             Hook
           </h3>
-          <p className="text-sm leading-relaxed">{result.hook}</p>
+          <p className="text-sm leading-relaxed font-medium">{result.hook}</p>
         </div>
       )}
 
@@ -69,7 +79,62 @@ function TeardownTab({ result }: { result: AnalysisResult }) {
         {result.audience_intent && (
           <Badge variant="secondary">{result.audience_intent}</Badge>
         )}
+        {result.target_audience && (
+          <Badge variant="outline" className="font-normal">{result.target_audience}</Badge>
+        )}
       </div>
+
+      {/* Unique angle */}
+      {result.unique_angle && (
+        <div className="space-y-1">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Unique Angle
+          </h3>
+          <p className="text-sm leading-relaxed">{result.unique_angle}</p>
+        </div>
+      )}
+
+      {/* Key Points */}
+      {result.key_points && (
+        <ListSection title="Key Points" items={result.key_points} />
+      )}
+
+      {/* Data Points */}
+      {result.data_points && result.data_points.length > 0 && (
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Data & Evidence
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {result.data_points.map((dp, i) => (
+              <span key={i} className="text-xs px-2 py-1 rounded bg-amber-600/10 text-amber-700 border border-amber-600/20">
+                {dp}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Content Breakdown */}
+      {result.content_breakdown && result.content_breakdown.length > 0 && (
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            Content Breakdown
+          </h3>
+          <div className="space-y-3">
+            {result.content_breakdown.map((section, i) => (
+              <div key={i} className="pl-3 border-l-2 border-amber-600/30">
+                <p className="text-sm font-medium">{section.section}</p>
+                <ul className="mt-1 space-y-0.5">
+                  {section.points.map((pt, j) => (
+                    <li key={j} className="text-xs text-muted-foreground">{pt}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {result.structure && (
         <ListSection title="Structure" items={result.structure} />

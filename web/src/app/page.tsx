@@ -1,165 +1,139 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PipelineView } from "@/components/pipeline-view";
-import { ResultsView } from "@/components/results-view";
-import { AnalysisResult, PipelineStep, PIPELINE_STEPS } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
 
-export type StepTimings = Record<string, { start: number; end?: number }>;
+interface DashboardData {
+  totalAnalyses: number;
+  byPlatform: Record<string, number>;
+  recentAnalyses: { id: string; title: string; platform: string; analyzedAt: string }[];
+  topKeywords: { keyword: string; count: number }[];
+  styleDistribution: Record<string, number>;
+}
 
-export default function Home() {
-  const [url, setUrl] = useState("");
-  const [step, setStep] = useState<PipelineStep | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [stepTimings, setStepTimings] = useState<StepTimings>({});
-  const lastStepRef = useRef<PipelineStep | null>(null);
+function formatDate(iso: string): string {
+  const d = new Date(iso);
+  return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+}
 
-  const handleStepChange = useCallback((newStep: PipelineStep) => {
-    const now = Date.now();
-    setStepTimings((prev) => {
-      const updated = { ...prev };
-      // Close the previous step
-      const prevStep = lastStepRef.current;
-      if (prevStep && updated[prevStep] && !updated[prevStep].end) {
-        updated[prevStep] = { ...updated[prevStep], end: now };
-      }
-      // Open the new step
-      updated[newStep] = { start: now };
-      return updated;
-    });
-    lastStepRef.current = newStep;
-    setStep(newStep);
+export default function DashboardPage() {
+  const router = useRouter();
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/dashboard")
+      .then((r) => r.json())
+      .then(setData)
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleAnalyze = useCallback(async () => {
-    if (!url.trim()) return;
-    setError(null);
-    setResult(null);
-    setLoading(true);
-    setStepTimings({});
-    lastStepRef.current = null;
-    handleStepChange("input");
+  if (loading) {
+    return (
+      <main className="flex-1 px-6 py-8">
+        <p className="text-sm text-muted-foreground">Loading dashboard...</p>
+      </main>
+    );
+  }
 
-    try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: url.trim() }),
-      });
+  if (!data) {
+    return (
+      <main className="flex-1 px-6 py-8">
+        <p className="text-sm text-muted-foreground">Failed to load dashboard.</p>
+      </main>
+    );
+  }
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || `Request failed (${res.status})`);
-      }
-
-      // Read streaming NDJSON response
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error("No response stream");
-
-      const decoder = new TextDecoder();
-      let buffer = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
-
-        for (const line of lines) {
-          if (!line.trim()) continue;
-          try {
-            const msg = JSON.parse(line);
-            if (msg.stage) {
-              handleStepChange(msg.stage as PipelineStep);
-            }
-            if (msg.result) {
-              setResult(msg.result as AnalysisResult);
-            }
-            if (msg.error) {
-              throw new Error(msg.error);
-            }
-          } catch (e) {
-            if (e instanceof Error && e.message !== line) throw e;
-          }
-        }
-      }
-
-      // Process any remaining buffer
-      if (buffer.trim()) {
-        const msg = JSON.parse(buffer);
-        if (msg.stage) handleStepChange(msg.stage as PipelineStep);
-        if (msg.result) setResult(msg.result as AnalysisResult);
-        if (msg.error) throw new Error(msg.error);
-      }
-    } catch (err: unknown) {
-      setStep(null);
-      setError(err instanceof Error ? err.message : "Analysis failed");
-    } finally {
-      setLoading(false);
-      // Close the last step timing
-      setStepTimings((prev) => {
-        const last = lastStepRef.current;
-        if (last && prev[last] && !prev[last].end) {
-          return { ...prev, [last]: { ...prev[last], end: Date.now() } };
-        }
-        return prev;
-      });
-    }
-  }, [url, handleStepChange]);
+  const maxKeywordCount = data.topKeywords[0]?.count || 1;
 
   return (
-    <main className="flex-1 flex flex-col items-center px-4 py-12 sm:py-20">
-      <div className="w-full max-w-2xl space-y-8">
-        {/* Header */}
-        <header className="space-y-1">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Content Analyzer
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Paste a YouTube or Xiaohongshu URL to analyze.
+    <main className="flex-1 px-6 py-8">
+      <div className="w-full max-w-4xl space-y-8">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Overview of your content research activity.
           </p>
         </header>
 
-        {/* Input */}
-        <div className="flex gap-2">
-          <Input
-            type="url"
-            placeholder="https://www.youtube.com/watch?v=... or https://www.xiaohongshu.com/explore/..."
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !loading) handleAnalyze();
-            }}
-            className="flex-1 h-11 text-sm"
-            disabled={loading}
-          />
-          <Button
-            onClick={handleAnalyze}
-            disabled={loading || !url.trim()}
-            className="h-11 px-5 bg-foreground text-background hover:bg-foreground/90"
-          >
-            {loading ? "Analyzing…" : "Analyze"}
-          </Button>
+        {/* Stats cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="rounded-lg border border-border p-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">Total Analyses</p>
+            <p className="text-3xl font-semibold mt-1">{data.totalAnalyses}</p>
+          </div>
+          <div className="rounded-lg border border-border p-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">小红书</p>
+            <p className="text-3xl font-semibold mt-1">{data.byPlatform.xiaohongshu || 0}</p>
+          </div>
+          <div className="rounded-lg border border-border p-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide">YouTube</p>
+            <p className="text-3xl font-semibold mt-1">{data.byPlatform.youtube || 0}</p>
+          </div>
         </div>
 
-        {/* Pipeline */}
-        {step && <PipelineView currentStep={step} stepTimings={stepTimings} />}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Recent analyses */}
+          <div className="space-y-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Recent Analyses</h2>
+            {data.recentAnalyses.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No analyses yet.</p>
+            ) : (
+              <div className="space-y-2">
+                {data.recentAnalyses.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => router.push(`/history/${item.id}`)}
+                    className="w-full text-left flex items-center gap-3 p-2.5 rounded-md border border-border hover:border-amber-600/30 transition-colors"
+                  >
+                    <span className="flex-1 text-sm truncate">{item.title}</span>
+                    <span className="text-xs text-muted-foreground shrink-0">{formatDate(item.analyzedAt)}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
-        {/* Error */}
-        {error && (
-          <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-3">
-            {error}
+          {/* Top keywords */}
+          <div className="space-y-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Top Keywords</h2>
+            {data.topKeywords.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No keyword data yet.</p>
+            ) : (
+              <div className="space-y-2">
+                {data.topKeywords.map((kw) => (
+                  <div key={kw.keyword} className="flex items-center gap-3">
+                    <span className="text-sm w-20 truncate">{kw.keyword}</span>
+                    <div className="flex-1 h-5 bg-muted rounded overflow-hidden">
+                      <div
+                        className="h-full bg-amber-600/60 rounded"
+                        style={{ width: `${(kw.count / maxKeywordCount) * 100}%` }}
+                      />
+                    </div>
+                    <span className="text-xs text-muted-foreground w-6 text-right">{kw.count}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Style distribution */}
+        {Object.keys(data.styleDistribution).length > 0 && (
+          <div className="space-y-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Content Style Distribution</h2>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(data.styleDistribution)
+                .sort((a, b) => b[1] - a[1])
+                .map(([style, count]) => (
+                  <Badge key={style} variant="secondary" className="text-xs">
+                    {style} ({count})
+                  </Badge>
+                ))}
+            </div>
           </div>
         )}
-
-        {/* Results */}
-        {result && <ResultsView result={result} />}
       </div>
     </main>
   );

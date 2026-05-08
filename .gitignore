@@ -7,3 +7,4 @@ dist/
 .env
 web/node_modules/
 web/.next/
+web/data/

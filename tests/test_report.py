@@ -109,8 +109,8 @@ class TestCLIFormat:
     def test_default_format_is_json(self, monkeypatch):
         """Default output is valid JSON (mock the pipeline)."""
         import content_analyzer.cli as cli_mod
-        monkeypatch.setattr(cli_mod, "analyze_youtube", lambda url: _make_result())
-        result = runner.invoke(app, ["https://youtube.com/watch?v=test"])
+        monkeypatch.setattr(cli_mod, "analyze_url", lambda url: _make_result())
+        result = runner.invoke(app, ["analyze", "https://youtube.com/watch?v=test"])
         assert result.exit_code == 0
         data = json.loads(result.output)
         assert "metadata" in data
@@ -118,8 +118,8 @@ class TestCLIFormat:
     def test_markdown_format(self, monkeypatch):
         """--format markdown produces Markdown output."""
         import content_analyzer.cli as cli_mod
-        monkeypatch.setattr(cli_mod, "analyze_youtube", lambda url: _make_result())
-        result = runner.invoke(app, ["https://youtube.com/watch?v=test", "--format", "markdown"])
+        monkeypatch.setattr(cli_mod, "analyze_url", lambda url: _make_result())
+        result = runner.invoke(app, ["analyze", "https://youtube.com/watch?v=test", "--format", "markdown"])
         assert result.exit_code == 0
         assert "# Teardown:" in result.output
         assert "## Hook" in result.output
@@ -127,7 +127,7 @@ class TestCLIFormat:
     def test_md_shorthand(self, monkeypatch):
         """--format md also works."""
         import content_analyzer.cli as cli_mod
-        monkeypatch.setattr(cli_mod, "analyze_youtube", lambda url: _make_result())
-        result = runner.invoke(app, ["https://youtube.com/watch?v=test", "-f", "md"])
+        monkeypatch.setattr(cli_mod, "analyze_url", lambda url: _make_result())
+        result = runner.invoke(app, ["analyze", "https://youtube.com/watch?v=test", "-f", "md"])
         assert result.exit_code == 0
         assert "# Teardown:" in result.output

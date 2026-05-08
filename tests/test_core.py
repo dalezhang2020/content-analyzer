@@ -30,10 +30,12 @@ def test_analysis_result_serializes():
 
 
 def test_pipeline_emits_warnings_for_missing_optional_sources(monkeypatch):
-    monkeypatch.setattr(pipeline, "fetch_metadata", lambda url: Metadata(video_id="abc123"))
-    monkeypatch.setattr(pipeline, "extract_video_id", lambda url: "abc123")
-    monkeypatch.setattr(pipeline, "fetch_transcript", lambda video_id: None)
-    monkeypatch.setattr(pipeline, "fetch_comments", lambda video_id: None)
+    from content_analyzer.adapters import youtube_adapter
+
+    monkeypatch.setattr(youtube_adapter, "fetch_metadata", lambda url: Metadata(video_id="abc123"))
+    monkeypatch.setattr(youtube_adapter, "extract_video_id", lambda url: "abc123")
+    monkeypatch.setattr(youtube_adapter, "fetch_transcript", lambda video_id: None)
+    monkeypatch.setattr(youtube_adapter, "fetch_comments", lambda video_id, max_results=20: None)
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
 
     result = pipeline.analyze_youtube("https://youtu.be/dQw4w9WgXcQ")
@@ -115,6 +117,8 @@ def test_factory_returns_llm_with_key(monkeypatch):
 
 def test_pipeline_fills_analysis_fields(monkeypatch):
     """Full pipeline with mocked adapters produces analysis fields."""
+    from content_analyzer.adapters import youtube_adapter
+
     segs = [
         TranscriptSegment(start=0, duration=3, text="Hey everyone"),
         TranscriptSegment(start=3, duration=3, text="Today we learn Python"),
@@ -125,10 +129,10 @@ def test_pipeline_fills_analysis_fields(monkeypatch):
     ]
     comments = [Comment(text="Great video!", likes=10)]
 
-    monkeypatch.setattr(pipeline, "fetch_metadata", lambda url: Metadata(video_id="x", title="Learn Python"))
-    monkeypatch.setattr(pipeline, "extract_video_id", lambda url: "x")
-    monkeypatch.setattr(pipeline, "fetch_transcript", lambda vid: segs)
-    monkeypatch.setattr(pipeline, "fetch_comments", lambda vid: comments)
+    monkeypatch.setattr(youtube_adapter, "fetch_metadata", lambda url: Metadata(video_id="x", title="Learn Python"))
+    monkeypatch.setattr(youtube_adapter, "extract_video_id", lambda url: "x")
+    monkeypatch.setattr(youtube_adapter, "fetch_transcript", lambda vid: segs)
+    monkeypatch.setattr(youtube_adapter, "fetch_comments", lambda vid, max_results=20: comments)
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
 
     result = pipeline.analyze_youtube("https://youtu.be/x")

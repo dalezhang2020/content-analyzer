@@ -40,7 +40,7 @@ def _get_config() -> tuple[Optional[str], Optional[str], str]:
     """Return (base_url, api_key, model) from env."""
     base_url = os.environ.get("OPENAI_COMPAT_BASE_URL")
     api_key = os.environ.get("OPENAI_COMPAT_API_KEY")
-    model = os.environ.get("OPENAI_COMPAT_MODEL", "gpt-4o")
+    model = os.environ.get("OPENAI_COMPAT_MODEL", "gpt-5.4-mini")
     return base_url, api_key, model
 
 
@@ -55,14 +55,17 @@ def get_prompt() -> str:
     return _CREATOR_ANALYSIS_PROMPT
 
 
-def extract_text_from_url(image_url: str, timeout: int = 60) -> Optional[str]:
-    """Send an image URL to GPT-4o via Responses API and return structured analysis."""
+def extract_text_from_url(image_url: str, timeout: int = 60) -> tuple[Optional[str], int, int]:
+    """Send an image URL to GPT-4o via Responses API and return structured analysis.
+
+    Returns (text, prompt_tokens, completion_tokens).
+    """
     if not _HAS_OPENAI:
-        return None
+        return None, 0, 0
 
     base_url, api_key, model = _get_config()
     if not base_url or not api_key:
-        return None
+        return None, 0, 0
 
     try:
         client = OpenAI(base_url=base_url, api_key=api_key)
@@ -79,26 +82,32 @@ def extract_text_from_url(image_url: str, timeout: int = 60) -> Optional[str]:
             ],
         )
         text = response.output_text
-        return text.strip() if text else None
+        # Extract token usage from response
+        prompt_tokens = 0
+        completion_tokens = 0
+        if hasattr(response, "usage") and response.usage:
+            prompt_tokens = getattr(response.usage, "input_tokens", 0) or getattr(response.usage, "prompt_tokens", 0) or 0
+            completion_tokens = getattr(response.usage, "output_tokens", 0) or getattr(response.usage, "completion_tokens", 0) or 0
+        return (text.strip() if text else None), prompt_tokens, completion_tokens
     except Exception as e:
         logger.warning("GPT-4o vision analysis failed for %s: %s", image_url, e)
-        return None
+        return None, 0, 0
 
 
 def extract_text_from_urls(
     image_urls: list[str], timeout: int = 60
-) -> tuple[list[str], list[str]]:
+) -> tuple[list[str], list[str], int, int]:
     """Run GPT-4o vision analysis on multiple image URLs.
 
-    Returns (extracted_texts, warnings).
+    Returns (extracted_texts, warnings, total_prompt_tokens, total_completion_tokens).
     """
     warnings: list[str] = []
     if not image_urls:
-        return [], warnings
+        return [], warnings, 0, 0
 
     if not _HAS_OPENAI:
         warnings.append("GPT-4o OCR skipped: openai SDK not installed. Install with: pip install openai")
-        return [], warnings
+        return [], warnings, 0, 0
 
     base_url, api_key, _ = _get_config()
     if not base_url or not api_key:
@@ -108,15 +117,19 @@ def extract_text_from_urls(
         if not api_key:
             missing.append("OPENAI_COMPAT_API_KEY")
         warnings.append(f"GPT-4o OCR skipped: missing env var(s) ({', '.join(missing)}).")
-        return [], warnings
+        return [], warnings, 0, 0
 
     texts: list[str] = []
+    total_prompt = 0
+    total_completion = 0
     for url in image_urls:
-        text = extract_text_from_url(url, timeout=timeout)
+        text, prompt_tokens, completion_tokens = extract_text_from_url(url, timeout=timeout)
+        total_prompt += prompt_tokens
+        total_completion += completion_tokens
         if text:
             texts.append(text)
 
     if not texts and image_urls:
         warnings.append(f"GPT-4o vision ran on {len(image_urls)} image(s) but extracted no content.")
 
-    return texts, warnings
+    return texts, warnings, total_prompt, total_completion

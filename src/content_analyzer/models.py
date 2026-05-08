@@ -26,6 +26,31 @@ class Comment(BaseModel):
     likes: int = 0
 
 
+class TokenUsage(BaseModel):
+    """Track token consumption across API calls."""
+    vision_prompt_tokens: int = 0
+    vision_completion_tokens: int = 0
+    analysis_prompt_tokens: int = 0
+    analysis_completion_tokens: int = 0
+
+    @property
+    def total_tokens(self) -> int:
+        return (
+            self.vision_prompt_tokens
+            + self.vision_completion_tokens
+            + self.analysis_prompt_tokens
+            + self.analysis_completion_tokens
+        )
+
+    @property
+    def total_prompt_tokens(self) -> int:
+        return self.vision_prompt_tokens + self.analysis_prompt_tokens
+
+    @property
+    def total_completion_tokens(self) -> int:
+        return self.vision_completion_tokens + self.analysis_completion_tokens
+
+
 class AnalysisResult(BaseModel):
     metadata: Metadata
     transcript: Optional[list[TranscriptSegment]] = None
@@ -44,4 +69,13 @@ class AnalysisResult(BaseModel):
     engagement_hooks: Optional[list[str]] = None
     cta_signals: Optional[list[str]] = None
     adaptation_ideas: Optional[list[str]] = None
+    # Deep content extraction (LLM-enhanced)
+    summary: Optional[str] = None  # 2-3 sentence content summary
+    key_points: Optional[list[str]] = None  # Core arguments/claims (5-8 items)
+    data_points: Optional[list[str]] = None  # Specific numbers, stats, facts
+    content_breakdown: Optional[list[dict]] = None  # [{section, points}] structured breakdown
+    target_audience: Optional[str] = None  # Specific audience description
+    unique_angle: Optional[str] = None  # What makes this content different
     warnings: list[str] = Field(default_factory=list)
+    # Token usage tracking
+    token_usage: TokenUsage = Field(default_factory=TokenUsage)

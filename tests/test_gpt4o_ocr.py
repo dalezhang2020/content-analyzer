@@ -108,7 +108,7 @@ def test_extract_skipped_missing_sdk(monkeypatch):
 
     from content_analyzer.adapters.xiaohongshu.gpt4o_ocr import extract_text_from_urls
 
-    texts, warnings = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+    texts, warnings, _, _ = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
     assert texts == []
     assert any("openai SDK" in w for w in warnings)
 
@@ -124,7 +124,7 @@ def test_extract_skipped_missing_env(monkeypatch):
 
     from content_analyzer.adapters.xiaohongshu.gpt4o_ocr import extract_text_from_urls
 
-    texts, warnings = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+    texts, warnings, _, _ = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
     assert texts == []
     assert any("OPENAI_COMPAT_BASE_URL" in w for w in warnings)
 
@@ -140,7 +140,7 @@ def test_dispatcher_fallback_gpt4o_to_skip(monkeypatch):
 
     monkeypatch.setattr(gpt4o_mod, "_HAS_OPENAI", True)
 
-    texts, warnings = ocr_mod.extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+    texts, warnings, _, _ = ocr_mod.extract_text_from_urls(["https://img.xhs.com/a.jpg"])
     assert texts == []
     assert any("GPT-4o vision not configured" in w for w in warnings)
 
@@ -202,7 +202,7 @@ def test_request_construction_uses_creator_prompt(monkeypatch):
     assert len(text_items) == 1
     assert "## Title" in text_items[0]["text"]
     assert "## Key Claims" in text_items[0]["text"]
-    assert result == "## Title\nTest Title\n## Key Claims\n- Claim 1"
+    assert result[0] == "## Title\nTest Title\n## Key Claims\n- Claim 1"
 
 
 # --- Merge behavior in fetch_note ---
@@ -238,11 +238,11 @@ def test_fetch_note_merges_structured_gpt4o_output(monkeypatch):
     structured_output = "## Title\n5个高效学习方法\n## Key Claims\n- 番茄工作法提升专注力"
 
     def fake_extract_urls(urls, timeout=15):
-        return ([structured_output], [])
+        return ([structured_output], [], 100, 50)
 
     monkeypatch.setattr(ocr_mod, "extract_text_from_urls", fake_extract_urls)
 
-    meta, text, warnings = fetcher_mod.fetch_note(
+    meta, text, warnings, _, _ = fetcher_mod.fetch_note(
         "https://www.xiaohongshu.com/explore/abc123"
     )
     assert meta.title == "Vision Test"
@@ -278,11 +278,11 @@ def test_fetch_note_merges_plain_ocr_with_ocr_marker(monkeypatch):
     monkeypatch.setattr(req_mod, "get", lambda *a, **kw: FakeResp())
 
     def fake_extract_urls(urls, timeout=15):
-        return (["Just plain text without markdown headings"], [])
+        return (["Just plain text without markdown headings"], [], 80, 40)
 
     monkeypatch.setattr(ocr_mod, "extract_text_from_urls", fake_extract_urls)
 
-    meta, text, warnings = fetcher_mod.fetch_note(
+    meta, text, warnings, _, _ = fetcher_mod.fetch_note(
         "https://www.xiaohongshu.com/explore/abc123"
     )
     assert "[OCR]" in text
@@ -318,11 +318,11 @@ def test_fetch_note_structured_only_when_no_desc(monkeypatch):
     structured = "## Title\nSomething\n## Stats\n100k views"
 
     def fake_extract_urls(urls, timeout=15):
-        return ([structured], [])
+        return ([structured], [], 90, 45)
 
     monkeypatch.setattr(ocr_mod, "extract_text_from_urls", fake_extract_urls)
 
-    meta, text, warnings = fetcher_mod.fetch_note(
+    meta, text, warnings, _, _ = fetcher_mod.fetch_note(
         "https://www.xiaohongshu.com/explore/abc123"
     )
     # No merge marker when desc was empty – raw structured content

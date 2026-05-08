@@ -38,7 +38,7 @@ def test_ocr_skipped_when_no_provider_configured(monkeypatch):
     monkeypatch.delenv("OPENAI_COMPAT_API_KEY", raising=False)
     monkeypatch.setattr(gpt4o_mod, "_HAS_OPENAI", False)
 
-    texts, warnings = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+    texts, warnings, _, _ = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
     assert texts == []
     assert any("no provider configured" in w for w in warnings)
 
@@ -52,14 +52,14 @@ def test_ocr_skipped_explicit_gpt4o_missing_config(monkeypatch):
     monkeypatch.delenv("OPENAI_COMPAT_API_KEY", raising=False)
     monkeypatch.setattr(gpt4o_mod, "_HAS_OPENAI", True)
 
-    texts, warnings = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+    texts, warnings, _, _ = extract_text_from_urls(["https://img.xhs.com/a.jpg"])
     assert texts == []
     assert any("GPT-4o vision not configured" in w for w in warnings)
 
 
 def test_ocr_empty_url_list():
     """No URLs means no work and no warnings."""
-    texts, warnings = extract_text_from_urls([])
+    texts, warnings, _, _ = extract_text_from_urls([])
     assert texts == []
     assert warnings == []
 
@@ -94,11 +94,11 @@ def test_fetch_note_merges_ocr_text(monkeypatch):
 
     # Mock OCR dispatcher to return text
     def fake_extract_urls(urls, timeout=15):
-        return (["OCR extracted text"], [])
+        return (["OCR extracted text"], [], 0, 0)
 
     monkeypatch.setattr(ocr_mod, "extract_text_from_urls", fake_extract_urls)
 
-    meta, text, warnings = fetcher_mod.fetch_note(
+    meta, text, warnings, _, _ = fetcher_mod.fetch_note(
         "https://www.xiaohongshu.com/explore/abc123"
     )
     assert meta.title == "Image Note"
@@ -132,11 +132,11 @@ def test_fetch_note_ocr_only_when_no_desc(monkeypatch):
     monkeypatch.setattr(req_mod, "get", lambda *a, **kw: FakeResp())
 
     def fake_extract_urls(urls, timeout=15):
-        return (["Image text only"], [])
+        return (["Image text only"], [], 0, 0)
 
     monkeypatch.setattr(ocr_mod, "extract_text_from_urls", fake_extract_urls)
 
-    meta, text, warnings = fetcher_mod.fetch_note(
+    meta, text, warnings, _, _ = fetcher_mod.fetch_note(
         "https://www.xiaohongshu.com/explore/abc123"
     )
     assert text == "Image text only"

@@ -49,16 +49,15 @@ def ocr_available() -> bool:
 
 def extract_text_from_urls(
     image_urls: list[str], timeout: int = 15
-) -> tuple[list[str], list[str]]:
+) -> tuple[list[str], list[str], int, int]:
     """Run image analysis on multiple image URLs using the configured provider.
 
     Provider resolution: auto (gpt4o if configured, else skip), or explicit choice.
-    Returns (extracted_texts, warnings) where extracted_texts contains
-    non-empty results and warnings lists any issues encountered.
+    Returns (extracted_texts, warnings, prompt_tokens, completion_tokens).
     """
     warnings: list[str] = []
     if not image_urls:
-        return [], warnings
+        return [], warnings, 0, 0
 
     provider = _resolve_provider()
 
@@ -72,7 +71,7 @@ def extract_text_from_urls(
                 "Image analysis skipped: GPT-4o vision not configured. "
                 "Set OPENAI_COMPAT_BASE_URL and OPENAI_COMPAT_API_KEY to enable."
             )
-            return [], warnings
+            return [], warnings, 0, 0
         return gpt4o_extract(image_urls, timeout=timeout)
 
     elif provider == "mistral":
@@ -85,12 +84,13 @@ def extract_text_from_urls(
                 "Image analysis skipped: Mistral OCR not configured. "
                 "Set AZURE_FOUNDRY_ENDPOINT and AZURE_FOUNDRY_API_KEY to enable."
             )
-            return [], warnings
-        return mistral_extract(image_urls, timeout=timeout)
+            return [], warnings, 0, 0
+        texts, w = mistral_extract(image_urls, timeout=timeout)
+        return texts, w, 0, 0
 
     # No provider available (auto resolved to 'none')
     warnings.append(
         "Image analysis skipped: no provider configured. "
         "Set OPENAI_COMPAT_BASE_URL + OPENAI_COMPAT_API_KEY for GPT-4o vision."
     )
-    return [], warnings
+    return [], warnings, 0, 0

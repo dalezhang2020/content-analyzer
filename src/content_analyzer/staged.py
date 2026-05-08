@@ -73,10 +73,9 @@ def _run_youtube(url: str) -> None:
 
 def _run_xiaohongshu(url: str) -> None:
     from content_analyzer.adapters.xiaohongshu import fetch_note
-    from content_analyzer.pipeline import _process_xiaohongshu_content
 
     _emit("fetch")
-    metadata, text_content, warnings = fetch_note(url)
+    metadata, text_content, warnings, vision_prompt_tokens, vision_completion_tokens = fetch_note(url)
 
     _emit("extract")
     # Shared processing logic (image block parsing, transcript mapping)
@@ -117,6 +116,8 @@ def _run_xiaohongshu(url: str) -> None:
         image_analysis=image_analysis_dict,
         warnings=warnings,
     )
+    result.token_usage.vision_prompt_tokens = vision_prompt_tokens
+    result.token_usage.vision_completion_tokens = vision_completion_tokens
 
     _emit("analyze")
     from content_analyzer.analysis import get_analyzer

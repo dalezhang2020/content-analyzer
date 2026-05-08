@@ -57,13 +57,13 @@ def _extract_image_urls(note_data: dict) -> list[str]:
     return urls
 
 
-def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str]]:
-    """Fetch a Xiaohongshu note. Returns (metadata, text_content, warnings)."""
+def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str], int, int]:
+    """Fetch a Xiaohongshu note. Returns (metadata, text_content, warnings, prompt_tokens, completion_tokens)."""
     warnings: list[str] = []
 
     if not _HAS_REQUESTS:
         warnings.append("requests library not installed; cannot fetch Xiaohongshu page. Install with: pip install requests")
-        return Metadata(video_id=url, title=None), None, warnings
+        return Metadata(video_id=url, title=None), None, warnings, 0, 0
 
     from content_analyzer.adapters.xiaohongshu.url import extract_note_id, is_xiaohongshu_url
     from urllib.parse import urlparse
@@ -76,7 +76,7 @@ def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str]]:
             canonical = _resolve_short_link(url)
         except Exception as e:
             warnings.append(f"Failed to resolve short link: {e}")
-            return Metadata(video_id=url, title=None), None, warnings
+            return Metadata(video_id=url, title=None), None, warnings, 0, 0
 
     note_id = extract_note_id(canonical) or canonical
 
@@ -84,15 +84,15 @@ def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str]]:
         resp = requests.get(canonical, headers=_HEADERS, timeout=15)
     except Exception as e:
         warnings.append(f"Network error fetching Xiaohongshu page: {e}")
-        return Metadata(video_id=note_id, title=None), None, warnings
+        return Metadata(video_id=note_id, title=None), None, warnings, 0, 0
 
     if resp.status_code == 403 or "请验证" in resp.text or "login" in resp.url:
         warnings.append("Xiaohongshu returned a login/captcha wall. Content extraction blocked by anti-bot measures.")
-        return Metadata(video_id=note_id, title=None), None, warnings
+        return Metadata(video_id=note_id, title=None), None, warnings, 0, 0
 
     if resp.status_code != 200:
         warnings.append(f"Xiaohongshu returned HTTP {resp.status_code}.")
-        return Metadata(video_id=note_id, title=None), None, warnings
+        return Metadata(video_id=note_id, title=None), None, warnings, 0, 0
 
     html = resp.text
     state = _extract_initial_state(html)
@@ -145,7 +145,7 @@ def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str]]:
     if image_urls:
         from content_analyzer.adapters.xiaohongshu.ocr import extract_text_from_urls
 
-        ocr_texts, ocr_warnings = extract_text_from_urls(image_urls)
+        ocr_texts, ocr_warnings, ocr_prompt_tokens, ocr_completion_tokens = extract_text_from_urls(image_urls)
         warnings.extend(ocr_warnings)
         if ocr_texts:
             ocr_combined = "\n".join(ocr_texts)
@@ -157,6 +157,9 @@ def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str]]:
                 text_content = text_content + f"\n\n{marker}\n" + ocr_combined
             else:
                 text_content = ocr_combined
+    else:
+        ocr_prompt_tokens = 0
+        ocr_completion_tokens = 0
 
     metadata = Metadata(
         video_id=note_id,
@@ -165,4 +168,4 @@ def fetch_note(url: str) -> tuple[Metadata, Optional[str], list[str]]:
         view_count=likes,  # repurpose view_count for likes in XHS context
     )
 
-    return metadata, text_content, warnings
+    return metadata, text_content, warnings, ocr_prompt_tokens, ocr_completion_tokens

@@ -220,7 +220,7 @@ class TestProviderFallback:
 
         monkeypatch.setattr(mistral_mod, "_HAS_REQUESTS", True)
 
-        texts, warnings = ocr_mod.extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+        texts, warnings, _, _ = ocr_mod.extract_text_from_urls(["https://img.xhs.com/a.jpg"])
         assert texts == []
         assert any("Mistral OCR not configured" in w for w in warnings)
 
@@ -243,7 +243,7 @@ class TestProviderFallback:
 
         monkeypatch.setattr(mistral_mod._requests, "post", lambda *a, **kw: FakeResp())
 
-        texts, warnings = ocr_mod.extract_text_from_urls(["https://img.xhs.com/a.jpg"])
+        texts, warnings, _, _ = ocr_mod.extract_text_from_urls(["https://img.xhs.com/a.jpg"])
         assert texts == ["Mistral extracted"]
         assert warnings == []
 
@@ -289,7 +289,7 @@ class TestMistralMergeInFetcher:
 
         monkeypatch.setattr(mistral_mod._requests, "post", lambda *a, **kw: FakeOcrResp())
 
-        meta, text, warnings = fetcher_mod.fetch_note(
+        meta, text, warnings, _, _ = fetcher_mod.fetch_note(
             "https://www.xiaohongshu.com/explore/abc123"
         )
         assert "Some caption" in text

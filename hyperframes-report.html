@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HyperFrames 调研报告</title>
+<style>
+  :root {
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-alt: #334155;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent: #22d3ee;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --border: #475569;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  header .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+  header .meta { color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem; }
+  h2 {
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--surface-alt);
+  }
+  h3 { font-size: 1.2rem; color: var(--primary-light); margin: 1.5rem 0 0.75rem; }
+  p { margin-bottom: 1rem; color: var(--text); }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--surface-alt);
+    color: var(--accent);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-right: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .badge-green { color: var(--success); }
+  .badge-yellow { color: var(--warning); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--surface-alt);
+  }
+  th { color: var(--accent); background: var(--surface); }
+  tr:hover td { background: var(--surface); }
+  code {
+    background: var(--surface-alt);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--success);
+  }
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  pre code { background: none; padding: 0; color: var(--text); }
+  ul, ol { margin: 0.75rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.4rem; }
+  .highlight { color: var(--accent); font-weight: 600; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1rem 0; }
+  .pros h4 { color: var(--success); }
+  .cons h4 { color: var(--warning); }
+  .toc { background: var(--surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .toc a { color: var(--primary-light); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ol { margin-left: 1.2rem; }
+  .toc li { margin-bottom: 0.3rem; }
+  footer { text-align: center; color: var(--text-muted); padding: 2rem 0; border-top: 1px solid var(--border); margin-top: 3rem; font-size: 0.85rem; }
+  a { color: var(--primary-light); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>HyperFrames 调研报告</h1>
+  <p class="subtitle">Write HTML. Render Video. Built for Agents.</p>
+  <p class="meta">调研日期：2025-05-08 | 来源：官方文档 + GitHub | 版本：v0.1.x</p>
+</header>
+
+<nav class="toc">
+  <strong>目录</strong>
+  <ol>
+    <li><a href="#overview">项目概览</a></li>
+    <li><a href="#core-concept">核心概念</a></li>
+    <li><a href="#features">主要功能</a></li>
+    <li><a href="#cli">CLI 工具链</a></li>
+    <li><a href="#use-cases">流行用法 &amp; 场景</a></li>
+    <li><a href="#vs-remotion">与 Remotion 对比</a></li>
+    <li><a href="#ecosystem">生态 &amp; 集成</a></li>
+    <li><a href="#verdict">总结评估</a></li>
+  </ol>
+</nav>
+
+<section id="overview">
+<h2>1. 项目概览</h2>
+<div class="card">
+  <table>
+    <tr><th>属性</th><th>详情</th></tr>
+    <tr><td>开发者</td><td>HeyGen（AI 视频平台）</td></tr>
+    <tr><td>GitHub</td><td><a href="https://github.com/heygen-com/hyperframes">heygen-com/hyperframes</a></td></tr>
+    <tr><td>Stars</td><td>~9.5k+（截至 2025-05）</td></tr>
+    <tr><td>License</td><td>Apache 2.0（完全开源，商用免费）</td></tr>
+    <tr><td>语言</td><td>TypeScript / Node.js</td></tr>
+    <tr><td>定位</td><td>HTML → 确定性逐帧视频渲染框架，AI Agent 原生</td></tr>
+  </table>
+</div>
+<p>HyperFrames 是 HeyGen 开源的视频渲染框架，核心理念是<span class="highlight">用写网页的方式定义视频</span>。开发者用标准 HTML + CSS + JavaScript（GSAP 动画）编写 composition，框架通过 headless Chrome 逐帧捕获，输出 MP4/MOV/WebM。</p>
+</section>
+
+<section id="core-concept">
+<h2>2. 核心概念</h2>
+
+<h3>2.1 Composition（组合）</h3>
+<p>一个 HTML 文件就是一个视频。根元素用 <code>data-composition-id</code> 标识，内部元素通过 data 属性控制时间轴：</p>
+<pre><code>&lt;div id="root" data-composition-id="root"
+     data-start="0" data-width="1920" data-height="1080"&gt;
+
+  &lt;video id="clip-1" data-start="0" data-duration="5"
+         data-track-index="0" src="intro.mp4" muted playsinline&gt;&lt;/video&gt;
+
+  &lt;h1 id="title" class="clip"
+      data-start="1" data-duration="4" data-track-index="1"
+      style="font-size: 72px; color: white;"&gt;
+    Welcome to Hyperframes
+  &lt;/h1&gt;
+
+  &lt;audio id="bg-music" data-start="0" data-duration="5"
+         data-track-index="2" data-volume="0.5" src="music.wav"&gt;&lt;/audio&gt;
+&lt;/div&gt;</code></pre>
+
+<h3>2.2 Clip 类型</h3>
+<div class="card-grid">
+  <div class="card">
+    <h4><code>&lt;video&gt;</code></h4>
+    <p>视频片段、B-roll、A-roll</p>
+  </div>
+  <div class="card">
+    <h4><code>&lt;img&gt;</code></h4>
+    <p>静态图片、叠加层</p>
+  </div>
+  <div class="card">
+    <h4><code>&lt;audio&gt;</code></h4>
+    <p>音乐、音效</p>
+  </div>
+  <div class="card">
+    <h4><code>&lt;div data-composition-id&gt;</code></h4>
+    <p>嵌套组合（动画、分组序列）</p>
+  </div>
+</div>
+
+<h3>2.3 Data Attributes（时间轴控制）</h3>
+<table>
+  <tr><th>属性</th><th>作用</th></tr>
+  <tr><td><code>data-start</code></td><td>元素在时间轴上的起始时间（秒）</td></tr>
+  <tr><td><code>data-duration</code></td><td>元素持续时长</td></tr>
+  <tr><td><code>data-track-index</code></td><td>轨道层级（类似视频编辑器的图层）</td></tr>
+  <tr><td><code>data-volume</code></td><td>音频音量控制</td></tr>
+  <tr><td><code>data-composition-src</code></td><td>引用外部 composition 文件</td></tr>
+  <tr><td><code>data-variable-values</code></td><td>向子 composition 传递变量</td></tr>
+</table>
+
+<h3>2.4 GSAP 动画集成</h3>
+<p>HyperFrames 使用 GSAP 做动画，timeline 设为 <code>paused: true</code>，框架在渲染时逐帧 seek，保证帧精确：</p>
+<pre><code>const tl = gsap.timeline({ paused: true });
+tl.to("#title", { opacity: 1, y: 0, duration: 0.5 }, 0);
+tl.from("#subtitle", { opacity: 0, scale: 0.8, duration: 0.8 }, 0.3);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["root"] = tl;</code></pre>
+<p>支持属性：<code>opacity</code>, <code>x</code>, <code>y</code>, <code>scale</code>, <code>rotation</code>, <code>width</code>, <code>height</code>, <code>color</code>, <code>backgroundColor</code> 等所有 CSS 可动画属性。</p>
+
+<h3>2.5 确定性渲染</h3>
+<p>相同输入 → 相同输出，每次都一样。引擎通过 <code>HeadlessExperimental.beginFrame</code> 驱动 Chrome compositor，逐帧捕获后通过 FFmpeg 编码。</p>
+</section>
+
+<section id="features">
+<h2>3. 主要功能</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>🎬 Website to Video</h3>
+    <p>给 AI agent 一个 URL + 创意方向，自动完成：</p>
+    <ol>
+      <li>Capture — 截图、设计 token、字体、资源</li>
+      <li>Design — 品牌参考文档</li>
+      <li>Script — 旁白脚本</li>
+      <li>Storyboard — 分镜创意方向</li>
+      <li>VO + Timing — TTS 语音 + 词级时间戳</li>
+      <li>Build — 动画 HTML compositions</li>
+      <li>Validate — 快照验证</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>🗣️ TTS 语音合成</h3>
+    <p>本地运行 Kokoro-82M 模型，无需 API key：</p>
+    <pre><code>npx hyperframes tts "Welcome to HyperFrames" --voice am_adam</code></pre>
+    <p>支持语言：英语、西班牙语、法语、日语、中文等</p>
+  </div>
+  <div class="card">
+    <h3>📝 字幕 &amp; 转录</h3>
+    <p>本地 whisper.cpp 转录，支持导入 SRT/VTT/JSON：</p>
+    <pre><code>npx hyperframes transcribe audio.mp3 --model medium.en</code></pre>
+  </div>
+  <div class="card">
+    <h3>✂️ 背景移除</h3>
+    <p>本地 u2net 模型，视频/图片去背景，输出透明 WebM：</p>
+    <pre><code>npx hyperframes remove-background avatar.mp4 -o transparent.webm</code></pre>
+  </div>
+  <div class="card">
+    <h3>🎨 Open Design</h3>
+    <p>AI 生成 composition 初稿 — 配色、场景内容、GSAP 入场动画、shader 转场。下载后用 agent 精修。</p>
+  </div>
+  <div class="card">
+    <h3>🧩 Registry（组件库）</h3>
+    <p>可复用的 blocks（场景）和 components（效果）：</p>
+    <pre><code>npx hyperframes add claude-code-window
+npx hyperframes add shader-wipe</code></pre>
+  </div>
+</div>
+</section>
+
+<section id="cli">
+<h2>4. CLI 工具链</h2>
+<div class="card">
+<table>
+  <tr><th>命令</th><th>功能</th></tr>
+  <tr><td><code>npx hyperframes init</code></td><td>从模板创建项目（blank / warm-grain / play-mode / swiss-grid / vignelli）</td></tr>
+  <tr><td><code>npx hyperframes preview</code></td><td>浏览器实时预览 + 热重载（Studio 编辑器）</td></tr>
+  <tr><td><code>npx hyperframes render</code></td><td>渲染为 MP4/MOV/WebM，支持 --docker 确定性输出</td></tr>
+  <tr><td><code>npx hyperframes lint</code></td><td>检查 composition 结构问题</td></tr>
+  <tr><td><code>npx hyperframes inspect</code></td><td>检测文字溢出、容器裁切等视觉问题</td></tr>
+  <tr><td><code>npx hyperframes capture</code></td><td>抓取网站（截图、颜色、字体、资源、动画）</td></tr>
+  <tr><td><code>npx hyperframes tts</code></td><td>本地 TTS 语音合成</td></tr>
+  <tr><td><code>npx hyperframes transcribe</code></td><td>音频转录（whisper.cpp）</td></tr>
+  <tr><td><code>npx hyperframes remove-background</code></td><td>AI 去背景</td></tr>
+  <tr><td><code>npx hyperframes snapshot</code></td><td>关键帧截图验证</td></tr>
+  <tr><td><code>npx hyperframes add</code></td><td>从 registry 安装 block/component</td></tr>
+  <tr><td><code>npx hyperframes catalog</code></td><td>浏览 registry 可用组件</td></tr>
+  <tr><td><code>npx hyperframes doctor</code></td><td>环境诊断（检查依赖）</td></tr>
+</table>
+</div>
+<p><strong>Agent-Friendly 设计</strong>：CLI 默认非交互模式，所有输入通过 flags 传递，输出纯文本，支持 <code>--json</code>。加 <code>--human-friendly</code> 启用交互 UI。</p>
+</section>
+
+<section id="use-cases">
+<h2>5. 流行用法 &amp; 场景</h2>
+
+<div class="card">
+<h3>🔥 最热门用法</h3>
+<table>
+  <tr><th>场景</th><th>时长</th><th>Prompt 示例</th></tr>
+  <tr><td>Social Ad（社交广告）</td><td>10-15s</td><td>"15-second Instagram reel. Energetic, fast cuts."</td></tr>
+  <tr><td>Product Launch（产品发布）</td><td>20-30s</td><td>"25-second product launch. Apple keynote energy."</td></tr>
+  <tr><td>Product Tour（产品演示）</td><td>30-60s</td><td>"45-second tour showing the top 3 features."</td></tr>
+  <tr><td>Brand Reel（品牌视频）</td><td>15-30s</td><td>"20-second brand video. Celebrate the design."</td></tr>
+  <tr><td>Feature Announcement</td><td>15-25s</td><td>"Feature announcement highlighting the new AI agents."</td></tr>
+  <tr><td>Teaser（预告片）</td><td>8-15s</td><td>"10-second teaser. Super minimal. Just the hook."</td></tr>
+</table>
+</div>
+
+<h3>5.1 AI Agent 驱动的视频生产</h3>
+<p>这是 HyperFrames 最核心的定位。通过 Claude Code / Cursor / Codex 等 AI agent，用自然语言描述视频需求，agent 自动生成 HTML composition 并渲染。</p>
+<pre><code># 安装 skills
+npx skills add heygen-com/hyperframes
+
+# 然后在 agent 中 prompt
+"Create a 20-second product intro with a fade-in title over a dark background"</code></pre>
+
+<h3>5.2 网站转视频（Website to Video）</h3>
+<p>给一个 URL，自动抓取品牌元素，生成宣传视频：</p>
+<pre><code>"Create a 25-second product launch video from https://linear.app.
+ Make it feel like an Apple keynote announcement."</code></pre>
+
+<h3>5.3 TikTok / Reels 短视频</h3>
+<p>快速生成带字幕、TTS 旁白的竖屏短视频，适合社交媒体批量生产。</p>
+
+<h3>5.4 开发者 Demo / 教程视频</h3>
+<p>用代码窗口 block + 动画展示代码执行过程，适合技术产品宣传。</p>
+
+<h3>5.5 自动化视频 Pipeline</h3>
+<p>因为 CLI 完全非交互 + 确定性输出，适合集成到 CI/CD 或批量视频生产流水线。</p>
+</section>
+
+<section id="vs-remotion">
+<h2>6. 与 Remotion 对比</h2>
+<div class="card">
+<table>
+  <tr><th>维度</th><th>HyperFrames</th><th>Remotion</th></tr>
+  <tr><td>编写方式</td><td>HTML + CSS + GSAP</td><td>React 组件 (TSX)</td></tr>
+  <tr><td>运行时</td><td>浏览器 DOM，无框架</td><td>React 逐帧 reconciliation</td></tr>
+  <tr><td>构建步骤</td><td>无；index.html 直接可用</td><td>需要 webpack/bundler</td></tr>
+  <tr><td>GSAP 等动画库</td><td>帧精确 seek</td><td>按实时时钟播放（会跑偏）</td></tr>
+  <tr><td>任意 HTML 接入</td><td>直接粘贴使用</td><td>需改写为 JSX</td></tr>
+  <tr><td>分布式渲染</td><td>单机（roadmap 中）</td><td>Lambda 成熟方案</td></tr>
+  <tr><td>HDR 输出</td><td>支持</td><td>不支持</td></tr>
+  <tr><td>可视化编辑器</td><td>原生（同一 DOM）</td><td>需 code → build 往返</td></tr>
+  <tr><td>License</td><td><span class="badge badge-green">Apache 2.0</span></td><td><span class="badge badge-yellow">商业许可</span></td></tr>
+  <tr><td>AI Agent 友好度</td><td>极高（HTML 是 LLM 训练数据最多的格式）</td><td>中等（需学框架规则）</td></tr>
+</table>
+</div>
+
+<div class="pros-cons">
+  <div class="pros card">
+    <h4>✅ HyperFrames 优势</h4>
+    <ul>
+      <li>LLM 生成质量更高（HTML 训练数据丰富）</li>
+      <li>零构建步骤，一个 HTML 文件即可</li>
+      <li>GSAP 帧精确，不会时间漂移</li>
+      <li>Apache 2.0 完全免费商用</li>
+      <li>可视化编辑器天然适配</li>
+      <li>任意网页内容可直接复用</li>
+    </ul>
+  </div>
+  <div class="cons card">
+    <h4>⚠️ HyperFrames 不足</h4>
+    <ul>
+      <li>无分布式渲染（长视频性能受限）</li>
+      <li>项目较新，社区生态还在建设</li>
+      <li>不适合已有 React 组件库的团队复用</li>
+      <li>文档和示例还在快速迭代中</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<section id="ecosystem">
+<h2>7. 生态 &amp; 集成</h2>
+
+<h3>7.1 Packages</h3>
+<table>
+  <tr><th>包</th><th>用途</th></tr>
+  <tr><td><code>hyperframes</code> (CLI)</td><td>主入口，封装所有功能</td></tr>
+  <tr><td><code>@hyperframes/core</code></td><td>解析/生成 composition HTML</td></tr>
+  <tr><td><code>@hyperframes/engine</code></td><td>帧捕获引擎</td></tr>
+  <tr><td><code>@hyperframes/producer</code></td><td>Node.js 编程式渲染</td></tr>
+  <tr><td><code>@hyperframes/studio</code></td><td>浏览器可视化编辑器</td></tr>
+</table>
+
+<h3>7.2 AI Agent 集成</h3>
+<table>
+  <tr><th>Agent</th><th>集成方式</th></tr>
+  <tr><td>Claude Code</td><td><code>npx skills add heygen-com/hyperframes</code>，注册为 slash commands</td></tr>
+  <tr><td>Cursor</td><td>同上，skills 自动识别</td></tr>
+  <tr><td>Gemini CLI</td><td>同上</td></tr>
+  <tr><td>Codex CLI</td><td>同上</td></tr>
+  <tr><td>Kiro</td><td>内置 hyperframes / hyperframes-cli / hyperframes-media skills</td></tr>
+</table>
+
+<h3>7.3 Skills 列表</h3>
+<table>
+  <tr><th>Skill</th><th>功能</th></tr>
+  <tr><td><code>/hyperframes</code></td><td>Composition 编写 — HTML 结构、时间轴、字幕、TTS、转场</td></tr>
+  <tr><td><code>/hyperframes-cli</code></td><td>CLI 命令 — init, lint, preview, render, transcribe, tts</td></tr>
+  <tr><td><code>/hyperframes-registry</code></td><td>Block/component 安装</td></tr>
+  <tr><td><code>/website-to-hyperframes</code></td><td>URL → 视频完整 pipeline</td></tr>
+  <tr><td><code>/gsap</code></td><td>GSAP 动画 API 辅助</td></tr>
+</table>
+</section>
+
+<section id="verdict">
+<h2>8. 总结评估</h2>
+<div class="card">
+  <h3>适合谁？</h3>
+  <ul>
+    <li><strong>AI 视频自动化</strong> — 用 agent 批量生产营销视频、社交内容</li>
+    <li><strong>前端开发者</strong> — 已有 HTML/CSS/GSAP 技能，零学习成本</li>
+    <li><strong>SaaS 产品</strong> — 需要 programmatic video generation 的平台</li>
+    <li><strong>内容创作者</strong> — 快速从网站/品牌素材生成宣传视频</li>
+    <li><strong>开源项目</strong> — Apache 2.0 无商用限制</li>
+  </ul>
+</div>
+<div class="card">
+  <h3>关键判断</h3>
+  <table>
+    <tr><td>成熟度</td><td>早期但可用（v0.1.x），HeyGen 内部生产使用</td></tr>
+    <tr><td>社区热度</td><td>GitHub 9.5k+ stars，增长迅速</td></tr>
+    <tr><td>技术赌注</td><td>HTML > React 作为视频编写层（对 AI 时代正确）</td></tr>
+    <tr><td>商业模式</td><td>开源框架 + HeyGen 平台商业化</td></tr>
+    <tr><td>风险</td><td>单机渲染限制、生态早期、依赖 HeyGen 持续投入</td></tr>
+  </table>
+</div>
+<div class="card" style="border-color: var(--accent);">
+  <h3>💡 对 Dale 的价值</h3>
+  <p>如果你的 side project 需要<strong>自动生成产品宣传视频</strong>（比如给 Amazon 产品做短视频广告），HyperFrames + AI agent 是目前最低成本的方案。用 HTML 定义模板，agent 填充内容，CLI 批量渲染。完全本地运行，无 API 费用（除 TTS 外）。</p>
+  <p>但如果只是偶尔做视频，直接用 HeyGen 平台可能更省事。HyperFrames 的价值在<strong>规模化、自动化、可编程</strong>。</p>
+</div>
+</section>
+
+<footer>
+  <p>数据来源：<a href="https://hyperframes.heygen.com">hyperframes.heygen.com</a> | <a href="https://github.com/heygen-com/hyperframes">GitHub</a></p>
+  <p>Generated by Kiro | 2025-05-08</p>
+</footer>
+
+</div>
+</body>
+</html>
