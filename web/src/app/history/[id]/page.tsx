@@ -67,17 +67,42 @@ export default function HistoryDetailPage({
     fetchEntry();
   }, [id]);
 
+  const handleCreatePlan = async () => {
+    if (!entry) return;
+    const title = window.prompt("Plan title:", `Video plan: ${entry.result?.metadata?.title?.slice(0, 50) || "Content"}`);
+    if (!title?.trim()) return;
+    const res = await fetch("/api/plans", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: title.trim(), sourceAnalyses: [id] }),
+    });
+    if (res.ok) {
+      const plan = await res.json();
+      router.push(`/plans/${plan.id}`);
+    }
+  };
+
   return (
     <main className="flex-1 flex flex-col px-6 py-8">
       <div className="w-full max-w-4xl space-y-6">
         {/* Back link */}
-        <button
-          onClick={() => router.push("/history")}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-amber-700 transition-colors"
-        >
-          <ArrowLeft className="size-4" />
-          Back to History
-        </button>
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => router.push("/history")}
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-amber-700 transition-colors"
+          >
+            <ArrowLeft className="size-4" />
+            Back to History
+          </button>
+          {entry && (
+            <button
+              onClick={handleCreatePlan}
+              className="text-xs px-3 py-1.5 rounded-md bg-amber-600 text-white hover:bg-amber-700 transition-colors"
+            >
+              + Create Video Plan
+            </button>
+          )}
+        </div>
 
         {/* Loading state */}
         {loading && (

@@ -9,10 +9,37 @@ export interface ContentPlan {
   createdAt: string;
   updatedAt: string;
   sourceAnalyses: string[]; // history entry IDs
-  angles: { title: string; hook: string; format: string }[];
-  script: string;
+
+  // Stage 1: Script (文案)
+  angle: string;           // 切入点/核心观点
+  outline: SceneOutline[]; // 场景大纲
+  script: string;          // 完整文案（自由编辑）
+
+  // Stage 2: HTML (Design)
+  htmlStyle?: string;      // 风格选择（如 'minimal', 'editorial', 'data-dense'）
+  htmlContent?: string;    // 生成的 HTML
+  htmlUpdatedAt?: string;  // HTML 上次生成时间
+
+  // Stage 3: Video (Render)
+  videoEngine?: "hyperframes" | "remotion"; // 渲染引擎
+  videoUrl?: string;       // 视频文件 URL
+  videoRenderedAt?: string;
+
+  // Meta
   topics: string[];
   notes: string;
+
+  // Current stage indicator
+  currentStage: "script" | "html" | "video";
+}
+
+export interface SceneOutline {
+  id: string;
+  title: string;        // 场景标题
+  type: "hook" | "content" | "data" | "action" | "closing";
+  duration: number;     // 秒
+  content: string;      // 场景内容要点（多行）
+  notes?: string;       // 创作备注
 }
 
 async function ensureDir(): Promise<void> {
