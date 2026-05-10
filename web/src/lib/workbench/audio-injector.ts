@@ -26,8 +26,6 @@
  *      close tag is present), in ascending `data-scene-index` order.
  *   4. Indexes in `successfulIndexes` that do not map to any scene in the
  *      storyboard are silently skipped (defensive fallback).
- *
- * _Requirements: 9.10, 9.11, 9.12_
  */
 
 import type { Scene, Storyboard } from "./types";
@@ -124,8 +122,6 @@ function canonicalTag(
  *                            treated as the same logical set.
  * @returns                   New HTML string with the invariants described
  *                            at the top of this file.
- *
- * _Requirements: 9.10, 9.11, 9.12_
  */
 export function injectAudio(
   html: string,

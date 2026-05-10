@@ -8,7 +8,7 @@ Two pages are added:
 - `/projects` — list of all projects, with create/delete.
 - `/projects/[id]` — detail page with a left-side stage panel and a 6-tab container (`Brief` / `Storyboard` / `HTML` / `Audio` / `Render` / `QA`), plus a right-side Scene drawer.
 
-Storage is pure local filesystem under `content-analyzer/web/data/projects/`. No ORM, no DB. Renders land in `content-analyzer/web/public/videos/`. The HyperFrames composition template comes from `../linear-launch` (sibling of `content-analyzer/web`) and is deep-copied per project so projects never cross-contaminate.
+Storage is pure local filesystem under `content-analyzer/web/data/projects/`. No ORM, no DB. Renders land in `content-analyzer/web/public/videos/`. The HyperFrames composition template is resolved via `HYPERFRAMES_TEMPLATE_DIR` env var (defaults to `workbench-data/_template/hf-blank`) and is deep-copied per project so projects never cross-contaminate.
 
 ### Design Goals
 
@@ -72,7 +72,7 @@ flowchart LR
     subgraph Disk["Local filesystem"]
         Data[("data/projects/{id}.json<br/>data/projects/{id}/...")]
         Videos[("public/videos/project-{id}.mp4")]
-        LinearLaunch[("../linear-launch<br/>template")]
+        Template[("workbench-data/_template/hf-blank")]
     end
 
     ListPage -- HTTP --> RouteProjects
@@ -170,7 +170,7 @@ sequenceDiagram
 | `path-safety.ts` | Validate `projectId` / `sceneId` regex, reject `..` / NUL | **Pure** |
 | `schemas.ts` | zod runtime validation schemas | **Pure** |
 | `project-store.ts` | Atomic JSON read/write, directory init, `projectId` generation | Impure (fs) |
-| `template-manager.ts` | Resolve `linear-launch` template, deep-copy, sync | Impure (fs) |
+| `template-manager.ts` | Resolve HyperFrames template, deep-copy, sync | Impure (fs) |
 | `ai-generator.ts` | LLM calls with retry/timeout, JSON-shape validation | Impure (network) |
 | `tts-service.ts` | Azure Speech TTS with exponential backoff, atomic mp3 writes | Impure (network + fs) |
 | `render-service.ts` | Spawn `npx hyperframes`, stream logs, SSE events | Impure (subprocess + fs) |
@@ -239,7 +239,7 @@ content-analyzer/web/src/
         ├── audio-injector.ts              # pure HTML mutation
         ├── path-safety.ts                 # projectId/sceneId regex, path validators
         ├── project-store.ts               # atomic JSON I/O + dir init
-        ├── template-manager.ts            # linear-launch resolver + deep copy
+        ├── template-manager.ts            # HyperFrames template resolver + deep copy
         ├── ai-generator.ts                # 4 LLM task functions
         ├── tts-service.ts                 # Azure Speech TTS
         ├── render-service.ts              # hyperframes subprocess + SSE
@@ -373,7 +373,7 @@ export interface ArtifactPaths {
 }
 
 export interface TemplateSource {
-  name: string;                       // "linear-launch"
+  name: string;                       // e.g. "hf-blank"
   version: string;                    // semver | commit-sha | "unknown"
   sourcePath: string;                 // absolute resolved path at creation time
 }
@@ -469,7 +469,7 @@ export interface Project {
     "videoPath": null
   },
   "qaNotes": [],
-  "templateSource": { "name": "linear-launch", "version": "0.5.5", "sourcePath": "/Users/…/linear-launch" },
+  "templateSource": { "name": "hf-blank", "version": "0.5.5", "sourcePath": "/Users/…/workbench-data/_template/hf-blank" },
   "createdAt": "2026-05-08T15:45:06.106Z",
   "updatedAt": "2026-05-08T15:47:12.440Z"
 }
@@ -831,7 +831,7 @@ Property titles reference the requirements they validate. Implementation uses `f
 
 ### Property 15: Template resolver picks the first existing candidate
 
-*For any* vector of booleans `(envExists, parentExists, grandparentExists)` and any consistent mock filesystem, `resolveTemplateDir()` returns the first of `[env, ../linear-launch, ../../linear-launch]` whose flag is `true` and whose `hyperframes.json` is readable; if none are available, it throws `TEMPLATE_NOT_FOUND` with `details.tried` listing every attempted path.
+*For any* vector of booleans `(envExists, parentExists, grandparentExists)` and any consistent mock filesystem, `resolveTemplateDir()` returns the first of `[env, ../hf-blank, ../../hf-blank]` whose flag is `true` and whose `hyperframes.json` is readable; if none are available, it throws `TEMPLATE_NOT_FOUND` with `details.tried` listing every attempted path.
 
 **Validates: Requirements 8.5, 15.1, 15.2**
 
@@ -1166,7 +1166,7 @@ One property test may be tagged with multiple consolidated requirement reference
 
 - **LLM (kiro-cli)**: mocked by stubbing `child_process.spawn` with a scripted reply queue. No real subprocess invocations in CI.
 - **Azure Speech TTS**: mocked at the HTTP layer with MSW (`msw` is already a zero-cost dev dep we can add). No real API calls in CI. One optional "live" test behind `WORKBENCH_LIVE=1` env flag for local smoke.
-- **HyperFrames CLI**: mocked by stubbing `child_process.spawn`; the tests inject a fake EventEmitter with pre-recorded stdout/exit codes. A separate "live" test behind the same env flag runs against the real `../linear-launch` template.
+- **HyperFrames CLI**: mocked by stubbing `child_process.spawn`; the tests inject a fake EventEmitter with pre-recorded stdout/exit codes. A separate "live" test behind the same env flag runs against the real template from `HYPERFRAMES_TEMPLATE_DIR`.
 - **Filesystem**: every store / template test uses a unique `tmp/` directory under `os.tmpdir()` and cleans up in `afterEach`. No test touches `data/projects/` in the real workspace.
 
 ### Coverage Targets (informal)
@@ -1273,8 +1273,8 @@ The design writes `brief.json` and `storyboard.json` only after successful zod v
 
 ### OD-7: Whether to pin `hyperframes` version
 
-`linear-launch/package.json` pins `hyperframes@0.5.5` via `npx --yes hyperframes@0.5.5`. The Workbench's `render-service.ts` currently calls `npx hyperframes <cmd>` without a version pin. **Recommendation**: pin to the same version as the template (`npx --yes hyperframes@0.5.5 <cmd>`) so rendering is reproducible regardless of whatever is cached globally. The pin can live in a `HYPERFRAMES_CLI_VERSION` constant in `src/lib/workbench/constants.ts`.
+The template's `package.json` pins `hyperframes@0.5.5` via `npx --yes hyperframes@0.5.5`. The Workbench's `render-service.ts` currently calls `npx hyperframes <cmd>` without a version pin. **Recommendation**: pin to the same version as the template (`npx --yes hyperframes@0.5.5 <cmd>`) so rendering is reproducible regardless of whatever is cached globally. The pin can live in a `HYPERFRAMES_CLI_VERSION` constant in `src/lib/workbench/constants.ts`.
 
-### OD-8: Where `linear-launch` lives in production-like setups
+### OD-8: Template location
 
-The template is located outside `content-analyzer/web/`. In a production build this path is only relevant at runtime (template copy happens at project creation, not at build time), so Vercel-style deployment is not blocked — but the current MVP is local-only, so this is not an active concern. Recorded here so it's not forgotten later.
+The template is located outside `content-analyzer/web/`, configured via `HYPERFRAMES_TEMPLATE_DIR` in `.env.local`. In a production build this path is only relevant at runtime (template copy happens at project creation, not at build time), so Vercel-style deployment is not blocked — but the current MVP is local-only, so this is not an active concern.

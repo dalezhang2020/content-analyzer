@@ -60,8 +60,6 @@ const totalDurationArb = fc.double({
  * predicate straight from the spec, so Property 19 is checking the
  * implementation against the Requirement text rather than against the
  * SUT's own helper.
- *
- * _Requirements: 7.3_
  */
 function specContainsDurationKeyword(qaNote: string): boolean {
   const haystack = qaNote.toLowerCase();

@@ -1,8 +1,8 @@
 /**
- * Video Creation Workbench — linear-launch template manager.
+ * Video Creation Workbench — HyperFrames template manager.
  *
- * Owns every filesystem touch that links a Project to the `linear-launch`
- * HyperFrames template:
+ * Owns every filesystem touch that links a Project to the HyperFrames
+ * template:
  *   1. Locate the template directory on disk (`resolveTemplateDir`).
  *   2. Deep-copy it into a new project's `composition/` subtree
  *      (`deepCopyTemplate`), honouring the exclusion ruleset.
@@ -26,8 +26,6 @@
  *   - On any copy failure, the destination subtree is removed best-effort
  *     via `removeTree(dst)` and the original error is wrapped in
  *     `WorkbenchError(TEMPLATE_COPY_FAILED, ..., { src, dst, failedFile })`.
- *
- * _Requirements: 8.2, 8.5, 15.1–15.8; Properties 15, 16, 17_
  */
 
 import { exec } from "node:child_process";
@@ -50,21 +48,18 @@ const execAsync = promisify(exec);
 /**
  * Ordered list of template directory **names** searched under the CWD's
  * siblings. `hf-blank` (from `npx hyperframes init --example blank`) is
- * the canonical HyperFrames baseline — minimal, ~30 lines, zero visual
- * bias. `linear-launch` is kept as a fallback for legacy setups where
- * users haven't scaffolded the blank template yet.
+ * the canonical HyperFrames baseline.
  *
  * `HYPERFRAMES_TEMPLATE_DIR` env override is always tried first and wins
  * over the sibling search.
  */
-const TEMPLATE_DIR_NAMES: readonly string[] = ["hf-blank", "linear-launch"];
+const TEMPLATE_DIR_NAMES: readonly string[] = ["hf-blank"];
 
 /**
  * Fallback name written into `TemplateSource.name` when the template's
- * `meta.json` doesn't carry a readable `name` field. Value preserves the
- * pre-hf-blank default for backward compatibility with older projects.
+ * `meta.json` doesn't carry a readable `name` field.
  */
-const DEFAULT_TEMPLATE_NAME = "linear-launch" as const;
+const DEFAULT_TEMPLATE_NAME = "hf-blank" as const;
 
 // ---------------------------------------------------------------------------
 // Candidate resolution
@@ -74,13 +69,11 @@ const DEFAULT_TEMPLATE_NAME = "linear-launch" as const;
  * Build the ordered candidate list tried by `resolveTemplateDir`.
  * Precedence:
  *   1. `process.env.HYPERFRAMES_TEMPLATE_DIR` (when non-empty)
- *   2. `<cwd>/../{hf-blank, linear-launch}`
- *   3. `<cwd>/../../{hf-blank, linear-launch}`
+ *   2. `<cwd>/../hf-blank`
+ *   3. `<cwd>/../../hf-blank`
  *
  * Resolved on each call (not cached) so tests that mutate the environment
  * or CWD observe fresh values.
- *
- * _Requirements: 15.1_
  */
 function getTemplateCandidates(): string[] {
   const candidates: string[] = [];
@@ -109,8 +102,6 @@ function getTemplateCandidates(): string[] {
  *
  * Returns `{ sourcePath, version }` where `version` is derived via
  * `readTemplateVersion(sourcePath)`.
- *
- * _Requirements: 8.5, 15.1, 15.2; Property 15_
  */
 export async function resolveTemplateDir(): Promise<{
   sourcePath: string;
@@ -143,7 +134,7 @@ export async function resolveTemplateDir(): Promise<{
 
   throw new WorkbenchError(
     ErrorCode.TEMPLATE_NOT_FOUND,
-    "HyperFrames template not found (looked for hf-blank and linear-launch)",
+    "HyperFrames template not found. Set HYPERFRAMES_TEMPLATE_DIR or place an hf-blank directory next to content-analyzer/web.",
     { tried },
   );
 }
@@ -202,8 +193,6 @@ function toPosix(rel: string): string {
  *   - Idempotent: `selectFilesToCopy(selectFilesToCopy(x))` equals
  *     `selectFilesToCopy(x)`.
  *   - Everything not matched by an exclusion rule is retained.
- *
- * _Requirements: 15.3, 15.4; Property 16_
  */
 export function selectFilesToCopy(relativePaths: string[]): string[] {
   return relativePaths.filter((rel) => {
@@ -261,7 +250,7 @@ async function walkFiles(src: string): Promise<string[]> {
 // ---------------------------------------------------------------------------
 
 /**
- * Deep-copy the `linear-launch` template from `src` to `dst` using the
+ * Deep-copy the HyperFrames template from `src` to `dst` using the
  * exclusion rules in `selectFilesToCopy`. Directories that would be empty
  * after filtering (e.g. `captures/`) are NOT created.
  *
@@ -272,8 +261,6 @@ async function walkFiles(src: string): Promise<string[]> {
  * On any copy failure, the partially-populated `dst` is removed best-effort
  * via `removeTree` and the original error is rethrown as
  * `WorkbenchError(TEMPLATE_COPY_FAILED, reason, { src, dst, failedFile })`.
- *
- * _Requirements: 15.3, 15.4, 15.5_
  */
 export async function deepCopyTemplate(
   src: string,
@@ -324,8 +311,6 @@ export async function deepCopyTemplate(
  * All failures are swallowed silently and fall through to the next tier —
  * a missing `package.json` or non-git directory is not an error at this
  * level; it's a reason to keep looking.
- *
- * _Requirements: 15.8_
  */
 export async function readTemplateVersion(src: string): Promise<string> {
   // Tier 1: package.json version.
@@ -403,8 +388,6 @@ async function copyDirRecursive(
  * The conflict check uses `JSON.stringify` equality of the parsed baseline
  * vs. the parsed on-disk file — this is the MVP's simpler equivalent of
  * deep field-by-field comparison (Criterion 15.7).
- *
- * _Requirements: 15.6, 15.7; Property 17_
  */
 export async function syncTemplate(
   src: string,
@@ -464,8 +447,6 @@ export async function syncTemplate(
  * `TemplateSource` snapshot persisted on `Project.templateSource`. Equivalent
  * to `resolveTemplateDir()` wrapped in the `{ name, version, sourcePath }`
  * shape.
- *
- * _Requirements: 15.8_
  */
 export async function getTemplateSource(): Promise<TemplateSource> {
   const { sourcePath, version } = await resolveTemplateDir();

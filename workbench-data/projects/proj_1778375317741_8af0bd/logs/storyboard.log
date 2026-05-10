@@ -4,3 +4,6 @@
 {"ts":"2026-05-10T01:28:01.813Z","level":"info","stage":"storyboard","event":"storyboard_attempt","attempt":1,"retryReason":null}
 {"ts":"2026-05-10T01:28:28.092Z","level":"info","stage":"storyboard","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":26278}
 {"ts":"2026-05-10T01:28:28.094Z","level":"info","stage":"storyboard","event":"storyboard_success","attempt":1,"totalSec":126,"targetSec":120}
+{"ts":"2026-05-10T15:19:27.266Z","level":"info","stage":"storyboard","event":"storyboard_attempt","attempt":1,"retryReason":null}
+{"ts":"2026-05-10T15:19:42.326Z","level":"info","stage":"storyboard","event":"llm_call","provider":"kiro-cli","model":"claude-opus-4.7","timeoutMs":60000,"responseFormat":"json_object","durationMs":15059}
+{"ts":"2026-05-10T15:19:42.327Z","level":"info","stage":"storyboard","event":"storyboard_success","attempt":1,"totalSec":112,"targetSec":120}

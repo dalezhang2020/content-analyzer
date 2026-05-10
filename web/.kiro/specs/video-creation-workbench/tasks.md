@@ -255,7 +255,7 @@ All paths are relative to `content-analyzer/web/`. TypeScript is the implementat
 - [x] T21 Implement `template-manager.ts`
   - [x] T21.1 Implement resolver, deep-copy, and sync-template merge
     - Create `src/lib/workbench/template-manager.ts` exporting `resolveTemplateDir()`, `selectFilesToCopy(listing)`, `deepCopyTemplate(src, dst)`, `readTemplateVersion(src)`, `syncTemplate(src, dst, baseline)`
-    - `resolveTemplateDir` tries `process.env.HYPERFRAMES_TEMPLATE_DIR`, `../linear-launch`, `../../linear-launch` in order; returns first with readable `hyperframes.json`; else throws `TEMPLATE_NOT_FOUND` with `details.tried`
+    - `resolveTemplateDir` tries `process.env.HYPERFRAMES_TEMPLATE_DIR`, `../hf-blank`, `../../hf-blank` in order; returns first with readable `hyperframes.json`; else throws `TEMPLATE_NOT_FOUND` with `details.tried`
     - `selectFilesToCopy` excludes `captures/`, `.thumbnails/`, `*.mp4` (Property 16)
     - `deepCopyTemplate` copies directory tree using `atomicCopyFile`, preserves mode bits; on failure cleans up destination (Req 15.5)
     - `readTemplateVersion`: template `package.json.version` → git rev-parse HEAD → `"unknown"`
@@ -515,7 +515,7 @@ All paths are relative to `content-analyzer/web/`. TypeScript is the implementat
   - Acceptance: `npx playwright test` exits 0
 
 - [ ]* T50.1 Live smoke behind `WORKBENCH_LIVE=1`
-  - Same spec, no mocks; skipped unless env set; relies on real LLM + TTS + `../linear-launch`
+  - Same spec, no mocks; skipped unless env set; relies on real LLM + TTS + `HYPERFRAMES_TEMPLATE_DIR`
   - Files: `e2e/workbench-live.spec.ts`
   - _Requirements: 17.3_
 
@@ -650,7 +650,7 @@ and the Render tab's `<video>` must be verified against a real mp4.
 - Property-based tests (fast-check) live next to the module they validate; integration tests use MSW for HTTP mocks and tmp-dir for fs isolation.
 - The pure core (T04–T16) is standalone — it can be fully PBT-proven before any I/O or UI work begins.
 - Route handlers (T27–T37) depend only on Phase 2 services; UI (T39–T48) can proceed in parallel with route handlers once Phase 1 types/schemas stabilise.
-- Live smoke (T50.1) requires `AZURE_SPEECH_ENDPOINT` + `AZURE_SPEECH_KEY`, a working `kiro-cli` on `PATH`, `HYPERFRAMES_TEMPLATE_DIR` (or sibling `linear-launch`), and `WORKBENCH_LIVE=1`; it is off by default.
+- Live smoke (T50.1) requires `AZURE_SPEECH_ENDPOINT` + `AZURE_SPEECH_KEY`, a working `kiro-cli` on `PATH`, `HYPERFRAMES_TEMPLATE_DIR`, and `WORKBENCH_LIVE=1`; it is off by default.
 
 ## Task Dependency Graph
 

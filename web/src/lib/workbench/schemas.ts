@@ -19,8 +19,6 @@
  * LLM output flow through `safeStr()`, which refuses any string containing
  * `CONTROL_CHAR_REGEX` matches. This prevents log injection, terminal
  * escape sequences, and NUL-byte smuggling into persisted JSON.
- *
- * _Requirements: 2.2, 2.11, 3.1, 3.4, 3.5, 3.6, 3.7, 14.1, 14.7, 16.1, 16.3_
  */
 
 import { z } from "zod";
@@ -127,18 +125,6 @@ export const TemplateSourceSchema = z.object({
 });
 
 // ---------------------------------------------------------------------------
-// QA notes
-// ---------------------------------------------------------------------------
-
-export const QaNoteSchema = z.object({
-  noteId: z.string().regex(REGEX.QA_NOTE_ID),
-  sceneId: z.string().regex(REGEX.SCENE_ID).nullable(),
-  text: safeStr(z.string().max(LIMITS.QA_NOTE_MAX)),
-  author: z.literal("local"),
-  createdAt: z.string().datetime(),
-});
-
-// ---------------------------------------------------------------------------
 // Brief / voice / scene / storyboard
 // ---------------------------------------------------------------------------
 
@@ -198,7 +184,6 @@ export const ProjectSchema = z.object({
   brief: BriefSchema.nullable(),
   storyboard: StoryboardSchema.nullable(),
   artifacts: ArtifactPathsSchema,
-  qaNotes: z.array(QaNoteSchema),
   templateSource: TemplateSourceSchema,
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
@@ -225,7 +210,8 @@ export const ProjectSummarySchema = z.object({
  * length. The control-character refine runs last so trimmed strings that
  * still contain embedded control bytes are rejected.
  *
- * _Requirements: 11.4, 16.1, 16.3_
+ * Optional `seedBrief` short-circuits the topic → brief LLM call — used
+ * by the "从分析创建项目" flow on history pages.
  */
 export const CreateProjectInputSchema = z.object({
   title: safeStr(
@@ -233,6 +219,7 @@ export const CreateProjectInputSchema = z.object({
   ),
   topic: safeStr(z.string().trim().min(1).max(LIMITS.TOPIC_MAX)),
   locale: z.enum(["zh-CN", "en-US"]).optional(),
+  seedBrief: BriefSchema.optional(),
 });
 
 // ---------------------------------------------------------------------------
@@ -334,22 +321,10 @@ export const ErrorResponseSchema = z.object({
   }),
 });
 
-export const QaNoteInputSchema = z.object({
-  sceneId: z.string().regex(REGEX.SCENE_ID).nullable().optional(),
-  text: safeStr(z.string().min(1).max(LIMITS.QA_NOTE_MAX)),
-});
-
-/** Publish endpoint takes no body; accept empty object or undefined. */
-export const PublishInputSchema = z.object({}).optional();
-
 /**
  * Request body for `POST /api/projects/{id}/regress`. Manual stage
- * regression — `target` must be a known `Stage` strictly earlier than
- * the project's current stage (enforced by `regressToStage`, not the
- * schema). Optional `reason` is captured in the history entry and
- * truncated to `LIMITS.REASON_MAX` by the state-machine helper.
- *
- * _Requirements: 1.4, 1.5_
+ * regression — `target` must be strictly earlier than the project's
+ * current stage (enforced by `regressToStage`, not the schema).
  */
 export const RegressInputSchema = z.object({
   target: StageSchema,
@@ -372,7 +347,5 @@ export type BulkSceneVoiceInput = z.infer<typeof BulkSceneVoiceSchema>;
 export type SceneRewriteInput = z.infer<typeof SceneRewriteInputSchema>;
 export type SceneRewriteOutput = z.infer<typeof SceneRewriteOutputSchema>;
 export type StoryboardOutput = z.infer<typeof StoryboardOutputSchema>;
-export type QaNoteInput = z.infer<typeof QaNoteInputSchema>;
-export type PublishInput = z.infer<typeof PublishInputSchema>;
 export type ForceFlag = z.infer<typeof ForceFlagSchema>;
 export type RegressInput = z.infer<typeof RegressInputSchema>;

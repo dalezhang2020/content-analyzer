@@ -67,18 +67,66 @@ export default function HistoryDetailPage({
     fetchEntry();
   }, [id]);
 
-  const handleCreatePlan = async () => {
+  const handleCreateProject = async () => {
     if (!entry) return;
-    const title = window.prompt("Plan title:", `Video plan: ${entry.result?.metadata?.title?.slice(0, 50) || "Content"}`);
+    const r = entry.result;
+    const title = window.prompt(
+      "项目标题：",
+      r?.metadata?.title?.slice(0, 60) || "基于此分析创建的项目",
+    );
     if (!title?.trim()) return;
-    const res = await fetch("/api/plans", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: title.trim(), sourceAnalyses: [id] }),
-    });
-    if (res.ok) {
-      const plan = await res.json();
-      router.push(`/plans/${plan.id}`);
+
+    // Seed a Brief from the analysis so the project opens at the
+    // storyboard stage with the Brief tab already populated.
+    // Fall back gracefully when the Python analyzer didn't fill in the
+    // deep-content fields (older history entries).
+    const corePoints =
+      r.key_points && r.key_points.length >= 3
+        ? r.key_points.slice(0, 5)
+        : r.takeaways && r.takeaways.length >= 3
+          ? r.takeaways.slice(0, 5)
+          : r.reusable_angles && r.reusable_angles.length >= 3
+            ? r.reusable_angles.slice(0, 5)
+            : null;
+
+    const topic =
+      r.summary?.slice(0, 500) ||
+      r.unique_angle?.slice(0, 500) ||
+      r.hook?.slice(0, 500) ||
+      title.trim();
+
+    const payload: Record<string, unknown> = {
+      title: title.trim(),
+      topic,
+    };
+
+    // Only include seedBrief when we have the minimum required fields.
+    if (corePoints && corePoints.length >= 3) {
+      payload.seedBrief = {
+        title: title.trim().slice(0, 60),
+        audience: (r.target_audience || "关注此类内容的创作者").slice(0, 200),
+        corePoints: corePoints.map((p) => p.slice(0, 200)),
+        tone: (r.content_style || "信息密度高、直接").slice(0, 60),
+        targetDurationSec: 45,
+        suggestedStyle: (r.content_style || "editorial").slice(0, 200),
+      };
+    }
+
+    try {
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        alert(`创建失败：${body?.error?.message || res.status}`);
+        return;
+      }
+      const project = await res.json();
+      router.push(`/projects/${project.projectId}`);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "创建失败");
     }
   };
 
@@ -96,10 +144,10 @@ export default function HistoryDetailPage({
           </button>
           {entry && (
             <button
-              onClick={handleCreatePlan}
+              onClick={handleCreateProject}
               className="text-xs px-3 py-1.5 rounded-md bg-amber-600 text-white hover:bg-amber-700 transition-colors"
             >
-              + Create Video Plan
+              + 基于此分析创建项目
             </button>
           )}
         </div>

@@ -16,8 +16,6 @@
  * These functions are fully pure — no I/O, no randomness, no clock —
  * and are exercised by property tests in
  * `./scene-rewrite-rules.test.ts` (Properties 19, 20).
- *
- * _Requirements: 7.3, 7.5_
  */
 
 import { LIMITS, REWRITE_DURATION_KEYWORDS } from "./constants";
@@ -30,8 +28,6 @@ import { LIMITS, REWRITE_DURATION_KEYWORDS } from "./constants";
  * QA note before comparison. The Chinese keywords (`改时长`, `缩短`,
  * `加长`) are case-insensitive by nature — CJK characters have no
  * separate case — so `toLowerCase()` is a no-op on them.
- *
- * _Requirements: 7.3_
  */
 export function hasDurationKeyword(qaNote: string): boolean {
   const haystack = qaNote.toLowerCase();
@@ -57,8 +53,6 @@ export function hasDurationKeyword(qaNote: string): boolean {
  * that case the rewrite is accepted only when `newDurationSec === 0`
  * as well (zero drift) — unless a keyword override applies — to avoid a
  * divide-by-zero surprise and to keep the predicate total.
- *
- * _Requirements: 7.3; Property 19_
  */
 export function validateSceneRewrite(
   oldDurationSec: number,
@@ -83,8 +77,6 @@ export function validateSceneRewrite(
  *
  * Edge case: when `oldTotalSec === 0`, any non-zero new total counts as
  * a drift and triggers regen; `0 → 0` does not.
- *
- * _Requirements: 7.5; Property 20_
  */
 export function compositionRegenRequired(
   oldTotalSec: number,

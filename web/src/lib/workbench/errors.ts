@@ -19,8 +19,6 @@ import type { ErrorResponse } from "./types";
 
 /**
  * Every stable error identifier the workbench surfaces through the API.
- *
- * _Requirements: 14.1, 14.7_
  */
 export enum ErrorCode {
   // Validation / input (400)
@@ -83,8 +81,6 @@ export enum ErrorCode {
 /**
  * Maps each `ErrorCode` to its HTTP status per design §Error-to-HTTP-Status
  * Matrix. Keep this in lockstep with the matrix in the design doc.
- *
- * _Requirements: 14.1_
  */
 export const HTTP_STATUS_BY_CODE: Record<ErrorCode, number> = {
   // 400
@@ -148,8 +144,6 @@ export const HTTP_STATUS_BY_CODE: Record<ErrorCode, number> = {
  * Truncate an arbitrary message to `LIMITS.ERROR_MESSAGE_MAX`. When the
  * input exceeds the limit, the first `MAX - 1` chars are kept and a `…`
  * suffix is appended so the result is exactly `MAX` chars long.
- *
- * _Requirements: 14.1, 14.7_
  */
 function truncateMessage(message: string): string {
   const max = LIMITS.ERROR_MESSAGE_MAX;
@@ -165,8 +159,6 @@ function truncateMessage(message: string): string {
  *   - `code` is an `ErrorCode` (≤64 chars by construction).
  *   - `message` is truncated to `LIMITS.ERROR_MESSAGE_MAX` chars.
  *   - `details` is an optional structured context payload.
- *
- * _Requirements: 14.1, 14.7_
  */
 export class WorkbenchError extends Error {
   public readonly code: ErrorCode;
@@ -261,8 +253,6 @@ function looksLikeZodError(
  * - Anything else → `500 UNKNOWN` with a generic message; full error is
  *   logged via `console.error` and never surfaced to the client (no stack
  *   leak, no raw message passthrough).
- *
- * _Requirements: 14.1, 14.7_
  */
 export function respondWithError(e: unknown): Response {
   if (isWorkbenchError(e)) {

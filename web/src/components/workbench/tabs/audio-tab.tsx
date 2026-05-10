@@ -45,8 +45,6 @@
  * browser only fetches mp3 bytes when the user hits play. The `key`
  * includes `scene.updatedAt` so a regenerated mp3 forces the element to
  * remount and bust the media cache.
- *
- * _Requirements: 12.6, 12.11_
  */
 
 import { useCallback, useState } from "react";

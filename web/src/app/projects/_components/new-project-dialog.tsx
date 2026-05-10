@@ -7,8 +7,6 @@
  * receives the new projectId via onCreated (parent decides how to navigate).
  * On failure the error is surfaced inline and the form stays open so the
  * user can retry without retyping.
- *
- * _Requirements: 11.4, 11.5, 11.6, 11.7_
  */
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";

@@ -16,8 +16,6 @@
  *   - Property 9: reindex preserves `[1..N]` under any edit sequence.
  *   - Property 10: `applySceneEdit` clears `audioPath` iff `narration` or
  *     `voice` changed value.
- *
- * _Requirements: 3.3, 3.8, 3.9, 5.7, 5.9_
  */
 
 import type { Scene } from "./types";

@@ -7,8 +7,6 @@
  * delete button stops event propagation so the click never triggers the
  * enclosing link. Parent component is responsible for the confirm-dialog +
  * actual DELETE call; this component only surfaces the intent.
- *
- * _Requirements: 11.1, 11.8_
  */
 
 import Link from "next/link";
@@ -25,25 +23,19 @@ const TITLE_MAX_CHARS = 60;
 // Per-stage color block used when no poster image is available.
 // One distinct tone per stage — see Requirement 11.1.
 const STAGE_COLOR: Record<Stage, string> = {
-  topic: "bg-slate-200",
   brief: "bg-sky-200",
   storyboard: "bg-indigo-200",
   composition: "bg-violet-200",
   audio: "bg-fuchsia-200",
   render: "bg-orange-200",
-  qa: "bg-amber-200",
-  published: "bg-emerald-200",
 };
 
 const STAGE_LABEL: Record<Stage, string> = {
-  topic: "选题",
   brief: "Brief",
   storyboard: "分镜",
   composition: "合成",
   audio: "配音",
   render: "渲染",
-  qa: "QA",
-  published: "已发布",
 };
 
 function truncate(value: string, max: number): string {

@@ -24,8 +24,6 @@
  *     `subscribeRenderImpl`). Any thrown error is surfaced as a trailing
  *     `event: error` frame followed by close — we never leak an unhandled
  *     rejection into the Response.
- *
- * _Requirements: 10.5, 10.7, 10.11_
  */
 
 import type { NextRequest } from "next/server";

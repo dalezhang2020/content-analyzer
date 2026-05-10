@@ -31,7 +31,7 @@ describe("tab-gating", () => {
     );
   });
 
-  it("documented map: Brief≥brief, Storyboard≥storyboard, HTML/Audio≥composition, Render≥audio, QA≥render", () => {
+  it("documented map: Brief≥brief, Storyboard≥storyboard, HTML/Audio≥composition, Render≥audio", () => {
     // Sanity check that the map itself matches the design doc.
     expect(TAB_MIN_STAGE).toEqual({
       brief: "brief",
@@ -39,7 +39,6 @@ describe("tab-gating", () => {
       html: "composition",
       audio: "composition",
       render: "audio",
-      qa: "render",
     });
   });
 });

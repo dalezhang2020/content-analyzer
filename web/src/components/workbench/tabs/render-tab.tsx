@@ -23,8 +23,6 @@
  *
  * Keep SSE handling local to the tab so there's no global EventSource
  * leak — `useEffect` cleanup closes the stream on unmount.
- *
- * _Requirements: 10.7, 12.7, 12.9_
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";

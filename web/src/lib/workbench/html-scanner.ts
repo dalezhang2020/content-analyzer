@@ -9,8 +9,6 @@
  * Intentionally implemented as a plain substring scanner (no HTML parser,
  * no DOM, no allocations beyond a single `toLowerCase()` of the input) so
  * it is fast, deterministic, and cannot be tricked by malformed markup.
- *
- * _Requirements: 6.3, 16.7_
  */
 
 import { HTML_FORBIDDEN_TOKENS } from "./constants";
@@ -35,8 +33,6 @@ export type HtmlScanResult =
  * The returned `hit` is the token as declared in the forbidden list,
  * _not_ the substring as it appears in the input — callers logging the
  * result therefore see a stable, canonical token string.
- *
- * _Requirements: 6.3, 16.7_
  */
 export function scanHtml(html: string): HtmlScanResult {
   const lowered = html.toLowerCase();

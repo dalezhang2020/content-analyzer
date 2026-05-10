@@ -20,8 +20,6 @@ import type { Stage, Voice } from "./types";
 
 /**
  * Version pin for the on-disk Project JSON schema.
- *
- * _Requirements: 2.11_
  */
 export const SCHEMA_VERSION = 1 as const;
 
@@ -30,40 +28,31 @@ export const SCHEMA_VERSION = 1 as const;
 // ---------------------------------------------------------------------------
 
 /**
- * The 8 stages of the project state machine, in canonical forward order.
+ * The 5 stages of the project state machine, in canonical forward order.
  *
- * The order here drives `STAGE_ORDER`, downstream-reset logic in
- * `state-machine.ts`, and tab gating in the UI.
- *
- * _Requirements: 1.1_
+ * Simplified from 8 stages (topic/qa/published removed). Topic is folded
+ * into project creation; qa/published not needed for single-user local
+ * workflow. `state-machine.ts` defines transitions.
  */
 export const STAGES = [
-  "topic",
   "brief",
   "storyboard",
   "composition",
   "audio",
   "render",
-  "qa",
-  "published",
 ] as const satisfies readonly Stage[];
 
 /**
  * Map from each Stage to its 0-based index in `STAGES`. Used when comparing
  * stage progress (e.g. "is current stage ≥ required stage?") — never do
  * string comparison on stages directly.
- *
- * _Requirements: 1.1_
  */
 export const STAGE_ORDER: Record<Stage, number> = {
-  topic: 0,
-  brief: 1,
-  storyboard: 2,
-  composition: 3,
-  audio: 4,
-  render: 5,
-  qa: 6,
-  published: 7,
+  brief: 0,
+  storyboard: 1,
+  composition: 2,
+  audio: 3,
+  render: 4,
 } as const;
 
 // Compile-time exhaustiveness check — errors here mean `STAGES` has drifted
@@ -80,8 +69,6 @@ void _stagesExhaustive;
  * voice picker. All are Chinese voices from the Azure AI Foundry endpoint.
  * The full Azure voice catalogue is much larger — these are the ones
  * surfaced in the workbench UI.
- *
- * _Requirements: 3.6, 9.5_
  */
 export const VOICES = [
   "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
@@ -98,8 +85,6 @@ export const VOICES = [
  * Default voice used when a Scene omits one or when the provided voice is
  * not in the curated list (TTSService falls back and logs a "voice fallback"
  * event).
- *
- * _Requirements: 3.6, 9.5_
  */
 export const DEFAULT_VOICE: Voice = "zh-CN-Xiaochen:DragonHDFlashLatestNeural";
 
@@ -111,8 +96,6 @@ export const DEFAULT_VOICE: Voice = "zh-CN-Xiaochen:DragonHDFlashLatestNeural";
 
 /**
  * Default locale applied when `CreateProjectInput.locale` is omitted.
- *
- * _Requirements: 4.7_
  */
 export const DEFAULT_LOCALE = "zh-CN" as const;
 
@@ -123,24 +106,18 @@ export const DEFAULT_LOCALE = "zh-CN" as const;
 /**
  * Root directory for Project JSON + per-project directories. Relative to
  * `content-analyzer/web`.
- *
- * _Requirements: 2.1, 8.1_
  */
 export const DATA_DIR = "data/projects" as const;
 
 /**
  * Root directory for rendered MP4s served by Next.js's static handler.
  * Relative to `content-analyzer/web`.
- *
- * _Requirements: 10.4_
  */
 export const VIDEO_DIR = "public/videos" as const;
 
 /**
  * Per-project subdirectory names inside
  * `data/projects/{projectId}/composition/` and `data/projects/{projectId}/`.
- *
- * _Requirements: 8.1, 14.2_
  */
 export const STAGE_DIRS = {
   COMPOSITION: "composition",
@@ -156,8 +133,6 @@ export const STAGE_DIRS = {
 /**
  * Minimum and maximum Scene count per Storyboard. Enforced by schemas,
  * scene CRUD routes, and the storyboard LLM prompt.
- *
- * _Requirements: 5.3, 5.10_
  */
 export const MIN_SCENES = 3 as const;
 export const MAX_SCENES = 20 as const;
@@ -169,7 +144,6 @@ export const MAX_SCENES = 20 as const;
 /**
  * Every numeric / length bound the spec calls out, grouped by subject.
  *
- * _Requirements: 2.2, 3.1, 3.4, 3.5, 3.7, 4.2, 5.3, 5.4, 6.4, 7.1, 7.3, 7.5,
  * 9.1, 10.6, 11.1, 11.4, 11.9, 12.9, 14.1, 14.3, 14.5, 14.7, 16.1, 16.5_
  */
 export const LIMITS = {
@@ -284,8 +258,6 @@ export const LIMITS = {
 
 /**
  * Hard timeouts applied to every external or long-running operation.
- *
- * _Requirements: 1.10, 4.1, 4.3, 5.1, 6.1, 6.5, 7.7, 9.6, 10.6, 10.7, 14.6_
  */
 export const TIMEOUTS_MS = {
   /** topic → brief per-attempt LLM budget. _Req 4.1, 4.3_ */
@@ -319,16 +291,12 @@ export const TIMEOUTS_MS = {
 /**
  * Azure Cognitive Services Speech REST API output format for TTS.
  * 16 kHz, 128 kbps mono MP3 — good quality / size balance.
- *
- * _Requirements: 9.5_
  */
 export const AZURE_TTS_OUTPUT_FORMAT = "audio-16khz-128kbitrate-mono-mp3" as const;
 
 /**
  * TTS retry delays (ms). First attempt waits 0 ms; then retry after 1 s,
  * then after 3 s. Total attempts bounded by `TTS_MAX_ATTEMPTS`.
- *
- * _Requirements: 9.6_
  */
 export const TTS_BACKOFF_MS = [0, 1_000, 3_000] as const;
 
@@ -361,8 +329,6 @@ export const LLM_REWRITE_MAX_ATTEMPTS = 1 as const;
 /**
  * Per-task LLM timeout lookup (alias over `TIMEOUTS_MS` for call sites that
  * think in task names rather than operation names).
- *
- * _Requirements: 4.1, 5.1, 6.1, 7.7_
  */
 export const LLM_TIMEOUT_MS = {
   brief: TIMEOUTS_MS.LLM_BRIEF,
@@ -378,8 +344,6 @@ export const LLM_TIMEOUT_MS = {
 /**
  * Identifier regex patterns. Compiled once here so schemas and path-safety
  * checks share the exact same literal.
- *
- * _Requirements: 2.3, 3.2, 8.7, 16.4_
  */
 export const REGEX = {
   /** Project ID shape: `proj_{ms-timestamp}_{6 lowercase alphanum}`. _Req 2.3_ */
@@ -393,8 +357,6 @@ export const REGEX = {
 /**
  * ASCII control-character class used by `scrubControlChars`. Matches
  * 0x00–0x08, 0x0B, 0x0C, 0x0E–0x1F, 0x7F.
- *
- * _Requirements: 16.3_
  */
 export const CONTROL_CHAR_REGEX = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/;
 
@@ -406,8 +368,6 @@ export const CONTROL_CHAR_REGEX = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/;
  * Keywords that, when present in a QA note, signal the user explicitly
  * wants a duration change — relaxing the ±30 % tolerance in
  * `LIMITS.REWRITE_DURATION_TOLERANCE_PCT`. Match is case-insensitive.
- *
- * _Requirements: 7.3_
  */
 export const REWRITE_DURATION_KEYWORDS = [
   "改时长",
@@ -422,8 +382,6 @@ export const REWRITE_DURATION_KEYWORDS = [
  * Forbidden substrings scanned (case-insensitive) against LLM-returned HTML
  * before it is ever written to disk. If any token matches, the output is
  * rejected and the composition-stage repair loop kicks in.
- *
- * _Requirements: 6.3, 16.7_
  */
 export const HTML_FORBIDDEN_TOKENS = [
   "<iframe",
@@ -440,17 +398,13 @@ export const HTML_FORBIDDEN_TOKENS = [
 // ---------------------------------------------------------------------------
 
 /**
- * Identifier for each of the 6 tabs on `/projects/[id]`.
- *
- * _Requirements: 12.2_
+ * Identifier for each of the 5 tabs on `/projects/[id]`.
  */
-export type TabName = "brief" | "storyboard" | "html" | "audio" | "render" | "qa";
+export type TabName = "brief" | "storyboard" | "html" | "audio" | "render";
 
 /**
  * Minimum Stage a Project must have reached before a given tab's controls
  * are enabled. `STAGE_ORDER` is used for comparison.
- *
- * _Requirements: 12.11_
  */
 export const TAB_MIN_STAGE: Record<TabName, Stage> = {
   brief: "brief",
@@ -458,5 +412,4 @@ export const TAB_MIN_STAGE: Record<TabName, Stage> = {
   html: "composition",
   audio: "composition",
   render: "audio",
-  qa: "render",
 } as const;

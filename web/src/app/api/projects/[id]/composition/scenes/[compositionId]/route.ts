@@ -22,8 +22,6 @@
  *   - Missing sub-composition file → 404 `COMPOSITION_NOT_FOUND`.
  *   - Forbidden token in HTML    → 500 `UNKNOWN` (data-integrity bug; the
  *     composition pipeline should have rejected this before it hit disk).
- *
- * _Requirements: 12.5_
  */
 
 import fs from "node:fs/promises";

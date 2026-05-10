@@ -23,8 +23,6 @@
  *   - Non-2xx other → inline error card with a link back to `/projects`.
  *   - Network failure → same inline error card, retry is implicit via
  *     the next poll tick.
- *
- * _Requirements: 12.1, 12.2, 12.12, 17.1, 17.2_
  */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -38,12 +36,12 @@ import { StagePanel } from "@/components/workbench/stage-panel";
 import { AudioTab } from "@/components/workbench/tabs/audio-tab";
 import { BriefTab } from "@/components/workbench/tabs/brief-tab";
 import { HtmlTab } from "@/components/workbench/tabs/html-tab";
-import { QaTab } from "@/components/workbench/tabs/qa-tab";
 import { RenderTab } from "@/components/workbench/tabs/render-tab";
 import { StoryboardTab } from "@/components/workbench/tabs/storyboard-tab";
 import type { ErrorResponse, Project, Scene } from "@/lib/workbench/types";
 
-const POLL_INTERVAL_MS = 5_000;
+const POLL_INTERVAL_MS = 2_000; // only active while a stage is running
+const IDLE_POLL_INTERVAL_MS = 30_000; // when nothing is running, slow check
 
 type FetchState =
   | { kind: "loading" }
@@ -59,12 +57,25 @@ export default function ProjectDetailPage(): React.JSX.Element {
   const [activeScene, setActiveScene] = useState<Scene | null>(null);
 
   // -----------------------------------------------------------------------
-  // Fetch + polling
+  // Fetch + adaptive polling
   // -----------------------------------------------------------------------
-  //
-  // Polling is paused while a scene drawer is open — `activeScene` is part
-  // of the dependency array below so the effect re-runs (clearing its old
-  // interval) whenever the drawer opens or closes.
+  // Polling cadence:
+  //   - 2s while any stage is `running` (observable progress).
+  //   - 30s otherwise (ambient refresh for timestamps, re-render
+  //     confirmation, etc.).
+  //   - Paused while the scene drawer is open so in-flight edits are
+  //     not clobbered.
+  //   - Paused while the document is hidden (tab switched away) — the
+  //     `visibilitychange` listener re-ticks `tick` when focus returns.
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const onVis = () => {
+      if (!document.hidden) setTick((t) => t + 1);
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -107,23 +118,48 @@ export default function ProjectDetailPage(): React.JSX.Element {
 
     void load();
 
-    // Pause polling while the scene drawer is open to avoid overwriting
-    // in-flight local edits.
+    // Pause polling while the scene drawer is open.
     if (activeScene) {
       return () => {
         cancelled = true;
       };
     }
 
-    const interval = window.setInterval(() => {
-      void load();
-    }, POLL_INTERVAL_MS);
+    // Skip polling entirely while the tab is hidden; `visibilitychange`
+    // above bumps `tick` on resume so this effect reruns.
+    if (document.hidden) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const anyRunning =
+      state.kind === "ok" &&
+      Object.values(state.project.stageStatus).some(
+        (s) => s.status === "running",
+      );
+    const interval = window.setInterval(
+      () => void load(),
+      anyRunning ? POLL_INTERVAL_MS : IDLE_POLL_INTERVAL_MS,
+    );
 
     return () => {
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [id, activeScene]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    id,
+    activeScene,
+    tick,
+    // Track only the derived "is anything running" bit — full-object
+    // dependency would re-create the interval on every tick.
+    state.kind === "ok"
+      ? Object.values(state.project.stageStatus).some(
+          (s) => s.status === "running",
+        )
+      : false,
+  ]);
 
   // -----------------------------------------------------------------------
   // Handlers
@@ -266,7 +302,6 @@ const TAB_VALUES = [
   { value: "html", label: "HTML" },
   { value: "audio", label: "Audio" },
   { value: "render", label: "Render" },
-  { value: "qa", label: "QA" },
 ] as const;
 
 function ProjectTabs({
@@ -314,9 +349,6 @@ function ProjectTabs({
         </TabsContent>
         <TabsContent value="render">
           <RenderTab project={project} onProjectChanged={onProjectChanged} />
-        </TabsContent>
-        <TabsContent value="qa">
-          <QaTab project={project} onProjectChanged={onProjectChanged} />
         </TabsContent>
       </Tabs>
     </section>

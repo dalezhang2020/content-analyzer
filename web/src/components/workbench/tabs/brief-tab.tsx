@@ -18,8 +18,6 @@
  *
  * A `StageFailureBanner` surfaces any persisted `stageStatus.brief.error`
  * separately from the in-flight action error.
- *
- * _Requirements: 12.3, 12.11_
  */
 
 import { useCallback, useState } from "react";
@@ -85,11 +83,11 @@ export function BriefTab({
   }, [project.projectId, onProjectChanged]);
 
   // -----------------------------------------------------------------------
-  // Gating — topic stage: show a "generate brief" CTA instead of locking
-  // the tab entirely, since generating the brief IS the action that
-  // advances the project from topic → brief.
+  // New-project path — before the Brief is generated the project is at
+  // `stage: "brief"` with a null `brief` field. Show a "generate" CTA
+  // rather than the read-only viewer.
   // -----------------------------------------------------------------------
-  if (project.stage === "topic") {
+  if (!project.brief) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
         <p className="text-sm font-medium text-foreground">

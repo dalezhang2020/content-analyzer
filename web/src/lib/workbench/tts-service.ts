@@ -28,8 +28,6 @@
  *     missing or empty key aborts BEFORE any network call.
  *   - The key is never placed into log payloads.
  *   - Error response bodies are truncated to 500 chars before logging.
- *
- * _Requirements: 9.1, 9.3, 9.4, 9.5, 9.6, 9.7, 9.9_
  */
 
 import path from "node:path";
@@ -272,8 +270,6 @@ async function synthesizeSceneBuffer(
 /**
  * Synthesize TTS for every scene in the project's storyboard.
  * Sequential iteration to respect Azure rate limits.
- *
- * _Requirements: 9.1, 9.3, 9.4, 9.5, 9.6, 9.9_
  */
 export async function synthesizeAll(
   project: Project,
@@ -394,8 +390,6 @@ export async function synthesizeAll(
 
 /**
  * Regenerate TTS for a single scene (always force mode).
- *
- * _Requirements: 9.4, 9.5, 9.6, 9.9_
  */
 export async function synthesizeOne(
   project: Project,

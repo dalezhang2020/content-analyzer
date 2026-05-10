@@ -15,8 +15,6 @@
  *               (`exists: false`) or contains no non-empty lines
  *   - error   — red-tinted message block with retry button
  *   - ready   — fixed-height scrollable `<pre>` with the log lines
- *
- * _Requirements: 14.4, 14.5_
  */
 
 import { useCallback, useEffect, useState } from "react";

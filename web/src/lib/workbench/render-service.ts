@@ -24,8 +24,6 @@
  * `runHyperframesLint` / `runHyperframesValidate` are one-shot spawn
  * helpers used by the composition repair loop; they share the same
  * timeout scaffolding but never broadcast SSE events.
- *
- * _Requirements: 10.1, 10.4–10.11; OD-7_
  */
 
 import { randomBytes } from "node:crypto";
@@ -161,8 +159,6 @@ function nowIso(): string {
  * against the rare re-entry where an old active record is still in
  * `running` state — callers that want the project-level 409 should check
  * `getActiveRender(projectId)?.status === "running"` before calling.
- *
- * _Requirements: 10.1, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9, 10.10, 10.11_
  */
 export async function startRender(
   project: Project,
@@ -491,8 +487,6 @@ export function getActiveRender(projectId: string): ActiveRender | undefined {
  *   - Otherwise the generator tails `active.events`, waking up whenever a
  *     new event is emitted, and returns as soon as a `stage: done` or
  *     `stage: failed` event is yielded.
- *
- * _Requirements: 10.7_
  */
 export function subscribeRender(
   projectId: string,
@@ -632,8 +626,6 @@ export async function killRender(projectId: string): Promise<void> {
  * timeout or spawn failure is surfaced as `ok: false` with a descriptive
  * stderr string — the caller decides whether to map that to
  * `LINT_FAILED` (502) or a different envelope.
- *
- * _Requirements: 6.5_
  */
 export async function runHyperframesLint(
   projectId: string,
@@ -651,8 +643,6 @@ export async function runHyperframesLint(
  * Same semantics as `runHyperframesLint`; separated so composition repair
  * logic can distinguish between syntax failures (lint) and semantic failures
  * (validate).
- *
- * _Requirements: 6.5_
  */
 export async function runHyperframesValidate(
   projectId: string,

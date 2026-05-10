@@ -7,8 +7,6 @@
  * These live as a standalone module so each tab file stays under the
  * design's ~250-line budget and so the visual treatment of the
  * "stage-not-ready" empty state is consistent across tabs.
- *
- * _Requirements: 12.2–12.11_
  */
 
 import type { ReactNode } from "react";
@@ -30,18 +28,14 @@ const TAB_LABEL: Record<TabName, string> = {
   html: "HTML",
   audio: "Audio",
   render: "Render",
-  qa: "QA",
 };
 
 const STAGE_LABEL: Record<Stage, string> = {
-  topic: "选题",
   brief: "Brief",
   storyboard: "Storyboard",
   composition: "HTML 场景",
   audio: "音频",
   render: "渲染",
-  qa: "QA",
-  published: "已发布",
 };
 
 export interface EmptyStateCardProps {

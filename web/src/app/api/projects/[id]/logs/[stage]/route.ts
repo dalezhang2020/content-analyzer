@@ -22,8 +22,6 @@
  * The `stage` path param must be one of the 8 canonical `STAGES` or the
  * string `"system"` (reserved for the project-level bootstrap log). Any
  * other value is rejected as `400 VALIDATION_FAILED`.
- *
- * _Requirements: 14.4, 14.5_
  */
 
 import type { NextRequest } from "next/server";

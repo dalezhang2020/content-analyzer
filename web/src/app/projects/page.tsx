@@ -11,8 +11,6 @@
  * project route. On failure the error is shown inline at the top of the
  * list so the user can retry. New project flow mounts `NewProjectDialog`
  * and, on successful create, navigates to `/projects/{id}`.
- *
- * _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9_
  */
 
 import { useCallback, useEffect, useMemo, useState } from "react";

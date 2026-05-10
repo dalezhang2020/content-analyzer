@@ -1,0 +1,238 @@
+<template id="scene-02-3e35eb-template">
+  <div id="scene-02-3e35eb" data-composition-id="scene-02-3e35eb" data-width="1920" data-height="1080">
+    <div class="scene-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="eyebrow">第 02 讲 · 单位圆</div>
+    <h1 class="title">认识单位圆</h1>
+    <div class="subtitle">半径为 1 · 三角函数的心脏</div>
+
+    <svg class="diagram" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-blue-s02" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-point-s02" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Coordinate axes -->
+      <line class="axis-x" x1="600" y1="540" x2="1320" y2="540" stroke="#64748b" stroke-width="2"/>
+      <line class="axis-y" x1="960" y1="200" x2="960" y2="880" stroke="#64748b" stroke-width="2"/>
+      <polygon class="arrow-x" points="1320,540 1305,533 1305,547" fill="#64748b"/>
+      <polygon class="arrow-y" points="960,200 953,215 967,215" fill="#64748b"/>
+      <text class="axis-label-x" x="1335" y="548" fill="#94a3b8" font-size="28" font-style="italic">x</text>
+      <text class="axis-label-y" x="970" y="195" fill="#94a3b8" font-size="28" font-style="italic">y</text>
+
+      <!-- Tick marks -->
+      <g class="ticks">
+        <line x1="1240" y1="534" x2="1240" y2="546" stroke="#64748b" stroke-width="2"/>
+        <line x1="680" y1="534" x2="680" y2="546" stroke="#64748b" stroke-width="2"/>
+        <line x1="954" y1="260" x2="966" y2="260" stroke="#64748b" stroke-width="2"/>
+        <line x1="954" y1="820" x2="966" y2="820" stroke="#64748b" stroke-width="2"/>
+        <text x="1232" y="575" fill="#94a3b8" font-size="20">1</text>
+        <text x="660" y="575" fill="#94a3b8" font-size="20">−1</text>
+        <text x="922" y="267" fill="#94a3b8" font-size="20">1</text>
+      </g>
+
+      <!-- Unit circle (drawn via stroke-dashoffset) -->
+      <circle class="unit-circle" cx="960" cy="540" r="280" fill="none" stroke="#60a5fa" stroke-width="3" filter="url(#glow-blue-s02)"/>
+
+      <!-- Origin -->
+      <circle class="center-dot" cx="960" cy="540" r="5" fill="#e2e8f0"/>
+      <text class="center-label" x="932" y="573" fill="#94a3b8" font-size="22" font-style="italic">O</text>
+
+      <!-- Cos segment on x-axis (0 → cos θ) -->
+      <line class="seg-cos" x1="960" y1="540" x2="1140" y2="540" stroke="#fbbf24" stroke-width="6" stroke-linecap="round"/>
+      <!-- Sin segment on y-axis (0 → sin θ) -->
+      <line class="seg-sin" x1="960" y1="540" x2="960" y2="326" stroke="#f472b6" stroke-width="6" stroke-linecap="round"/>
+
+      <!-- Angle arc at origin -->
+      <path class="angle-arc" d="M 1020 540 A 60 60 0 0 0 998.57 494.04" fill="none" stroke="#c4b5fd" stroke-width="2.5"/>
+      <text class="angle-label" x="1035" y="522" fill="#c4b5fd" font-size="28" font-style="italic" font-weight="500">θ</text>
+
+      <!-- Radius from origin to P -->
+      <line class="radius-line" x1="960" y1="540" x2="1140" y2="326" stroke="#a78bfa" stroke-width="3"/>
+      <text class="radius-label" x="1028" y="420" fill="#c4b5fd" font-size="26" font-weight="500">1</text>
+
+      <!-- Dashed projection lines -->
+      <line class="proj-cos" x1="1140" y1="326" x2="1140" y2="540" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6" opacity="0.65"/>
+      <line class="proj-sin" x1="1140" y1="326" x2="960" y2="326" stroke="#f472b6" stroke-width="2" stroke-dasharray="8 6" opacity="0.65"/>
+
+      <!-- Component labels -->
+      <text class="label-cos" x="1000" y="592" fill="#fbbf24" font-size="32" font-weight="700" font-style="italic">cos θ</text>
+      <text class="label-sin" x="815" y="445" fill="#f472b6" font-size="32" font-weight="700" font-style="italic">sin θ</text>
+
+      <!-- Point P with glow aura -->
+      <circle class="point-glow" cx="1140" cy="326" r="14" fill="#fbbf24" opacity="0.35" filter="url(#glow-point-s02)"/>
+      <circle class="point-p" cx="1140" cy="326" r="10" fill="#ffffff" stroke="#fbbf24" stroke-width="3"/>
+      <text class="point-label" x="1162" y="315" fill="#f8fafc" font-size="26" font-weight="600">P (cos θ, sin θ)</text>
+    </svg>
+
+    <div class="caption">圆上任取一点 P,横坐标即为 cos θ,纵坐标即为 sin θ</div>
+
+    <style>
+      #scene-02-3e35eb {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: radial-gradient(ellipse at center, #0f1a3d 0%, #050814 65%, #020410 100%);
+        font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-02-3e35eb .scene-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 25% 20%, rgba(96, 165, 250, 0.10) 0%, transparent 45%),
+          radial-gradient(circle at 75% 80%, rgba(244, 114, 182, 0.08) 0%, transparent 45%);
+      }
+      #scene-02-3e35eb .grid-overlay {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+        background-size: 80px 80px;
+        opacity: 0.55;
+      }
+      #scene-02-3e35eb .eyebrow {
+        position: absolute;
+        top: 92px;
+        left: 120px;
+        font-size: 28px;
+        letter-spacing: 0.3em;
+        color: #fbbf24;
+        font-weight: 500;
+      }
+      #scene-02-3e35eb .title {
+        position: absolute;
+        top: 138px;
+        left: 120px;
+        font-size: 104px;
+        font-weight: 800;
+        color: #f8fafc;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+        margin: 0;
+        text-shadow: 0 0 48px rgba(96, 165, 250, 0.35);
+      }
+      #scene-02-3e35eb .subtitle {
+        position: absolute;
+        top: 272px;
+        left: 124px;
+        font-size: 34px;
+        color: #94a3b8;
+        letter-spacing: 0.12em;
+        font-weight: 300;
+      }
+      #scene-02-3e35eb .diagram {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      #scene-02-3e35eb .caption {
+        position: absolute;
+        bottom: 72px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 32px;
+        color: #e2e8f0;
+        letter-spacing: 0.08em;
+        font-weight: 400;
+        text-align: center;
+        padding: 18px 52px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 10px;
+      }
+      /* SVG draw-in preparation via stroke-dashoffset */
+      #scene-02-3e35eb .unit-circle {
+        stroke-dasharray: 1760;
+        stroke-dashoffset: 1760;
+      }
+      #scene-02-3e35eb .axis-x,
+      #scene-02-3e35eb .axis-y {
+        stroke-dasharray: 720;
+        stroke-dashoffset: 720;
+      }
+      #scene-02-3e35eb .radius-line {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+      }
+      #scene-02-3e35eb .angle-arc {
+        stroke-dasharray: 70;
+        stroke-dashoffset: 70;
+      }
+      #scene-02-3e35eb .seg-cos {
+        stroke-dasharray: 180;
+        stroke-dashoffset: 180;
+      }
+      #scene-02-3e35eb .seg-sin {
+        stroke-dasharray: 214;
+        stroke-dashoffset: 214;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // 0 – 2.0s: Background glow + typography block
+      tl.from('#scene-02-3e35eb .scene-bg', { opacity: 0, duration: 1 }, 0)
+        .from('#scene-02-3e35eb .grid-overlay', { opacity: 0, duration: 1.2 }, 0.2)
+        .from('#scene-02-3e35eb .eyebrow', { opacity: 0, x: -30, duration: 0.8, ease: 'power3.out' }, 0.4)
+        .from('#scene-02-3e35eb .title', { opacity: 0, y: 30, duration: 0.9, ease: 'power3.out' }, 0.7)
+        .from('#scene-02-3e35eb .subtitle', { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' }, 1.2);
+
+      // 1.8 – 3.6s: Coordinate axes draw in
+      tl.to('#scene-02-3e35eb .axis-x', { strokeDashoffset: 0, duration: 1, ease: 'power2.out' }, 1.8)
+        .to('#scene-02-3e35eb .axis-y', { strokeDashoffset: 0, duration: 1, ease: 'power2.out' }, 1.95)
+        .from('#scene-02-3e35eb .arrow-x', { opacity: 0, duration: 0.4 }, 2.75)
+        .from('#scene-02-3e35eb .arrow-y', { opacity: 0, duration: 0.4 }, 2.85)
+        .from('#scene-02-3e35eb .axis-label-x', { opacity: 0, x: 15, duration: 0.5 }, 2.95)
+        .from('#scene-02-3e35eb .axis-label-y', { opacity: 0, y: -15, duration: 0.5 }, 3.05)
+        .from('#scene-02-3e35eb .ticks', { opacity: 0, duration: 0.6 }, 3.15);
+
+      // 3.5 – 5.3s: Origin + unit circle trace
+      tl.from('#scene-02-3e35eb .center-dot', { opacity: 0, duration: 0.4 }, 3.5)
+        .from('#scene-02-3e35eb .center-label', { opacity: 0, duration: 0.4 }, 3.65)
+        .to('#scene-02-3e35eb .unit-circle', { strokeDashoffset: 0, duration: 1.7, ease: 'power2.inOut' }, 3.7);
+
+      // 5.3 – 6.5s: Radius line and angle θ
+      tl.to('#scene-02-3e35eb .radius-line', { strokeDashoffset: 0, duration: 0.8, ease: 'power2.out' }, 5.4)
+        .from('#scene-02-3e35eb .radius-label', { opacity: 0, duration: 0.5 }, 5.95)
+        .to('#scene-02-3e35eb .angle-arc', { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }, 6.0)
+        .from('#scene-02-3e35eb .angle-label', { opacity: 0, duration: 0.4 }, 6.45);
+
+      // 6.7 – 7.6s: Point P lands on the circle
+      tl.from('#scene-02-3e35eb .point-glow', { opacity: 0, duration: 0.6 }, 6.7)
+        .from('#scene-02-3e35eb .point-p', { opacity: 0, duration: 0.5, ease: 'back.out(2.5)' }, 6.8)
+        .to('#scene-02-3e35eb .point-p', { attr: { r: 14 }, duration: 0.35, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 6.9)
+        .from('#scene-02-3e35eb .point-label', { opacity: 0, x: -20, duration: 0.6 }, 7.15);
+
+      // 7.6 – 8.6s: Reveal cos projection + label
+      tl.from('#scene-02-3e35eb .proj-cos', { opacity: 0, duration: 0.4 }, 7.6)
+        .to('#scene-02-3e35eb .seg-cos', { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' }, 7.7)
+        .from('#scene-02-3e35eb .label-cos', { opacity: 0, y: 12, duration: 0.5, ease: 'power3.out' }, 8.1);
+
+      // 8.3 – 9.3s: Reveal sin projection + label
+      tl.from('#scene-02-3e35eb .proj-sin', { opacity: 0, duration: 0.4 }, 8.3)
+        .to('#scene-02-3e35eb .seg-sin', { strokeDashoffset: 0, duration: 0.7, ease: 'power2.out' }, 8.4)
+        .from('#scene-02-3e35eb .label-sin', { opacity: 0, y: 12, duration: 0.5, ease: 'power3.out' }, 8.8);
+
+      // 9.3s: Narration caption slides in
+      tl.from('#scene-02-3e35eb .caption', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, 9.3);
+
+      // 10.2 – 11.7s: Finite pulse on point P to anchor attention (2 full cycles)
+      tl.to('#scene-02-3e35eb .point-glow', { attr: { r: 22 }, opacity: 0.55, duration: 0.5, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 10.2);
+
+      window.__timelines["scene-02-3e35eb"] = tl;
+    </script>
+  </div>
+</template>

@@ -41,8 +41,6 @@
  *   - Project missing from disk → 404 `PROJECT_NOT_FOUND`
  *   - Lock held by another op   → 409 `LOCK_BUSY`
  *   - Anything else             → 500 `UNKNOWN`
- *
- * _Requirements: 3.6, 3.8, 3.9, 12.6, 12.11_
  */
 
 import type { NextRequest } from "next/server";

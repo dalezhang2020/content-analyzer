@@ -23,8 +23,6 @@
  *
  * Both handlers run inside `withProjectLock` to serialise with concurrent
  * CRUD operations.
- *
- * _Requirements: 3.1, 3.3–3.9, 5.8–5.10_
  */
 
 import type { NextRequest } from "next/server";
@@ -58,7 +56,6 @@ const ALLOWED_STAGES: readonly Stage[] = [
   "composition",
   "audio",
   "render",
-  "qa",
 ] as const;
 
 function assertStageAllowsSceneCrud(stage: Stage): void {

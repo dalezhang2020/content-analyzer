@@ -119,8 +119,8 @@ describe("template-manager · resolveTemplateDir · Property 15", () => {
 
         // Layout per run:
         //   runRoot/env/hyperframes.json             (if envPresent)
-        //   runRoot/a/linear-launch/hyperframes.json (cand3)
-        //   runRoot/a/b/linear-launch/hyperframes.json (cand2)
+        //   runRoot/a/hf-blank/hyperframes.json      (cand2)
+        //   runRoot/a/b/hf-blank/hyperframes.json    (cand3)
         //   runRoot/a/b/cwd/                         (cwd for the resolver)
         const envDir = path.join(runRoot, "env");
         const aDir = path.join(runRoot, "a");
@@ -139,13 +139,13 @@ describe("template-manager · resolveTemplateDir · Property 15", () => {
         const resolvedCand2 = path.resolve(
           resolvedCwd,
           "..",
-          "linear-launch",
+          "hf-blank",
         );
         const resolvedCand3 = path.resolve(
           resolvedCwd,
           "..",
           "..",
-          "linear-launch",
+          "hf-blank",
         );
 
         if (params.envSet) {
@@ -206,12 +206,10 @@ describe("template-manager · resolveTemplateDir · Property 15", () => {
             | Array<{ path: string; reason: string }>
             | undefined;
           expect(Array.isArray(tried)).toBe(true);
-          // Resolver now tries two template names (hf-blank, linear-launch)
-          // at each of the two sibling depths; env (when set) is probed
-          // first. This test only plants `linear-launch` candidates, so
-          // the hf-blank probes always miss → the total miss count is
-          // 2 names × 2 depths (+ 1 env when set).
-          const expectedLen = params.envSet ? 5 : 4;
+          // Resolver tries one template name (hf-blank) at each of the
+          // two sibling depths; env (when set) is probed first.
+          // Total miss count: 1 name × 2 depths (+ 1 env when set).
+          const expectedLen = params.envSet ? 3 : 2;
           expect(tried).toHaveLength(expectedLen);
           const triedPaths = (tried ?? []).map((t) => t.path);
           if (params.envSet) expect(triedPaths).toContain(envDir);
@@ -371,7 +369,7 @@ describe("template-manager · syncTemplate · Property 17", () => {
     // Source template
     await writeJson(srcHfPath, opts.srcHf);
     await writeJson(srcPkgPath, {
-      name: "linear-launch",
+      name: "hf-blank",
       version: opts.srcPkgVersion,
     });
     await mkdir(path.dirname(srcFontPath), { recursive: true });
@@ -380,7 +378,7 @@ describe("template-manager · syncTemplate · Property 17", () => {
     // Destination project
     await writeJson(dstHfPath, opts.dstHf);
     await writeJson(dstPkgPath, {
-      name: "linear-launch",
+      name: "hf-blank",
       version: opts.dstPkgVersion,
     });
     await mkdir(path.dirname(dstFontPath), { recursive: true });

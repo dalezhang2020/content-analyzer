@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Video Creation Workbench 是把现有的 `content-analyzer/web`（Next.js 16 + React 19 + Tailwind 4 + shadcn/ui）改造成一个本地可视化视频创作工作台。每个视频是一个 Project，从 topic（选题）一路走到 published（mp4 产出），由一条状态机驱动。创意和结构生成（topic→brief→storyboard→HTML、以及 scene 改写）由本地 `kiro-cli chat` 子进程（默认 Claude Sonnet 4.6）完成；确定性环节（目录初始化、schema 校验、Azure Speech TTS、音频注入、HyperFrames 渲染、预览、状态流转）由本地代码完成。HyperFrames 项目模板直接复用 `linear-launch` 目录结构（`hyperframes.json` / `index.html` / `meta.json` / `package.json` / `fonts/`），每个 Project 在 `data/projects/{projectId}/composition/` 下拥有自己的一份完整模板实例，通过 `npx hyperframes render` 产出 mp4 到 `public/videos/`。
+Video Creation Workbench 是把现有的 `content-analyzer/web`（Next.js 16 + React 19 + Tailwind 4 + shadcn/ui）改造成一个本地可视化视频创作工作台。每个视频是一个 Project，从 brief（内容卡）一路走到 render（mp4 产出），由一条状态机驱动。创意和结构生成（brief→storyboard→HTML、以及 scene 改写）由本地 `kiro-cli chat` 子进程（默认 Claude Sonnet 4.6）完成；确定性环节（目录初始化、schema 校验、Azure Speech TTS、音频注入、HyperFrames 渲染、预览、状态流转）由本地代码完成。HyperFrames 项目模板通过 `HYPERFRAMES_TEMPLATE_DIR` 环境变量指定（默认指向 `workbench-data/_template/hf-blank`），每个 Project 在 `data/projects/{projectId}/composition/` 下拥有自己的一份完整模板实例，通过 `npx hyperframes render` 产出 mp4 到 `public/videos/`。
 
 MVP 范围：输入一个 topic，输出一个可预览、可修改、可渲染的 mp4 项目。UI 只做两页（`/projects` 列表页、`/projects/[id]` 详情页），详情页含 6 个 Tab（Brief / Storyboard / HTML / Audio / Render / QA）和 scene 抽屉。本次不涉及登录、多用户、云端部署，存储全部在本地文件系统。
 
@@ -17,11 +17,11 @@ MVP 范围：输入一个 topic，输出一个可预览、可修改、可渲染�
 - **Brief**: 内容卡，AI 根据 Topic 生成的结构化简介（标题、目标观众、核心观点、语气、时长预算等）。
 - **Storyboard**: 分镜，由一组有序的 Scene 组成。
 - **Scene**: 分镜中的一个镜头，含 id、index、文案（narration）、时长、voice、audioPath、qaNote 等字段。
-- **Composition**: HyperFrames HTML 场景，落盘到 `data/projects/{projectId}/composition/` 下，结构对齐 `linear-launch` 模板。
+- **Composition**: HyperFrames HTML 场景，落盘到 `data/projects/{projectId}/composition/` 下，结构对齐 `hf-blank` 模板。
 - **Audio**: 每个 Scene 的 TTS 音频文件（mp3），由 Azure Cognitive Services Speech REST API 生成，存放在 `composition/assets/scene-{index}.mp3`。
 - **Render**: 调用 `npx hyperframes render` 将 composition 渲染成 mp4，产物落到 `public/videos/project-{projectId}.mp4`。
 - **QA**: 用户对渲染产物打的 note，可以指向整个视频，也可以指向某个 Scene；指向 Scene 时可触发该 Scene 的 AI 重写。
-- **Template**: 指 `linear-launch` 目录（`hyperframes.json` / `index.html` / `meta.json` / `package.json` / `fonts/`），作为 Composition 的模板来源。
+- **Template**: 指 HyperFrames 模板目录（`hyperframes.json` / `index.html` / `meta.json` / `package.json` / `fonts/`），路径由 `HYPERFRAMES_TEMPLATE_DIR` 环境变量指定，作为 Composition 的模板来源。
 - **AIGenerator**: 负责调用本地 Kiro CLI（Claude 模型）的服务端模块，封装 topic→brief、brief→storyboard、storyboard→HTML、qa→scene 改写四种任务。通过 `kiro-cli chat --no-interactive` 子进程完成所有 LLM 调用，不使用 HTTP API，不需要 API key；默认模型 `claude-sonnet-4.6`，可通过 `KIRO_MODEL` 环境变量切换；二进制路径可通过 `KIRO_CLI_BIN` 环境变量覆盖。
 - **TTSService**: 封装 Azure Cognitive Services Speech REST API 的服务端模块，通过 `AZURE_SPEECH_ENDPOINT` / `AZURE_SPEECH_KEY` 环境变量认证。
 - **RenderService**: 封装 HyperFrames CLI（lint / validate / render）的服务端模块。
@@ -153,10 +153,10 @@ MVP 范围：输入一个 topic，输出一个可预览、可修改、可渲染�
 #### Acceptance Criteria
 
 1. WHEN 一个 Project 被创建，THE ProjectStore SHALL 在 `data/projects/{projectId}/` 下初始化以下子结构：`composition/index.html`、`composition/hyperframes.json`、`composition/meta.json`、`composition/package.json`、`composition/assets/.gitkeep`、`composition/fonts/.gitkeep`。
-2. WHEN 一个 Project 被创建，THE ProjectStore SHALL 从 `linear-launch` 模板拷贝（而不是软链接）`hyperframes.json`、`package.json`、`fonts/` 到新 Project 的 `composition/` 下。
+2. WHEN 一个 Project 被创建，THE ProjectStore SHALL 从 HyperFrames 模板拷贝（而不是软链接）`hyperframes.json`、`package.json`、`fonts/` 到新 Project 的 `composition/` 下。
 3. WHEN 一个 Project 被创建，THE ProjectStore SHALL 将 `composition/meta.json` 写为 `{ "id": "{projectId}", "name": "{title}", "createdAt": "{ISO-UTC}" }`，覆盖模板原值。
 4. WHEN 一个 Project 被创建，THE ProjectStore SHALL 将 `composition/index.html` 初始化为最小占位 HTML，内容至少包含 `<div class="clip" data-start="0" data-duration="1" data-track-index="0">placeholder</div>`；该占位文件在 composition 阶段 AI 生成成功时被整体覆盖。
-5. IF `linear-launch` 模板目录在环境变量 `HYPERFRAMES_TEMPLATE_DIR` 指定的路径以及 `../linear-launch`（相对 `content-analyzer/web`）、`../../linear-launch` 都不存在或不可读，THEN THE ProjectStore SHALL 拒绝创建 Project 并返回 HTTP 500，错误信息明示已尝试的所有模板路径。
+5. IF HyperFrames 模板目录在 `HYPERFRAMES_TEMPLATE_DIR` 指定的路径以及 `../hf-blank`、`../../hf-blank` 都不存在或不可读，THEN THE ProjectStore SHALL 拒绝创建 Project 并返回 HTTP 500，错误信息明示已尝试的所有模板路径。
 6. WHEN 一个 Project 被删除，THE ProjectStore SHALL 删除 `data/projects/{projectId}.json`、`data/projects/{projectId}/` 整个目录，以及 `public/videos/project-{projectId}.mp4`（如存在）。
 7. WHEN 读取或写入任何 Project 相关文件前，THE ProjectStore SHALL 校验 `projectId` 符合正则 `^proj_[0-9]+_[a-z0-9]{6}$`，以避免路径注入。
 8. IF 传入的 `projectId` 不符合 Criterion 7 的正则，THEN THE ProjectStore SHALL 立即拒绝该请求并返回 HTTP 400，不触碰任何文件系统路径。
@@ -269,13 +269,13 @@ MVP 范围：输入一个 topic，输出一个可预览、可修改、可渲染�
 8. IF 某个 Stage 在 `stageHistory` 中最近 3 条记录结果均为失败，THEN THE Workbench SHALL 在对应 Stage Tab 顶部显示"建议回退上一阶段重做"的提示文字，且不自动执行回退操作。
 9. THE Workbench SHALL 在所有涉及外部调用（本地 Kiro CLI 子进程 / Azure Speech TTS / HyperFrames CLI）的日志条目中记录该次调用的耗时，单位为整数毫秒。
 
-### Requirement 15: 模板复用（linear-launch）
+### Requirement 15: 模板复用（hf-blank）
 
-**User Story:** 作为创作者，我希望所有项目共享 linear-launch 那套视觉底子，但每个项目能独立改 HTML 不互相污染。
+**User Story:** 作为创作者，我希望所有项目共享同一套 HyperFrames 视觉底子，但每个项目能独立改 HTML 不互相污染。
 
 #### Acceptance Criteria
 
-1. WHEN 服务端启动或首次创建 Project 时，THE Workbench SHALL 按序检查以下路径以定位模板目录：`process.env.HYPERFRAMES_TEMPLATE_DIR`、`../linear-launch`（相对 `content-analyzer/web`）、`../../linear-launch`；取第一个"目录存在、可读、且含 `hyperframes.json`"的路径作为模板源。
+1. WHEN 服务端启动或首次创建 Project 时，THE Workbench SHALL 使用 `process.env.HYPERFRAMES_TEMPLATE_DIR` 指定的路径定位模板目录；若未设置，则按序检查 `../hf-blank`（相对 `content-analyzer/web`）、`../../hf-blank`；取第一个"目录存在、可读、且含 `hyperframes.json`"的路径作为模板源。
 2. IF Criterion 1 列出的所有路径都不满足"目录存在、可读、且含 `hyperframes.json`"，THEN THE Workbench SHALL 拒绝创建 Project 并返回 HTTP 500，错误信息明示已尝试的所有路径与每个路径的失败原因。
 3. WHEN 创建 Project 时，THE Workbench SHALL 对模板目录做深拷贝（不使用软链接）到 `data/projects/{projectId}/composition/`，保证不同 Project 修改 HTML/assets 互不影响。
 4. WHEN 执行 Criterion 3 的深拷贝时，THE Workbench SHALL 排除模板目录下的 `captures/`、`.thumbnails/` 目录以及任意 `*.mp4` 文件（属于模板作者的产物，不属于模板本身）。

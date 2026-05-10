@@ -35,8 +35,6 @@
  * All external errors (missing Azure Speech credentials, timeouts,
  * network, write failures) propagate through the caught-error branch
  * where the audio stage is marked failed before the error is rethrown.
- *
- * _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 9.9, 9.10, 9.11, 9.12_
  */
 
 import type { NextRequest } from "next/server";

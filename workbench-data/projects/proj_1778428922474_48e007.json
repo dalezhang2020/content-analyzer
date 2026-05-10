@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "projectId": "proj_1778428922474_48e007",
+  "title": "什么是三角函数",
+  "topic": "深度解析三角函数",
+  "locale": "zh-CN",
+  "stage": "storyboard",
+  "stageStatus": {
+    "brief": {
+      "status": "succeeded",
+      "startedAt": "2026-05-10T16:02:04.800Z",
+      "finishedAt": "2026-05-10T16:02:18.387Z",
+      "attempts": 1
+    },
+    "storyboard": {
+      "status": "succeeded",
+      "startedAt": "2026-05-10T16:02:24.815Z",
+      "finishedAt": "2026-05-10T16:03:16.832Z",
+      "attempts": 1
+    },
+    "composition": {
+      "status": "running",
+      "startedAt": "2026-05-10T16:09:46.062Z",
+      "attempts": 1
+    },
+    "audio": {
+      "status": "pending"
+    },
+    "render": {
+      "status": "pending"
+    }
+  },
+  "stageHistory": [
+    {
+      "fromStage": "brief",
+      "toStage": "storyboard",
+      "at": "2026-05-10T16:03:16.832Z",
+      "result": "success"
+    }
+  ],
+  "brief": {
+    "title": "深度解析三角函数：从单位圆到现实应用",
+    "audience": "高中生、大学低年级学生及想重新理解三角函数的自学者",
+    "corePoints": [
+      "从单位圆出发重新定义正弦、余弦、正切,让角度不再是死记硬背的符号",
+      "用直观动画讲清三角函数的周期性、对称性和相位,理解波形的本质",
+      "推导关键恒等式,如和角公式、倍角公式,展示它们背后的几何逻辑",
+      "结合现实场景:声波、潮汐、建筑测量,说明三角函数为什么有用",
+      "给出学习路线图和常见误区,帮助观众建立长期可复用的思维框架"
+    ],
+    "tone": "清晰、理性、略带启发性,像一位耐心的学长在讲题",
+    "targetDurationSec": 150,
+    "suggestedStyle": "白板手绘动画结合实拍讲解,配合单位圆和波形可视化,节奏紧凑但留有思考间隙"
+  },
+  "storyboard": {
+    "scenes": [
+      {
+        "sceneId": "sc_c694ae0a",
+        "index": 1,
+        "title": "开场:为什么要重学三角函数",
+        "narration": "很多人背过sin、cos、tan,却说不清它们到底是什么。今天我们从单位圆出发,重新理解三角函数,让它从一堆公式,变成你真正能用的思维工具。",
+        "durationSec": 14,
+        "voice": "zh-CN-YunxiNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_5ac90707",
+        "index": 2,
+        "title": "单位圆:一切的起点",
+        "narration": "在坐标系里画一个半径为一的圆。让一条射线从x轴正方向开始旋转,它与圆的交点坐标,就是余弦和正弦。角度不再抽象,而是圆上一个真实的位置。",
+        "durationSec": 18,
+        "voice": "zh-CN-YunxiNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_ca5c735b",
+        "index": 3,
+        "title": "正切的几何含义",
+        "narration": "正切等于正弦除以余弦,几何上它是这条射线在单位圆右侧切线上的截距。当角度接近九十度,正切趋于无穷,这就是它为何有垂直渐近线。",
+        "durationSec": 16,
+        "voice": "zh-CN-YunxiNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_4ab39ad6",
+        "index": 4,
+        "title": "周期性:旋转一圈又一圈",
+        "narration": "射线每转一圈回到原点,函数值重复,这就是周期性的本质。正弦和余弦周期是二π,正切周期是π。波形的循环,就源自圆的循环。",
+        "durationSec": 15,
+        "voice": "zh-CN-XiaochenNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_88ea7259",
+        "index": 5,
+        "title": "对称性与相位",
+        "narration": "余弦是偶函数,正弦是奇函数,这来自单位圆的左右与上下对称。把正弦向左平移π除以二,就得到余弦。相位,不过是起点不同而已。",
+        "durationSec": 16,
+        "voice": "zh-CN-XiaochenNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_1bac9ebb",
+        "index": 6,
+        "title": "和角公式的几何直觉",
+        "narration": "sin(α加β)等于sinα·cosβ加cosα·sinβ。它不是天上掉下来的,而是两次旋转叠加的结果。在单位圆上画出α和β,投影一下,公式自然浮现。",
+        "durationSec": 18,
+        "voice": "zh-CN-YunjianNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_13649f94",
+        "index": 7,
+        "title": "倍角公式:叠加的力量",
+        "narration": "把β换成α,就得到倍角公式。cos二α等于余弦平方减正弦平方,也等于一减两倍正弦平方。每一个变形,都对应一种几何切法。",
+        "durationSec": 15,
+        "voice": "zh-CN-YunjianNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_0788bc6d",
+        "index": 8,
+        "title": "现实应用一:声波与音乐",
+        "narration": "空气压力随时间做正弦振动,就是声音。频率决定音高,振幅决定音量。把多个正弦波相加,就能合成任何乐器的音色,这就是傅里叶的起点。",
+        "durationSec": 16,
+        "voice": "zh-CN-XiaohanNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_d6e42948",
+        "index": 9,
+        "title": "现实应用二:潮汐与建筑",
+        "narration": "海水每天两次涨落,近似正弦曲线。工程师用三角函数预测潮位、计算桥梁受力、测量远处建筑高度。一个圆的旋转,支撑着现代世界的测量与预测。",
+        "durationSec": 16,
+        "voice": "zh-CN-XiaohanNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      },
+      {
+        "sceneId": "sc_1561d30c",
+        "index": 10,
+        "title": "常见误区与学习路线",
+        "narration": "别只背公式,要先画单位圆;别怕弧度,它才是自然的度量。先吃透定义,再练恒等式,最后看应用。把三角函数当作语言,你会发现它无处不在。",
+        "durationSec": 16,
+        "voice": "zh-CN-YunyangNeural",
+        "audioPath": null,
+        "qaNote": "",
+        "updatedAt": "2026-05-10T16:03:16.830Z"
+      }
+    ]
+  },
+  "artifacts": {
+    "briefPath": "brief.json",
+    "storyboardPath": "storyboard.json",
+    "compositionDir": null,
+    "indexHtmlPath": null,
+    "hyperframesJsonPath": null,
+    "audioPaths": [],
+    "videoPath": null
+  },
+  "templateSource": {
+    "name": "hf-blank",
+    "version": "73e9a93",
+    "sourcePath": "/Users/dizhang/self-project/content-analyzer/workbench-data/_template/hf-blank"
+  },
+  "createdAt": "2026-05-10T16:02:02.474Z",
+  "updatedAt": "2026-05-10T16:09:46.062Z"
+}

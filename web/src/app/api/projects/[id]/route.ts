@@ -15,8 +15,6 @@
  * Every mutating method runs inside `withProjectLock` so concurrent
  * PATCH / DELETE / stage transitions on the same `projectId` are
  * serialised (fail-fast with `409 LOCK_BUSY`).
- *
- * _Requirements: 2.9, 2.10, 2.12, 8.6, 8.10, 11.8_
  */
 
 import { z } from "zod";
@@ -67,8 +65,6 @@ const safeTrimmed = (maxLen: number) =>
  *
  * `topic` edits are gated at runtime against `project.stage` (see
  * `PATCH` handler below) — this schema only enforces shape.
- *
- * _Requirements: 2.9, 16.1, 16.3_
  */
 const PatchBodySchema = z.object({
   title: safeTrimmed(LIMITS.TITLE_MAX).optional(),
@@ -94,8 +90,6 @@ type Ctx = { params: Promise<{ id: string }> };
  *   - `409 SCHEMA_VERSION_MISMATCH`   — on-disk `schemaVersion !== 1`.
  *   - `500 READ_FAILED`               — corrupt JSON or schema validation
  *                                       failure (zod issues in `details`).
- *
- * _Requirements: 2.9, 2.10_
  */
 export async function GET(_req: Request, ctx: Ctx): Promise<Response> {
   try {
@@ -127,8 +121,6 @@ export async function GET(_req: Request, ctx: Ctx): Promise<Response> {
  * The entire mutation runs inside `withProjectLock(projectId, …)` so a
  * concurrent PATCH / DELETE / stage transition on the same project
  * fails fast with `409 LOCK_BUSY`.
- *
- * _Requirements: 2.9, 1.11, 16.1, 16.3_
  */
 export async function PATCH(req: Request, ctx: Ctx): Promise<Response> {
   try {
@@ -138,7 +130,9 @@ export async function PATCH(req: Request, ctx: Ctx): Promise<Response> {
     const updated = await withProjectLock(projectId, async () => {
       const project = await readProject(projectId);
 
-      if (body.topic !== undefined && project.stage !== "topic") {
+      // topic may only change before a brief exists — once the brief is
+      // produced, downstream artefacts depend on it.
+      if (body.topic !== undefined && project.brief !== null) {
         throw new WorkbenchError(
           ErrorCode.INVALID_STAGE,
           "Cannot change topic after brief generation",
@@ -184,8 +178,6 @@ export async function PATCH(req: Request, ctx: Ctx): Promise<Response> {
  *
  * The delete runs inside `withProjectLock` to serialise with other
  * mutating operations on the same project.
- *
- * _Requirements: 2.12, 8.10, 11.8_
  */
 export async function DELETE(_req: Request, ctx: Ctx): Promise<Response> {
   try {

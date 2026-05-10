@@ -7,8 +7,6 @@
  *
  * Pure presentational — no data fetching, no state. The parent owns the
  * rewrite lifecycle and decides what "accept" / "discard" mean.
- *
- * _Requirements: 13.8, 13.9_
  */
 
 import type React from "react";

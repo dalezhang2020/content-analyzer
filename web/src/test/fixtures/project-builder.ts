@@ -284,12 +284,12 @@ const artifactPathsArb: fc.Arbitrary<ArtifactPaths> = fc.record({
 });
 
 const templateSourceArb: fc.Arbitrary<TemplateSource> = fc.record({
-  name: fc.constant("linear-launch"),
+  name: fc.constant("hf-blank"),
   version: fc.constantFrom("0.5.5", "1.0.0", "unknown", "abc1234"),
   sourcePath: fc.constantFrom(
-    "/tmp/linear-launch",
-    "/Users/dev/linear-launch",
-    "/opt/templates/linear-launch",
+    "/tmp/hf-blank",
+    "/Users/dev/hf-blank",
+    "/opt/templates/hf-blank",
   ),
 });
 

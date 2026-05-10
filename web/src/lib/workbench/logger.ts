@@ -18,8 +18,6 @@
  *   - A bad `projectId` (missing, malformed, traversal-looking) is redirected
  *     to `data/projects/_invalid/logs/{stage}.log` rather than throwing, so
  *     the logger itself is never a source of new failures.
- *
- * _Requirements: 9.9, 14.2, 14.3, 14.9; Property 25_
  */
 
 import path from "node:path";
@@ -310,8 +308,6 @@ function append(
 /**
  * Build a `WorkbenchLogger` bound to `(projectId, stage)`. The returned
  * object is cheap — safe to construct per-request.
- *
- * _Requirements: 14.2, 14.3, 14.9_
  */
 export function createLogger(
   projectId: string,

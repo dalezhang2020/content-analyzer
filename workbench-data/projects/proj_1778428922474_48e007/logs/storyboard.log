@@ -1,0 +1,6 @@
+{"ts":"2026-05-10T16:02:24.815Z","level":"info","stage":"storyboard","event":"storyboard_attempt","attempt":1,"retryReason":null}
+{"ts":"2026-05-10T16:02:55.516Z","level":"info","stage":"storyboard","event":"llm_call","provider":"kiro-cli","model":"claude-opus-4.7","timeoutMs":60000,"responseFormat":"json_object","durationMs":30700}
+{"ts":"2026-05-10T16:02:55.517Z","level":"warn","stage":"storyboard","event":"storyboard_tolerance_fail","attempt":1,"totalSec":186,"targetSec":150}
+{"ts":"2026-05-10T16:02:55.518Z","level":"info","stage":"storyboard","event":"storyboard_attempt","attempt":2,"retryReason":"tolerance"}
+{"ts":"2026-05-10T16:03:16.828Z","level":"info","stage":"storyboard","event":"llm_call","provider":"kiro-cli","model":"claude-opus-4.7","timeoutMs":60000,"responseFormat":"json_object","durationMs":21310}
+{"ts":"2026-05-10T16:03:16.829Z","level":"info","stage":"storyboard","event":"storyboard_success","attempt":2,"totalSec":160,"targetSec":150}

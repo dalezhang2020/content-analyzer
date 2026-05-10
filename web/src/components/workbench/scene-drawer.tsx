@@ -18,8 +18,6 @@
  * Client-side validation mirrors the zod constraints used by the API so
  * we fail fast and don't round-trip obviously-bad input. The server is
  * still the source of truth; server errors are rendered inline.
- *
- * _Requirements: 13.1–13.10_
  */
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";

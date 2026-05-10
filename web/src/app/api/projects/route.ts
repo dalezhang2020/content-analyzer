@@ -10,7 +10,7 @@
  *
  * Creation flow:
  *   1. Parse body with `CreateProjectInputSchema`.
- *   2. Resolve the `linear-launch` template on disk
+ *   2. Resolve the HyperFrames template on disk
  *      (`getTemplateSource` → `TEMPLATE_NOT_FOUND` on miss).
  *   3. `createProject` generates an ID, scaffolds the per-project dir tree,
  *      and persists the initial Project JSON.
@@ -18,8 +18,6 @@
  *      On copy failure, roll back by best-effort `deleteProject(id)` and
  *      rethrow the original error.
  *   5. Return `201 Created` with the full `Project`.
- *
- * _Requirements: 2.1–2.6, 11.1, 11.4, 15.1–15.5_
  */
 
 import type { NextRequest } from "next/server";

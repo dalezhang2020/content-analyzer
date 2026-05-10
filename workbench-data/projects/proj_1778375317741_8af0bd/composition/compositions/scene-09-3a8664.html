@@ -1,0 +1,328 @@
+<template id="scene-09-3a8664-template">
+  <div id="scene-09-3a8664" data-composition-id="scene-09-3a8664" data-width="1920" data-height="1080">
+    <div class="bg"></div>
+    <div class="grid-floor">
+      <svg class="grid-svg" viewBox="0 0 1920 600" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="s09-grid-fade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1b2a4e" stop-opacity="0"/>
+            <stop offset="60%" stop-color="#2a4a8a" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#3a6bc8" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        <g stroke="url(#s09-grid-fade)" stroke-width="1.2" fill="none">
+          <line x1="0" y1="80" x2="1920" y2="80"/>
+          <line x1="0" y1="160" x2="1920" y2="160"/>
+          <line x1="0" y1="250" x2="1920" y2="250"/>
+          <line x1="0" y1="355" x2="1920" y2="355"/>
+          <line x1="0" y1="480" x2="1920" y2="480"/>
+          <line x1="-200" y1="0" x2="400" y2="600"/>
+          <line x1="100" y1="0" x2="600" y2="600"/>
+          <line x1="400" y1="0" x2="800" y2="600"/>
+          <line x1="700" y1="0" x2="960" y2="600"/>
+          <line x1="960" y1="0" x2="960" y2="600"/>
+          <line x1="1220" y1="0" x2="1120" y2="600"/>
+          <line x1="1520" y1="0" x2="1320" y2="600"/>
+          <line x1="1820" y1="0" x2="1520" y2="600"/>
+          <line x1="2120" y1="0" x2="1720" y2="600"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+
+    <div class="stage">
+      <svg class="diagram" viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="s09-point-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffd27a" stop-opacity="1"/>
+            <stop offset="60%" stop-color="#f5a44a" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#f5a44a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="s09-wave-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#7fd4ff" stop-opacity="0.1"/>
+            <stop offset="25%" stop-color="#7fd4ff" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#c8a3ff" stop-opacity="1"/>
+          </linearGradient>
+          <linearGradient id="s09-cos-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ffb36e" stop-opacity="0.1"/>
+            <stop offset="30%" stop-color="#ffb36e" stop-opacity="0.95"/>
+            <stop offset="100%" stop-color="#ff7a9c" stop-opacity="0.9"/>
+          </linearGradient>
+          <filter id="s09-soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <g class="circle-group" transform="translate(300 260)">
+          <ellipse class="circle-shadow" cx="0" cy="8" rx="170" ry="48" fill="#3a6bc8" opacity="0.22"/>
+          <line class="axis axis-x" x1="-210" y1="0" x2="210" y2="0" stroke="#5a7bb8" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.7"/>
+          <line class="axis axis-y" x1="0" y1="-210" x2="0" y2="210" stroke="#5a7bb8" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.7"/>
+          <circle class="unit-circle" cx="0" cy="0" r="170" fill="none" stroke="#7fd4ff" stroke-width="2.5" stroke-dasharray="1070" stroke-dashoffset="1070" filter="url(#s09-soft-glow)"/>
+          <circle class="tick tick-1" cx="170" cy="0" r="4" fill="#7fd4ff" opacity="0"/>
+          <circle class="tick tick-2" cx="0" cy="-170" r="4" fill="#7fd4ff" opacity="0"/>
+          <circle class="tick tick-3" cx="-170" cy="0" r="4" fill="#7fd4ff" opacity="0"/>
+          <circle class="tick tick-4" cx="0" cy="170" r="4" fill="#7fd4ff" opacity="0"/>
+
+          <g class="rotor">
+            <line class="radius" x1="0" y1="0" x2="170" y2="0" stroke="#ffd27a" stroke-width="2.5" opacity="0"/>
+            <line class="drop-cos" x1="170" y1="0" x2="170" y2="0" stroke="#ffb36e" stroke-width="1.5" stroke-dasharray="3 5" opacity="0"/>
+            <line class="drop-sin" x1="170" y1="0" x2="0" y2="0" stroke="#7fd4ff" stroke-width="1.5" stroke-dasharray="3 5" opacity="0"/>
+            <circle class="point-halo" cx="170" cy="0" r="22" fill="url(#s09-point-glow)" opacity="0"/>
+            <circle class="point" cx="170" cy="0" r="7" fill="#ffe2a6" opacity="0"/>
+          </g>
+
+          <text class="label-o" x="-16" y="22" fill="#9fb5d8" font-family="serif" font-size="18" font-style="italic" opacity="0">O</text>
+        </g>
+
+        <g class="wave-group" transform="translate(560 260)">
+          <line class="wave-axis" x1="0" y1="0" x2="560" y2="0" stroke="#5a7bb8" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.55"/>
+          <path class="sin-wave"
+                d="M0,0 C30,-95 60,-160 90,-160 C120,-160 150,-95 180,0 C210,95 240,160 270,160 C300,160 330,95 360,0 C390,-95 420,-160 450,-160 C480,-160 510,-95 540,0"
+                fill="none" stroke="url(#s09-wave-grad)" stroke-width="3" stroke-linecap="round"
+                stroke-dasharray="1400" stroke-dashoffset="1400" filter="url(#s09-soft-glow)"/>
+          <path class="cos-wave"
+                d="M0,-160 C30,-160 60,-95 90,0 C120,95 150,160 180,160 C210,160 240,95 270,0 C300,-95 330,-160 360,-160 C390,-160 420,-95 450,0 C480,95 510,160 540,160"
+                fill="none" stroke="url(#s09-cos-grad)" stroke-width="2.5" stroke-linecap="round"
+                stroke-dasharray="1400" stroke-dashoffset="1400" opacity="0.85"/>
+          <text class="wave-label-sin" x="8" y="-178" fill="#7fd4ff" font-family="serif" font-size="22" font-style="italic" opacity="0">sin θ</text>
+          <text class="wave-label-cos" x="8" y="186" fill="#ffb36e" font-family="serif" font-size="22" font-style="italic" opacity="0">cos θ</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="text-block">
+      <div class="eyebrow">第九章 · 尾声</div>
+      <div class="title">
+        <span class="t-char">从</span><span class="t-char">具</span><span class="t-char">象</span><span class="t-char">，</span>
+        <span class="t-char t-accent">到</span><span class="t-char t-accent">理</span><span class="t-char t-accent">解</span>
+      </div>
+      <div class="subtitle">三角函数不是枯燥的公式,而是一场优雅的几何之舞</div>
+    </div>
+
+    <div class="caption">
+      <span class="cap-line">下次看到 <em>sin</em> 与 <em>cos</em>,愿你眼前浮现的,</span>
+      <span class="cap-line cap-line-2">是那个,旋转的圆。</span>
+    </div>
+
+    <div class="corner-mark">θ ∈ [0, 2π]</div>
+
+    <style>
+      #scene-09-3a8664 {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #060b1a;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+        color: #eaf1ff;
+      }
+      #scene-09-3a8664 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse at 30% 35%, rgba(58, 107, 200, 0.35) 0%, rgba(58, 107, 200, 0) 55%),
+          radial-gradient(ellipse at 75% 70%, rgba(245, 164, 74, 0.18) 0%, rgba(245, 164, 74, 0) 50%),
+          radial-gradient(ellipse at 50% 100%, rgba(127, 212, 255, 0.12) 0%, rgba(6, 11, 26, 0) 60%),
+          linear-gradient(180deg, #060b1a 0%, #0a1430 55%, #060b1a 100%);
+      }
+      #scene-09-3a8664 .grid-floor {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 480px;
+        transform: perspective(900px) rotateX(58deg);
+        transform-origin: 50% 100%;
+        opacity: 0;
+      }
+      #scene-09-3a8664 .grid-svg { width: 100%; height: 100%; }
+      #scene-09-3a8664 .glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        pointer-events: none;
+        opacity: 0;
+      }
+      #scene-09-3a8664 .glow-a {
+        width: 520px; height: 520px;
+        left: 120px; top: 160px;
+        background: radial-gradient(circle, rgba(127, 212, 255, 0.45), rgba(127, 212, 255, 0));
+      }
+      #scene-09-3a8664 .glow-b {
+        width: 620px; height: 620px;
+        right: -80px; bottom: 40px;
+        background: radial-gradient(circle, rgba(245, 164, 74, 0.32), rgba(245, 164, 74, 0));
+      }
+
+      #scene-09-3a8664 .stage {
+        position: absolute;
+        left: 50%;
+        top: 360px;
+        width: 1200px;
+        height: 520px;
+        transform: translateX(-50%);
+      }
+      #scene-09-3a8664 .diagram {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      #scene-09-3a8664 .text-block {
+        position: absolute;
+        top: 90px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 5;
+      }
+      #scene-09-3a8664 .eyebrow {
+        font-size: 26px;
+        letter-spacing: 0.6em;
+        color: #ffb36e;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+        opacity: 0;
+        text-shadow: 0 0 20px rgba(255, 179, 110, 0.5);
+      }
+      #scene-09-3a8664 .title {
+        font-size: 104px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 1.1;
+        color: #f5f9ff;
+        text-shadow: 0 0 40px rgba(127, 212, 255, 0.35);
+      }
+      #scene-09-3a8664 .t-char {
+        display: inline-block;
+        opacity: 0;
+      }
+      #scene-09-3a8664 .t-accent {
+        background: linear-gradient(135deg, #ffd27a 0%, #ff7a9c 60%, #c8a3ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      #scene-09-3a8664 .subtitle {
+        margin-top: 28px;
+        font-size: 32px;
+        letter-spacing: 0.12em;
+        color: #9fb5d8;
+        opacity: 0;
+      }
+
+      #scene-09-3a8664 .caption {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 70px;
+        text-align: center;
+        font-size: 34px;
+        letter-spacing: 0.1em;
+        color: #c8d6f0;
+        line-height: 1.6;
+        z-index: 5;
+      }
+      #scene-09-3a8664 .cap-line {
+        display: block;
+        opacity: 0;
+      }
+      #scene-09-3a8664 .caption em {
+        font-style: italic;
+        font-family: "Georgia", "Times New Roman", serif;
+        background: linear-gradient(135deg, #7fd4ff 0%, #ffb36e 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        padding: 0 6px;
+        font-weight: 600;
+      }
+
+      #scene-09-3a8664 .corner-mark {
+        position: absolute;
+        right: 60px;
+        top: 60px;
+        font-family: "Georgia", serif;
+        font-style: italic;
+        font-size: 24px;
+        color: #5a7bb8;
+        letter-spacing: 0.15em;
+        opacity: 0;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Background atmosphere
+      tl.to('#scene-09-3a8664 .bg', { opacity: 1, duration: 0.6 }, 0)
+        .fromTo('#scene-09-3a8664 .grid-floor', { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0.2)
+        .fromTo('#scene-09-3a8664 .glow-a', { opacity: 0 }, { opacity: 0.9, duration: 1.8, ease: 'power2.out' }, 0.1)
+        .fromTo('#scene-09-3a8664 .glow-b', { opacity: 0 }, { opacity: 0.8, duration: 2.0, ease: 'power2.out' }, 0.3);
+
+      // Eyebrow + corner mark
+      tl.fromTo('#scene-09-3a8664 .eyebrow', { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.5)
+        .fromTo('#scene-09-3a8664 .corner-mark', { opacity: 0, x: 30 }, { opacity: 0.85, x: 0, duration: 0.9, ease: 'power2.out' }, 0.7);
+
+      // Axes + unit circle drawing
+      tl.fromTo('#scene-09-3a8664 .axis-x', { scaleX: 0, transformOrigin: '50% 50%' }, { scaleX: 1, duration: 0.9, ease: 'power3.out' }, 0.9)
+        .fromTo('#scene-09-3a8664 .axis-y', { scaleY: 0, transformOrigin: '50% 50%' }, { scaleY: 1, duration: 0.9, ease: 'power3.out' }, 1.0)
+        .to('#scene-09-3a8664 .unit-circle', { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 1.1)
+        .fromTo('#scene-09-3a8664 .label-o', { opacity: 0 }, { opacity: 0.9, duration: 0.4 }, 1.8)
+        .to('#scene-09-3a8664 .tick-1', { opacity: 1, duration: 0.3 }, 2.0)
+        .to('#scene-09-3a8664 .tick-2', { opacity: 1, duration: 0.3 }, 2.15)
+        .to('#scene-09-3a8664 .tick-3', { opacity: 1, duration: 0.3 }, 2.3)
+        .to('#scene-09-3a8664 .tick-4', { opacity: 1, duration: 0.3 }, 2.45);
+
+      // Rotating radius + point
+      tl.to('#scene-09-3a8664 .radius', { opacity: 1, duration: 0.4 }, 2.3)
+        .to('#scene-09-3a8664 .point', { opacity: 1, duration: 0.4 }, 2.4)
+        .to('#scene-09-3a8664 .point-halo', { opacity: 1, duration: 0.6 }, 2.4)
+        .to('#scene-09-3a8664 .drop-sin', { opacity: 0.75, duration: 0.4 }, 2.6)
+        .to('#scene-09-3a8664 .drop-cos', { opacity: 0.75, duration: 0.4 }, 2.6)
+        .fromTo('#scene-09-3a8664 .rotor',
+          { rotation: 0, transformOrigin: '0px 0px' },
+          { rotation: -360, transformOrigin: '0px 0px', duration: 7.5, ease: 'none', repeat: 0 }, 2.7);
+
+      // Sin & cos wave drawing
+      tl.fromTo('#scene-09-3a8664 .wave-axis', { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, 2.6)
+        .to('#scene-09-3a8664 .sin-wave', { strokeDashoffset: 0, duration: 4.5, ease: 'power1.inOut' }, 2.9)
+        .to('#scene-09-3a8664 .cos-wave', { strokeDashoffset: 0, duration: 4.5, ease: 'power1.inOut' }, 3.3)
+        .fromTo('#scene-09-3a8664 .wave-label-sin', { opacity: 0, x: -12 }, { opacity: 0.95, x: 0, duration: 0.6 }, 4.0)
+        .fromTo('#scene-09-3a8664 .wave-label-cos', { opacity: 0, x: -12 }, { opacity: 0.9, x: 0, duration: 0.6 }, 4.4);
+
+      // Title staggered reveal
+      tl.to('#scene-09-3a8664 .t-char', {
+        opacity: 1,
+        y: 0,
+        duration: 0.55,
+        stagger: 0.09,
+        ease: 'power3.out'
+      }, 1.3)
+        .fromTo('#scene-09-3a8664 .subtitle',
+          { opacity: 0, y: 14 },
+          { opacity: 0.95, y: 0, duration: 0.9, ease: 'power2.out' }, 2.6);
+
+      // Final caption
+      tl.fromTo('#scene-09-3a8664 .cap-line',
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.45, ease: 'power2.out' }, 7.4);
+
+      // Gentle breathing on the point halo
+      tl.to('#scene-09-3a8664 .point-halo', { scale: 1.35, transformOrigin: '50% 50%', duration: 1.2, yoyo: true, repeat: 5, ease: 'sine.inOut' }, 3.0);
+
+      // Hold, then soft final fade
+      tl.to('#scene-09-3a8664 .glow-a', { opacity: 1.1, duration: 1.5, ease: 'sine.inOut' }, 9.0)
+        .to('#scene-09-3a8664 .glow-b', { opacity: 1.0, duration: 1.5, ease: 'sine.inOut' }, 9.2)
+        .to(['#scene-09-3a8664 .grid-floor', '#scene-09-3a8664 .corner-mark'], { opacity: 0, duration: 1.0, ease: 'power2.in' }, 11.2)
+        .to('#scene-09-3a8664 .bg', { opacity: 0.55, duration: 0.9, ease: 'power2.in' }, 11.3);
+
+      window.__timelines["scene-09-3a8664"] = tl;
+    </script>
+  </div>
+</template>

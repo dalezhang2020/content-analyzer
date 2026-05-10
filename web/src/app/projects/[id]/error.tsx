@@ -11,8 +11,6 @@
  * more generic "出错了" banner since this boundary catches any render-time
  * error, not just not-found. The explicit 404 flow uses the adjacent
  * `not-found.tsx`.
- *
- * _Requirements: 12.12_
  */
 
 import { useEffect } from "react";

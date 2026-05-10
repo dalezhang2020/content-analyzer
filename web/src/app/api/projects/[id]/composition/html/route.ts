@@ -15,8 +15,6 @@
  * The payload is whatever the underlying file contains — the composition
  * pipeline already enforces sane HTML sizes via the repair loop, so no
  * additional truncation is applied here.
- *
- * _Requirements: 12.5_
  */
 
 import type { NextRequest } from "next/server";

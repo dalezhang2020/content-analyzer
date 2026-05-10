@@ -25,8 +25,6 @@
  *      on failure. This task runs outside the lock so the render call
  *      can return `202` without holding the mutex for 180 s.
  *   8. Respond `202` with `{ runId, streamUrl }`.
- *
- * _Requirements: 10.1–10.11; Property 21_
  */
 
 import type { NextRequest } from "next/server";

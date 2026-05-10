@@ -7,8 +7,6 @@
  *
  * Satisfies the "项目不存在或无法读取" copy + back-link affordance in
  * Requirement 12.12.
- *
- * _Requirements: 12.12_
  */
 
 import Link from "next/link";

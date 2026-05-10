@@ -21,8 +21,6 @@
  *   - Fetch failures are swallowed silently — the grid keeps showing
  *     the last-known state so a transient network hiccup doesn't flip
  *     every card back to "待生成".
- *
- * _Requirements: 12.12, 16.7, 17.2_
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";

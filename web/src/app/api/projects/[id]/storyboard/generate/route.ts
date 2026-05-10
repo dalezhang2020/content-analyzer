@@ -25,8 +25,6 @@
  *      is persisted before rethrowing so the UI can observe the failure.
  *   7. Tolerance-retry warning from `generateStoryboardFromBrief` is passed
  *      through to the response body as `{ project, warning? }`.
- *
- * _Requirements: 5.1–5.7_
  */
 
 import { randomBytes } from "node:crypto";

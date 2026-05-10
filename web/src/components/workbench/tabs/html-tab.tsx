@@ -25,8 +25,6 @@
  * Note: this tab is read-only w.r.t. the HTML content itself. Manual
  * HTML editing is a separate future-work affordance (surface area too
  * wide for MVP).
- *
- * _Requirements: 12.5, 12.11, 12.12, 16.7, 17.2_
  */
 
 import { useCallback, useEffect, useState } from "react";

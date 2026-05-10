@@ -16,18 +16,19 @@
 // ---------------------------------------------------------------------------
 
 /**
- * The 8 stages of the project state machine, in canonical order.
+ * The 5 stages of the project state machine, in canonical order.
  * Transitions are authoritative — see `state-machine.ts`.
+ *
+ * Simplified from the original 8 stages (topic/qa/published removed):
+ *   - topic → merged into project creation; new projects land at `brief`
+ *   - qa/published → dropped for single-user local workflow
  */
 export type Stage =
-  | "topic"
   | "brief"
   | "storyboard"
   | "composition"
   | "audio"
-  | "render"
-  | "qa"
-  | "published";
+  | "render";
 
 /** Lifecycle value of a single stage. Each stage has its own independent lifecycle. */
 export type StageStatusValue =
@@ -108,7 +109,7 @@ export interface ArtifactPaths {
  * silently change past projects.
  */
 export interface TemplateSource {
-  /** Template name, e.g. "linear-launch". */
+  /** Template name, e.g. "hf-blank". */
   name: string;
   /** semver | commit-sha | "unknown". */
   version: string;
@@ -122,7 +123,8 @@ export interface TemplateSource {
 
 /**
  * QA feedback attached either to a specific scene or to the project.
- * Notes are append-only and drive scene rewrites.
+ * Kept for backward compat of Scene.qaNote field, but project-level QA
+ * notes list has been removed from Project in the 5-stage simplification.
  */
 export interface QaNote {
   /** Format: `qan_{8hex}`. */
@@ -227,7 +229,6 @@ export interface Project {
   brief: Brief | null;
   storyboard: Storyboard | null;
   artifacts: ArtifactPaths;
-  qaNotes: QaNote[];
   templateSource: TemplateSource;
   /** ISO 8601 UTC timestamp. */
   createdAt: string;
@@ -263,6 +264,13 @@ export interface CreateProjectInput {
   topic: string;
   /** Defaults to `"zh-CN"` when omitted. */
   locale?: "zh-CN" | "en-US";
+  /**
+   * Optional pre-filled Brief. When provided, project creation skips the
+   * topic → brief LLM call and lands directly at stage=storyboard with
+   * this Brief persisted. Wired up by the "从分析创建项目" flow on
+   * history pages.
+   */
+  seedBrief?: Brief;
 }
 
 /**

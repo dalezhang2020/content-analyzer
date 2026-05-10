@@ -28,8 +28,6 @@
  *   - Invalid project id → 400 `INVALID_PROJECT_ID` (via the helper).
  *   - Missing project JSON → 404 `PROJECT_NOT_FOUND` (via `readProject`).
  *   - Any other failure → 500 via `respondError` / `respondWithError`.
- *
- * _Requirements: 12.5, 12.11, 14.1, 16.4, 16.6_
  */
 
 import { promises as fs } from "node:fs";

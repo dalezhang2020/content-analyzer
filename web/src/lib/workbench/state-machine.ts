@@ -34,32 +34,23 @@ export interface StageTransition {
 }
 
 /**
- * Forward progression `topic → brief → … → qa → published`. Every edge is
- * a single-step advance; there is no "skip" transition.
+ * Forward progression `brief → storyboard → composition → audio → render`.
+ * Every edge is a single-step advance; there is no "skip" transition.
  *
- * _Requirements: 1.3, 1.5_
+ * Simplified from original 8-stage DAG: topic/qa/published removed.
  */
 export const FORWARD_TRANSITIONS: readonly StageTransition[] = [
-  { from: "topic", to: "brief" },
   { from: "brief", to: "storyboard" },
   { from: "storyboard", to: "composition" },
   { from: "composition", to: "audio" },
   { from: "audio", to: "render" },
-  { from: "render", to: "qa" },
-  { from: "qa", to: "published" },
 ] as const;
 
 /**
- * Regression edges. Only `qa` may regress, and only to `storyboard`,
- * `composition`, or `audio`. `published` is terminal.
- *
- * _Requirements: 1.4, 1.5_
+ * No automatic regression edges in the simplified workflow. Use
+ * `regressToStage` for manual jumps backward.
  */
-export const BACKWARD_TRANSITIONS: readonly StageTransition[] = [
-  { from: "qa", to: "storyboard" },
-  { from: "qa", to: "composition" },
-  { from: "qa", to: "audio" },
-] as const;
+export const BACKWARD_TRANSITIONS: readonly StageTransition[] = [] as const;
 
 /** Concatenation of forward + backward edges. Stable order. */
 export const ALL_TRANSITIONS: readonly StageTransition[] = [
@@ -74,8 +65,6 @@ export const ALL_TRANSITIONS: readonly StageTransition[] = [
 /**
  * Return `true` iff `(from, to)` appears in the union of forward and
  * backward transitions.
- *
- * _Requirements: 1.3, 1.5; Property 1_
  */
 export function canTransition(from: Stage, to: Stage): boolean {
   for (const edge of ALL_TRANSITIONS) {
@@ -87,8 +76,6 @@ export function canTransition(from: Stage, to: Stage): boolean {
 /**
  * Enumerate every `to` stage for which `canTransition(from, to)` holds.
  * Order matches `ALL_TRANSITIONS`.
- *
- * _Requirements: 1.3, 1.5; Property 1_
  */
 export function allowedNextStages(from: Stage): Stage[] {
   const out: Stage[] = [];
@@ -103,8 +90,6 @@ export function allowedNextStages(from: Stage): Stage[] {
  * a legal edge. Details include the current stage, the requested stage,
  * and the list of legal next stages — enough for the UI to render a
  * 409 response without a second round-trip.
- *
- * _Requirements: 1.3, 1.5, 14.1_
  */
 export function assertCanTransition(
   from: Stage,
@@ -130,8 +115,6 @@ export function assertCanTransition(
 /**
  * Fresh `StageStatusMap` with every stage set to `{ status: "pending" }`.
  * Used at project-creation time.
- *
- * _Requirements: 1.8_
  */
 export function initialStageStatusMap(): StageStatusMap {
   const map = {} as StageStatusMap;
@@ -148,8 +131,6 @@ export function initialStageStatusMap(): StageStatusMap {
  *
  * This implements the regression-reset rule from design §Regression
  * semantics and Property 2.
- *
- * _Requirements: 1.4; Property 2_
  */
 export function resetDownstreamStatus(
   map: StageStatusMap,
@@ -189,8 +170,6 @@ export interface ApplyTransitionOptions {
  * `resetDownstreamStatus` (Property 2). `updatedAt` is always refreshed.
  *
  * The input project is **not** mutated; a new object is returned.
- *
- * _Requirements: 1.3–1.6; Properties 2, 3_
  */
 export function applyTransition(
   project: Project,
@@ -212,18 +191,12 @@ export function applyTransition(
     ...(reason !== undefined ? { reason } : {}),
   };
 
-  const isBackward =
-    project.stage === "qa" &&
-    (to === "storyboard" || to === "composition" || to === "audio");
-
-  const nextStageStatus = isBackward
-    ? resetDownstreamStatus(project.stageStatus, to)
-    : project.stageStatus;
-
+  // Forward-only automatic transitions. Manual regressions use
+  // `regressToStage` which resets downstream stageStatus explicitly.
   return {
     ...project,
     stage: to,
-    stageStatus: nextStageStatus,
+    stageStatus: project.stageStatus,
     stageHistory: [...project.stageHistory, historyEntry],
     updatedAt: nowIso,
   };
@@ -264,8 +237,6 @@ export interface RegressToStageOptions {
  * Throws `WorkbenchError(INVALID_TRANSITION, …)` when `target` is not
  * strictly earlier than the current stage (no sideways, no forward).
  * The input project is **not** mutated.
- *
- * _Requirements: 1.4, 1.5_
  */
 export function regressToStage(
   project: Project,
@@ -315,8 +286,6 @@ export function regressToStage(
  * Enter the `running` state for `stage`: records `startedAt`, bumps
  * `attempts`, and clears any prior `error`. Project-level `stage` is
  * unchanged.
- *
- * _Requirements: 1.8–1.10; Property 4_
  */
 export function markStageRunning(
   project: Project,
@@ -341,8 +310,6 @@ export function markStageRunning(
 /**
  * Enter the `succeeded` state for `stage`: records `finishedAt` and
  * clears any prior `error`. Preserves `startedAt` and `attempts`.
- *
- * _Requirements: 1.8–1.10; Property 4_
  */
 export function markStageSucceeded(
   project: Project,
@@ -370,8 +337,6 @@ export function markStageSucceeded(
  * `LIMITS.ERROR_CODE_MAX`; `error.message` to `LIMITS.ERROR_MESSAGE_MAX`
  * — matching the convention in `errors.ts`. Project-level `stage` is
  * unchanged (Property 4c).
- *
- * _Requirements: 1.8–1.10, 14.1, 14.7; Property 4_
  */
 export function markStageFailed(
   project: Project,
@@ -408,8 +373,6 @@ export function markStageFailed(
  * `history` whose `toStage === stage` all have `result === "failure"`.
  * Never triggers on an empty history or one shorter than the threshold
  * (per Property 26).
- *
- * _Requirements: 14.8; Property 26_
  */
 export function shouldSuggestRegress(
   history: readonly StageHistoryEntry[],

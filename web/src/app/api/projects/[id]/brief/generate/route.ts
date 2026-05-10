@@ -22,8 +22,6 @@
  *      when coming from `topic`.
  *   6. On any thrown error inside the lock, `markStageFailed("brief", …)`
  *      is persisted before rethrowing so the UI can observe the failure.
- *
- * _Requirements: 4.1–4.9_
  */
 
 import type { NextRequest } from "next/server";
@@ -45,7 +43,6 @@ import {
 } from "@/lib/workbench/project-store";
 import { ForceFlagSchema } from "@/lib/workbench/schemas";
 import {
-  applyTransition,
   markStageFailed,
   markStageRunning,
   markStageSucceeded,
@@ -65,14 +62,10 @@ export async function POST(
     const updated = await withProjectLock(projectId, async () => {
       let project = await readProject(projectId);
 
-      // Stage guard: topic required for fresh brief; force allows rerun
-      // after brief (or any later stage, with the understanding that
-      // downstream artefacts will become stale — that's the user's call).
-      if (project.stage === "topic") {
-        // okay — canonical first-run path
-      } else if (force) {
-        // okay — caller opted into overwrite
-      } else {
+      // Stage guard: if a brief already exists, require force=true to
+      // regenerate — downstream artefacts (storyboard/composition/audio)
+      // will become stale, which is the user's call.
+      if (project.brief && !force) {
         throw new WorkbenchError(
           ErrorCode.INVALID_STAGE,
           "Brief already generated; pass force:true to regenerate",
@@ -102,9 +95,6 @@ export async function POST(
           artifacts: { ...project.artifacts, briefPath: "brief.json" },
         };
         project = markStageSucceeded(project, "brief");
-        if (project.stage === "topic") {
-          project = applyTransition(project, "brief");
-        }
         await writeProject(project);
         return project;
       } catch (err) {

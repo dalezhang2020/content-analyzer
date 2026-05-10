@@ -45,8 +45,6 @@
  *      `{scenePath}.failed.bak` for inspection.
  *  12. On success: update artifacts, markStageSucceeded, transition to
  *      `composition`.
- *
- * _Requirements: 6.1–6.8, 16.7_
  */
 
 import type { NextRequest } from "next/server";
@@ -372,6 +370,7 @@ export async function POST(
           { currentStage: project.stage },
         );
       }
+      const storyboardScenes = project.storyboard.scenes;
 
       project = markStageRunning(project, "composition");
       // Persist the `running` status immediately so the HTML tab's scene
@@ -404,7 +403,7 @@ export async function POST(
         if (!check.ok) {
           const offending = findOffendingScene(
             check.stderr,
-            project.storyboard.scenes,
+            storyboardScenes,
           );
           if (offending) {
             // Re-generate just this one scene with lint feedback.

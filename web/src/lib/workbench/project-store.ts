@@ -28,8 +28,6 @@
  *   4. String fields are control-char-scrubbed by `schemas.ts` before
  *      persistence (zod refine via `safeStr`).
  *   5. Every resolved path is asserted to stay under the data directory.
- *
- * _Requirements: 2.1–2.12, 8.1, 8.6, 8.7, 8.8, 8.9, 8.10_
  */
 
 import path from "node:path";
@@ -115,8 +113,6 @@ function randomProjectSuffix(): string {
  * Collisions are astronomically unlikely at this shape (≈ 1.7e7 suffix
  * space × ms-precision clock), but the retry budget is the spec's
  * defence-in-depth.
- *
- * _Requirements: 2.3_
  */
 export async function generateProjectId(): Promise<string> {
   const dataDir = getDataDirAbs();
@@ -157,8 +153,6 @@ export async function generateProjectId(): Promise<string> {
  * Idempotent: pre-existing directories are not an error. `.gitkeep` stubs
  * are written as empty files via `atomicWriteBuffer` so they survive git
  * clean without piggy-backing on a user's global ignore rules.
- *
- * _Requirements: 2.7, 8.1, 8.6_
  */
 export async function initProjectDirs(projectId: string): Promise<void> {
   assertValidProjectId(projectId);
@@ -221,8 +215,6 @@ function initialArtifacts(): ArtifactPaths {
  *
  * On any failure after step 1, a best-effort `deleteProject(id)` runs to
  * roll back the partial creation before the original error propagates.
- *
- * _Requirements: 2.1, 2.2, 2.3, 2.4, 2.6_
  */
 export async function createProject(
   input: CreateProjectInput,
@@ -231,31 +223,59 @@ export async function createProject(
   const projectId = await generateProjectId();
   try {
     const now = new Date().toISOString();
+    const seedBrief = input.seedBrief ?? null;
+
+    // Initial stage status: if a seed brief is present, mark "brief" as
+    // already succeeded so the workbench UI opens directly at the
+    // storyboard stage with the Brief tab populated.
+    const stageStatus = initialStageStatusMap();
+    if (seedBrief) {
+      stageStatus.brief = {
+        status: "succeeded",
+        startedAt: now,
+        finishedAt: now,
+        attempts: 1,
+      };
+    }
+
     const project: Project = {
       schemaVersion: SCHEMA_VERSION,
       projectId,
       title: input.title,
       topic: input.topic,
       locale: input.locale ?? DEFAULT_LOCALE,
-      stage: "topic",
-      stageStatus: initialStageStatusMap(),
-      stageHistory: [],
-      brief: null,
+      stage: seedBrief ? "storyboard" : "brief",
+      stageStatus,
+      stageHistory: seedBrief
+        ? [
+            {
+              fromStage: "brief",
+              toStage: "storyboard",
+              at: now,
+              result: "success" as const,
+              reason: "seeded from analysis",
+            },
+          ]
+        : [],
+      brief: seedBrief,
       storyboard: null,
-      artifacts: initialArtifacts(),
-      qaNotes: [],
+      artifacts: {
+        ...initialArtifacts(),
+        ...(seedBrief ? { briefPath: "brief.json" } : {}),
+      },
       templateSource,
       createdAt: now,
       updatedAt: now,
     };
 
     await initProjectDirs(projectId);
+    if (seedBrief) {
+      await writeBrief(projectId, seedBrief);
+    }
     await writeProject(project);
     return project;
   } catch (e) {
     // Best-effort rollback so a partially-created project doesn't linger.
-    // Swallow any cleanup failure — the original error is what callers
-    // want to see.
     try {
       await deleteProject(projectId);
     } catch {
@@ -274,8 +294,6 @@ export async function createProject(
  *   - `schemaVersion !== 1` → `SCHEMA_VERSION_MISMATCH` (409) with
  *     `{ found, expected }`.
  *   - Zod validation failure → `READ_FAILED` (500) with `{ path, issues }`.
- *
- * _Requirements: 2.9, 2.10, 2.11_
  */
 export async function readProject(projectId: string): Promise<Project> {
   assertValidProjectId(projectId);
@@ -343,8 +361,6 @@ export async function readProject(projectId: string): Promise<Project> {
  *     — see module docstring note).
  *   - Re-validate against `ProjectSchema`; a malformed in-memory project
  *     throws `READ_FAILED` (caller's bug, not a runtime data issue).
- *
- * _Requirements: 2.5, 2.7, 2.8_
  */
 export async function writeProject(project: Project): Promise<void> {
   assertValidProjectId(project.projectId);
@@ -388,8 +404,6 @@ export async function writeProject(project: Project): Promise<void> {
  * Missing paths are treated as success (nothing to remove). Partial
  * failures are aggregated into `DeleteReport.failed`; the caller decides
  * whether to surface `PARTIAL_DELETE` (500) or `204`.
- *
- * _Requirements: 2.12, 8.10_
  */
 export async function deleteProject(projectId: string): Promise<DeleteReport> {
   assertValidProjectId(projectId);
@@ -431,8 +445,6 @@ export async function deleteProject(projectId: string): Promise<DeleteReport> {
  *   - `posterUrl` is the public URL when `public/videos/project-{id}.poster.jpg`
  *     exists on disk; otherwise `null`.
  *   - `videoUrl` mirrors `project.artifacts.videoPath` (already a public URL).
- *
- * _Requirements: 2.6, 11.9_
  */
 export async function listProjects(): Promise<ProjectSummary[]> {
   const dataDir = getDataDirAbs();
@@ -495,8 +507,6 @@ export async function listProjects(): Promise<ProjectSummary[]> {
  * Atomically persist `brief` at `data/projects/{projectId}/brief.json`.
  * Re-validates with `BriefSchema` so a bad in-memory brief surfaces before
  * the file is touched.
- *
- * _Requirements: 4.5, 4.6_
  */
 export async function writeBrief(
   projectId: string,
@@ -518,8 +528,6 @@ export async function writeBrief(
  * Atomically persist `storyboard` at
  * `data/projects/{projectId}/storyboard.json`. Re-validates with
  * `StoryboardSchema`.
- *
- * _Requirements: 5.7, 5.8_
  */
 export async function writeStoryboard(
   projectId: string,
@@ -543,8 +551,6 @@ export async function writeStoryboard(
  *
  * The buffer is encoded UTF-8; callers are expected to have already passed
  * the HTML through `html-scanner` for forbidden-token rejection.
- *
- * _Requirements: 6.2, 6.8_
  */
 export async function writeCompositionHtml(
   projectId: string,
@@ -562,8 +568,6 @@ export async function writeCompositionHtml(
  * Read `data/projects/{projectId}/composition/index.html` as UTF-8 text.
  * Surfaces missing files as `READ_FAILED` with reason `"Not found"` (via
  * `readFileSafe`); callers that want a 404 should reclassify.
- *
- * _Requirements: 6.8_
  */
 export async function readCompositionHtml(projectId: string): Promise<string> {
   const absPath = resolveProjectFile(
@@ -647,8 +651,6 @@ export async function clearSceneCompositions(projectId: string): Promise<void> {
  * `index` is the 1-based Scene index — not the sceneId — so audio files
  * line up with the positional slots the composition HTML wires via
  * `<audio src="assets/scene-N.mp3">`.
- *
- * _Requirements: 9.4, 9.7_
  */
 export async function writeAudioFile(
   projectId: string,

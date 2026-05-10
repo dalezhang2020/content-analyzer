@@ -18,8 +18,6 @@
  * `POST .../storyboard/generate` with `{ force: true }`. Downstream
  * artefacts (HTML, audio) will become stale, which the confirmation
  * copy highlights.
- *
- * _Requirements: 12.4, 12.11, 13.1_
  */
 
 import { useCallback, useState } from "react";

@@ -1,0 +1,259 @@
+<template id="scene-05-f80eb7-template">
+  <div id="scene-05-f80eb7" data-composition-id="scene-05-f80eb7" data-width="1920" data-height="1080">
+    <div class="bg-glow"></div>
+    <div class="grid-floor"></div>
+
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="scene-05-f80eb7-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="scene-05-f80eb7-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffb347"/>
+          <stop offset="100%" stop-color="#ff8c6b"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 3D tilted unit circle -->
+      <g class="circle-group" transform="translate(460, 640)">
+        <line class="ax-h" x1="-250" y1="0" x2="250" y2="0" stroke="#4a6b99" stroke-width="1.5" opacity="0.55"/>
+        <line class="ax-v" x1="0" y1="-235" x2="0" y2="235" stroke="#4a6b99" stroke-width="1.5" opacity="0.55"/>
+
+        <ellipse class="unit-circle" cx="0" cy="0" rx="215" ry="84" fill="none"
+                 stroke="#4a9eff" stroke-width="3.5"
+                 stroke-dasharray="980" stroke-dashoffset="980"
+                 filter="url(#scene-05-f80eb7-glow)"/>
+
+        <line class="drop-line" x1="215" y1="0" x2="215" y2="0"
+              stroke="#ff8c6b" stroke-width="2.5" stroke-dasharray="6,6" opacity="0"/>
+
+        <circle class="rot-point" cx="215" cy="0" r="14" fill="#ffb347"
+                filter="url(#scene-05-f80eb7-glow)" opacity="0"/>
+
+        <text class="circle-label" x="0" y="-275" fill="#8bb5ff" font-size="26"
+              text-anchor="middle" font-weight="600" letter-spacing="2">单位圆</text>
+      </g>
+
+      <!-- Time axis -->
+      <line class="time-axis" x1="460" y1="640" x2="460" y2="640"
+            stroke="#6b85ab" stroke-width="2.5" opacity="0.85"/>
+      <polygon class="time-arrow" points="1760,640 1740,632 1740,648" fill="#6b85ab" opacity="0"/>
+      <text class="time-label" x="1770" y="648" fill="#8ba3c7" font-size="22" opacity="0">时间 t</text>
+
+      <!-- Sine wave -->
+      <path class="sine-wave"
+            d="M 460 640 Q 540 540, 620 640 T 780 640 T 940 640 T 1100 640 T 1260 640 T 1420 640 T 1580 640 T 1720 640"
+            fill="none" stroke="url(#scene-05-f80eb7-wave)" stroke-width="4.5"
+            stroke-linecap="round"
+            stroke-dasharray="2000" stroke-dashoffset="2000"
+            filter="url(#scene-05-f80eb7-glow)"/>
+
+      <!-- Trace dots on wave -->
+      <g class="trace-dots">
+        <circle class="trace-dot" cx="620" cy="540" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
+        <circle class="trace-dot" cx="940" cy="740" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
+        <circle class="trace-dot" cx="1260" cy="540" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
+        <circle class="trace-dot" cx="1580" cy="740" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
+      </g>
+
+      <text class="sin-label" x="720" y="560" fill="#ff8c6b" font-size="24" opacity="0" font-style="italic" font-weight="500">sin(θ)</text>
+      <text class="wave-label" x="1620" y="595" fill="#ffb347" font-size="24" opacity="0" font-weight="600" letter-spacing="1">正弦波</text>
+    </svg>
+
+    <div class="eyebrow">第五幕 · 投影的秘密</div>
+    <h1 class="title">3D视角的<span class="highlight">统一</span></h1>
+    <p class="subtitle">波，是圆周运动在时间轴上的<span class="accent">投影</span></p>
+    <div class="caption">旋转 &times; 时间 = 正弦波</div>
+
+    <style>
+      #scene-05-f80eb7 {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: radial-gradient(ellipse 1300px 900px at 28% 42%, #1a2847 0%, #0c1426 55%, #05070f 100%);
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
+        color: #fff;
+      }
+      #scene-05-f80eb7 .bg-glow {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 78% 82%, rgba(255, 179, 71, 0.14) 0%, transparent 38%),
+          radial-gradient(circle at 18% 28%, rgba(74, 158, 255, 0.20) 0%, transparent 46%);
+        pointer-events: none;
+      }
+      #scene-05-f80eb7 .grid-floor {
+        position: absolute;
+        left: 0; bottom: 0;
+        width: 100%; height: 540px;
+        background-image:
+          linear-gradient(rgba(74, 158, 255, 0.24) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(74, 158, 255, 0.24) 1px, transparent 1px);
+        background-size: 100px 100px;
+        transform: perspective(950px) rotateX(62deg);
+        transform-origin: bottom center;
+        opacity: 0.55;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        pointer-events: none;
+      }
+      #scene-05-f80eb7 .stage {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+      }
+      #scene-05-f80eb7 .eyebrow {
+        position: absolute;
+        top: 95px; left: 128px;
+        font-size: 26px;
+        letter-spacing: 10px;
+        color: #ffb347;
+        font-weight: 500;
+        opacity: 0;
+      }
+      #scene-05-f80eb7 .title {
+        position: absolute;
+        top: 145px; left: 128px;
+        font-size: 122px;
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #ffffff 0%, #a9c4ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 6px 26px rgba(74, 158, 255, 0.38));
+        opacity: 0;
+        margin: 0;
+      }
+      #scene-05-f80eb7 .title .highlight {
+        background: linear-gradient(135deg, #ffb347 0%, #ff8c6b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      #scene-05-f80eb7 .subtitle {
+        position: absolute;
+        top: 320px; left: 132px;
+        font-size: 40px;
+        color: #c8d4e6;
+        font-weight: 400;
+        letter-spacing: 1px;
+        opacity: 0;
+        margin: 0;
+      }
+      #scene-05-f80eb7 .subtitle .accent {
+        color: #ffb347;
+        font-weight: 600;
+        padding: 0 6px;
+      }
+      #scene-05-f80eb7 .caption {
+        position: absolute;
+        bottom: 74px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 28px;
+        color: #8ba3c7;
+        letter-spacing: 8px;
+        font-weight: 300;
+        opacity: 0;
+        white-space: nowrap;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-05-f80eb7';
+
+      // Background layers
+      tl.from(ID + ' .bg-glow', { opacity: 0, duration: 0.9, ease: 'power2.out' }, 0);
+      tl.from(ID + ' .grid-floor', { opacity: 0, duration: 1.4, ease: 'power2.out' }, 0.15);
+
+      // Headline copy
+      tl.fromTo(ID + ' .eyebrow',
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.3);
+      tl.fromTo(ID + ' .title',
+        { opacity: 0, y: 45 },
+        { opacity: 1, y: 0, duration: 0.95, ease: 'power3.out' }, 0.55);
+      tl.fromTo(ID + ' .subtitle',
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' }, 1.25);
+
+      // Circle group fades in
+      tl.from(ID + ' .circle-group', { opacity: 0, duration: 0.8, ease: 'power2.out' }, 1.8);
+
+      // Axes appear
+      tl.from(ID + ' .ax-h', { opacity: 0, duration: 0.7, ease: 'power2.out' }, 2.05);
+      tl.from(ID + ' .ax-v', { opacity: 0, duration: 0.7, ease: 'power2.out' }, 2.15);
+
+      // Unit circle draws
+      tl.to(ID + ' .unit-circle', { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, 2.25);
+      tl.from(ID + ' .circle-label', { opacity: 0, y: 12, duration: 0.55, ease: 'power2.out' }, 3.05);
+
+      // Time axis extends right
+      tl.to(ID + ' .time-axis', { attr: { x2: 1740 }, duration: 1.7, ease: 'power2.out' }, 3.5);
+      tl.to(ID + ' .time-arrow', { opacity: 1, duration: 0.4 }, 5.05);
+      tl.to(ID + ' .time-label', { opacity: 1, duration: 0.5 }, 5.15);
+
+      // Rotating point + projection line appear
+      tl.to(ID + ' .rot-point', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 3.9);
+      tl.to(ID + ' .drop-line', { opacity: 0.9, duration: 0.4 }, 4.1);
+
+      // Drive rotation around ellipse; projection drops to the horizontal plane
+      const proxy = { a: -Math.PI / 2 };
+      tl.to(proxy, {
+        a: -Math.PI / 2 + Math.PI * 2.5,
+        duration: 6.8,
+        ease: 'none',
+        onUpdate: function() {
+          const rx = 215, ry = 84;
+          const px = Math.cos(proxy.a) * rx;
+          const py = Math.sin(proxy.a) * ry;
+          const pt = document.querySelector(ID + ' .rot-point');
+          const dl = document.querySelector(ID + ' .drop-line');
+          if (pt) {
+            pt.setAttribute('cx', px.toFixed(2));
+            pt.setAttribute('cy', py.toFixed(2));
+          }
+          if (dl) {
+            dl.setAttribute('x1', px.toFixed(2));
+            dl.setAttribute('y1', py.toFixed(2));
+            dl.setAttribute('x2', px.toFixed(2));
+            dl.setAttribute('y2', '0');
+          }
+        }
+      }, 4.3);
+
+      // Sine wave draws in, synchronized with rotation
+      tl.to(ID + ' .sine-wave', { strokeDashoffset: 0, duration: 6.5, ease: 'power1.inOut' }, 4.4);
+
+      // sin(θ) annotation
+      tl.to(ID + ' .sin-label', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 5.6);
+
+      // Trace dots appear along the wave
+      tl.to(ID + ' .trace-dot', {
+        opacity: 1, duration: 0.35, stagger: 0.55, ease: 'power2.out'
+      }, 6.1);
+
+      // Wave label at end
+      tl.to(ID + ' .wave-label', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 8.8);
+
+      // Final caption reveals near end
+      tl.fromTo(ID + ' .caption',
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 9.7);
+
+      // Gentle hold emphasis on title at the end
+      tl.to(ID + ' .title', {
+        filter: 'drop-shadow(0 6px 34px rgba(255, 179, 71, 0.45))',
+        duration: 1.4, ease: 'power1.inOut'
+      }, 11.2);
+
+      window.__timelines['scene-05-f80eb7'] = tl;
+    </script>
+  </div>
+</template>

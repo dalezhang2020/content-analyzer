@@ -23,8 +23,6 @@
  * individual asset without regressing the pipeline. The caller remains
  * responsible for re-running downstream stages if they were already
  * finished.
- *
- * _Requirements: 9.1, 9.4, 9.5, 9.6, 9.9_
  */
 
 import type { NextRequest } from "next/server";

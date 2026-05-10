@@ -22,8 +22,6 @@
  * mapped to `VALIDATION_FAILED` 400 by `respondWithError` via its
  * structural `ZodError` check. This keeps the helpers tiny and the error
  * mapping centralised.
- *
- * _Requirements: 14.1, 16.1, 16.2, 16.4, 16.5_
  */
 
 import type { NextRequest } from "next/server";
@@ -47,8 +45,6 @@ import { assertValidProjectId, assertValidSceneId } from "./path-safety";
  * ```
  *
  * without branching on the runtime shape.
- *
- * _Requirements: 16.4_
  */
 export function awaitParams<T>(p: T | Promise<T>): Promise<T> {
   return Promise.resolve(p);
@@ -72,8 +68,6 @@ function readParamString(
  * `REGEX.PROJECT_ID`, and return it. Throws
  * `WorkbenchError(INVALID_PROJECT_ID)` for any miss (wrong type, missing
  * key, or regex mismatch).
- *
- * _Requirements: 2.3, 16.4_
  */
 export async function requireProjectIdFromParams(
   params:
@@ -97,8 +91,6 @@ export async function requireProjectIdFromParams(
  * Await (if needed) a params record, extract `sceneId`, validate it
  * against `REGEX.SCENE_ID`, and return it. Throws
  * `WorkbenchError(INVALID_SCENE_ID)` for any miss.
- *
- * _Requirements: 3.2, 16.4_
  */
 export async function requireSceneIdFromParams(
   params:
@@ -154,8 +146,6 @@ export interface ParseJsonBodyOptions {
  * zod errors are intentionally NOT caught here — `respondWithError`
  * structurally detects `ZodError` and maps it to 400 `VALIDATION_FAILED`
  * with the full issue list in `details`.
- *
- * _Requirements: 16.1, 16.2, 16.5_
  */
 export async function parseJsonBody<T>(
   req: Request | NextRequest,
@@ -207,8 +197,6 @@ export async function parseJsonBody<T>(
  * deserialised (e.g. query parameters, already-parsed form fields).
  * Delegates straight to `schema.parse` so zod errors flow through
  * `respondWithError` unchanged.
- *
- * _Requirements: 16.1_
  */
 export function parseWithSchema<T>(
   schema: z.ZodSchema<T>,
@@ -224,8 +212,6 @@ export function parseWithSchema<T>(
 /**
  * Canonical success-path serialiser. Delegates to `Response.json` so
  * Next.js picks up the correct `Content-Type: application/json`.
- *
- * _Requirements: 14.1_
  */
 export function respondJson<T>(body: T, status = 200): Response {
   return Response.json(body, { status });
@@ -240,8 +226,6 @@ export function respondJson<T>(body: T, status = 200): Response {
  *   - `WorkbenchError` → `e.httpStatus`
  *   - `ZodError`-shaped → 400 `VALIDATION_FAILED` with `issues`
  *   - anything else → 500 `UNKNOWN` (no stack leak)
- *
- * _Requirements: 14.1, 14.7_
  */
 export function respondError(e: unknown): Response {
   return respondWithError(e);
@@ -255,8 +239,6 @@ export function respondError(e: unknown): Response {
  * Read the optional `force` flag used by destructive routes (project
  * delete, template reset). Returns `true` only when the body is a plain
  * object with `force === true`; all other shapes default to `false`.
- *
- * _Requirements: 11.10, 15.1_
  */
 export function readForceFlag(body: unknown): boolean {
   if (body === null || typeof body !== "object") return false;

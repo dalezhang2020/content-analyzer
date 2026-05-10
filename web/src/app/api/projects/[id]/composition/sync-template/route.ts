@@ -1,7 +1,7 @@
 /**
  * Video Creation Workbench — `POST /api/projects/{id}/composition/sync-template`.
  *
- * Re-syncs the safe subset of the `linear-launch` template into an existing
+ * Re-syncs the safe subset of the HyperFrames template into an existing
  * project's `composition/` directory: `hyperframes.json`, `package.json`,
  * and `fonts/` are overwritten while `index.html` and `assets/` are left
  * alone (user edits to those are preserved by design — see `template-manager`).
@@ -22,8 +22,6 @@
  *
  * The whole flow runs under `withProjectLock` so concurrent sync calls
  * against the same project fail fast with 409 `LOCK_BUSY`.
- *
- * _Requirements: 15.6, 15.7_
  */
 
 import path from "node:path";

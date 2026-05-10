@@ -15,8 +15,6 @@
  *
  * Internal state controls the popover visibility — parents don't have
  * to wire up any viewer plumbing.
- *
- * _Requirements: 14.4, 14.5_
  */
 
 import { useState } from "react";

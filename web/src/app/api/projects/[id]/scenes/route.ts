@@ -17,8 +17,6 @@
  * against the same project serialise (fail-fast `LOCK_BUSY` → HTTP 409).
  * The new scene lands at the end of the array; `reindex` then stamps it
  * with `index = scenes.length` (1-based, contiguous).
- *
- * _Requirements: 3.1, 3.3–3.9, 5.8–5.10_
  */
 
 import { randomBytes } from "node:crypto";
@@ -49,7 +47,6 @@ const ALLOWED_STAGES: readonly Stage[] = [
   "composition",
   "audio",
   "render",
-  "qa",
 ] as const;
 
 function assertStageAllowsSceneCrud(stage: Stage): void {

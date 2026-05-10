@@ -35,8 +35,6 @@
  *      re-run via the cleared stageStatus + `compositionRegenRequired`.
  *   9. `writeProject`; return
  *      `{ scene, compositionRegenRequired }`.
- *
- * _Requirements: 7.1–7.7, 9.1_
  */
 
 import type { NextRequest } from "next/server";
@@ -75,7 +73,6 @@ const REWRITE_ALLOWED_STAGES = new Set<Stage>([
   "composition",
   "audio",
   "render",
-  "qa",
 ]);
 
 export async function POST(

@@ -19,8 +19,6 @@
  * The whole file is read into memory with `fs.readFile`; per-scene mp3s
  * are tiny (typically < 500 KB) so a streaming `ReadStream` would add
  * complexity without material benefit.
- *
- * _Requirements: 9.10, 12.6, 12.11, 16.4, 16.6_
  */
 
 import { promises as fs } from "node:fs";

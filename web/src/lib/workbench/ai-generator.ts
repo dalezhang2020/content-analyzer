@@ -28,8 +28,6 @@
  *   KIRO_CLI_BIN  — path to the kiro-cli binary (default: "kiro-cli")
  *   KIRO_MODEL    — model id, see `kiro-cli chat --list-models`
  *                   (default: "claude-sonnet-4.6")
- *
- * _Requirements: 4.1–4.9, 5.1–5.7, 6.1–6.4, 7.1–7.3, 7.7, 14.6, 14.9_
  */
 
 import { spawn } from "node:child_process";
@@ -152,8 +150,6 @@ function parseJsonLoose(s: string): unknown {
  * fires and `LLM_OUTPUT_INVALID` for non-2xx or network failures. When a
  * logger is supplied the call is wrapped in `logger.timed("llm_call", …)`
  * so `durationMs` lands in the stage log.
- *
- * _Requirements: 4.1, 5.1, 6.1, 7.7, 14.6, 14.9_
  */
 export async function callLLM(
   messages: LLMMessage[],
@@ -451,8 +447,6 @@ function buildBriefMessages(
 /**
  * Generate a Brief from `project.topic`. Up to `LLM_BRIEF_MAX_ATTEMPTS`
  * total attempts, each bounded by `TIMEOUTS_MS.LLM_BRIEF`.
- *
- * _Requirements: 4.1, 4.2, 4.3, 4.4, 4.7_
  */
 export async function generateBrief(project: Project): Promise<Brief> {
   const logger = createLogger(project.projectId, "brief");
@@ -606,8 +600,6 @@ function buildStoryboardMessages(
  * array (sceneId/index are assigned by the caller) plus an optional
  * `warning` when the total duration falls outside the ±15% tolerance band
  * after the retry budget is spent.
- *
- * _Requirements: 5.1, 5.3, 5.4, 5.5, 5.6_
  */
 export async function generateStoryboardFromBrief(project: Project): Promise<{
   scenes: StoryboardOutput["scenes"];
@@ -782,12 +774,12 @@ export async function generateStoryboardFromBrief(project: Project): Promise<{
  *
  * Resolution precedence (matches template-manager.ts):
  *   1. `process.env.HYPERFRAMES_TEMPLATE_DIR`/index.html
- *   2. `<cwd>/../{hf-blank, linear-launch}/index.html`
- *   3. `<cwd>/../../{hf-blank, linear-launch}/index.html`
+ *   2. `<cwd>/../hf-blank/index.html`
+ *   3. `<cwd>/../../hf-blank/index.html`
  *
  * `hf-blank` is the canonical HyperFrames baseline (from
  * `npx hyperframes init --example blank`) — minimal structure, zero visual
- * bias. `linear-launch` is a legacy fallback kept for backward compat.
+ * bias.
  *
  * Any resolution failure falls back to `null`, in which case the prompt
  * reverts to the abstract-rules-only format. The cache is keyed by the
@@ -801,7 +793,6 @@ let referenceTemplateCache: {
 
 const REFERENCE_TEMPLATE_DIR_NAMES: readonly string[] = [
   "hf-blank",
-  "linear-launch",
 ];
 
 async function loadReferenceTemplate(): Promise<string | null> {
@@ -1275,15 +1266,13 @@ function buildRewriteMessages(
  * Rewrite a single Scene's narration (and optionally durationSec) given a
  * QA note. No retry on failure per Req 7.7 — the caller returns HTTP 502
  * and the user decides whether to try again.
- *
- * _Requirements: 7.1, 7.2, 7.7_
  */
 export async function rewriteScene(
   project: Project,
   scene: Scene,
   qaNote: string,
 ): Promise<{ narration: string; durationSec?: number }> {
-  const logger = createLogger(project.projectId, "qa");
+  const logger = createLogger(project.projectId, "storyboard");
 
   await logger.info("rewrite_attempt", { sceneId: scene.sceneId });
 
