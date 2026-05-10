@@ -426,7 +426,8 @@ export async function readProject(projectId: string): Promise<Project> {
 
       const result = ProjectSchema.safeParse(raw);
       if (!result.success) {
-        console.warn("[project-store] Neon row failed schema validation, falling back to FS");
+        console.warn("[project-store] Neon row failed schema validation, issues:", JSON.stringify(result.error.issues.slice(0, 3)));
+        console.warn("[project-store] raw.stage:", raw.stage, "raw.stageStatus keys:", Object.keys(raw.stageStatus as object));
         throw new Error("schema validation failed");
       }
       return result.data;
