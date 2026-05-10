@@ -303,12 +303,25 @@ function mapLegacyStage(stage: string): string {
 /**
  * Filter a stageStatus object from Neon to only include the 5 valid stages.
  * Legacy data may contain "topic", "qa", "published" from the old 8-stage schema.
+ * Also normalizes any invalid status values to "pending".
  */
 function filterStageStatus(raw: unknown): unknown {
   if (!raw || typeof raw !== "object") return raw;
   const validStages = new Set(["brief", "storyboard", "composition", "audio", "render"]);
+  const validStatuses = new Set(["pending", "running", "succeeded", "failed", "skipped"]);
   return Object.fromEntries(
-    Object.entries(raw as Record<string, unknown>).filter(([k]) => validStages.has(k))
+    Object.entries(raw as Record<string, unknown>)
+      .filter(([k]) => validStages.has(k))
+      .map(([k, v]) => {
+        // Normalize invalid status values to "pending"
+        if (v && typeof v === "object" && "status" in v) {
+          const stageObj = v as Record<string, unknown>;
+          if (!validStatuses.has(stageObj.status as string)) {
+            return [k, { ...stageObj, status: "pending" }];
+          }
+        }
+        return [k, v];
+      })
   );
 }
 
