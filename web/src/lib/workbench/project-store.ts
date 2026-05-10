@@ -881,8 +881,8 @@ export async function writeAudioFile(
     const { url } = await put(blobPath, buf, {
       access: "public",
       contentType: "audio/mpeg",
-      // Overwrite if re-generating the same scene
       addRandomSuffix: false,
+      allowOverwrite: true,
     });
     // Mirror blob URL to Neon for reference
     const { syncAudioBlobUrlToNeon } = await import("./neon-sync");
