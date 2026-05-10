@@ -851,20 +851,19 @@ export async function clearSceneCompositions(projectId: string): Promise<void> {
 }
 
 /**
- * Atomically persist a scene's TTS audio buffer.
+ * Persist a scene's TTS audio buffer.
  *
  * - Local: writes to `data/projects/{projectId}/composition/assets/scene-{index}.mp3`
- * - Vercel: stores base64-encoded MP3 in Neon `scenes.audio_data`
+ *   and returns the relative path `"assets/scene-{index}.mp3"`.
+ * - Vercel: uploads to Vercel Blob and returns the public blob URL.
  *
- * `index` is the 1-based Scene index — not the sceneId — so audio files
- * line up with the positional slots the composition HTML wires via
- * `<audio src="assets/scene-N.mp3">`.
+ * `index` is the 1-based Scene index — not the sceneId.
  */
 export async function writeAudioFile(
   projectId: string,
   index: number,
   buf: Buffer,
-): Promise<void> {
+): Promise<string> {
   if (!Number.isInteger(index) || index < 1) {
     throw new WorkbenchError(
       ErrorCode.WRITE_FAILED,
@@ -875,10 +874,19 @@ export async function writeAudioFile(
 
   const { isLocalEnv } = await import("@/lib/env");
   if (!isLocalEnv()) {
-    // On Vercel: persist to Neon (no local FS available)
-    const { syncAudioToNeon } = await import("./neon-sync");
-    await syncAudioToNeon(projectId, index, buf);
-    return;
+    // On Vercel: upload to Vercel Blob, return public URL
+    const { put } = await import("@vercel/blob");
+    const blobPath = `audio/${projectId}/scene-${index}.mp3`;
+    const { url } = await put(blobPath, buf, {
+      access: "public",
+      contentType: "audio/mpeg",
+      // Overwrite if re-generating the same scene
+      addRandomSuffix: false,
+    });
+    // Mirror blob URL to Neon for reference
+    const { syncAudioBlobUrlToNeon } = await import("./neon-sync");
+    void syncAudioBlobUrlToNeon(projectId, index, url);
+    return url;
   }
 
   const absPath = resolveProjectFile(
@@ -888,6 +896,7 @@ export async function writeAudioFile(
     `scene-${index}.mp3`,
   );
   await atomicWriteBuffer(absPath, buf);
+  return path.posix.join(STAGE_DIRS.ASSETS, `scene-${index}.mp3`);
 }
 
 // Silence unused-import warning if DATA_DIR ever becomes unused after

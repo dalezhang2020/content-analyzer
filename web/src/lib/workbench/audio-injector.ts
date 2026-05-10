@@ -87,21 +87,25 @@ const AUDIO_TAG_RE =
 const BODY_CLOSE_RE = /<\/body\s*>/i;
 
 /**
- * Render the canonical `<audio>` tag for a scene. Kept as a single template
- * so tests and future consumers have a single source of truth for the tag
- * shape.
+ * Render the canonical `<audio>` tag for a scene.
+ *
+ * @param src  Audio source — either a relative path ("assets/scene-N.mp3")
+ *             or an absolute URL (Vercel Blob). Defaults to the relative
+ *             path for backward compatibility.
  */
 function canonicalTag(
   index: number,
   startSec: number,
   durationSec: number,
+  src?: string,
 ): string {
+  const audioSrc = src ?? `assets/scene-${index}.mp3`;
   return (
     `<audio id="scene-${index}-audio" class="scene-audio" ` +
     `data-scene-index="${index}" ` +
     `data-start="${startSec}" ` +
     `data-duration="${durationSec}" ` +
-    `src="assets/scene-${index}.mp3"></audio>`
+    `src="${audioSrc}"></audio>`
   );
 }
 
@@ -120,6 +124,10 @@ function canonicalTag(
  * @param successfulIndexes   1-based scene indexes whose TTS succeeded. May
  *                            be passed as an array or a Set — both are
  *                            treated as the same logical set.
+ * @param audioSrcMap         Optional map of scene index → audio src URL.
+ *                            When provided (e.g. Vercel Blob URLs), the
+ *                            canonical tag uses that URL as `src` instead
+ *                            of the default relative path.
  * @returns                   New HTML string with the invariants described
  *                            at the top of this file.
  */
@@ -127,6 +135,7 @@ export function injectAudio(
   html: string,
   storyboard: Storyboard,
   successfulIndexes: number[] | Set<number>,
+  audioSrcMap?: Map<number, string>,
 ): string {
   const successful: Set<number> =
     successfulIndexes instanceof Set
@@ -163,7 +172,7 @@ export function injectAudio(
 
     emitted.add(index);
     const startSec = starts.get(index) ?? 0;
-    return canonicalTag(index, startSec, scene.durationSec);
+    return canonicalTag(index, startSec, scene.durationSec, audioSrcMap?.get(index));
   });
 
   // Pass 2 — build canonical tags for successful indexes that had no
@@ -182,7 +191,7 @@ export function injectAudio(
     .map((index) => {
       const scene = byIndex.get(index)!;
       const startSec = starts.get(index) ?? 0;
-      return canonicalTag(index, startSec, scene.durationSec);
+      return canonicalTag(index, startSec, scene.durationSec, audioSrcMap?.get(index));
     })
     .join("");
 

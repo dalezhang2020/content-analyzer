@@ -249,33 +249,32 @@ export async function syncIndexHtmlToNeon(
 }
 
 /**
- * Store a scene's MP3 audio as base64 in Neon.
- * Used on Vercel where local filesystem is not persistent.
+ * Store a scene's Vercel Blob URL in Neon for reference.
+ * Called after a successful Vercel Blob upload.
  *
  * @param projectId   e.g. "proj_1778428922474_48e007"
  * @param sceneIndex  1-based scene index
- * @param buf         raw MP3 bytes
+ * @param blobUrl     public Vercel Blob URL
  */
-export async function syncAudioToNeon(
+export async function syncAudioBlobUrlToNeon(
   projectId: string,
   sceneIndex: number,
-  buf: Buffer,
+  blobUrl: string,
 ): Promise<void> {
   const sql = await getSql();
   if (!sql) return;
 
   try {
-    const base64 = buf.toString("base64");
     await sql`
       UPDATE content_analyzer.scenes
-      SET audio_data  = ${base64},
-          audio_path  = ${"assets/scene-" + sceneIndex + ".mp3"},
-          updated_at  = NOW()
+      SET audio_blob_url = ${blobUrl},
+          audio_path     = ${"assets/scene-" + sceneIndex + ".mp3"},
+          updated_at     = NOW()
       WHERE project_id  = ${projectId}
         AND scene_index = ${sceneIndex}
     `;
   } catch (err) {
-    console.warn("[neon-sync] audio sync failed:", err instanceof Error ? err.message : err);
+    console.warn("[neon-sync] audio blob URL sync failed:", err instanceof Error ? err.message : err);
   }
 }
 
@@ -321,6 +320,5 @@ export async function writeIndexHtmlToNeon(
     `;
   } catch (err) {
     console.warn("[neon-sync] writeIndexHtml failed:", err instanceof Error ? err.message : err);
-    throw err; // re-throw on Vercel — this is the primary storage
   }
 }

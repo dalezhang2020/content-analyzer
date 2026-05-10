@@ -336,8 +336,16 @@ export async function synthesizeAll(
         { sceneIndex: original.index, voice },
       );
 
+      let resolvedAudioPath: string;
       try {
-        await writeAudioFile(project.projectId, original.index, buffer);
+        // writeAudioFile returns the path/URL where the audio was stored:
+        // - local: relative path "assets/scene-N.mp3"
+        // - Vercel: absolute Vercel Blob URL
+        resolvedAudioPath = await writeAudioFile(
+          project.projectId,
+          original.index,
+          buffer,
+        );
       } catch (writeErr) {
         const reason =
           writeErr instanceof Error ? writeErr.message : String(writeErr);
@@ -358,10 +366,7 @@ export async function synthesizeAll(
 
       const updated: Scene = {
         ...original,
-        audioPath: path.posix.join(
-          STAGE_DIRS.ASSETS,
-          `scene-${original.index}.mp3`,
-        ),
+        audioPath: resolvedAudioPath,
       };
       scenes.push(updated);
     } catch (err) {
@@ -453,8 +458,13 @@ export async function synthesizeOne(
     throw err;
   }
 
+  let resolvedAudioPath: string;
   try {
-    await writeAudioFile(project.projectId, original.index, buffer);
+    resolvedAudioPath = await writeAudioFile(
+      project.projectId,
+      original.index,
+      buffer,
+    );
   } catch (writeErr) {
     const reason =
       writeErr instanceof Error ? writeErr.message : String(writeErr);
@@ -468,10 +478,7 @@ export async function synthesizeOne(
 
   const updated: Scene = {
     ...original,
-    audioPath: path.posix.join(
-      STAGE_DIRS.ASSETS,
-      `scene-${original.index}.mp3`,
-    ),
+    audioPath: resolvedAudioPath,
   };
 
   await logger.info("tts_done", {

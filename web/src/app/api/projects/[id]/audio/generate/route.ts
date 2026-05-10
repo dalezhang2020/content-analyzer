@@ -161,6 +161,14 @@ export async function POST(
         let currentHtml: string;
         let prevHtmlPath: string | null = null;
 
+        // Build audioSrcMap: index → audioPath (relative path or blob URL).
+        // Used by injectAudio so <audio src> points to the right location.
+        const audioSrcMap = new Map<number, string>(
+          ttsResult.scenes
+            .filter((s) => s.audioPath !== null)
+            .map((s) => [s.index, s.audioPath as string]),
+        );
+
         if (isLocalEnv()) {
           // Local: read/write from filesystem, run lint/validate
           const htmlPath = resolveProjectFile(
@@ -184,6 +192,7 @@ export async function POST(
             currentHtml,
             updatedStoryboard,
             successfulIndexes,
+            audioSrcMap,
           );
           await atomicWriteBuffer(htmlPath, Buffer.from(newHtml, "utf8"));
 
@@ -257,6 +266,7 @@ export async function POST(
             currentHtml,
             updatedStoryboard,
             successfulIndexes,
+            audioSrcMap,
           );
           await writeIndexHtmlToNeon(projectId, newHtml);
         }
