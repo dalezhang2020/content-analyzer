@@ -507,13 +507,6 @@ export async function readProject(projectId: string): Promise<Project> {
 export async function writeProject(project: Project): Promise<void> {
   assertValidProjectId(project.projectId);
 
-  // MVP monotonicity strategy:
-  //   We set `updatedAt` to the current wall-clock ISO string on every
-  //   write. As long as the system clock advances between writes,
-  //   `updatedAt` is strictly non-decreasing (Property 6: monotonic).
-  //   Clock skew from an NTP correction could theoretically violate this
-  //   — deferred until the property test reveals a failing scenario at
-  //   which point we'd switch to a read-prev → take-max strategy.
   const next: Project = {
     ...project,
     updatedAt: new Date().toISOString(),
@@ -531,10 +524,18 @@ export async function writeProject(project: Project): Promise<void> {
     );
   }
 
+  const { isLocalEnv } = await import("@/lib/env");
+  if (!isLocalEnv()) {
+    // On Vercel: Neon is the primary store — write synchronously and return.
+    const { syncProjectToNeon } = await import("./neon-sync");
+    await syncProjectToNeon(validated.data);
+    return;
+  }
+
+  // Local: write to filesystem, then mirror to Neon fire-and-forget.
   const absPath = projectJsonPath(project.projectId);
   await atomicWriteJson(absPath, validated.data, { spaces: 2 });
 
-  // Phase 1 dual-write: mirror to Neon (fire-and-forget, never throws)
   import("./neon-sync").then(({ syncProjectToNeon }) => {
     void syncProjectToNeon(validated.data);
   }).catch(() => {/* ignore import errors in test environments */});

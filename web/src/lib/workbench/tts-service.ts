@@ -312,9 +312,15 @@ export async function synthesizeAll(
     if (!force && original.audioPath !== null) {
       let present = false;
       try {
-        present = await fileExists(
-          existingAudioAbsPath(project.projectId, original.audioPath),
-        );
+        const audioPath = original.audioPath;
+        if (audioPath.startsWith("http://") || audioPath.startsWith("https://")) {
+          // Vercel Blob URL — treat as present (blob storage is persistent)
+          present = true;
+        } else {
+          present = await fileExists(
+            existingAudioAbsPath(project.projectId, audioPath),
+          );
+        }
       } catch {
         present = false;
       }

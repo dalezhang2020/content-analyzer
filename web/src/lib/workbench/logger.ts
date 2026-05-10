@@ -308,11 +308,48 @@ function append(
 /**
  * Build a `WorkbenchLogger` bound to `(projectId, stage)`. The returned
  * object is cheap — safe to construct per-request.
+ *
+ * On Vercel (non-local env), returns a console-only logger since the
+ * local filesystem is read-only.
  */
 export function createLogger(
   projectId: string,
   stage: LoggerStage,
 ): WorkbenchLogger {
+  // On Vercel: no persistent filesystem — log to console only.
+  if (process.env.VERCEL) {
+    const prefix = `[workbench:${stage}:${projectId}]`;
+    const noop = async (event: string, data?: Record<string, unknown>) => {
+      console.log(prefix, event, data ? JSON.stringify(redactData(data)) : "");
+    };
+    return {
+      info: noop,
+      warn: async (event, data) => {
+        console.warn(prefix, event, data ? JSON.stringify(redactData(data)) : "");
+      },
+      error: async (event, data) => {
+        console.error(prefix, event, data ? JSON.stringify(redactData(data)) : "");
+      },
+      async timed<T>(
+        event: string,
+        fn: () => Promise<T>,
+        data?: Record<string, unknown>,
+      ): Promise<T> {
+        const start = Date.now();
+        try {
+          const result = await fn();
+          console.log(prefix, event, JSON.stringify({ ...redactData(data), durationMs: Date.now() - start }));
+          return result;
+        } catch (err) {
+          const durationMs = Date.now() - start;
+          const message = err instanceof Error ? err.message.slice(0, 500) : String(err);
+          console.error(prefix, event, JSON.stringify({ ...redactData(data), durationMs, error: { message } }));
+          throw err;
+        }
+      },
+    };
+  }
+
   const logPath = resolveLogPath(projectId, stage);
 
   return {
