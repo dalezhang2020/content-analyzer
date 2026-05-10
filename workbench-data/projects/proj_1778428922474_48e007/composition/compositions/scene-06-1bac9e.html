@@ -1,0 +1,318 @@
+<template id="scene-06-1bac9e-template">
+  <div id="scene-06-1bac9e" data-composition-id="scene-06-1bac9e" data-width="1920" data-height="1080">
+
+    <!-- Background layers -->
+    <div class="bg-base"></div>
+    <div class="bg-glow"></div>
+    <svg class="bg-grid" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <pattern id="sc06-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+          <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(120,160,220,0.06)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="1920" height="1080" fill="url(#sc06-grid)"/>
+    </svg>
+
+    <!-- Left: unit-circle visualization -->
+    <div class="stage-left">
+      <svg class="circle-svg" viewBox="0 0 1080 1080" aria-hidden="true">
+        <defs>
+          <radialGradient id="sc06-disc" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(74,158,255,0.12)"/>
+            <stop offset="70%" stop-color="rgba(74,158,255,0.02)"/>
+            <stop offset="100%" stop-color="rgba(74,158,255,0)"/>
+          </radialGradient>
+          <marker id="sc06-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="rgba(200,215,240,0.7)"/>
+          </marker>
+        </defs>
+
+        <!-- Halo behind circle -->
+        <circle class="disc" cx="540" cy="540" r="320" fill="url(#sc06-disc)"/>
+
+        <!-- Coordinate axes -->
+        <line class="axis" x1="140" y1="540" x2="940" y2="540" stroke="rgba(200,215,240,0.5)" stroke-width="2" marker-end="url(#sc06-arrow)"/>
+        <line class="axis" x1="540" y1="940" x2="540" y2="140" stroke="rgba(200,215,240,0.5)" stroke-width="2" marker-end="url(#sc06-arrow)"/>
+
+        <text class="axis-label" x="955" y="548" fill="rgba(200,215,240,0.7)">x</text>
+        <text class="axis-label" x="548" y="132" fill="rgba(200,215,240,0.7)">y</text>
+        <text class="axis-label origin" x="522" y="568" fill="rgba(200,215,240,0.55)">O</text>
+
+        <!-- Unit circle -->
+        <circle class="unit" cx="540" cy="540" r="300" fill="none" stroke="#4A9EFF" stroke-width="2.5"
+                stroke-dasharray="1885" stroke-dashoffset="1885"
+                style="filter: drop-shadow(0 0 10px rgba(74,158,255,0.5));"/>
+
+        <!-- α radius (to 30°) -->
+        <line class="r-alpha" x1="540" y1="540" x2="800" y2="390"
+              stroke="#F5B942" stroke-width="3" stroke-linecap="round"
+              style="filter: drop-shadow(0 0 6px rgba(245,185,66,0.6));"/>
+        <!-- α arc near origin -->
+        <path class="arc-alpha" d="M 600 540 A 60 60 0 0 0 591.96 510"
+              fill="none" stroke="#F5B942" stroke-width="2.5"/>
+        <text class="label-alpha" x="615" y="528" fill="#F5B942">α</text>
+        <circle class="dot-alpha" cx="800" cy="390" r="7" fill="#F5B942"
+                style="filter: drop-shadow(0 0 8px rgba(245,185,66,0.8));"/>
+
+        <!-- β radius (from 30° to 80°) -->
+        <line class="r-beta" x1="540" y1="540" x2="592.1" y2="244.6"
+              stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"
+              style="filter: drop-shadow(0 0 6px rgba(255,107,107,0.6));"/>
+        <!-- β arc (swept from α to α+β) -->
+        <path class="arc-beta" d="M 617.9 495.0 A 90 90 0 0 0 555.6 451.4"
+              fill="none" stroke="#FF6B6B" stroke-width="2.5"/>
+        <text class="label-beta" x="596" y="470" fill="#FF6B6B">β</text>
+        <circle class="dot-sum" cx="592.1" cy="244.6" r="9" fill="#FF6B6B"
+                style="filter: drop-shadow(0 0 12px rgba(255,107,107,0.9));"/>
+
+        <!-- Projection: horizontal dashed to y-axis -->
+        <line class="proj-h" x1="592.1" y1="244.6" x2="540" y2="244.6"
+              stroke="rgba(255,107,107,0.75)" stroke-width="2" stroke-dasharray="6 6"/>
+        <!-- Projection: vertical dashed to x-axis -->
+        <line class="proj-v" x1="592.1" y1="244.6" x2="592.1" y2="540"
+              stroke="rgba(255,107,107,0.45)" stroke-width="2" stroke-dasharray="6 6"/>
+
+        <!-- sin(α+β) bracket on y-axis -->
+        <line class="sin-bar" x1="540" y1="540" x2="540" y2="244.6"
+              stroke="#FF6B6B" stroke-width="4" stroke-linecap="round"
+              style="filter: drop-shadow(0 0 8px rgba(255,107,107,0.6));"/>
+        <text class="sin-label" x="455" y="400" fill="#FF6B6B">sin(α+β)</text>
+
+        <!-- α+β label near sum point -->
+        <text class="label-sum" x="546" y="228" fill="#FFE8C8">α+β</text>
+      </svg>
+    </div>
+
+    <!-- Right: copy block -->
+    <div class="stage-right">
+      <div class="eyebrow">角度相加 · 几何解读</div>
+      <h1 class="title">和角公式的<br/><span class="hl">几何直觉</span></h1>
+
+      <div class="formula">
+        <span class="f-lhs">sin(α+β)</span>
+        <span class="f-eq">=</span>
+        <div class="f-rhs">
+          <span class="f-term f-t1">sinα·cosβ</span>
+          <span class="f-plus">+</span>
+          <span class="f-term f-t2">cosα·sinβ</span>
+        </div>
+      </div>
+
+      <p class="caption">
+        不是天上掉下的公式 ——<br/>
+        <span class="cap-em">两次旋转的叠加</span>,投影到坐标轴,答案自然浮现。
+      </p>
+
+      <div class="footer-tag">单位圆 · 投影 · 旋转</div>
+    </div>
+
+    <style>
+      #scene-06-1bac9e {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, 'Helvetica Neue', sans-serif;
+        background: #050812;
+        color: #E8EEF8;
+      }
+      #scene-06-1bac9e .bg-base {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse at 28% 45%, rgba(32,60,120,0.55) 0%, rgba(10,14,28,0) 55%),
+          radial-gradient(ellipse at 78% 75%, rgba(80,40,110,0.35) 0%, rgba(10,14,28,0) 60%),
+          linear-gradient(180deg, #060a18 0%, #030510 100%);
+      }
+      #scene-06-1bac9e .bg-glow {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 30% 50%, rgba(74,158,255,0.08) 0%, rgba(5,8,18,0) 50%);
+        mix-blend-mode: screen;
+      }
+      #scene-06-1bac9e .bg-grid {
+        position: absolute; inset: 0;
+        width: 1920px; height: 1080px;
+      }
+
+      #scene-06-1bac9e .stage-left {
+        position: absolute;
+        left: 0; top: 0;
+        width: 1080px; height: 1080px;
+      }
+      #scene-06-1bac9e .circle-svg {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1080px;
+      }
+      #scene-06-1bac9e .axis-label {
+        font-family: 'Georgia', 'Cambria', serif;
+        font-style: italic;
+        font-size: 32px;
+      }
+      #scene-06-1bac9e .axis-label.origin { font-style: normal; font-size: 26px; }
+      #scene-06-1bac9e .label-alpha,
+      #scene-06-1bac9e .label-beta,
+      #scene-06-1bac9e .label-sum,
+      #scene-06-1bac9e .sin-label {
+        font-family: 'Georgia', 'Cambria', serif;
+        font-style: italic;
+        font-weight: 600;
+      }
+      #scene-06-1bac9e .label-alpha { font-size: 34px; }
+      #scene-06-1bac9e .label-beta { font-size: 34px; }
+      #scene-06-1bac9e .label-sum { font-size: 36px; }
+      #scene-06-1bac9e .sin-label { font-size: 30px; }
+
+      #scene-06-1bac9e .stage-right {
+        position: absolute;
+        left: 1080px; top: 0;
+        width: 840px; height: 1080px;
+        padding: 110px 80px 90px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      #scene-06-1bac9e .eyebrow {
+        font-size: 26px;
+        letter-spacing: 0.32em;
+        color: #F5B942;
+        text-transform: none;
+        margin-bottom: 28px;
+        font-weight: 500;
+      }
+      #scene-06-1bac9e .title {
+        font-size: 96px;
+        line-height: 1.1;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: #F4F7FC;
+        margin-bottom: 56px;
+      }
+      #scene-06-1bac9e .title .hl {
+        background: linear-gradient(120deg, #4A9EFF 0%, #8BD4FF 50%, #FF6B6B 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        filter: drop-shadow(0 0 16px rgba(74,158,255,0.28));
+      }
+
+      #scene-06-1bac9e .formula {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px 18px;
+        padding: 28px 32px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(74,158,255,0.06) 0%, rgba(255,107,107,0.05) 100%);
+        border: 1px solid rgba(120,160,220,0.2);
+        margin-bottom: 52px;
+        backdrop-filter: blur(2px);
+      }
+      #scene-06-1bac9e .f-lhs,
+      #scene-06-1bac9e .f-eq,
+      #scene-06-1bac9e .f-term,
+      #scene-06-1bac9e .f-plus {
+        font-family: 'Georgia', 'Cambria', serif;
+        font-style: italic;
+        font-size: 46px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      #scene-06-1bac9e .f-lhs {
+        color: #FF8F8F;
+        text-shadow: 0 0 12px rgba(255,107,107,0.35);
+      }
+      #scene-06-1bac9e .f-eq { color: #E8EEF8; opacity: 0.8; }
+      #scene-06-1bac9e .f-rhs {
+        display: flex; align-items: center; gap: 14px;
+        flex-wrap: wrap;
+      }
+      #scene-06-1bac9e .f-t1 { color: #F5B942; text-shadow: 0 0 10px rgba(245,185,66,0.3); }
+      #scene-06-1bac9e .f-t2 { color: #8BD4FF; text-shadow: 0 0 10px rgba(139,212,255,0.3); }
+      #scene-06-1bac9e .f-plus { color: #E8EEF8; opacity: 0.9; }
+
+      #scene-06-1bac9e .caption {
+        font-size: 30px;
+        line-height: 1.55;
+        color: #C6D1E4;
+        font-weight: 400;
+        margin-bottom: 40px;
+      }
+      #scene-06-1bac9e .cap-em {
+        color: #F4F7FC;
+        font-weight: 600;
+        border-bottom: 2px solid rgba(245,185,66,0.55);
+        padding-bottom: 2px;
+      }
+
+      #scene-06-1bac9e .footer-tag {
+        font-size: 22px;
+        letter-spacing: 0.3em;
+        color: rgba(200,215,240,0.45);
+        margin-top: 12px;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const S = '#scene-06-1bac9e';
+
+      // 0.0-0.8: backdrop + eyebrow
+      tl.from(S + ' .bg-glow', { opacity: 0, duration: 1.0, ease: 'power2.out' }, 0);
+      tl.from(S + ' .bg-grid', { opacity: 0, duration: 1.2, ease: 'power2.out' }, 0.1);
+      tl.from(S + ' .eyebrow', { opacity: 0, y: -16, duration: 0.7, ease: 'power2.out' }, 0.3);
+
+      // 0.9-1.6: title
+      tl.from(S + ' .title', { opacity: 0, y: 30, duration: 0.9, ease: 'power3.out' }, 0.9);
+
+      // 1.7-4.0: formula parts stagger
+      tl.from(S + ' .formula', { opacity: 0, scale: 0.96, duration: 0.6, ease: 'power2.out', transformOrigin: '0% 50%' }, 1.7);
+      tl.from(S + ' .f-lhs', { opacity: 0, x: -20, duration: 0.5, ease: 'power2.out' }, 2.1);
+      tl.from(S + ' .f-eq', { opacity: 0, duration: 0.3, ease: 'power2.out' }, 2.5);
+      tl.from(S + ' .f-t1', { opacity: 0, y: 12, duration: 0.5, ease: 'power2.out' }, 2.8);
+      tl.from(S + ' .f-plus', { opacity: 0, duration: 0.3, ease: 'power2.out' }, 3.3);
+      tl.from(S + ' .f-t2', { opacity: 0, y: 12, duration: 0.5, ease: 'power2.out' }, 3.5);
+
+      // 4.0-5.5: axes and origin
+      tl.from(S + ' .axis', { opacity: 0, duration: 0.7, ease: 'power2.out', stagger: 0.15 }, 4.0);
+      tl.from(S + ' .axis-label', { opacity: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 }, 4.5);
+
+      // 5.2-7.0: unit circle draws
+      tl.to(S + ' .unit', { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 5.2);
+      tl.from(S + ' .disc', { opacity: 0, duration: 1.0, ease: 'power2.out' }, 5.6);
+
+      // 7.0-8.8: α radius + arc + label + dot
+      tl.from(S + ' .r-alpha', { scaleX: 0, transformOrigin: '540px 540px', duration: 0.8, ease: 'power2.out' }, 7.0);
+      tl.from(S + ' .arc-alpha', { opacity: 0, duration: 0.5, ease: 'power2.out' }, 7.5);
+      tl.from(S + ' .label-alpha', { opacity: 0, scale: 0.6, duration: 0.5, ease: 'back.out(2)', transformOrigin: '50% 50%' }, 7.8);
+      tl.from(S + ' .dot-alpha', { opacity: 0, scale: 0, duration: 0.4, ease: 'back.out(2)', transformOrigin: '50% 50%' }, 8.2);
+
+      // 9.0-11.0: β radius rotates in, β arc and label
+      tl.from(S + ' .r-beta', { rotation: -50, transformOrigin: '540px 540px', opacity: 0, duration: 1.1, ease: 'power2.inOut' }, 9.0);
+      tl.from(S + ' .arc-beta', { opacity: 0, duration: 0.5, ease: 'power2.out' }, 9.7);
+      tl.from(S + ' .label-beta', { opacity: 0, scale: 0.6, duration: 0.5, ease: 'back.out(2)', transformOrigin: '50% 50%' }, 10.0);
+      tl.from(S + ' .dot-sum', { opacity: 0, scale: 0, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: '50% 50%' }, 10.5);
+      tl.from(S + ' .label-sum', { opacity: 0, y: -10, duration: 0.5, ease: 'power2.out' }, 10.8);
+
+      // 11.3-13.5: projections appear
+      tl.from(S + ' .proj-v', { opacity: 0, duration: 0.6, ease: 'power2.out' }, 11.3);
+      tl.from(S + ' .proj-h', { opacity: 0, duration: 0.6, ease: 'power2.out' }, 11.9);
+      tl.from(S + ' .sin-bar', { scaleY: 0, transformOrigin: '540px 540px', duration: 0.8, ease: 'power2.out' }, 12.6);
+      tl.from(S + ' .sin-label', { opacity: 0, x: -14, duration: 0.6, ease: 'power2.out' }, 13.1);
+
+      // 13.8-14.6: pulse the sum dot to connect visual to formula
+      tl.to(S + ' .dot-sum', { scale: 1.5, transformOrigin: '50% 50%', duration: 0.35, ease: 'power2.out', yoyo: true, repeat: 1 }, 13.8);
+      tl.to(S + ' .f-lhs', { textShadow: '0 0 24px rgba(255,107,107,0.8)', duration: 0.4, ease: 'power2.out', yoyo: true, repeat: 1 }, 13.9);
+
+      // 14.5-15.8: caption
+      tl.from(S + ' .caption', { opacity: 0, y: 20, duration: 0.9, ease: 'power2.out' }, 14.5);
+
+      // 15.8-16.6: footer tag
+      tl.from(S + ' .footer-tag', { opacity: 0, y: 12, duration: 0.7, ease: 'power2.out' }, 15.8);
+
+      // 17.3-18.0: gentle fade out of whole scene
+      tl.to(S + ' .stage-left, ' + S + ' .stage-right', { opacity: 0.6, duration: 0.7, ease: 'power2.in' }, 17.3);
+
+      window.__timelines['scene-06-1bac9e'] = tl;
+    </script>
+  </div>
+</template>

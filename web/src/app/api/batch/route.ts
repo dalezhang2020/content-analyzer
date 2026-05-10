@@ -1,19 +1,18 @@
 import { NextRequest } from "next/server";
 import { spawn } from "child_process";
 import path from "path";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 /**
- * POST /api/batch
- * Body: { urls: string[] }
- *
- * Processes multiple URLs concurrently (max 5 at a time, max 20 total).
- * Streams NDJSON events for per-URL progress.
+ * POST /api/batch — requires local Python venv, returns 503 on Vercel.
  */
 
 const MAX_URLS = 20;
 const MAX_CONCURRENT = 5;
 
 export async function POST(request: NextRequest) {
+  if (!isLocalEnv()) return localOnlyResponse("Batch analysis");
+
   let body: { urls?: unknown };
   try {
     body = await request.json();

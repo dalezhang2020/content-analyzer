@@ -29,6 +29,7 @@
 
 import { randomBytes } from "node:crypto";
 import type { NextRequest } from "next/server";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import { generateStoryboardFromBrief } from "@/lib/workbench/ai-generator";
 import {
@@ -58,6 +59,7 @@ export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ id: string }> },
 ) {
+  if (!isLocalEnv()) return localOnlyResponse("Storyboard generation (requires kiro-cli)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
     const body = await parseJsonBody(req, ForceFlagSchema, {

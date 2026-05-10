@@ -1,22 +1,22 @@
 import { NextRequest } from "next/server";
 import { spawn } from "child_process";
 import path from "path";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 /**
  * POST /api/analyze
  * Body: { url: string }
  *
  * Streams pipeline stage updates as NDJSON lines, then the final result.
- * Each line is a JSON object: { stage: string } or { result: object } or { error: string }
- *
- * Stage progression is driven by structured markers from the Python CLI (--staged),
- * not by keyword heuristics on stderr.
+ * Requires local Python venv — returns 503 on Vercel.
  */
 
 const ORDERED_STAGES = ["input", "fetch", "extract", "analyze", "report", "done"] as const;
 type Stage = (typeof ORDERED_STAGES)[number];
 
 export async function POST(request: NextRequest) {
+  if (!isLocalEnv()) return localOnlyResponse("Content analysis");
+
   const { url } = await request.json();
 
   if (!url || typeof url !== "string") {

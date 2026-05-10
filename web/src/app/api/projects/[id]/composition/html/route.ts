@@ -23,6 +23,7 @@ import {
   requireProjectIdFromParams,
   respondError,
 } from "@/lib/workbench/api-helpers";
+import { sql, isNeonConfigured } from "@/lib/db";
 import { readCompositionHtml } from "@/lib/workbench/project-store";
 
 type Ctx = { params: Promise<{ id: string }> };
@@ -33,7 +34,29 @@ export async function GET(
 ): Promise<Response> {
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
-    const html = await readCompositionHtml(projectId);
+
+    let html: string | null = null;
+
+    // Phase 3: try Neon first
+    if (isNeonConfigured()) {
+      try {
+        const rows = await sql<{ index_html_content: string | null }>`
+          SELECT index_html_content
+          FROM content_analyzer.projects
+          WHERE project_id = ${projectId}
+        `;
+        if (rows[0]?.index_html_content) {
+          html = rows[0].index_html_content;
+        }
+      } catch (err) {
+        console.warn("[composition/html] Neon read failed, falling back to FS:", err instanceof Error ? err.message : err);
+      }
+    }
+
+    // Local FS fallback
+    if (!html) {
+      html = await readCompositionHtml(projectId);
+    }
 
     return new Response(html, {
       status: 200,

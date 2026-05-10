@@ -49,6 +49,7 @@
 
 import type { NextRequest } from "next/server";
 import pLimit from "p-limit";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import {
   assembleIndexHtml,
@@ -334,6 +335,7 @@ export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ id: string }> },
 ) {
+  if (!isLocalEnv()) return localOnlyResponse("Composition HTML generation (requires kiro-cli)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
     const body = await parseJsonBody(req, ForceFlagSchema, {

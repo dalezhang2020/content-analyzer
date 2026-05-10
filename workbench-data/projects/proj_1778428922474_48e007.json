@@ -19,9 +19,14 @@
       "attempts": 1
     },
     "composition": {
-      "status": "running",
-      "startedAt": "2026-05-10T16:09:46.062Z",
-      "attempts": 1
+      "status": "failed",
+      "startedAt": "2026-05-10T16:29:48.966Z",
+      "finishedAt": "2026-05-10T16:42:00.210Z",
+      "error": {
+        "code": "LLM_TIMEOUT",
+        "message": "LLM request exceeded 180000ms"
+      },
+      "attempts": 2
     },
     "audio": {
       "status": "pending"
@@ -181,5 +186,5 @@
     "sourcePath": "/Users/dizhang/self-project/content-analyzer/workbench-data/_template/hf-blank"
   },
   "createdAt": "2026-05-10T16:02:02.474Z",
-  "updatedAt": "2026-05-10T16:09:46.062Z"
+  "updatedAt": "2026-05-10T16:42:00.210Z"
 }

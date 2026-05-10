@@ -38,6 +38,7 @@
  */
 
 import type { NextRequest } from "next/server";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import {
   parseJsonBody,
@@ -79,6 +80,7 @@ export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ id: string }> },
 ): Promise<Response> {
+  if (!isLocalEnv()) return localOnlyResponse("Audio generation (requires Azure TTS + local filesystem)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
 

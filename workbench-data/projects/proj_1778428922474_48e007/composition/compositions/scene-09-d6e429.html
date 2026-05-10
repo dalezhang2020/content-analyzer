@@ -1,0 +1,325 @@
+<template id="scene-09-d6e429-template">
+  <div id="scene-09-d6e429" data-composition-id="scene-09-d6e429" data-width="1920" data-height="1080">
+    <div class="bg"></div>
+    <div class="grid"></div>
+    <div class="vignette"></div>
+
+    <div class="eyebrow">现实应用 · 02</div>
+    <div class="title">潮汐与建筑</div>
+    <div class="subtitle">一个圆的旋转,支撑现代世界的测量与预测</div>
+
+    <!-- Left block: unit circle driving tide wave -->
+    <svg class="stage" viewBox="0 0 1760 720" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sc9-wave-grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4aa8ff" stop-opacity="0.2"/>
+          <stop offset="0.5" stop-color="#4aa8ff" stop-opacity="1"/>
+          <stop offset="1" stop-color="#7fd7ff" stop-opacity="0.3"/>
+        </linearGradient>
+        <linearGradient id="sc9-water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4aa8ff" stop-opacity="0.35"/>
+          <stop offset="1" stop-color="#0b2844" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="sc9-bldg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffb86b"/>
+          <stop offset="1" stop-color="#7a4e28"/>
+        </linearGradient>
+        <radialGradient id="sc9-glow" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#ffd27a" stop-opacity="0.9"/>
+          <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="sc9-soft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3"/>
+        </filter>
+      </defs>
+
+      <!-- === LEFT: unit circle === -->
+      <g class="circle-block" transform="translate(260,360)">
+        <circle class="cx-ring" r="170" fill="none" stroke="#2b4a70" stroke-width="1.5" stroke-dasharray="4 6"/>
+        <line class="cx-axis cx-axis-x" x1="-210" y1="0" x2="210" y2="0" stroke="#2b4a70" stroke-width="1.2"/>
+        <line class="cx-axis cx-axis-y" x1="0" y1="-210" x2="0" y2="210" stroke="#2b4a70" stroke-width="1.2"/>
+        <circle class="cx-circle" r="170" fill="none" stroke="#7fd7ff" stroke-width="2.5"
+                stroke-dasharray="1068" stroke-dashoffset="1068"/>
+        <g class="cx-rotor">
+          <line class="cx-radius" x1="0" y1="0" x2="170" y2="0" stroke="#ffd27a" stroke-width="2.5"/>
+          <circle class="cx-dot" cx="170" cy="0" r="9" fill="#ffd27a"/>
+          <circle class="cx-dot-glow" cx="170" cy="0" r="22" fill="url(#sc9-glow)"/>
+        </g>
+        <text class="cx-label" x="0" y="230" text-anchor="middle" fill="#7fd7ff" font-size="20" font-family="serif">单位圆 · 驱动源</text>
+      </g>
+
+      <!-- === RIGHT: tide wave === -->
+      <g class="wave-block" transform="translate(540,360)">
+        <!-- horizon / sea-level reference -->
+        <line class="wv-mid" x1="0" y1="0" x2="1120" y2="0" stroke="#2b4a70" stroke-width="1" stroke-dasharray="3 5"/>
+        <!-- amplitude guides -->
+        <line class="wv-top" x1="0" y1="-140" x2="1120" y2="-140" stroke="#2b4a70" stroke-width="0.8" stroke-dasharray="2 6" opacity="0.5"/>
+        <line class="wv-bot" x1="0" y1="140" x2="1120" y2="140" stroke="#2b4a70" stroke-width="0.8" stroke-dasharray="2 6" opacity="0.5"/>
+        <!-- filled water region -->
+        <path class="wv-fill" d="M 0 0
+          Q 70 -140 140 0 T 280 0 T 420 0 T 560 0 T 700 0 T 840 0 T 980 0 T 1120 0
+          L 1120 260 L 0 260 Z"
+          fill="url(#sc9-water)" opacity="0"/>
+        <!-- main sine path -->
+        <path class="wv-path" d="M 0 0
+          Q 70 -140 140 0 T 280 0 T 420 0 T 560 0 T 700 0 T 840 0 T 980 0 T 1120 0"
+          fill="none" stroke="url(#sc9-wave-grad)" stroke-width="4"
+          stroke-linecap="round" stroke-dasharray="2400" stroke-dashoffset="2400"/>
+        <!-- time markers: high tide / low tide / high tide -->
+        <g class="wv-marks">
+          <g class="wv-mark wv-m1">
+            <circle cx="70" cy="-140" r="7" fill="#ffd27a"/>
+            <text x="70" y="-162" text-anchor="middle" fill="#ffd27a" font-size="17" font-family="serif">高潮</text>
+          </g>
+          <g class="wv-mark wv-m2">
+            <circle cx="210" cy="140" r="7" fill="#4aa8ff"/>
+            <text x="210" y="175" text-anchor="middle" fill="#4aa8ff" font-size="17" font-family="serif">低潮</text>
+          </g>
+          <g class="wv-mark wv-m3">
+            <circle cx="350" cy="-140" r="7" fill="#ffd27a"/>
+            <text x="350" y="-162" text-anchor="middle" fill="#ffd27a" font-size="17" font-family="serif">高潮</text>
+          </g>
+        </g>
+        <!-- traveling dot linked to circle -->
+        <circle class="wv-cursor" cx="0" cy="0" r="8" fill="#ffd27a" opacity="0"/>
+        <!-- time axis label -->
+        <text class="wv-time" x="560" y="210" text-anchor="middle" fill="#7fd7ff" font-size="20" font-family="serif">时间 · 每 12 小时一个周期</text>
+        <text class="wv-amp" x="-16" y="-140" text-anchor="end" fill="#ffd27a" font-size="16" font-family="serif">A</text>
+        <text class="wv-amp2" x="-16" y="148" text-anchor="end" fill="#4aa8ff" font-size="16" font-family="serif">-A</text>
+      </g>
+
+      <!-- === BRIDGE + BUILDING SILHOUETTE === -->
+      <g class="arch-block" transform="translate(880,560)">
+        <!-- horizon -->
+        <line class="ar-ground" x1="-100" y1="0" x2="720" y2="0" stroke="#3a5578" stroke-width="1.4"/>
+        <!-- bridge suspension -->
+        <g class="ar-bridge">
+          <path class="ar-cable" d="M 0 0 Q 200 -140 400 0" fill="none" stroke="#7fd7ff" stroke-width="2.5"
+                stroke-dasharray="520" stroke-dashoffset="520"/>
+          <line class="ar-pillar ar-p1" x1="0" y1="0" x2="0" y2="-120" stroke="#7fd7ff" stroke-width="3"/>
+          <line class="ar-pillar ar-p2" x1="400" y1="0" x2="400" y2="-120" stroke="#7fd7ff" stroke-width="3"/>
+          <g class="ar-hang">
+            <line x1="60" y1="0" x2="60" y2="-92" stroke="#4aa8ff" stroke-width="1.5"/>
+            <line x1="120" y1="0" x2="120" y2="-124" stroke="#4aa8ff" stroke-width="1.5"/>
+            <line x1="200" y1="0" x2="200" y2="-140" stroke="#4aa8ff" stroke-width="1.5"/>
+            <line x1="280" y1="0" x2="280" y2="-124" stroke="#4aa8ff" stroke-width="1.5"/>
+            <line x1="340" y1="0" x2="340" y2="-92" stroke="#4aa8ff" stroke-width="1.5"/>
+          </g>
+        </g>
+        <!-- distant building + measurement -->
+        <g class="ar-measure" transform="translate(500,0)">
+          <rect class="ar-bldg" x="120" y="-180" width="70" height="180" fill="url(#sc9-bldg)" rx="2"/>
+          <rect class="ar-bldg-top" x="148" y="-205" width="14" height="25" fill="#ffd27a"/>
+          <!-- observer point -->
+          <circle class="ar-eye" cx="0" cy="0" r="5" fill="#ffd27a"/>
+          <!-- baseline -->
+          <line class="ar-base" x1="0" y1="0" x2="155" y2="0" stroke="#ffd27a" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <!-- line of sight -->
+          <line class="ar-sight" x1="0" y1="0" x2="155" y2="-180" stroke="#ffd27a" stroke-width="2"/>
+          <!-- height tick -->
+          <line class="ar-height" x1="155" y1="0" x2="155" y2="-180" stroke="#ffd27a" stroke-width="1.4" stroke-dasharray="3 3"/>
+          <!-- angle arc -->
+          <path class="ar-angle" d="M 40 0 A 40 40 0 0 0 34.4 -20.4" fill="none" stroke="#ffd27a" stroke-width="1.6"/>
+          <text class="ar-theta" x="52" y="-10" fill="#ffd27a" font-size="18" font-family="serif" font-style="italic">θ</text>
+          <text class="ar-tan" x="78" y="-110" fill="#ffd27a" font-size="16" font-family="serif">h = d · tan θ</text>
+        </g>
+      </g>
+    </svg>
+
+    <!-- callout chips -->
+    <div class="chips">
+      <div class="chip chip-1"><span class="dot"></span>预测潮位</div>
+      <div class="chip chip-2"><span class="dot"></span>桥梁受力</div>
+      <div class="chip chip-3"><span class="dot"></span>测量高度</div>
+    </div>
+
+    <div class="caption">海水每天两次涨落,近似正弦曲线 —— 从一个圆的旋转,到港口、桥梁与摩天楼的尺度</div>
+
+    <style>
+      #scene-09-d6e429 {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        font-family: "PingFang SC", "Noto Serif SC", "Songti SC", serif;
+        color: #eaf2ff;
+        background: #05101f;
+      }
+      #scene-09-d6e429 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 70% 55% at 30% 35%, rgba(74,168,255,0.18), transparent 60%),
+          radial-gradient(ellipse 60% 50% at 75% 75%, rgba(255,210,122,0.10), transparent 65%),
+          linear-gradient(180deg, #0a1c33 0%, #05101f 60%, #02070f 100%);
+      }
+      #scene-09-d6e429 .grid {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(127,215,255,0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(127,215,255,0.06) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: radial-gradient(ellipse 70% 60% at 50% 55%, #000 45%, transparent 90%);
+        -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 55%, #000 45%, transparent 90%);
+        opacity: 0.55;
+      }
+      #scene-09-d6e429 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse 90% 70% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+        pointer-events: none;
+      }
+      #scene-09-d6e429 .eyebrow {
+        position: absolute;
+        top: 72px; left: 120px;
+        font-size: 22px;
+        letter-spacing: 12px;
+        color: #7fd7ff;
+        text-transform: uppercase;
+        opacity: 0.9;
+      }
+      #scene-09-d6e429 .eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 52px; height: 1px;
+        background: #7fd7ff;
+        vertical-align: middle;
+        margin-right: 18px;
+        transform: translateY(-3px);
+      }
+      #scene-09-d6e429 .title {
+        position: absolute;
+        top: 118px; left: 120px;
+        font-size: 104px;
+        font-weight: 700;
+        letter-spacing: 6px;
+        color: #ffffff;
+        text-shadow: 0 0 30px rgba(127,215,255,0.35);
+      }
+      #scene-09-d6e429 .subtitle {
+        position: absolute;
+        top: 250px; left: 124px;
+        font-size: 30px;
+        color: #b9d6f0;
+        letter-spacing: 2px;
+        font-weight: 300;
+      }
+      #scene-09-d6e429 .stage {
+        position: absolute;
+        top: 330px; left: 80px;
+        width: 1760px;
+        height: 720px;
+        filter: drop-shadow(0 0 24px rgba(74,168,255,0.12));
+      }
+      #scene-09-d6e429 .cx-dot-glow { filter: url(#sc9-soft); }
+      #scene-09-d6e429 .chips {
+        position: absolute;
+        right: 120px; top: 130px;
+        display: flex; flex-direction: column; gap: 14px;
+        align-items: flex-end;
+      }
+      #scene-09-d6e429 .chip {
+        display: inline-flex; align-items: center;
+        padding: 12px 24px;
+        border: 1px solid rgba(127,215,255,0.35);
+        border-radius: 30px;
+        background: rgba(10,28,51,0.55);
+        backdrop-filter: blur(4px);
+        font-size: 24px;
+        letter-spacing: 3px;
+        color: #eaf2ff;
+        opacity: 0;
+      }
+      #scene-09-d6e429 .chip .dot {
+        width: 10px; height: 10px; border-radius: 50%;
+        background: #ffd27a;
+        margin-right: 14px;
+        box-shadow: 0 0 12px #ffd27a;
+      }
+      #scene-09-d6e429 .chip-2 .dot { background: #7fd7ff; box-shadow: 0 0 12px #7fd7ff; }
+      #scene-09-d6e429 .chip-3 .dot { background: #ff8a6b; box-shadow: 0 0 12px #ff8a6b; }
+      #scene-09-d6e429 .caption {
+        position: absolute;
+        bottom: 58px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 26px;
+        color: #8fb4da;
+        letter-spacing: 3px;
+        opacity: 0;
+        font-weight: 300;
+        text-align: center;
+      }
+      #scene-09-d6e429 .caption::before,
+      #scene-09-d6e429 .caption::after {
+        content: "◇";
+        color: #4aa8ff;
+        margin: 0 22px;
+        opacity: 0.7;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const P = '#scene-09-d6e429 ';
+
+      // 0-2s : atmosphere + eyebrow + title
+      tl.from(P + '.grid', { opacity: 0, duration: 1.2, ease: 'power2.out' }, 0)
+        .from(P + '.eyebrow', { opacity: 0, x: -40, duration: 0.9, ease: 'power2.out' }, 0.2)
+        .from(P + '.title', { opacity: 0, y: 40, duration: 1.0, ease: 'power3.out' }, 0.6)
+        .from(P + '.subtitle', { opacity: 0, y: 20, duration: 0.8, ease: 'power2.out' }, 1.2);
+
+      // 2-5s : unit circle builds
+      tl.from(P + '.cx-ring', { opacity: 0, scale: 0.6, transformOrigin: '50% 50%', duration: 0.8, ease: 'power2.out' }, 2.0)
+        .from(P + '.cx-axis', { opacity: 0, scaleX: 0, scaleY: 0, transformOrigin: '50% 50%', duration: 0.6, ease: 'power2.out' }, 2.3)
+        .to(P + '.cx-circle', { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, 2.6)
+        .from(P + '.cx-rotor', { opacity: 0, duration: 0.4 }, 3.6)
+        .from(P + '.cx-label', { opacity: 0, y: 10, duration: 0.6 }, 3.8);
+
+      // 3.6-14s : rotor spins slowly, driving the wave
+      tl.to(P + '.cx-rotor', { rotation: -360 * 1.5, transformOrigin: '0 0', duration: 10.0, ease: 'none' }, 3.6);
+
+      // 4-8s : tide wave draws in
+      tl.from(P + '.wv-mid', { opacity: 0, scaleX: 0, transformOrigin: '0 50%', duration: 0.8, ease: 'power2.out' }, 4.0)
+        .from([P + '.wv-top', P + '.wv-bot'], { opacity: 0, duration: 0.7, stagger: 0.1 }, 4.4)
+        .to(P + '.wv-path', { strokeDashoffset: 0, duration: 3.2, ease: 'power2.inOut' }, 4.6)
+        .to(P + '.wv-fill', { opacity: 0.55, duration: 1.2, ease: 'power2.out' }, 6.4)
+        .from([P + '.wv-amp', P + '.wv-amp2'], { opacity: 0, x: -10, duration: 0.6, stagger: 0.1 }, 6.6)
+        .from(P + '.wv-time', { opacity: 0, y: 10, duration: 0.6 }, 7.2);
+
+      // 7-9s : peak / trough markers
+      tl.from(P + '.wv-m1', { opacity: 0, scale: 0, transformOrigin: '70px -140px', duration: 0.5, ease: 'back.out(2)' }, 7.4)
+        .from(P + '.wv-m2', { opacity: 0, scale: 0, transformOrigin: '210px 140px', duration: 0.5, ease: 'back.out(2)' }, 7.9)
+        .from(P + '.wv-m3', { opacity: 0, scale: 0, transformOrigin: '350px -140px', duration: 0.5, ease: 'back.out(2)' }, 8.4);
+
+      // 8-11s : chips — the three engineering uses
+      tl.to(P + '.chip-1', { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }, 8.2)
+        .from(P + '.chip-1', { x: 40, duration: 0.6, ease: 'power2.out' }, 8.2)
+        .to(P + '.chip-2', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 8.8)
+        .from(P + '.chip-2', { x: 40, duration: 0.6, ease: 'power2.out' }, 8.8)
+        .to(P + '.chip-3', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 9.4)
+        .from(P + '.chip-3', { x: 40, duration: 0.6, ease: 'power2.out' }, 9.4);
+
+      // 9-13.5s : bridge + building measurement
+      tl.from(P + '.ar-ground', { opacity: 0, scaleX: 0, transformOrigin: '0 50%', duration: 0.7, ease: 'power2.out' }, 9.2)
+        .from([P + '.ar-p1', P + '.ar-p2'], { scaleY: 0, transformOrigin: '50% 100%', duration: 0.7, ease: 'power3.out', stagger: 0.1 }, 9.6)
+        .to(P + '.ar-cable', { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, 10.1)
+        .from(P + '.ar-hang line', { scaleY: 0, transformOrigin: '50% 0%', duration: 0.5, stagger: 0.08, ease: 'power2.out' }, 10.8)
+        .from(P + '.ar-bldg', { scaleY: 0, transformOrigin: '50% 100%', duration: 0.9, ease: 'power3.out' }, 11.4)
+        .from(P + '.ar-bldg-top', { opacity: 0, y: 10, duration: 0.5 }, 12.0)
+        .from(P + '.ar-eye', { opacity: 0, scale: 0, transformOrigin: '50% 50%', duration: 0.4, ease: 'back.out(2)' }, 11.8)
+        .from(P + '.ar-base', { scaleX: 0, transformOrigin: '0 50%', duration: 0.8, ease: 'power2.out' }, 12.1)
+        .from(P + '.ar-sight', { scaleX: 0, scaleY: 0, transformOrigin: '0 100%', duration: 0.8, ease: 'power2.out' }, 12.5)
+        .from(P + '.ar-height', { scaleY: 0, transformOrigin: '50% 100%', duration: 0.6, ease: 'power2.out' }, 13.0)
+        .from([P + '.ar-angle', P + '.ar-theta'], { opacity: 0, duration: 0.5 }, 13.1)
+        .from(P + '.ar-tan', { opacity: 0, y: 8, duration: 0.6, ease: 'power2.out' }, 13.3);
+
+      // 13-15.5s : final caption
+      tl.to(P + '.caption', { opacity: 1, duration: 0.9, ease: 'power2.out' }, 13.6)
+        .from(P + '.caption', { y: 18, duration: 0.9, ease: 'power2.out' }, 13.6);
+
+      // 15.3-16s : gentle fade-out of busy bits
+      tl.to([P + '.chips', P + '.stage'], { opacity: 0.75, duration: 0.6, ease: 'power1.out' }, 15.3);
+
+      window.__timelines["scene-09-d6e429"] = tl;
+    </script>
+  </div>
+</template>

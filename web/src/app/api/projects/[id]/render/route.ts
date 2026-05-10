@@ -28,6 +28,7 @@
  */
 
 import type { NextRequest } from "next/server";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import {
   requireProjectIdFromParams,
@@ -59,6 +60,7 @@ export async function POST(
   _req: NextRequest,
   ctx: RouteContext,
 ): Promise<Response> {
+  if (!isLocalEnv()) return localOnlyResponse("Video rendering (requires HyperFrames CLI)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
 

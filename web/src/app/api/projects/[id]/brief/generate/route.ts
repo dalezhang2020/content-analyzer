@@ -33,6 +33,7 @@ import {
   respondError,
   respondJson,
 } from "@/lib/workbench/api-helpers";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 import { LIMITS } from "@/lib/workbench/constants";
 import { ErrorCode, WorkbenchError } from "@/lib/workbench/errors";
 import { withProjectLock } from "@/lib/workbench/locks";
@@ -52,6 +53,7 @@ export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ id: string }> },
 ) {
+  if (!isLocalEnv()) return localOnlyResponse("Brief generation (requires kiro-cli)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
     const body = await parseJsonBody(req, ForceFlagSchema, {

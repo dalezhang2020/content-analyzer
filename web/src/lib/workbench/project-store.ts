@@ -297,6 +297,102 @@ export async function createProject(
  */
 export async function readProject(projectId: string): Promise<Project> {
   assertValidProjectId(projectId);
+
+  // Phase 2: try Neon first
+  if (process.env.DATABASE_URL) {
+    try {
+      const { sqlOne } = await import("@/lib/db");
+      const row = await sqlOne<{
+        project_id: string;
+        schema_version: number;
+        title: string;
+        topic: string;
+        locale: string;
+        stage: string;
+        stage_status: unknown;
+        stage_history: unknown;
+        brief: unknown;
+        artifacts: unknown;
+        template_source: unknown;
+        created_at: string;
+        updated_at: string;
+      }>`
+        SELECT project_id, schema_version, title, topic, locale, stage,
+               stage_status, stage_history, brief, artifacts,
+               template_source,
+               created_at::text AS created_at,
+               updated_at::text AS updated_at
+        FROM content_analyzer.projects
+        WHERE project_id = ${projectId}
+      `;
+      if (!row) {
+        throw new WorkbenchError(ErrorCode.PROJECT_NOT_FOUND, "Project not found", { projectId });
+      }
+      // Reconstruct storyboard from scenes table
+      const { sql: dbSql } = await import("@/lib/db");
+      const sceneRows = await dbSql<{
+        scene_id: string;
+        scene_index: number;
+        title: string;
+        narration: string;
+        duration_sec: number;
+        voice: string;
+        qa_note: string;
+        audio_path: string | null;
+        updated_at: string;
+      }>`
+        SELECT scene_id, scene_index, title, narration, duration_sec,
+               voice, qa_note, audio_path, updated_at::text AS updated_at
+        FROM content_analyzer.scenes
+        WHERE project_id = ${projectId}
+        ORDER BY scene_index
+      `;
+      const storyboard = sceneRows.length > 0
+        ? {
+            scenes: sceneRows.map((s) => ({
+              sceneId: s.scene_id,
+              index: s.scene_index,
+              title: s.title,
+              narration: s.narration,
+              durationSec: s.duration_sec,
+              voice: s.voice,
+              qaNote: s.qa_note,
+              audioPath: s.audio_path,
+              updatedAt: s.updated_at,
+            })),
+          }
+        : null;
+
+      const raw = {
+        schemaVersion: row.schema_version,
+        projectId: row.project_id,
+        title: row.title,
+        topic: row.topic,
+        locale: row.locale,
+        stage: row.stage,
+        stageStatus: row.stage_status,
+        stageHistory: row.stage_history,
+        brief: row.brief,
+        storyboard,
+        artifacts: row.artifacts,
+        templateSource: row.template_source,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      };
+
+      const result = ProjectSchema.safeParse(raw);
+      if (!result.success) {
+        console.warn("[project-store] Neon row failed schema validation, falling back to FS");
+        throw new Error("schema validation failed");
+      }
+      return result.data;
+    } catch (e) {
+      if (e instanceof WorkbenchError && e.code === ErrorCode.PROJECT_NOT_FOUND) throw e;
+      console.warn("[project-store] Neon read failed, falling back to FS:", e instanceof Error ? e.message : e);
+    }
+  }
+
+  // Local FS fallback
   const absPath = projectJsonPath(projectId);
 
   let raw: string;
@@ -391,6 +487,11 @@ export async function writeProject(project: Project): Promise<void> {
 
   const absPath = projectJsonPath(project.projectId);
   await atomicWriteJson(absPath, validated.data, { spaces: 2 });
+
+  // Phase 1 dual-write: mirror to Neon (fire-and-forget, never throws)
+  import("./neon-sync").then(({ syncProjectToNeon }) => {
+    void syncProjectToNeon(validated.data);
+  }).catch(() => {/* ignore import errors in test environments */});
 }
 
 /**
@@ -407,6 +508,13 @@ export async function writeProject(project: Project): Promise<void> {
  */
 export async function deleteProject(projectId: string): Promise<DeleteReport> {
   assertValidProjectId(projectId);
+
+  // Phase 2: also delete from Neon (fire-and-forget, non-blocking)
+  if (process.env.DATABASE_URL) {
+    import("@/lib/db").then(({ sql: dbSql }) => {
+      void dbSql`DELETE FROM content_analyzer.projects WHERE project_id = ${projectId}`;
+    }).catch(() => {/* ignore */});
+  }
 
   const jsonAbs = projectJsonPath(projectId);
   const dirAbs = resolveProjectFile(projectId);
@@ -447,6 +555,39 @@ export async function deleteProject(projectId: string): Promise<DeleteReport> {
  *   - `videoUrl` mirrors `project.artifacts.videoPath` (already a public URL).
  */
 export async function listProjects(): Promise<ProjectSummary[]> {
+  // Phase 2: try Neon first
+  if (process.env.DATABASE_URL) {
+    try {
+      const { sql: dbSql } = await import("@/lib/db");
+      const rows = await dbSql<{
+        project_id: string;
+        title: string;
+        stage: string;
+        updated_at: string;
+        video_blob_url: string | null;
+        artifacts: { videoPath?: string | null } | null;
+      }>`
+        SELECT project_id, title, stage,
+               updated_at::text AS updated_at,
+               video_blob_url,
+               artifacts
+        FROM content_analyzer.projects
+        ORDER BY updated_at DESC
+      `;
+      return rows.map((row) => ({
+        projectId: row.project_id,
+        title: row.title,
+        stage: row.stage as ProjectSummary["stage"],
+        updatedAt: row.updated_at,
+        posterUrl: null, // poster not yet in Neon (Phase 3)
+        videoUrl: row.video_blob_url ?? (row.artifacts?.videoPath ?? null),
+      }));
+    } catch (err) {
+      console.warn("[project-store] Neon listProjects failed, falling back to FS:", err instanceof Error ? err.message : err);
+    }
+  }
+
+  // Local FS fallback
   const dataDir = getDataDirAbs();
   await ensureDir(dataDir);
 
@@ -562,6 +703,11 @@ export async function writeCompositionHtml(
     "index.html",
   );
   await atomicWriteBuffer(absPath, Buffer.from(html, "utf8"));
+
+  // Sync index.html to Neon (fire-and-forget)
+  import("./neon-sync").then(({ syncIndexHtmlToNeon }) => {
+    void syncIndexHtmlToNeon(projectId, html);
+  }).catch(() => {});
 }
 
 /**
@@ -610,6 +756,20 @@ export async function writeSceneCompositionHtml(
     ...parts,
   );
   await atomicWriteBuffer(absPath, Buffer.from(html, "utf8"));
+
+  // Sync scene HTML to Neon (fire-and-forget).
+  // relPath format: "compositions/scene-NN-xxxxxx.html"
+  // sceneId format: "sc_xxxxxxxx" where xxxxxx is the first 6 hex chars.
+  // Extract the hex tail from the filename to match the scene row.
+  const filename = parts[parts.length - 1]; // e.g. "scene-05-88ea72.html"
+  const hexTailMatch = filename.match(/scene-\d+-([a-z0-9]{6})\.html$/);
+  if (hexTailMatch) {
+    const hexTail = hexTailMatch[1]; // e.g. "88ea72"
+    import("./neon-sync").then(({ syncSceneHtmlToNeon }) => {
+      // sceneId starts with "sc_" followed by 8 hex chars; the first 6 match hexTail
+      void syncSceneHtmlToNeon(projectId, `sc_${hexTail}`, html);
+    }).catch(() => {});
+  }
 }
 
 /**

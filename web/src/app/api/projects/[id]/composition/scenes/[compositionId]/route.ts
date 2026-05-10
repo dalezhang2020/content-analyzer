@@ -33,6 +33,7 @@ import {
   requireProjectIdFromParams,
   respondError,
 } from "@/lib/workbench/api-helpers";
+import { sql, isNeonConfigured } from "@/lib/db";
 import { ErrorCode, WorkbenchError } from "@/lib/workbench/errors";
 import { scanHtml } from "@/lib/workbench/html-scanner";
 import { resolveProjectFile } from "@/lib/workbench/path-safety";
@@ -67,25 +68,58 @@ export async function GET(
       );
     }
 
-    const absPath = resolveProjectFile(
-      projectId,
-      "composition",
-      "compositions",
-      compositionId + ".html",
-    );
+    let raw: string | null = null;
 
-    let raw: string;
-    try {
-      raw = await fs.readFile(absPath, "utf-8");
-    } catch (e: unknown) {
-      if ((e as NodeJS.ErrnoException)?.code === "ENOENT") {
-        throw new WorkbenchError(
-          ErrorCode.COMPOSITION_NOT_FOUND,
-          "Sub-composition file not found",
-          { projectId, compositionId },
-        );
+    // Phase 3: try Neon first
+    if (isNeonConfigured()) {
+      try {
+        // compositionId = "scene-05-88ea72" → hexTail = "88ea72"
+        const hexTailMatch = compositionId.match(/scene-\d+-([a-z0-9]{6})$/);
+        if (hexTailMatch) {
+          const hexTail = hexTailMatch[1];
+          const rows = await sql<{ html_content: string | null }>`
+            SELECT html_content
+            FROM content_analyzer.scenes
+            WHERE project_id = ${projectId}
+              AND scene_id LIKE ${'sc_' + hexTail + '%'}
+          `;
+          if (rows[0]?.html_content) {
+            raw = rows[0].html_content;
+          }
+        }
+      } catch (err) {
+        console.warn("[composition/scenes/id] Neon read failed, falling back to FS:", err instanceof Error ? err.message : err);
       }
-      throw e;
+    }
+
+    // Local FS fallback
+    if (!raw) {
+      const absPath = resolveProjectFile(
+        projectId,
+        "composition",
+        "compositions",
+        compositionId + ".html",
+      );
+      try {
+        raw = await fs.readFile(absPath, "utf-8");
+      } catch (e: unknown) {
+        if ((e as NodeJS.ErrnoException)?.code === "ENOENT") {
+          throw new WorkbenchError(
+            ErrorCode.COMPOSITION_NOT_FOUND,
+            "Sub-composition file not found",
+            { projectId, compositionId },
+          );
+        }
+        throw e;
+      }
+    }
+
+    if (!raw) {
+      throw new WorkbenchError(
+        ErrorCode.COMPOSITION_NOT_FOUND,
+        "Sub-composition not found",
+        { projectId, compositionId },
+      );
     }
 
     // Defence-in-depth: reject any forbidden token before we echo bytes

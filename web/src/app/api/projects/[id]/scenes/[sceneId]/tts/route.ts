@@ -26,6 +26,7 @@
  */
 
 import type { NextRequest } from "next/server";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import {
   requireProjectIdFromParams,
@@ -43,6 +44,7 @@ export async function POST(
   _req: NextRequest,
   ctx: { params: Promise<{ id: string; sceneId: string }> },
 ): Promise<Response> {
+  if (!isLocalEnv()) return localOnlyResponse("Scene TTS (requires Azure TTS + local filesystem)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
     const sceneId = await requireSceneIdFromParams(ctx.params);

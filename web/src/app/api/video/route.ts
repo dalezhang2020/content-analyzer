@@ -3,6 +3,7 @@ import { spawn, execSync } from "child_process";
 import path from "path";
 import fs from "fs";
 import os from "os";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 /**
  * POST /api/video
@@ -13,6 +14,7 @@ import os from "os";
  */
 
 export async function POST(request: NextRequest) {
+  if (!isLocalEnv()) return localOnlyResponse("Video generation (requires Python + HyperFrames)");
   const { result } = await request.json();
 
   if (!result || !result.metadata) {

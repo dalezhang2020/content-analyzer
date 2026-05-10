@@ -1,13 +1,10 @@
 import { NextRequest } from "next/server";
 import { spawn } from "child_process";
 import path from "path";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 /**
- * POST /api/search
- * Body: { keyword: string, platform: string, sort: string, page: number }
- *
- * Calls Python backend pipeline.search() via subprocess and returns
- * structured search results with title, author, engagement metrics, content type.
+ * POST /api/search — requires local Python venv, returns 503 on Vercel.
  */
 
 const VALID_PLATFORMS = ["xiaohongshu", "youtube"] as const;
@@ -19,6 +16,8 @@ type Platform = (typeof VALID_PLATFORMS)[number];
 type Sort = (typeof VALID_SORTS)[number];
 
 export async function POST(request: NextRequest) {
+  if (!isLocalEnv()) return localOnlyResponse("Content search");
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();

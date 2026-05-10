@@ -66,8 +66,6 @@ export function HtmlTab({
   const [generating, setGenerating] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const canEnter = canEnterTab("html", project.stage);
-
   const generate = useCallback(async (force = false) => {
     setGenerating(true);
     setActionError(null);
@@ -75,9 +73,24 @@ export function HtmlTab({
     // polling loop reflect progress. The POST can take 5-15 minutes
     // (one LLM call per scene, each up to 180s, plus retries) — blocking
     // a modal spinner on the whole trip defeats the streaming UX.
-    // If the request ultimately fails we surface the error via the
-    // actionError banner, which remains visible after the dialog closes.
     if (force) setConfirmOpen(false);
+
+    // Optimistically mark composition as "running" so the SceneGrid
+    // starts its 2s polling loop immediately — without this the parent
+    // page's 30s idle poll would delay the first scene-card update by
+    // up to 30 seconds.
+    onProjectChanged?.({
+      ...project,
+      stageStatus: {
+        ...project.stageStatus,
+        composition: {
+          ...project.stageStatus.composition,
+          status: "running",
+          startedAt: new Date().toISOString(),
+        },
+      },
+    });
+
     try {
       const res = await fetch(
         `/api/projects/${encodeURIComponent(project.projectId)}/composition/generate`,
@@ -100,11 +113,18 @@ export function HtmlTab({
     } finally {
       setGenerating(false);
     }
-  }, [project.projectId, onProjectChanged]);
+  }, [project, onProjectChanged]);
 
   // stage=storyboard: show "generate HTML" CTA (first-time generation
   // is what advances storyboard → composition).
-  if (project.stage === "storyboard") {
+  // Skip the CTA when:
+  //   - generating is in flight (show SceneGrid instead)
+  //   - composition already failed (show failure banner + retry instead)
+  const compositionStatus = project.stageStatus.composition.status;
+  const compositionError = project.stageStatus.composition.error;
+  const compositionFailed = compositionStatus === "failed" && compositionError !== undefined;
+
+  if (project.stage === "storyboard" && !generating && !compositionFailed && compositionStatus !== "running") {
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
         <p className="text-sm font-medium text-foreground">
@@ -136,7 +156,10 @@ export function HtmlTab({
   // Fetch HTML on mount (and whenever the composition artifact changes).
   // -----------------------------------------------------------------------
   useEffect(() => {
-    if (!canEnter) return;
+    // Don't try to load HTML while generation is in flight or before
+    // the composition stage has been reached.
+    if (!canEnterTab("html", project.stage)) return;
+    if (generating) return;
 
     let cancelled = false;
     setLoading(true);
@@ -172,9 +195,9 @@ export function HtmlTab({
       cancelled = true;
     };
     // `updatedAt` changes on every write, so refetch on project mutation.
-  }, [project.projectId, project.updatedAt, canEnter]);
+  }, [project.projectId, project.updatedAt, generating]);
 
-  if (!canEnter) {
+  if (!canEnterTab("html", project.stage) && !generating && !compositionFailed && compositionStatus !== "running") {
     return (
       <EmptyStateCard
         tab="html"
@@ -184,16 +207,13 @@ export function HtmlTab({
     );
   }
 
-  const compositionError = project.stageStatus.composition.error;
-  const compositionStatus = project.stageStatus.composition.status;
-  const compositionFailed =
-    compositionStatus === "failed" && compositionError !== undefined;
-
   // Grid visibility: either the project has advanced to `composition`
-  // (or later), or a composition run is currently in flight.
+  // (or later), or a composition run is currently in flight (either
+  // from the server's stageStatus or from the local optimistic update).
   const showSceneGrid =
     STAGE_ORDER[project.stage] >= STAGE_ORDER.composition ||
-    compositionStatus === "running";
+    compositionStatus === "running" ||
+    generating;
 
   const previewUrl = `/api/projects/${encodeURIComponent(project.projectId)}/composition/html`;
 
@@ -211,7 +231,7 @@ export function HtmlTab({
         <SceneGrid
           projectId={project.projectId}
           storyboardScenes={project.storyboard?.scenes ?? []}
-          compositionStatus={compositionStatus}
+          compositionStatus={generating ? "running" : compositionStatus}
           projectUpdatedAt={project.updatedAt}
         />
       ) : null}

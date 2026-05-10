@@ -1,0 +1,315 @@
+<template id="scene-05-88ea72-template">
+  <div id="scene-05-88ea72" data-composition-id="scene-05-88ea72" data-width="1920" data-height="1080">
+    <div class="bg-layer"></div>
+    <div class="grid-layer"></div>
+
+    <div class="eyebrow">第五幕 · 深度解析三角函数</div>
+    <h1 class="title">对称性与相位</h1>
+    <div class="subtitle">偶函数 · 奇函数 · π/2 的平移</div>
+
+    <!-- LEFT: unit circle with symmetry -->
+    <svg class="circle-panel" viewBox="-220 -220 440 440" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="s05-circGlow" cx="0" cy="0" r="200" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#4dd2ff" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#4dd2ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <circle class="circ-halo" r="190" fill="url(#s05-circGlow)"/>
+
+      <!-- axes -->
+      <line class="axis axis-x" x1="-200" y1="0" x2="200" y2="0"/>
+      <line class="axis axis-y" x1="0" y1="-200" x2="0" y2="200"/>
+
+      <!-- unit circle -->
+      <circle class="unit-circle" r="160" fill="none" stroke="#4dd2ff" stroke-width="2.5"/>
+
+      <!-- symmetry reflection ticks -->
+      <g class="sym-h">
+        <line x1="-200" y1="0" x2="200" y2="0" stroke="#ffc857" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <text class="sym-label" x="210" y="6">x 轴对称 → 偶函数 cos</text>
+      </g>
+      <g class="sym-v">
+        <line x1="0" y1="-200" x2="0" y2="200" stroke="#ff6b8b" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <text class="sym-label sym-label-v" x="8" y="-205">y 轴对称 → 奇函数 sin</text>
+      </g>
+
+      <!-- angle α and its reflection -->
+      <line class="ray ray-a" x1="0" y1="0" x2="136" y2="-84"/>
+      <line class="ray ray-b" x1="0" y1="0" x2="136" y2="84"/>
+
+      <circle class="pt pt-a" cx="136" cy="-84" r="6"/>
+      <circle class="pt pt-b" cx="136" cy="84" r="6"/>
+
+      <text class="pt-lbl lbl-a" x="146" y="-92">(cos α, sin α)</text>
+      <text class="pt-lbl lbl-b" x="146" y="100">(cos α, -sin α)</text>
+
+      <text class="alpha" x="52" y="-14">α</text>
+      <text class="alpha alpha-neg" x="52" y="28">-α</text>
+    </svg>
+
+    <!-- RIGHT: sine → cosine phase shift -->
+    <svg class="wave-panel" viewBox="0 -160 900 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- baseline + grid -->
+      <line class="wave-axis" x1="0" y1="0" x2="900" y2="0"/>
+      <line class="wave-vtick" x1="0" y1="-130" x2="0" y2="130"/>
+
+      <!-- π/2 tick labels -->
+      <g class="ticks">
+        <line x1="225" y1="-6" x2="225" y2="6"/>
+        <line x1="450" y1="-6" x2="450" y2="6"/>
+        <line x1="675" y1="-6" x2="675" y2="6"/>
+        <line x1="900" y1="-6" x2="900" y2="6"/>
+        <text x="225" y="28">π/2</text>
+        <text x="450" y="28">π</text>
+        <text x="675" y="28">3π/2</text>
+        <text x="900" y="28">2π</text>
+      </g>
+
+      <!-- sin curve -->
+      <path class="sin-path"
+        d="M 0 0 Q 56 -110 112 -110 T 225 0 T 338 110 T 450 110 T 562 0 T 675 -110 T 788 -110 T 900 0"
+        fill="none" stroke="#ff6b8b" stroke-width="3.5"/>
+
+      <!-- cos curve (drawn, then sin slides into it) -->
+      <path class="cos-path"
+        d="M 0 -110 Q 56 -110 112 0 T 225 110 T 338 110 T 450 0 T 562 -110 T 675 -110 T 788 0 T 900 110"
+        fill="none" stroke="#ffc857" stroke-width="3.5"/>
+
+      <!-- moving sin copy that shifts left by π/2 -->
+      <g class="shift-group">
+        <path class="sin-shift"
+          d="M 0 0 Q 56 -110 112 -110 T 225 0 T 338 110 T 450 110 T 562 0 T 675 -110 T 788 -110 T 900 0"
+          fill="none" stroke="#ff6b8b" stroke-width="3" stroke-dasharray="8 6"/>
+      </g>
+
+      <!-- legend -->
+      <g class="legend">
+        <line class="lg-sin" x1="30" y1="-140" x2="70" y2="-140" stroke="#ff6b8b" stroke-width="3.5"/>
+        <text class="lg-txt" x="80" y="-134">sin x</text>
+        <line class="lg-cos" x1="200" y1="-140" x2="240" y2="-140" stroke="#ffc857" stroke-width="3.5"/>
+        <text class="lg-txt" x="250" y="-134">cos x</text>
+      </g>
+
+      <!-- phase shift arrow -->
+      <g class="phase-arrow">
+        <path d="M 450 -150 Q 340 -180 225 -150" fill="none" stroke="#4dd2ff" stroke-width="2"/>
+        <path d="M 225 -150 l 10 -6 l -2 12 z" fill="#4dd2ff"/>
+        <text x="338" y="-160">向左平移 π/2</text>
+      </g>
+    </svg>
+
+    <!-- formula band -->
+    <div class="formula">
+      <span class="f-eq">cos x = sin&thinsp;(x + <em>π/2</em>)</span>
+      <span class="f-sep">·</span>
+      <span class="f-eq">cos(-x) = cos x</span>
+      <span class="f-sep">·</span>
+      <span class="f-eq">sin(-x) = -sin x</span>
+    </div>
+
+    <div class="caption">相位,不过是起点不同而已</div>
+
+    <style>
+      #scene-05-88ea72 {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+        color: #e8eef7;
+        background: #05080f;
+      }
+      #scene-05-88ea72 .bg-layer {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 28% 42%, rgba(77,210,255,0.14), transparent 60%),
+          radial-gradient(ellipse 900px 700px at 78% 58%, rgba(255,200,87,0.10), transparent 60%),
+          radial-gradient(ellipse 1200px 900px at 50% 120%, rgba(255,107,139,0.08), transparent 55%),
+          linear-gradient(180deg, #060913 0%, #020409 100%);
+      }
+      #scene-05-88ea72 .grid-layer {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(120,160,220,0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(120,160,220,0.06) 1px, transparent 1px);
+        background-size: 80px 80px;
+        mask-image: radial-gradient(ellipse 1400px 900px at 50% 50%, #000 35%, transparent 85%);
+        -webkit-mask-image: radial-gradient(ellipse 1400px 900px at 50% 50%, #000 35%, transparent 85%);
+      }
+
+      #scene-05-88ea72 .eyebrow {
+        position: absolute; top: 72px; left: 120px;
+        font-size: 24px; letter-spacing: 0.32em;
+        color: #ffc857; text-transform: uppercase;
+        opacity: 0.88;
+      }
+      #scene-05-88ea72 .title {
+        position: absolute; top: 118px; left: 120px;
+        font-size: 104px; font-weight: 800; letter-spacing: 0.04em;
+        color: #f7fafc;
+        text-shadow: 0 0 32px rgba(77,210,255,0.35);
+      }
+      #scene-05-88ea72 .subtitle {
+        position: absolute; top: 250px; left: 124px;
+        font-size: 34px; color: #9fb4cc; letter-spacing: 0.12em;
+      }
+
+      #scene-05-88ea72 .circle-panel {
+        position: absolute; left: 120px; top: 360px;
+        width: 560px; height: 560px;
+        filter: drop-shadow(0 0 22px rgba(77,210,255,0.25));
+      }
+      #scene-05-88ea72 .circle-panel .axis {
+        stroke: rgba(200,220,255,0.4); stroke-width: 1.5;
+      }
+      #scene-05-88ea72 .circle-panel .unit-circle {
+        filter: drop-shadow(0 0 10px rgba(77,210,255,0.55));
+      }
+      #scene-05-88ea72 .circle-panel .ray {
+        stroke-width: 3; stroke-linecap: round;
+      }
+      #scene-05-88ea72 .ray-a { stroke: #ff6b8b; filter: drop-shadow(0 0 6px rgba(255,107,139,0.7)); }
+      #scene-05-88ea72 .ray-b { stroke: #ffc857; filter: drop-shadow(0 0 6px rgba(255,200,87,0.7)); }
+      #scene-05-88ea72 .pt-a { fill: #ff6b8b; filter: drop-shadow(0 0 6px #ff6b8b); }
+      #scene-05-88ea72 .pt-b { fill: #ffc857; filter: drop-shadow(0 0 6px #ffc857); }
+      #scene-05-88ea72 .pt-lbl { font-size: 14px; fill: #d7e3f2; font-family: "JetBrains Mono", monospace; }
+      #scene-05-88ea72 .alpha { font-size: 22px; fill: #ff6b8b; font-style: italic; font-weight: 700; }
+      #scene-05-88ea72 .alpha-neg { fill: #ffc857; }
+      #scene-05-88ea72 .sym-label {
+        font-size: 14px; fill: #9fb4cc; letter-spacing: 0.08em;
+      }
+      #scene-05-88ea72 .sym-label-v { transform: translate(0,0); }
+
+      #scene-05-88ea72 .wave-panel {
+        position: absolute; right: 100px; top: 380px;
+        width: 1060px; height: 400px;
+        filter: drop-shadow(0 0 18px rgba(255,200,87,0.18));
+      }
+      #scene-05-88ea72 .wave-axis { stroke: rgba(200,220,255,0.35); stroke-width: 1.2; }
+      #scene-05-88ea72 .wave-vtick { stroke: rgba(200,220,255,0.25); stroke-width: 1; }
+      #scene-05-88ea72 .ticks line { stroke: rgba(200,220,255,0.5); stroke-width: 1.2; }
+      #scene-05-88ea72 .ticks text {
+        font-size: 18px; fill: #9fb4cc;
+        text-anchor: middle; font-family: "JetBrains Mono", monospace;
+      }
+      #scene-05-88ea72 .sin-path { filter: drop-shadow(0 0 5px rgba(255,107,139,0.6)); }
+      #scene-05-88ea72 .cos-path { filter: drop-shadow(0 0 5px rgba(255,200,87,0.6)); }
+      #scene-05-88ea72 .legend text { font-size: 20px; fill: #c8d4e6; }
+      #scene-05-88ea72 .phase-arrow text {
+        font-size: 20px; fill: #4dd2ff; text-anchor: middle;
+        letter-spacing: 0.1em;
+      }
+
+      #scene-05-88ea72 .formula {
+        position: absolute; left: 50%; transform: translateX(-50%);
+        bottom: 148px;
+        display: flex; align-items: center; gap: 28px;
+        font-size: 30px; color: #e8eef7;
+        font-family: "JetBrains Mono", "SF Mono", monospace;
+        padding: 18px 42px;
+        background: rgba(12, 20, 36, 0.6);
+        border: 1px solid rgba(77,210,255,0.25);
+        border-radius: 14px;
+        backdrop-filter: blur(6px);
+      }
+      #scene-05-88ea72 .formula em {
+        color: #4dd2ff; font-style: normal; font-weight: 700;
+      }
+      #scene-05-88ea72 .f-sep { color: rgba(200,220,255,0.35); }
+
+      #scene-05-88ea72 .caption {
+        position: absolute; left: 50%; bottom: 72px;
+        transform: translateX(-50%);
+        font-size: 32px; color: #ffc857;
+        letter-spacing: 0.18em;
+        text-shadow: 0 0 18px rgba(255,200,87,0.4);
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // entrance: title block
+      tl.from('#scene-05-88ea72 .bg-layer', { opacity: 0, duration: 0.8, ease: 'power2.out' }, 0);
+      tl.from('#scene-05-88ea72 .eyebrow', { opacity: 0, y: -12, duration: 0.6, ease: 'power2.out' }, 0.2);
+      tl.from('#scene-05-88ea72 .title', { opacity: 0, y: 24, duration: 0.9, ease: 'power3.out' }, 0.35);
+      tl.from('#scene-05-88ea72 .subtitle', { opacity: 0, y: 16, duration: 0.7, ease: 'power2.out' }, 0.8);
+
+      // unit circle: axes + circle draw
+      tl.from('#scene-05-88ea72 .circle-panel .axis', { opacity: 0, duration: 0.5, stagger: 0.1 }, 1.2);
+      tl.from('#scene-05-88ea72 .unit-circle', {
+        strokeDasharray: 1005, strokeDashoffset: 1005, duration: 1.4, ease: 'power2.inOut'
+      }, 1.4);
+      tl.from('#scene-05-88ea72 .circ-halo', { opacity: 0, scale: 0.6, transformOrigin: '50% 50%', duration: 1.0 }, 1.6);
+
+      // rays + reflection points
+      tl.from('#scene-05-88ea72 .ray-a', {
+        attr: { x2: 0, y2: 0 }, duration: 0.6, ease: 'power2.out'
+      }, 2.6);
+      tl.from('#scene-05-88ea72 .pt-a, #scene-05-88ea72 .lbl-a, #scene-05-88ea72 .alpha', {
+        opacity: 0, scale: 0.5, transformOrigin: '50% 50%', duration: 0.4, stagger: 0.08
+      }, 3.1);
+
+      tl.from('#scene-05-88ea72 .ray-b', {
+        attr: { x2: 0, y2: 0 }, duration: 0.6, ease: 'power2.out'
+      }, 3.6);
+      tl.from('#scene-05-88ea72 .pt-b, #scene-05-88ea72 .lbl-b, #scene-05-88ea72 .alpha-neg', {
+        opacity: 0, scale: 0.5, transformOrigin: '50% 50%', duration: 0.4, stagger: 0.08
+      }, 4.0);
+
+      // symmetry axes reveal
+      tl.from('#scene-05-88ea72 .sym-h', { opacity: 0, duration: 0.6 }, 4.6);
+      tl.from('#scene-05-88ea72 .sym-v', { opacity: 0, duration: 0.6 }, 5.0);
+
+      // right panel: baseline & ticks
+      tl.from('#scene-05-88ea72 .wave-axis, #scene-05-88ea72 .wave-vtick', {
+        opacity: 0, duration: 0.5, stagger: 0.1
+      }, 5.4);
+      tl.from('#scene-05-88ea72 .ticks', { opacity: 0, duration: 0.5 }, 5.7);
+      tl.from('#scene-05-88ea72 .legend', { opacity: 0, y: -8, duration: 0.5 }, 6.0);
+
+      // sin curve draw
+      tl.from('#scene-05-88ea72 .sin-path', {
+        strokeDasharray: 2000, strokeDashoffset: 2000, duration: 1.4, ease: 'power2.inOut'
+      }, 6.2);
+
+      // cos curve draw
+      tl.from('#scene-05-88ea72 .cos-path', {
+        strokeDasharray: 2000, strokeDashoffset: 2000, duration: 1.4, ease: 'power2.inOut'
+      }, 7.6);
+
+      // phase shift: dashed sine slides left by π/2 (225 units)
+      gsap.set('#scene-05-88ea72 .shift-group', { x: 0, opacity: 0 });
+      tl.to('#scene-05-88ea72 .shift-group', { opacity: 1, duration: 0.4 }, 9.2);
+      tl.from('#scene-05-88ea72 .phase-arrow', { opacity: 0, y: 8, duration: 0.5 }, 9.4);
+      tl.to('#scene-05-88ea72 .shift-group', {
+        x: -225, duration: 1.6, ease: 'power2.inOut'
+      }, 9.8);
+
+      // formula band
+      tl.from('#scene-05-88ea72 .formula', {
+        opacity: 0, y: 20, duration: 0.8, ease: 'power3.out'
+      }, 11.4);
+      tl.from('#scene-05-88ea72 .f-eq', {
+        opacity: 0, y: 8, duration: 0.5, stagger: 0.2, ease: 'power2.out'
+      }, 11.7);
+
+      // caption emphasis
+      tl.from('#scene-05-88ea72 .caption', {
+        opacity: 0, y: 14, duration: 0.8, ease: 'power3.out'
+      }, 13.2);
+      tl.to('#scene-05-88ea72 .caption', {
+        textShadow: '0 0 36px rgba(255,200,87,0.85)',
+        duration: 0.8, ease: 'power2.inOut', yoyo: true, repeat: 1
+      }, 14.0);
+
+      // gentle outro fade
+      tl.to('#scene-05-88ea72 .bg-layer', { opacity: 0.85, duration: 0.8 }, 15.2);
+
+      window.__timelines["scene-05-88ea72"] = tl;
+    </script>
+  </div>
+</template>

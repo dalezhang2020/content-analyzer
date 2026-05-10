@@ -38,6 +38,7 @@
  */
 
 import type { NextRequest } from "next/server";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import { rewriteScene } from "@/lib/workbench/ai-generator";
 import {
@@ -79,6 +80,7 @@ export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ id: string; sceneId: string }> },
 ): Promise<Response> {
+  if (!isLocalEnv()) return localOnlyResponse("Scene rewrite (requires kiro-cli)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
     const sceneId = await requireSceneIdFromParams(ctx.params);

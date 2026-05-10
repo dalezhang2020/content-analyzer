@@ -43,6 +43,7 @@ import {
   sceneCompositionPath,
 } from "@/lib/workbench/ai-generator";
 import { STAGE_DIRS } from "@/lib/workbench/constants";
+import { sql, isNeonConfigured } from "@/lib/db";
 import { resolveProjectFile } from "@/lib/workbench/path-safety";
 import { readProject } from "@/lib/workbench/project-store";
 
@@ -68,13 +69,51 @@ export async function GET(
     const project = await readProject(projectId);
     const scenes = project.storyboard?.scenes ?? [];
 
+    // Phase 3: if Neon has html_content, use that to determine "exists"
+    if (isNeonConfigured()) {
+      try {
+        const rows = await sql<{
+          scene_id: string;
+          html_content: string | null;
+          updated_at: string;
+        }>`
+          SELECT scene_id, html_content, updated_at::text AS updated_at
+          FROM content_analyzer.scenes
+          WHERE project_id = ${projectId}
+        `;
+        const neonMap = new Map(rows.map((r) => [r.scene_id, r]));
+
+        const entries: SceneCompositionStatus[] = scenes.map((scene) => {
+          const compositionId = sceneCompositionId(scene);
+          const relPath = sceneCompositionPath(scene);
+          const neonRow = neonMap.get(scene.sceneId);
+          const exists = Boolean(neonRow?.html_content);
+          return {
+            sceneId: scene.sceneId,
+            index: scene.index,
+            title: scene.title,
+            compositionId,
+            relPath,
+            exists,
+            size: exists && neonRow?.html_content ? neonRow.html_content.length : 0,
+            updatedAt: exists && neonRow ? neonRow.updated_at : undefined,
+          };
+        });
+
+        return Response.json(
+          { scenes: entries },
+          { status: 200, headers: { "Cache-Control": "no-store" } },
+        );
+      } catch (err) {
+        console.warn("[composition/scenes] Neon read failed, falling back to FS:", err instanceof Error ? err.message : err);
+      }
+    }
+
+    // Local FS fallback
     const entries: SceneCompositionStatus[] = await Promise.all(
       scenes.map(async (scene) => {
         const compositionId = sceneCompositionId(scene);
         const relPath = sceneCompositionPath(scene);
-        // `resolveProjectFile` runs every path segment through
-        // `assertNoPathTraversal` + `assertUnderDataDir`, so no extra
-        // guard is needed here.
         const absPath = resolveProjectFile(
           projectId,
           STAGE_DIRS.COMPOSITION,

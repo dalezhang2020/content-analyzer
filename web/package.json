@@ -9,10 +9,15 @@
     "lint": "eslint",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "clean:videos": "node scripts/clean-videos.mjs"
+    "clean:videos": "node scripts/clean-videos.mjs",
+    "migrate:neon": "node scripts/migrate-to-neon.mjs",
+    "migrate:neon:apply": "node scripts/migrate-to-neon.mjs --apply",
+    "sync:html": "node scripts/sync-html-to-neon.mjs",
+    "sync:html:apply": "node scripts/sync-html-to-neon.mjs --apply"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
+    "@neondatabase/serverless": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.14.0",
@@ -30,6 +35,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.1",
@@ -38,6 +44,7 @@
     "fast-check": "^3.23.2",
     "jsdom": "^29.1.1",
     "msw": "^2.7.0",
+    "pg": "^8.20.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.5"

@@ -2,73 +2,56 @@
   <div id="scene-01-c694ae" data-composition-id="scene-01-c694ae" data-width="1920" data-height="1080">
     <div class="bg-layer"></div>
     <div class="grid-layer">
-      <svg viewBox="0 0 1920 540" preserveAspectRatio="none" width="1920" height="540">
-        <g class="grid-lines" stroke="#3b4a8a" stroke-width="1" fill="none" opacity="0.35">
-          <line class="gline" x1="0" y1="60" x2="1920" y2="60"></line>
-          <line class="gline" x1="0" y1="130" x2="1920" y2="130"></line>
-          <line class="gline" x1="0" y1="210" x2="1920" y2="210"></line>
-          <line class="gline" x1="0" y1="300" x2="1920" y2="300"></line>
-          <line class="gline" x1="0" y1="400" x2="1920" y2="400"></line>
-          <line class="gline" x1="0" y1="510" x2="1920" y2="510"></line>
-          <line class="gv" x1="-200" y1="0" x2="700" y2="540"></line>
-          <line class="gv" x1="100" y1="0" x2="850" y2="540"></line>
-          <line class="gv" x1="400" y1="0" x2="1000" y2="540"></line>
-          <line class="gv" x1="700" y1="0" x2="1150" y2="540"></line>
-          <line class="gv" x1="960" y1="0" x2="1300" y2="540"></line>
-          <line class="gv" x1="1220" y1="0" x2="1450" y2="540"></line>
-          <line class="gv" x1="1520" y1="0" x2="1600" y2="540"></line>
-          <line class="gv" x1="1820" y1="0" x2="1750" y2="540"></line>
-          <line class="gv" x1="2120" y1="0" x2="1900" y2="540"></line>
-        </g>
+      <svg class="grid-svg" viewBox="0 0 1920 1080" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="s01-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#1d3a5f" stroke-width="1" opacity="0.35"/>
+          </pattern>
+        </defs>
+        <rect width="1920" height="1080" fill="url(#s01-grid)"/>
       </svg>
     </div>
 
-    <div class="floating-formulas">
-      <span class="ff ff-1">sin</span>
-      <span class="ff ff-2">cos</span>
-      <span class="ff ff-3">tan</span>
-      <span class="ff ff-4">sin²θ + cos²θ = 1</span>
-      <span class="ff ff-5">tan θ = sin θ / cos θ</span>
-      <span class="ff ff-6">SOH · CAH · TOA</span>
-      <span class="ff ff-7">θ</span>
-      <span class="ff ff-8">π/2</span>
-      <span class="ff ff-9">sec</span>
+    <!-- Floating formula glyphs — the "tangled" old understanding -->
+    <div class="glyph-layer">
+      <span class="glyph g1">sin θ</span>
+      <span class="glyph g2">cos θ</span>
+      <span class="glyph g3">tan θ</span>
+      <span class="glyph g4">sin²+cos²=1</span>
+      <span class="glyph g5">π/2</span>
+      <span class="glyph g6">opposite/hypotenuse</span>
     </div>
 
-    <svg class="circle-preview" viewBox="-150 -150 300 300" width="460" height="460">
-      <defs>
-        <radialGradient id="sc1-ring-grad" cx="50%" cy="50%" r="50%">
-          <stop offset="70%" stop-color="#60a5fa" stop-opacity="0"></stop>
-          <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.35"></stop>
-        </radialGradient>
-      </defs>
-      <circle class="cp-halo" cx="0" cy="0" r="130" fill="url(#sc1-ring-grad)"></circle>
-      <line class="cp-axis" x1="-120" y1="0" x2="120" y2="0" stroke="#7aa0ff" stroke-width="1" stroke-dasharray="3 6"></line>
-      <line class="cp-axis" x1="0" y1="-120" x2="0" y2="120" stroke="#7aa0ff" stroke-width="1" stroke-dasharray="3 6"></line>
-      <circle class="cp-ring" cx="0" cy="0" r="110" fill="none" stroke="#60a5fa" stroke-width="2" pathLength="1"></circle>
-      <line class="cp-ray" x1="0" y1="0" x2="95" y2="-55" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"></line>
-      <circle class="cp-dot" cx="95" cy="-55" r="6" fill="#fbbf24"></circle>
+    <!-- Central unit circle preview — the "clarity" we're moving toward -->
+    <svg class="circle-svg" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
+      <g class="axes">
+        <line x1="-180" y1="0" x2="180" y2="0" stroke="#4a6d8c" stroke-width="1.5" opacity="0.6"/>
+        <line x1="0" y1="-180" x2="0" y2="180" stroke="#4a6d8c" stroke-width="1.5" opacity="0.6"/>
+      </g>
+      <circle class="unit-circle" cx="0" cy="0" r="140" fill="none" stroke="#ffb347" stroke-width="2.5"
+        stroke-dasharray="880" stroke-dashoffset="880"
+        style="filter: drop-shadow(0 0 8px rgba(255,179,71,0.6));"/>
+      <line class="radius" x1="0" y1="0" x2="140" y2="0" stroke="#6bd4ff" stroke-width="2.5"
+        style="filter: drop-shadow(0 0 6px rgba(107,212,255,0.7));"/>
+      <circle class="point" cx="140" cy="0" r="6" fill="#ff7a6b"
+        style="filter: drop-shadow(0 0 10px rgba(255,122,107,0.9));"/>
     </svg>
 
-    <div class="question-mark">?</div>
-
-    <div class="content">
-      <div class="eyebrow">深度解析 · 第一讲</div>
+    <div class="text-layer">
+      <div class="eyebrow">第一讲 · 序章</div>
       <h1 class="title">
-        <span class="word w1">为什么要</span>
-        <span class="word w2">重学</span>
-        <span class="word w3 accent">三角函数</span>
+        <span class="title-word w1">为什么</span>
+        <span class="title-word w2">要</span>
+        <span class="title-word w3">重学</span>
+        <span class="title-word w4 accent">三角函数</span>
       </h1>
-      <div class="underline"></div>
-      <p class="subtitle">背过公式，却说不清它们是什么。<br/>从单位圆出发，让概念变成思维工具。</p>
+      <div class="subtitle">从单位圆出发,把公式变回思维工具</div>
     </div>
 
-    <div class="bridge-hint">
-      <span class="bh-dot"></span>
-      <span class="bh-text">下一步：走进单位圆</span>
+    <div class="caption">
+      <span class="caption-dot"></span>
+      <span class="caption-text">背得出 sin、cos、tan,却说不清它们到底是什么</span>
     </div>
-
-    <div class="caption">EP.01 &nbsp;·&nbsp; Trigonometry, revisited</div>
 
     <style>
       #scene-01-c694ae {
@@ -76,172 +59,125 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-        color: #e8ecff;
-        background: #05071a;
+        background: #050a15;
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: #f0f4fa;
       }
       #scene-01-c694ae .bg-layer {
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(ellipse 1100px 780px at 50% 46%, rgba(96, 165, 250, 0.22), transparent 65%),
-          radial-gradient(ellipse 900px 600px at 18% 90%, rgba(251, 191, 36, 0.08), transparent 70%),
-          radial-gradient(ellipse 900px 600px at 85% 12%, rgba(248, 113, 113, 0.06), transparent 70%),
-          linear-gradient(180deg, #05071a 0%, #080c24 55%, #05071a 100%);
+          radial-gradient(ellipse at 30% 40%, rgba(58, 102, 156, 0.28) 0%, transparent 55%),
+          radial-gradient(ellipse at 70% 65%, rgba(255, 179, 71, 0.12) 0%, transparent 50%),
+          linear-gradient(180deg, #060d1c 0%, #030711 100%);
       }
       #scene-01-c694ae .grid-layer {
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 540px;
-        transform: perspective(900px) rotateX(58deg);
-        transform-origin: 50% 100%;
+        inset: 0;
         opacity: 0;
-        mix-blend-mode: screen;
       }
-      #scene-01-c694ae .grid-layer svg { display: block; }
+      #scene-01-c694ae .grid-svg {
+        width: 100%;
+        height: 100%;
+      }
 
-      #scene-01-c694ae .floating-formulas {
+      #scene-01-c694ae .glyph-layer {
         position: absolute;
         inset: 0;
         pointer-events: none;
       }
-      #scene-01-c694ae .ff {
+      #scene-01-c694ae .glyph {
         position: absolute;
         font-family: "Georgia", "Times New Roman", serif;
         font-style: italic;
+        color: #5a7a9c;
+        text-shadow: 0 0 14px rgba(90, 122, 156, 0.35);
         opacity: 0;
-        filter: drop-shadow(0 0 14px rgba(96, 165, 250, 0.35));
-        white-space: nowrap;
+        will-change: transform, opacity;
       }
-      #scene-01-c694ae .ff-1 { left: 150px;  top: 160px;  font-size: 92px;  color: rgba(96, 165, 250, 0.65); }
-      #scene-01-c694ae .ff-2 { right: 180px; top: 140px;  font-size: 104px; color: rgba(251, 191, 36, 0.55); }
-      #scene-01-c694ae .ff-3 { left: 220px;  bottom: 220px; font-size: 88px; color: rgba(248, 113, 113, 0.55); }
-      #scene-01-c694ae .ff-4 { right: 140px; bottom: 260px; font-size: 40px; color: rgba(200, 215, 255, 0.55); letter-spacing: 1px; }
-      #scene-01-c694ae .ff-5 { left: 120px;  top: 48%;    font-size: 36px; color: rgba(200, 215, 255, 0.4); letter-spacing: 1px; }
-      #scene-01-c694ae .ff-6 { right: 120px; top: 46%;    font-size: 32px; color: rgba(251, 191, 36, 0.45); letter-spacing: 3px; font-style: normal; }
-      #scene-01-c694ae .ff-7 { left: 48%;    top: 90px;   font-size: 70px; color: rgba(96, 165, 250, 0.4); }
-      #scene-01-c694ae .ff-8 { right: 320px; top: 310px;  font-size: 44px; color: rgba(200, 215, 255, 0.4); }
-      #scene-01-c694ae .ff-9 { left: 340px;  bottom: 360px; font-size: 54px; color: rgba(96, 165, 250, 0.4); }
+      #scene-01-c694ae .g1 { top: 140px; left: 180px; font-size: 52px; }
+      #scene-01-c694ae .g2 { top: 240px; right: 220px; font-size: 46px; }
+      #scene-01-c694ae .g3 { top: 820px; left: 260px; font-size: 48px; }
+      #scene-01-c694ae .g4 { top: 880px; right: 180px; font-size: 38px; }
+      #scene-01-c694ae .g5 { top: 380px; left: 120px; font-size: 58px; }
+      #scene-01-c694ae .g6 { top: 760px; right: 320px; font-size: 30px; letter-spacing: 1px; }
 
-      #scene-01-c694ae .circle-preview {
+      #scene-01-c694ae .circle-svg {
         position: absolute;
-        left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%) scale(0.92);
+        left: 50%;
+        width: 520px;
+        height: 520px;
+        transform: translate(-50%, -48%);
         opacity: 0;
-        filter: drop-shadow(0 0 24px rgba(96, 165, 250, 0.45));
       }
-      #scene-01-c694ae .cp-ring {
-        stroke-dasharray: 1;
-        stroke-dashoffset: 1;
-      }
-      #scene-01-c694ae .cp-ray,
-      #scene-01-c694ae .cp-dot { opacity: 0; }
 
-      #scene-01-c694ae .question-mark {
+      #scene-01-c694ae .text-layer {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        font-size: 340px;
-        font-weight: 700;
-        color: rgba(96, 165, 250, 0.12);
-        font-family: "Georgia", serif;
-        letter-spacing: -20px;
-        opacity: 0;
-        filter: drop-shadow(0 0 40px rgba(96, 165, 250, 0.25));
-      }
-
-      #scene-01-c694ae .content {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 1400px;
         text-align: center;
-        z-index: 5;
+        z-index: 2;
       }
       #scene-01-c694ae .eyebrow {
-        display: inline-block;
-        font-size: 28px;
-        letter-spacing: 10px;
-        color: #fbbf24;
-        padding: 10px 24px;
-        border: 1px solid rgba(251, 191, 36, 0.45);
-        border-radius: 4px;
-        background: rgba(251, 191, 36, 0.06);
+        font-size: 26px;
+        letter-spacing: 12px;
+        color: #ffb347;
+        margin-bottom: 28px;
         opacity: 0;
+        text-shadow: 0 0 16px rgba(255, 179, 71, 0.5);
       }
       #scene-01-c694ae .title {
-        margin-top: 36px;
-        font-size: 128px;
-        font-weight: 800;
-        letter-spacing: 6px;
-        line-height: 1.1;
-        color: #ffffff;
+        font-size: 118px;
+        font-weight: 900;
+        letter-spacing: 4px;
+        line-height: 1.15;
+        margin-bottom: 36px;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
       }
-      #scene-01-c694ae .title .word {
+      #scene-01-c694ae .title-word {
         display: inline-block;
         opacity: 0;
         margin: 0 6px;
       }
-      #scene-01-c694ae .title .accent {
-        background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #fbbf24 100%);
+      #scene-01-c694ae .title-word.accent {
+        background: linear-gradient(135deg, #ffd27a 0%, #ff7a6b 100%);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 24px rgba(96, 165, 250, 0.5));
-      }
-      #scene-01-c694ae .underline {
-        width: 0;
-        height: 3px;
-        margin: 32px auto 0;
-        background: linear-gradient(90deg, transparent, #60a5fa 20%, #fbbf24 80%, transparent);
-        border-radius: 2px;
-        opacity: 0.9;
+        filter: drop-shadow(0 0 24px rgba(255, 122, 107, 0.35));
       }
       #scene-01-c694ae .subtitle {
-        margin-top: 38px;
         font-size: 34px;
-        line-height: 1.7;
-        color: #b8c3e6;
-        letter-spacing: 2px;
+        font-weight: 300;
+        color: #a9c0dc;
+        letter-spacing: 3px;
         opacity: 0;
-      }
-
-      #scene-01-c694ae .bridge-hint {
-        position: absolute;
-        left: 50%;
-        bottom: 140px;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        font-size: 26px;
-        color: #fbbf24;
-        letter-spacing: 4px;
-        opacity: 0;
-      }
-      #scene-01-c694ae .bh-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #fbbf24;
-        box-shadow: 0 0 18px rgba(251, 191, 36, 0.9);
       }
 
       #scene-01-c694ae .caption {
         position: absolute;
+        bottom: 88px;
         left: 50%;
-        bottom: 60px;
         transform: translateX(-50%);
-        font-family: "Georgia", serif;
-        font-size: 22px;
-        letter-spacing: 6px;
-        color: rgba(200, 215, 255, 0.5);
+        display: flex;
+        align-items: center;
+        gap: 18px;
         opacity: 0;
+      }
+      #scene-01-c694ae .caption-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6bd4ff;
+        box-shadow: 0 0 12px rgba(107, 212, 255, 0.9);
+      }
+      #scene-01-c694ae .caption-text {
+        font-size: 28px;
+        color: #c9d7e8;
+        letter-spacing: 2px;
+        font-weight: 300;
       }
     </style>
 
@@ -249,74 +185,107 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      // Background + perspective grid
-      tl.from('#scene-01-c694ae .bg-layer', { opacity: 0, duration: 0.8, ease: 'power2.out' }, 0)
-        .to('#scene-01-c694ae .grid-layer', { opacity: 0.6, duration: 1.4, ease: 'power2.out' }, 0.3)
-        .from('#scene-01-c694ae .grid-layer .gline', { scaleX: 0, transformOrigin: '50% 50%', duration: 1.2, stagger: 0.08, ease: 'power2.out' }, 0.4)
-        .from('#scene-01-c694ae .grid-layer .gv', { opacity: 0, duration: 0.8, stagger: 0.05, ease: 'power2.out' }, 0.6);
+      // 0 — 1.8s: background + grid fade in
+      tl.to('#scene-01-c694ae .grid-layer', { opacity: 1, duration: 1.8, ease: 'power2.out' }, 0);
 
-      // Scattered formulas drift in (suggesting confusion / chaos)
-      tl.to('#scene-01-c694ae .ff-1', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.9)
-        .to('#scene-01-c694ae .ff-2', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.1)
-        .to('#scene-01-c694ae .ff-3', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.3)
-        .to('#scene-01-c694ae .ff-7', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 1.5)
-        .to('#scene-01-c694ae .ff-4', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 1.7)
-        .to('#scene-01-c694ae .ff-5', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 1.9)
-        .to('#scene-01-c694ae .ff-8', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 2.0)
-        .to('#scene-01-c694ae .ff-9', { opacity: 1, duration: 0.6, ease: 'power2.out' }, 2.2)
-        .to('#scene-01-c694ae .ff-6', { opacity: 1, duration: 0.7, ease: 'power2.out' }, 2.4);
+      // 0.4 — 2.6s: floating formula glyphs drift in (the "old" tangled understanding)
+      tl.from('#scene-01-c694ae .glyph', {
+        opacity: 0,
+        y: 40,
+        scale: 0.9,
+        duration: 1.4,
+        stagger: 0.18,
+        ease: 'power2.out'
+      }, 0.4);
+      tl.to('#scene-01-c694ae .glyph', { opacity: 0.55, duration: 0.01 }, 1.8);
 
-      // Ambient drift on the floating formulas (finite, not infinite)
-      tl.to('#scene-01-c694ae .ff-1', { y: -14, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 2.6)
-        .to('#scene-01-c694ae .ff-2', { y: 18, duration: 3.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 2.6)
-        .to('#scene-01-c694ae .ff-3', { y: -12, duration: 3.0, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 2.7)
-        .to('#scene-01-c694ae .ff-4', { y: 10, duration: 3.6, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 2.8);
+      // 2.4 — 3.2s: eyebrow reveal
+      tl.to('#scene-01-c694ae .eyebrow', {
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, 2.4);
 
-      // Faint giant question mark behind the title
-      tl.to('#scene-01-c694ae .question-mark', { opacity: 1, duration: 1.2, ease: 'power2.out' }, 2.2)
-        .to('#scene-01-c694ae .question-mark', { scale: 1.08, duration: 2.5, ease: 'sine.inOut', yoyo: true, repeat: 1, transformOrigin: '50% 50%' }, 3.4);
+      // 3.0 — 4.6s: title words stagger in
+      tl.to('#scene-01-c694ae .title-word', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.22,
+        ease: 'power3.out'
+      }, 3.0);
+      tl.from('#scene-01-c694ae .title-word', {
+        y: 50,
+        duration: 0.7,
+        stagger: 0.22,
+        ease: 'power3.out'
+      }, 3.0);
 
-      // Eyebrow + title reveal
-      tl.to('#scene-01-c694ae .eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 2.8)
-        .from('#scene-01-c694ae .eyebrow', { y: -14, duration: 0.8, ease: 'power3.out' }, 2.8)
-        .to('#scene-01-c694ae .title .w1', { opacity: 1, duration: 0.7, ease: 'power3.out' }, 3.3)
-        .from('#scene-01-c694ae .title .w1', { y: 40, duration: 0.7, ease: 'power3.out' }, 3.3)
-        .to('#scene-01-c694ae .title .w2', { opacity: 1, duration: 0.7, ease: 'power3.out' }, 3.55)
-        .from('#scene-01-c694ae .title .w2', { y: 40, duration: 0.7, ease: 'power3.out' }, 3.55)
-        .to('#scene-01-c694ae .title .w3', { opacity: 1, duration: 0.9, ease: 'power3.out' }, 3.85)
-        .from('#scene-01-c694ae .title .w3', { y: 40, scale: 0.88, duration: 0.9, ease: 'power3.out', transformOrigin: '50% 50%' }, 3.85);
+      // 4.6 — 5.6s: subtitle fade in
+      tl.to('#scene-01-c694ae .subtitle', {
+        opacity: 1,
+        duration: 1.0,
+        ease: 'power2.out'
+      }, 4.6);
 
-      // Underline sweep + subtitle
-      tl.to('#scene-01-c694ae .underline', { width: 620, duration: 1.0, ease: 'power3.inOut' }, 4.4)
-        .to('#scene-01-c694ae .subtitle', { opacity: 1, duration: 0.9, ease: 'power2.out' }, 4.9)
-        .from('#scene-01-c694ae .subtitle', { y: 16, duration: 0.9, ease: 'power2.out' }, 4.9);
+      // 6.2 — 8.4s: glyphs dim out, unit circle emerges behind the title
+      tl.to('#scene-01-c694ae .glyph', {
+        opacity: 0.12,
+        duration: 1.6,
+        ease: 'power1.inOut'
+      }, 6.2);
 
-      // Caption appears
-      tl.to('#scene-01-c694ae .caption', { opacity: 1, duration: 0.8, ease: 'power2.out' }, 5.4);
+      tl.to('#scene-01-c694ae .circle-svg', {
+        opacity: 0.38,
+        duration: 1.8,
+        ease: 'power2.out'
+      }, 6.6);
 
-      // Linger beat — subtle breathing on accent word
-      tl.to('#scene-01-c694ae .title .w3', { scale: 1.035, duration: 1.6, ease: 'sine.inOut', yoyo: true, repeat: 1, transformOrigin: '50% 50%' }, 6.2);
+      // 7.2 — 9.2s: unit circle draws
+      tl.to('#scene-01-c694ae .unit-circle', {
+        strokeDashoffset: 0,
+        duration: 2.0,
+        ease: 'power2.inOut'
+      }, 7.2);
 
-      // Fade scattered formulas out gently as we prepare for the bridge
-      tl.to('#scene-01-c694ae .floating-formulas .ff', { opacity: 0.15, duration: 1.2, stagger: 0.04, ease: 'power2.in' }, 9.0)
-        .to('#scene-01-c694ae .question-mark', { opacity: 0, duration: 1.0, ease: 'power2.in' }, 9.2);
+      // 9.0 — 12.5s: rotating radius + point — hint at what's next
+      tl.fromTo('#scene-01-c694ae .radius', {
+        rotation: 0,
+        transformOrigin: '0px 0px'
+      }, {
+        rotation: -62,
+        transformOrigin: '0px 0px',
+        duration: 3.5,
+        ease: 'power1.inOut'
+      }, 9.0);
 
-      // Unit-circle preview fades in to bridge to next scene
-      tl.to('#scene-01-c694ae .circle-preview', { opacity: 0.35, scale: 1, duration: 1.2, ease: 'power3.out' }, 9.6)
-        .to('#scene-01-c694ae .cp-ring', { strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut' }, 9.8)
-        .to('#scene-01-c694ae .cp-ray', { opacity: 0.9, duration: 0.5, ease: 'power2.out' }, 11.0)
-        .from('#scene-01-c694ae .cp-ray', { attr: { x2: 0, y2: 0 }, duration: 0.7, ease: 'power2.out' }, 11.0)
-        .to('#scene-01-c694ae .cp-dot', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 11.5)
-        .from('#scene-01-c694ae .cp-dot', { scale: 0, transformOrigin: '95px -55px', duration: 0.5, ease: 'back.out(2)' }, 11.5);
+      tl.fromTo('#scene-01-c694ae .point', {
+        x: 0, y: 0
+      }, {
+        x: 140 * Math.cos(-62 * Math.PI / 180) - 140,
+        y: 140 * Math.sin(-62 * Math.PI / 180),
+        duration: 3.5,
+        ease: 'power1.inOut'
+      }, 9.0);
 
-      // Bridge hint text
-      tl.to('#scene-01-c694ae .bridge-hint', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 11.4)
-        .from('#scene-01-c694ae .bridge-hint', { y: 12, duration: 0.8, ease: 'power2.out' }, 11.4)
-        .to('#scene-01-c694ae .bh-dot', { scale: 1.4, duration: 0.5, ease: 'sine.inOut', yoyo: true, repeat: 2, transformOrigin: '50% 50%' }, 12.0);
+      // 9.6 — 10.8s: caption appears
+      tl.to('#scene-01-c694ae .caption', {
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power2.out'
+      }, 9.6);
 
-      // Final gentle fade of non-bridge chrome
-      tl.to(['#scene-01-c694ae .eyebrow', '#scene-01-c694ae .subtitle', '#scene-01-c694ae .caption'], { opacity: 0.35, duration: 0.8, ease: 'power2.in' }, 13.1)
-        .to('#scene-01-c694ae', { opacity: 0, duration: 0.6, ease: 'power2.in' }, 13.45);
+      // 13.3 — 14.0s: gentle final settle — caption and glyphs fade slightly
+      tl.to('#scene-01-c694ae .caption', {
+        opacity: 0.75,
+        duration: 0.7,
+        ease: 'power1.in'
+      }, 13.3);
+      tl.to('#scene-01-c694ae .glyph', {
+        opacity: 0.06,
+        duration: 0.7,
+        ease: 'power1.in'
+      }, 13.3);
 
       window.__timelines["scene-01-c694ae"] = tl;
     </script>
