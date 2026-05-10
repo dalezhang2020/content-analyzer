@@ -206,7 +206,12 @@ describe("template-manager · resolveTemplateDir · Property 15", () => {
             | Array<{ path: string; reason: string }>
             | undefined;
           expect(Array.isArray(tried)).toBe(true);
-          const expectedLen = params.envSet ? 3 : 2;
+          // Resolver now tries two template names (hf-blank, linear-launch)
+          // at each of the two sibling depths; env (when set) is probed
+          // first. This test only plants `linear-launch` candidates, so
+          // the hf-blank probes always miss → the total miss count is
+          // 2 names × 2 depths (+ 1 env when set).
+          const expectedLen = params.envSet ? 5 : 4;
           expect(tried).toHaveLength(expectedLen);
           const triedPaths = (tried ?? []).map((t) => t.path);
           if (params.envSet) expect(triedPaths).toContain(envDir);

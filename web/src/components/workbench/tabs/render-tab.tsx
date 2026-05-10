@@ -395,6 +395,7 @@ export function RenderTab({
         <video
           key={videoPath}
           controls
+          preload="metadata"
           src={videoPath}
           className="w-full rounded-lg border border-border bg-black aspect-video"
         />

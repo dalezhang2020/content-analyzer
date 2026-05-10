@@ -522,6 +522,126 @@ All paths are relative to `content-analyzer/web/`. TypeScript is the implementat
 - [x] T51 Final checkpoint — Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
+### Phase 7 — UI debug affordances (live preview + inline playback)
+
+Increment on top of the completed spec to address pain-points from the first
+real E2E run: composition generation is streamed per-scene but the HTML tab
+cannot see sub-scene progress; generated audio cannot be auditioned inline;
+and the Render tab's `<video>` must be verified against a real mp4.
+
+- [x] T52 Implement `GET /api/projects/[id]/composition/scenes`
+  - Create `src/app/api/projects/[id]/composition/scenes/route.ts`
+  - For each scene in `project.storyboard.scenes`, resolve
+    `composition/{sceneCompositionPath(scene)}` via `resolveProjectFile`
+    + `assertUnderDataDir` and `fs.stat` it
+  - Return `200 { scenes: [{ sceneId, index, title, compositionId, relPath, exists, size, updatedAt }] }`
+    where `compositionId = sceneCompositionId(scene)`; `updatedAt` is the file `mtimeMs`
+    as an ISO string (omit when `exists=false`)
+  - `Cache-Control: no-store`
+  - Errors: invalid projectId → 400 `INVALID_PROJECT_ID`; `readProject` failures → 404/500 per matrix
+  - Files: `src/app/api/projects/[id]/composition/scenes/route.ts`
+  - _Requirements: 12.5, 12.11, 14.1, 16.4, 16.6_
+  - Acceptance: for a project with 11 scenes and 5 generated sub-composition
+    files, the response contains 11 entries with `exists: true` on the 5
+    whose files exist and `exists: false` on the rest
+
+- [x] T53 Implement `GET /api/projects/[id]/composition/scenes/[compositionId]`
+  - Create `src/app/api/projects/[id]/composition/scenes/[compositionId]/route.ts`
+  - Validate `compositionId` matches `/^scene-\d{2}-[0-9a-f]{6}$/`; otherwise 400 `INVALID_COMPOSITION_ID`
+  - Resolve `composition/compositions/{compositionId}.html` and 404 if missing
+  - Read the sub-composition `<template>` bytes (the existing per-scene file)
+    and wrap them in a minimal host document so an iframe renders the
+    animation instead of a black page:
+      * include `<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>`
+      * on `DOMContentLoaded`, clone the `<template>`'s content into `document.body`,
+        dispatch a `hyperframes:ready` event, then call
+        `window.__timelines[compositionId].play()` when present
+      * apply `html, body { margin: 0; background: #111; color: #fff; overflow: hidden; }`
+      * set `<base target="_blank">` so no in-iframe link ever navigates the parent
+  - Sanity-scan the sub-composition bytes with `scanHtml` before embedding; if a forbidden
+    token appears (should never happen — writes already go through `scanHtml`) return 500
+    `HTML_SCAN_REJECTED`
+  - Respond `200 text/html; charset=utf-8; Cache-Control: no-store`
+  - Files: `src/app/api/projects/[id]/composition/scenes/[compositionId]/route.ts`
+  - _Requirements: 12.5, 12.11, 16.4, 16.6, 16.7_
+  - Acceptance: loading the route for an existing `scene-01-53c377` in an iframe shows
+    the real GSAP-driven animation (not a blank `<template>`)
+
+- [x] T54 Implement `GET /api/projects/[id]/audio/scenes/[index]`
+  - Create `src/app/api/projects/[id]/audio/scenes/[index]/route.ts`
+  - Validate `index` parses as positive integer in `[1, MAX_SCENES]`; else 400 `INVALID_SCENE_INDEX`
+  - Resolve `composition/assets/scene-{index}.mp3` via `resolveProjectFile` + `assertUnderDataDir`;
+    404 `AUDIO_NOT_FOUND` if missing
+  - Stream the file with `Content-Type: audio/mpeg`, `Content-Length`, `Accept-Ranges: bytes`,
+    `Cache-Control: no-store`; honour `Range` header for the common `bytes=0-` player seek
+  - Files: `src/app/api/projects/[id]/audio/scenes/[index]/route.ts`
+  - _Requirements: 9.10, 12.6, 12.11, 16.4, 16.6_
+  - Acceptance: an `<audio controls src="…/audio/scenes/3">` tag plays scene 3's mp3
+    end-to-end; seeking via the scrubber issues valid `Range` requests and gets 206
+
+- [x] T55 Add scene grid to `HtmlTab`
+  - Extend `src/components/workbench/tabs/html-tab.tsx` with a grid above the raw
+    source view when `project.stage >= "composition"` or `project.stageStatus.composition.status === "running"`
+  - Grid card per scene from `project.storyboard.scenes`: index, title, status chip
+    (`pending` when no file, `ready` when `exists:true`, `generating` when composition
+    is running and file missing, `failed` when stage failed), file size, "点击预览" button
+  - Poll `GET /api/projects/[id]/composition/scenes` every 2 s while
+    `stageStatus.composition.status === "running"`, otherwise fetch once on mount and
+    on every `project.updatedAt` change
+  - Clicking "点击预览" opens a drawer (reuse existing shadcn `Sheet` pattern if
+    available; else a lightweight inline `<dialog>`) containing an iframe whose `src`
+    is `/api/projects/{id}/composition/scenes/{compositionId}`; sandbox the iframe
+    with `allow-scripts` only (no `allow-same-origin`, no `allow-forms`, no top
+    navigation) per Req 16.7 defence-in-depth
+  - Keep the existing "重新生成 HTML" confirm flow and raw source viewer below the grid
+  - Files: `src/components/workbench/tabs/html-tab.tsx` (extend), optional
+    `src/components/workbench/tabs/_scene-grid.tsx` helper if the grid is large
+    enough to warrant extraction
+  - _Requirements: 12.5, 12.11, 12.12, 16.7, 17.2_
+  - Acceptance: during an 11-scene composition generation run, the grid flips
+    cards from "生成中" → "已生成" one by one as files appear on disk; clicking
+    an already-ready scene opens the drawer and the iframe plays the animation
+
+- [x] T56 Add per-scene inline audio player to `AudioTab`
+  - Extend `src/components/workbench/tabs/audio-tab.tsx` so each scene row renders
+    `<audio controls preload="metadata" src="/api/projects/{id}/audio/scenes/{index}">`
+    **only when** `scene.audioPath !== null && scene.audioPath !== undefined`
+  - Player sits below the narration preview line; width 100 %, compact height
+  - Update the `StatusChip` to include a subtle affordance hinting playability
+    (no behaviour change otherwise)
+  - Files: `src/components/workbench/tabs/audio-tab.tsx`
+  - _Requirements: 12.6, 12.11_
+  - Acceptance: for a project with 11 scenes all generated, 11 `<audio>` players
+    render and each plays the correct mp3
+
+- [x] T57 Verify `RenderTab` `<video>` against real mp4
+  - Walk `render-tab.tsx` against the existing test project
+    `proj_1778375317741_8af0bd` (mp4 at `public/videos/project-proj_1778375317741_8af0bd.mp4`)
+    and confirm the `<video controls src={videoPath}>` tag renders and plays
+  - If the file is > 10 MB, add `preload="metadata"` to avoid force-download on
+    first paint; otherwise no change
+  - No new API routes — reuses the Next.js static handler on `public/videos/`
+  - Files: `src/components/workbench/tabs/render-tab.tsx` (optional 1-line tweak)
+  - _Requirements: 12.7_
+  - Acceptance: opening `/projects/proj_1778375317741_8af0bd` with the mp4 present
+    shows the video, scrubbing works, no console errors
+
+- [x] T58 Checkpoint — Phase 7 live-preview smoke
+  - Manually walk a fresh project through topic → brief → storyboard → composition
+    (watch the scene grid light up) → audio (play scenes 1, 5, 11 inline) → render
+    (verify inline video plays post-completion)
+  - Run `npx vitest run src/lib/workbench/` to make sure existing 127 tests remain green
+  - Files: — (smoke only)
+  - _Requirements: 17.1, 17.2, 17.6_
+  - Acceptance: all three debug affordances work end-to-end against a real project;
+    existing vitest suite green
+  - **Automated gate status** (run on 2026-05-10):
+    - `npx vitest run src/lib/workbench/` — 19 files / 127 tests passed
+    - `npx vitest run src/app/api/projects/` — 3 files / 14 tests passed (includes T52/T53/T54)
+    - `npx vitest run src/components/workbench/` — 2 files / 7 tests passed (includes T55/T56)
+    - `npx tsc --noEmit` — 0 Phase 7 errors; 15 pre-existing errors in unrelated files
+  - **Manual gate status**: pending — Dale to walk through a real project end-to-end
+
 ## Notes
 
 - Tasks marked with `*` are optional (tests) and can be skipped for faster MVP — core functionality tasks are never optional.
@@ -549,7 +669,10 @@ All paths are relative to `content-analyzer/web/`. TypeScript is the implementat
     { "id": 9, "tasks": ["T27", "T28", "T29", "T30", "T31", "T32", "T33", "T34", "T35", "T36", "T37"] },
     { "id": 10, "tasks": ["T39", "T40", "T41", "T43", "T44", "T45", "T45.1"] },
     { "id": 11, "tasks": ["T42", "T47", "T48"] },
-    { "id": 12, "tasks": ["T50", "T50.1"] }
+    { "id": 12, "tasks": ["T50", "T50.1"] },
+    { "id": 13, "tasks": ["T52", "T53", "T54"] },
+    { "id": 14, "tasks": ["T55", "T56", "T57"] },
+    { "id": 15, "tasks": ["T58"] }
   ]
 }
 ```

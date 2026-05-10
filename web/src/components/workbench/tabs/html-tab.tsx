@@ -14,22 +14,32 @@
  *     `{ force: true }` after a confirmation dialog. Audio artifacts
  *     may be invalidated by a regen.
  *
+ * Scene grid (added in T55):
+ *   - Rendered above the raw-source viewer when the project has
+ *     reached `composition` stage OR is currently generating one
+ *     (`stageStatus.composition.status === "running"`).
+ *   - Polls `/composition/scenes` every 2 s while generation is in
+ *     flight and lets the user click a ready scene to preview it in
+ *     an iframe drawer (see `_scene-grid.tsx` for sandbox rationale).
+ *
  * Note: this tab is read-only w.r.t. the HTML content itself. Manual
  * HTML editing is a separate future-work affordance (surface area too
  * wide for MVP).
  *
- * _Requirements: 12.5, 12.11_
+ * _Requirements: 12.5, 12.11, 12.12, 16.7, 17.2_
  */
 
 import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { StageFailureBanner } from "@/components/workbench/stage-failure-banner";
+import { SceneGrid } from "@/components/workbench/tabs/_scene-grid";
 import {
   ConfirmDialog,
   EmptyStateCard,
   extractErrorMessage,
 } from "@/components/workbench/tabs/_shared";
+import { STAGE_ORDER } from "@/lib/workbench/constants";
 import { canEnterTab, requiredStageForTab } from "@/lib/workbench/tab-gating";
 import type { Project } from "@/lib/workbench/types";
 
@@ -63,6 +73,13 @@ export function HtmlTab({
   const generate = useCallback(async (force = false) => {
     setGenerating(true);
     setActionError(null);
+    // Close the confirm dialog immediately and let the scene grid's
+    // polling loop reflect progress. The POST can take 5-15 minutes
+    // (one LLM call per scene, each up to 180s, plus retries) — blocking
+    // a modal spinner on the whole trip defeats the streaming UX.
+    // If the request ultimately fails we surface the error via the
+    // actionError banner, which remains visible after the dialog closes.
+    if (force) setConfirmOpen(false);
     try {
       const res = await fetch(
         `/api/projects/${encodeURIComponent(project.projectId)}/composition/generate`,
@@ -79,7 +96,7 @@ export function HtmlTab({
       }
       const updated = (await res.json()) as Project;
       onProjectChanged?.(updated);
-      setConfirmOpen(false);
+      if (!force) setConfirmOpen(false);
     } catch (err) {
       setActionError(err instanceof Error ? err.message : "生成失败");
     } finally {
@@ -170,9 +187,15 @@ export function HtmlTab({
   }
 
   const compositionError = project.stageStatus.composition.error;
+  const compositionStatus = project.stageStatus.composition.status;
   const compositionFailed =
-    project.stageStatus.composition.status === "failed" &&
-    compositionError !== undefined;
+    compositionStatus === "failed" && compositionError !== undefined;
+
+  // Grid visibility: either the project has advanced to `composition`
+  // (or later), or a composition run is currently in flight.
+  const showSceneGrid =
+    STAGE_ORDER[project.stage] >= STAGE_ORDER.composition ||
+    compositionStatus === "running";
 
   const previewUrl = `/api/projects/${encodeURIComponent(project.projectId)}/composition/html`;
 
@@ -183,6 +206,15 @@ export function HtmlTab({
           projectId={project.projectId}
           stage="composition"
           error={compositionError}
+        />
+      ) : null}
+
+      {showSceneGrid ? (
+        <SceneGrid
+          projectId={project.projectId}
+          storyboardScenes={project.storyboard?.scenes ?? []}
+          compositionStatus={compositionStatus}
+          projectUpdatedAt={project.updatedAt}
         />
       ) : null}
 

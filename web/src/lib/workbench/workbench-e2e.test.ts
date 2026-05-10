@@ -171,7 +171,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 const AZURE_ENDPOINT = "https://azure.test.example.com";
-const AZURE_TTS_URL = `${AZURE_ENDPOINT}/cognitiveservices/v1`;
+const AZURE_TTS_URL = `${AZURE_ENDPOINT}/tts/cognitiveservices/v1`;
 const FAKE_MP3 = Buffer.from([0xff, 0xfb, 0x90, 0x44, 0x00, 0x00]);
 
 let tmp: TmpDir;
@@ -241,22 +241,36 @@ const VALID_STORYBOARD_SCENES = [
   { title: "Outro", narration: "Thanks", durationSec: 20, voice: "zh-CN-XiaoxiaoNeural" },
 ];
 
-const VALID_COMPOSITION_HTML =
-  '<!doctype html>\n<html><head><title>t</title></head><body>' +
-  '<div class="clip" data-start="0" data-duration="20" data-track-index="0">s1</div>' +
-  '<div class="clip" data-start="20" data-duration="20" data-track-index="0">s2</div>' +
-  '<div class="clip" data-start="40" data-duration="20" data-track-index="0">s3</div>' +
-  "</body></html>";
+/** Build a minimal sub-composition <template> for scene `N`. */
+function sceneSubComposition(n: number): string {
+  const id = `scene-0${n}-xxxxxx`;
+  return (
+    `<template id="${id}-template">\n` +
+    `  <div data-composition-id="${id}" data-width="1920" data-height="1080">\n` +
+    `    <div>scene ${n}</div>\n` +
+    `    <style>[data-composition-id="${id}"] div { color: #fff; }</style>\n` +
+    `    <script>\n` +
+    `      window.__timelines = window.__timelines || {};\n` +
+    `      const tl = gsap.timeline({ paused: true });\n` +
+    `      window.__timelines["${id}"] = tl;\n` +
+    `    </script>\n` +
+    `  </div>\n` +
+    `</template>`
+  );
+}
 
-/** Queue the three scripted kiro-cli replies used by the walk:
- *  brief → storyboard → composition HTML. The mocked spawn in the
- *  hoisted factory consumes entries in FIFO order, one per invocation. */
+/** Queue the scripted kiro-cli replies used by the walk:
+ *  brief → storyboard → N × per-scene composition HTML. The mocked
+ *  spawn in the hoisted factory consumes entries in FIFO order, one per
+ *  invocation. One reply per scene in VALID_STORYBOARD_SCENES. */
 function queueKiroReplies(): void {
   hoisted.kiroScript.push(
     { reply: JSON.stringify(VALID_BRIEF) },
     { reply: JSON.stringify({ scenes: VALID_STORYBOARD_SCENES }) },
-    { reply: VALID_COMPOSITION_HTML },
   );
+  for (let i = 1; i <= VALID_STORYBOARD_SCENES.length; i++) {
+    hoisted.kiroScript.push({ reply: sceneSubComposition(i) });
+  }
 }
 
 function installAzureHandler(): void {

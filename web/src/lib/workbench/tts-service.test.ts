@@ -40,7 +40,7 @@ import { synthesizeAll, synthesizeOne } from "@/lib/workbench/tts-service";
 
 const TEST_ENDPOINT = "https://test.example.com";
 const TEST_KEY = "test-key-12345678";
-const TTS_URL = `${TEST_ENDPOINT}/cognitiveservices/v1`;
+const TTS_URL = `${TEST_ENDPOINT}/tts/cognitiveservices/v1`;
 
 // Small fake mp3 bytes — just a valid-ish MPEG frame header. We only
 // verify these bytes round-trip to disk.

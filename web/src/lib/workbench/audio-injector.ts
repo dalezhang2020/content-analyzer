@@ -99,7 +99,7 @@ function canonicalTag(
   durationSec: number,
 ): string {
   return (
-    `<audio class="scene-audio" ` +
+    `<audio id="scene-${index}-audio" class="scene-audio" ` +
     `data-scene-index="${index}" ` +
     `data-start="${startSec}" ` +
     `data-duration="${durationSec}" ` +

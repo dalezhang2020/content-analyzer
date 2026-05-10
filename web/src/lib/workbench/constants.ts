@@ -293,7 +293,7 @@ export const TIMEOUTS_MS = {
   /** brief → storyboard per-attempt LLM budget. _Req 5.1_ */
   LLM_STORYBOARD: 60_000,
   /** storyboard → HTML per-attempt LLM budget. _Req 6.1_ */
-  LLM_COMPOSITION: 90_000,
+  LLM_COMPOSITION: 180_000,
   /** QA → scene rewrite per-attempt LLM budget. _Req 7.7_ */
   LLM_REWRITE: 60_000,
   /** Single Azure TTS call budget. _Req 9.6_ */
@@ -343,6 +343,17 @@ export const LLM_STORYBOARD_MAX_ATTEMPTS = 2 as const;
 
 /** Composition repair retry budget: 1 initial + 1 repair = 2 total. _Req 6.6_ */
 export const LLM_COMPOSITION_MAX_ATTEMPTS = 2 as const;
+
+/**
+ * Max number of per-scene LLM calls in flight at once during
+ * scene-sharded composition generation (Plan A). Going higher gets you
+ * more throughput but also raises the risk of server-side rate limiting
+ * on kiro-cli and spikes local RAM / FD usage. Tuned conservatively —
+ * raise once you have production failure-rate data.
+ *
+ * Override with `SCENE_GEN_CONCURRENCY` env var.
+ */
+export const SCENE_GEN_CONCURRENCY_DEFAULT = 4 as const;
 
 /** Scene rewrite never retries automatically. _Req 7.7_ */
 export const LLM_REWRITE_MAX_ATTEMPTS = 1 as const;

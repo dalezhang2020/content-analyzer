@@ -47,17 +47,35 @@ import type { TemplateSource } from "./types";
 
 const execAsync = promisify(exec);
 
-const TEMPLATE_NAME = "linear-launch" as const;
+/**
+ * Ordered list of template directory **names** searched under the CWD's
+ * siblings. `hf-blank` (from `npx hyperframes init --example blank`) is
+ * the canonical HyperFrames baseline — minimal, ~30 lines, zero visual
+ * bias. `linear-launch` is kept as a fallback for legacy setups where
+ * users haven't scaffolded the blank template yet.
+ *
+ * `HYPERFRAMES_TEMPLATE_DIR` env override is always tried first and wins
+ * over the sibling search.
+ */
+const TEMPLATE_DIR_NAMES: readonly string[] = ["hf-blank", "linear-launch"];
+
+/**
+ * Fallback name written into `TemplateSource.name` when the template's
+ * `meta.json` doesn't carry a readable `name` field. Value preserves the
+ * pre-hf-blank default for backward compatibility with older projects.
+ */
+const DEFAULT_TEMPLATE_NAME = "linear-launch" as const;
 
 // ---------------------------------------------------------------------------
 // Candidate resolution
 // ---------------------------------------------------------------------------
 
 /**
- * Build the ordered candidate list tried by `resolveTemplateDir`:
+ * Build the ordered candidate list tried by `resolveTemplateDir`.
+ * Precedence:
  *   1. `process.env.HYPERFRAMES_TEMPLATE_DIR` (when non-empty)
- *   2. `path.resolve(cwd, "..", "linear-launch")`
- *   3. `path.resolve(cwd, "..", "..", "linear-launch")`
+ *   2. `<cwd>/../{hf-blank, linear-launch}`
+ *   3. `<cwd>/../../{hf-blank, linear-launch}`
  *
  * Resolved on each call (not cached) so tests that mutate the environment
  * or CWD observe fresh values.
@@ -71,14 +89,18 @@ function getTemplateCandidates(): string[] {
     candidates.push(envDir);
   }
   const cwd = process.cwd();
-  candidates.push(path.resolve(cwd, "..", TEMPLATE_NAME));
-  candidates.push(path.resolve(cwd, "..", "..", TEMPLATE_NAME));
+  for (const name of TEMPLATE_DIR_NAMES) {
+    candidates.push(path.resolve(cwd, "..", name));
+  }
+  for (const name of TEMPLATE_DIR_NAMES) {
+    candidates.push(path.resolve(cwd, "..", "..", name));
+  }
   return candidates;
 }
 
 /**
- * Locate the `linear-launch` template directory by trying each candidate
- * in order and picking the first one whose `hyperframes.json` both exists
+ * Locate a HyperFrames template directory by trying each candidate in
+ * order and picking the first one whose `hyperframes.json` both exists
  * and is readable.
  *
  * On failure, throws `WorkbenchError(TEMPLATE_NOT_FOUND, ..., { tried })`
@@ -121,9 +143,34 @@ export async function resolveTemplateDir(): Promise<{
 
   throw new WorkbenchError(
     ErrorCode.TEMPLATE_NOT_FOUND,
-    "linear-launch template not found",
+    "HyperFrames template not found (looked for hf-blank and linear-launch)",
     { tried },
   );
+}
+
+/**
+ * Read the template's logical name from its `meta.json`. Falls back to
+ * `DEFAULT_TEMPLATE_NAME` when the file is missing or the `name` field
+ * is absent / not a string. Never throws — the worst case is a slightly
+ * less descriptive `TemplateSource.name` on the persisted Project.
+ */
+async function readTemplateName(sourcePath: string): Promise<string> {
+  try {
+    const raw = await readFileSafe(path.join(sourcePath, "meta.json"));
+    const parsed = JSON.parse(raw) as unknown;
+    if (
+      typeof parsed === "object" &&
+      parsed !== null &&
+      "name" in parsed &&
+      typeof (parsed as { name: unknown }).name === "string" &&
+      (parsed as { name: string }).name.length > 0
+    ) {
+      return (parsed as { name: string }).name;
+    }
+  } catch {
+    // fall through
+  }
+  return DEFAULT_TEMPLATE_NAME;
 }
 
 // ---------------------------------------------------------------------------
@@ -422,8 +469,9 @@ export async function syncTemplate(
  */
 export async function getTemplateSource(): Promise<TemplateSource> {
   const { sourcePath, version } = await resolveTemplateDir();
+  const name = await readTemplateName(sourcePath);
   return {
-    name: TEMPLATE_NAME,
+    name,
     version,
     sourcePath,
   };

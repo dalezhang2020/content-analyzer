@@ -230,6 +230,84 @@ export function applyTransition(
 }
 
 // ---------------------------------------------------------------------------
+// Manual regression (universal backward jump)
+// ---------------------------------------------------------------------------
+
+/** Options accepted by `regressToStage`. */
+export interface RegressToStageOptions {
+  /** Human-readable reason; truncated to `LIMITS.REASON_MAX`. */
+  reason?: string;
+  /** ISO 8601 UTC timestamp. Defaults to `new Date().toISOString()`. */
+  now?: string;
+}
+
+/**
+ * Regress the project's stage to an earlier `target`. Unlike the strict
+ * `applyTransition` edges (which only permit the narrow `qa → {...}` set),
+ * this helper accepts any pair where
+ * `STAGE_ORDER[target] < STAGE_ORDER[project.stage]`.
+ *
+ * Semantics:
+ *   - `stage` resets to `target`.
+ *   - Every stage with `STAGE_ORDER >= STAGE_ORDER[target]` has its
+ *     status reset to `{ status: "pending" }` via `resetDownstreamStatus`.
+ *   - A `{ fromStage, toStage: target, at: now, reason, result: "success" }`
+ *     entry is appended to `stageHistory`.
+ *   - `updatedAt` is refreshed to `now`.
+ *
+ * This is the explicit "manual override" path intended to unblock users
+ * when the automatic pipeline's narrow regression edges aren't enough
+ * (e.g. regressing from `published` back to `composition`). The strict
+ * `FORWARD_TRANSITIONS` / `BACKWARD_TRANSITIONS` guards remain in place
+ * for the automatic pipeline — do not conflate the two.
+ *
+ * Throws `WorkbenchError(INVALID_TRANSITION, …)` when `target` is not
+ * strictly earlier than the current stage (no sideways, no forward).
+ * The input project is **not** mutated.
+ *
+ * _Requirements: 1.4, 1.5_
+ */
+export function regressToStage(
+  project: Project,
+  target: Stage,
+  opts: RegressToStageOptions = {},
+): Project {
+  const currentOrder = STAGE_ORDER[project.stage];
+  const targetOrder = STAGE_ORDER[target];
+
+  if (!(targetOrder < currentOrder)) {
+    throw new WorkbenchError(
+      ErrorCode.INVALID_TRANSITION,
+      `Cannot regress from "${project.stage}" to "${target}": target must be strictly earlier`,
+      {
+        currentStage: project.stage,
+        requestedStage: target,
+      },
+    );
+  }
+
+  const nowIso = opts.now ?? new Date().toISOString();
+  const reason =
+    opts.reason === undefined ? undefined : truncate(opts.reason, LIMITS.REASON_MAX);
+
+  const historyEntry: StageHistoryEntry = {
+    fromStage: project.stage,
+    toStage: target,
+    at: nowIso,
+    result: "success",
+    ...(reason !== undefined ? { reason } : {}),
+  };
+
+  return {
+    ...project,
+    stage: target,
+    stageStatus: resetDownstreamStatus(project.stageStatus, target),
+    stageHistory: [...project.stageHistory, historyEntry],
+    updatedAt: nowIso,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Per-stage lifecycle mutators
 // ---------------------------------------------------------------------------
 

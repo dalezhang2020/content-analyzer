@@ -143,7 +143,8 @@ vi.mock("node:child_process", async (importOriginal) => {
 // Imports below must come AFTER vi.mock so the mocked spawn is picked up.
 import {
   generateBrief,
-  generateCompositionHtml,
+  assembleIndexHtml,
+  generateSceneCompositionHtml,
   generateStoryboardFromBrief,
   rewriteScene,
 } from "@/lib/workbench/ai-generator";
@@ -339,22 +340,63 @@ describe("generateStoryboardFromBrief", () => {
 });
 
 // ---------------------------------------------------------------------------
-// generateCompositionHtml
+// generateSceneCompositionHtml (Plan A: per-scene sub-composition)
 // ---------------------------------------------------------------------------
 
-describe("generateCompositionHtml", () => {
+describe("generateSceneCompositionHtml", () => {
   it("returns HTML and strips surrounding code fences", async () => {
-    const html = '<!doctype html>\n<html><body>hello</body></html>';
+    const html =
+      '<template id="scene-01-abcd01-template">\n' +
+      '<div data-composition-id="scene-01-abcd01" data-width="1920" data-height="1080">hello</div>\n' +
+      '</template>';
     // Wrap in ```html ... ``` fences the way LLMs sometimes return them.
     queueReplies({ reply: '```html\n' + html + '\n```' });
 
+    const scene: Scene = {
+      sceneId: "sc_abcd0001",
+      index: 1,
+      title: "Intro",
+      narration: "hello",
+      durationSec: 5,
+      voice: "zh-CN-XiaoxiaoNeural",
+      audioPath: null,
+      qaNote: "",
+      updatedAt: "2024-01-01T00:00:00.000Z",
+    };
+    const project = createTestProject({
+      brief: VALID_BRIEF,
+      storyboard: { scenes: [scene] },
+      stage: "storyboard",
+    });
+
+    const result = await generateSceneCompositionHtml(project, scene);
+
+    expect(result.startsWith("<template")).toBe(true);
+    expect(result).toContain("data-composition-id");
+    expect(result).not.toContain("```");
+  });
+});
+
+describe("assembleIndexHtml", () => {
+  it("produces a deterministic parent HTML referencing each scene via data-composition-src", () => {
     const scenes: Scene[] = [
       {
-        sceneId: "sc_abcd0001",
+        sceneId: "sc_aaaaaa01",
         index: 1,
-        title: "Intro",
-        narration: "hello",
+        title: "A",
+        narration: "n1",
         durationSec: 5,
+        voice: "zh-CN-XiaoxiaoNeural",
+        audioPath: null,
+        qaNote: "",
+        updatedAt: "2024-01-01T00:00:00.000Z",
+      },
+      {
+        sceneId: "sc_bbbbbb02",
+        index: 2,
+        title: "B",
+        narration: "n2",
+        durationSec: 8,
         voice: "zh-CN-XiaoxiaoNeural",
         audioPath: null,
         qaNote: "",
@@ -367,11 +409,21 @@ describe("generateCompositionHtml", () => {
       stage: "storyboard",
     });
 
-    const result = await generateCompositionHtml(project);
+    const html = assembleIndexHtml(project);
 
-    expect(result.startsWith("<!doctype")).toBe(true);
-    expect(result).toContain("<html>");
-    expect(result).not.toContain("```");
+    // Root + total duration.
+    expect(html).toContain('data-composition-id="main"');
+    expect(html).toContain('data-duration="13"');
+
+    // Each scene mounted as an external sub-composition.
+    expect(html).toContain('data-composition-src="compositions/scene-01-aaaaaa.html"');
+    expect(html).toContain('data-start="0"');
+    expect(html).toContain('data-composition-src="compositions/scene-02-bbbbbb.html"');
+    expect(html).toContain('data-start="5"');
+
+    // Parent must register its own no-op timeline so hyperframes lint
+    // accepts the main composition.
+    expect(html).toContain('window.__timelines["main"]');
   });
 });
 
@@ -626,7 +678,7 @@ describe("Property 18: LLM retry respects the configured attempt budget", () => 
   });
 
   // -------------------------------------------------------------------------
-  // generateCompositionHtml — 1 spawn per call; repair loop bounded to 2
+  // generateSceneCompositionHtml — 1 spawn per call; repair retry bounded to 2
   // -------------------------------------------------------------------------
 
   /** Scene fixture reused across composition / rewrite properties. */
@@ -642,23 +694,19 @@ describe("Property 18: LLM retry respects the configured attempt budget", () => 
     updatedAt: "2024-01-01T00:00:00.000Z",
   };
 
-  it("generateCompositionHtml: 1 spawn per invocation; caller repair loop ≤ 2 total", async () => {
+  it("generateSceneCompositionHtml: 1 spawn per invocation; caller repair loop ≤ 2 total", async () => {
     await fc.assert(
       fc.asyncProperty(
-        // doRepair drives the second (repair) invocation. bodyVariant is
-        // only there to vary the scripted HTML so the test exercises
-        // different outputs — the retry budget itself is independent of
-        // the HTML content.
         fc.boolean(),
         fc.boolean(),
         async (doRepair, bodyVariant) => {
           resetHarness();
 
           const firstHtml = bodyVariant
-            ? "<!doctype html>\n<html><body>first variant</body></html>"
-            : "<!doctype html>\n<html><body>hello</body></html>";
+            ? '<template id="scene-01-abcd01-template">\n<div data-composition-id="scene-01-abcd01" data-width="1920" data-height="1080">v1</div>\n</template>'
+            : '<template id="scene-01-abcd01-template">\n<div data-composition-id="scene-01-abcd01" data-width="1920" data-height="1080">v2</div>\n</template>';
           const repairHtml =
-            "<!doctype html>\n<html><body>repaired</body></html>";
+            '<template id="scene-01-abcd01-template">\n<div data-composition-id="scene-01-abcd01" data-width="1920" data-height="1080">repaired</div>\n</template>';
 
           queueReplies(
             { reply: firstHtml },
@@ -671,25 +719,25 @@ describe("Property 18: LLM retry respects the configured attempt budget", () => 
             stage: "storyboard",
           });
 
-          const out1 = await generateCompositionHtml(project);
-          expect(out1.startsWith("<!doctype")).toBe(true);
-          // Single invocation → exactly 1 spawn (no internal retry).
+          const out1 = await generateSceneCompositionHtml(
+            project,
+            compositionScene,
+          );
+          expect(out1.startsWith("<template")).toBe(true);
           expect(spawnCalls).toHaveLength(1);
 
           if (doRepair) {
-            // Simulate the route-level repair loop: caller re-invokes
-            // with `lintError` populated after lint/validate fails once.
-            const out2 = await generateCompositionHtml(
+            const out2 = await generateSceneCompositionHtml(
               project,
-              "lint error: missing class=\"clip\"",
+              compositionScene,
+              {
+                lintError: "lint error: missing __timelines registration",
+              },
             );
-            expect(out2.startsWith("<!doctype")).toBe(true);
-            // After the single repair retry the total is 2 spawns — the
-            // documented upper bound for the composition stage.
+            expect(out2.startsWith("<template")).toBe(true);
             expect(spawnCalls).toHaveLength(2);
           }
 
-          // Core property: total spawns never exceed the 2-attempt budget.
           expect(spawnCalls.length).toBeLessThanOrEqual(2);
         },
       ),

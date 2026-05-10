@@ -254,6 +254,17 @@ export const SceneEditableSchema = z.object({
   qaNote: safeStr(z.string().max(LIMITS.QA_NOTE_MAX)).optional(),
 });
 
+/**
+ * Request body for `POST /api/projects/{id}/scenes/bulk-voice`. Applies a
+ * single `voice` to every scene in the project's storyboard in one atomic
+ * write, clearing `audioPath` on every scene whose voice actually changes
+ * (Property 10). Topic and brief edits are not covered — the route guard
+ * rejects missing-storyboard calls with `INVALID_STAGE`.
+ */
+export const BulkSceneVoiceSchema = z.object({
+  voice: VoiceSchema,
+});
+
 export const SceneCreateInputSchema = z.object({
   title: safeStr(z.string().min(1).max(LIMITS.SCENE_TITLE_MAX)),
   narration: safeStr(
@@ -331,6 +342,20 @@ export const QaNoteInputSchema = z.object({
 /** Publish endpoint takes no body; accept empty object or undefined. */
 export const PublishInputSchema = z.object({}).optional();
 
+/**
+ * Request body for `POST /api/projects/{id}/regress`. Manual stage
+ * regression — `target` must be a known `Stage` strictly earlier than
+ * the project's current stage (enforced by `regressToStage`, not the
+ * schema). Optional `reason` is captured in the history entry and
+ * truncated to `LIMITS.REASON_MAX` by the state-machine helper.
+ *
+ * _Requirements: 1.4, 1.5_
+ */
+export const RegressInputSchema = z.object({
+  target: StageSchema,
+  reason: safeStr(z.string().min(1).max(LIMITS.REASON_MAX)).optional(),
+});
+
 export const ForceFlagSchema = z.object({
   force: z.boolean().optional(),
 });
@@ -343,9 +368,11 @@ export const ForceFlagSchema = z.object({
 export type ProjectInput = z.infer<typeof CreateProjectInputSchema>;
 export type SceneEditableInput = z.infer<typeof SceneEditableSchema>;
 export type SceneCreateInput = z.infer<typeof SceneCreateInputSchema>;
+export type BulkSceneVoiceInput = z.infer<typeof BulkSceneVoiceSchema>;
 export type SceneRewriteInput = z.infer<typeof SceneRewriteInputSchema>;
 export type SceneRewriteOutput = z.infer<typeof SceneRewriteOutputSchema>;
 export type StoryboardOutput = z.infer<typeof StoryboardOutputSchema>;
 export type QaNoteInput = z.infer<typeof QaNoteInputSchema>;
 export type PublishInput = z.infer<typeof PublishInputSchema>;
 export type ForceFlag = z.infer<typeof ForceFlagSchema>;
+export type RegressInput = z.infer<typeof RegressInputSchema>;

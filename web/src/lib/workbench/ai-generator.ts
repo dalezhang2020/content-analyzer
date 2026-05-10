@@ -106,18 +106,36 @@ function snippet(s: string): string {
 /**
  * Strip common Markdown fences that LLMs stubbornly wrap JSON in even when
  * told not to. Matches an optional leading "```[lang]\n" and a trailing "```".
+ *
+ * Also handles the kiro-cli TUI edge case: when kiro-cli renders a
+ * `\`\`\`html` fence in its output, the backticks are consumed by the
+ * markdown renderer but the language tag (`html`) leaks through on a line
+ * of its own. We treat a solo `html` / `json` / `javascript` / `typescript`
+ * prefix line as a language tag residue and strip it.
  */
 function stripCodeFences(s: string): string {
-  const trimmed = s.trim();
-  if (!trimmed.startsWith("```")) return trimmed;
+  let trimmed = s.trim();
 
-  // Drop the opening fence (optionally with a language tag like ```json).
-  let body = trimmed.replace(/^```[a-zA-Z0-9_-]*\s*\n?/, "");
-  // Drop the closing fence if present at the very end.
-  if (body.endsWith("```")) {
-    body = body.slice(0, -3);
+  // Standard fence stripping.
+  if (trimmed.startsWith("```")) {
+    trimmed = trimmed.replace(/^```[a-zA-Z0-9_-]*\s*\n?/, "");
+    if (trimmed.endsWith("```")) {
+      trimmed = trimmed.slice(0, -3);
+    }
+    return trimmed.trim();
   }
-  return body.trim();
+
+  // kiro-cli TUI residue: the opening backticks were eaten by the markdown
+  // renderer, leaving only the language tag as the first line. Drop it.
+  const firstNewline = trimmed.indexOf("\n");
+  if (firstNewline > 0) {
+    const firstLine = trimmed.slice(0, firstNewline).trim();
+    if (/^(html|json|javascript|typescript|ts|js|css|xml)$/i.test(firstLine)) {
+      return trimmed.slice(firstNewline + 1).trim();
+    }
+  }
+
+  return trimmed;
 }
 
 /** Parse JSON after stripping code fences; throws on syntax error. */
@@ -764,8 +782,12 @@ export async function generateStoryboardFromBrief(project: Project): Promise<{
  *
  * Resolution precedence (matches template-manager.ts):
  *   1. `process.env.HYPERFRAMES_TEMPLATE_DIR`/index.html
- *   2. `<cwd>/../linear-launch/index.html`
- *   3. `<cwd>/../../linear-launch/index.html`
+ *   2. `<cwd>/../{hf-blank, linear-launch}/index.html`
+ *   3. `<cwd>/../../{hf-blank, linear-launch}/index.html`
+ *
+ * `hf-blank` is the canonical HyperFrames baseline (from
+ * `npx hyperframes init --example blank`) — minimal structure, zero visual
+ * bias. `linear-launch` is a legacy fallback kept for backward compat.
  *
  * Any resolution failure falls back to `null`, in which case the prompt
  * reverts to the abstract-rules-only format. The cache is keyed by the
@@ -777,14 +799,22 @@ let referenceTemplateCache: {
   html: string;
 } | null = null;
 
+const REFERENCE_TEMPLATE_DIR_NAMES: readonly string[] = [
+  "hf-blank",
+  "linear-launch",
+];
+
 async function loadReferenceTemplate(): Promise<string | null> {
   const envDir = process.env.HYPERFRAMES_TEMPLATE_DIR;
   const cwd = process.cwd();
-  const candidates = [
-    envDir ? path.resolve(cwd, envDir, "index.html") : null,
-    path.resolve(cwd, "..", "linear-launch", "index.html"),
-    path.resolve(cwd, "..", "..", "linear-launch", "index.html"),
-  ].filter((p): p is string => p !== null);
+  const candidates: string[] = [];
+  if (envDir) candidates.push(path.resolve(cwd, envDir, "index.html"));
+  for (const name of REFERENCE_TEMPLATE_DIR_NAMES) {
+    candidates.push(path.resolve(cwd, "..", name, "index.html"));
+  }
+  for (const name of REFERENCE_TEMPLATE_DIR_NAMES) {
+    candidates.push(path.resolve(cwd, "..", "..", name, "index.html"));
+  }
 
   for (const abs of candidates) {
     if (referenceTemplateCache?.path === abs) {
@@ -803,46 +833,134 @@ async function loadReferenceTemplate(): Promise<string | null> {
   return null;
 }
 
-function buildCompositionMessages(
+// ---------------------------------------------------------------------------
+// Per-scene sub-composition generation (Plan A: scene sharding)
+// ---------------------------------------------------------------------------
+//
+// Architecture: instead of one massive LLM call that produces the whole
+// composition HTML (300+ lines, 11 scenes, all inline CSS + all timelines),
+// we make N small calls — one per scene — each producing a sub-composition
+// HTML file ~1-3 KB. The main `index.html` is then assembled by
+// deterministic code (`assembleIndexHtml`) that stitches scene references
+// with `data-composition-src`.
+//
+// Each scene sub-composition follows the HyperFrames external-composition
+// contract (see docs/concepts/compositions):
+//   <template id="scene-NN-template">
+//     <div data-composition-id="scene-NN" data-width="1920" data-height="1080">
+//       <style>[data-composition-id="scene-NN"] { ... }</style>
+//       ...content...
+//       <script>
+//         const tl = gsap.timeline({ paused: true });
+//         // tl.from(...) etc.
+//         window.__timelines["scene-NN"] = tl;
+//       </script>
+//     </div>
+//   </template>
+//
+// Benefits over the monolithic approach:
+//   - Per-call output is small → no truncation, no timeout on complex scenes
+//   - Single scene failure can be retried independently
+//   - Users can regenerate one scene without rebuilding the whole video
+//   - LLM focuses on one visual concept at a time (higher quality per scene)
+
+function buildSceneMessages(
   project: Project,
-  lintError: string | undefined,
+  scene: Scene,
+  context: { prevNarration?: string; nextNarration?: string },
   referenceTemplate: string | null,
+  lintError: string | undefined,
 ): LLMMessage[] {
-  const storyboard = project.storyboard;
-  // Caller guarantees storyboard is set — the helper below enforces it.
-  const scenesJson = JSON.stringify(storyboard?.scenes ?? [], null, 2);
   const locale = project.locale ?? DEFAULT_LOCALE;
+  const compositionId = sceneCompositionId(scene);
 
   const system = [
-    "You generate a single self-contained HyperFrames-compatible HTML document.",
-    "Return ONLY the HTML — no prose, no markdown fences, no explanation.",
+    "You generate ONE HyperFrames sub-composition HTML file for a single scene.",
+    "Your output is a `.html` file that will be loaded via `data-composition-src` from a parent composition. It is NOT a full HTML document.",
     "",
-    "Hard rules (output will be rejected if any rule is violated):",
-    "  1. Every timed scene MUST be a <div class=\"scene clip\"> with integer data-start, data-duration, and data-track-index attributes (seconds, floats allowed).",
-    "  2. The outer root element MUST be <div id=\"root\" data-composition-id=\"root\" data-start=\"0\" data-width=\"1920\" data-height=\"1080\">, and every <div class=\"scene clip\"> lives inside it.",
-    "  3. The <script> block MUST contain exactly one GSAP timeline constructed with `gsap.timeline({ paused: true })`, which is assigned to `window.__timelines[\"root\"]` after `window.__timelines = window.__timelines || {};`. DO NOT push into an array — `__timelines` is an object keyed by compositionId.",
-    "  4. No Date.now(), no Math.random(), no fetch(), no XMLHttpRequest, no <iframe>, <object>, or <embed>.",
-    "  5. Scenes play sequentially on track-index 1. Each scene's data-start equals the cumulative duration of every previous scene (not 0 except the first).",
-    "  6. The timeline's final `tl.set({}, {}, X)` X value MUST equal the sum of every scene's durationSec (closes the timeline to the exact total duration).",
-    `  7. Natural-language copy rendered to the viewer MUST be in locale "${locale}". All text content, labels, and tagline copy go through the narration and title fields.`,
-    "  8. The document MUST start with <!DOCTYPE html> and be valid standalone HTML.",
-    "  9. Load GSAP from `<script src=\"https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js\"></script>` before the timeline script.",
-    "  10. Target resolution is 1920x1080 — CSS MUST fit this viewport; use `position: absolute; top: 0; left: 0; width: 100%; height: 100%;` on `.scene`.",
+    "===== OUTPUT FORMAT =====",
+    "Wrap your ENTIRE output inside a single ```html code fence:",
+    "  ```html",
+    "  <template id=\"" + compositionId + "-template\">",
+    "    ... content ...",
+    "  </template>",
+    "  ```",
+    "The code fence prevents terminal rendering from corrupting asterisks and other markdown-sensitive characters. Output NOTHING outside the fence.",
+    "",
+    "===== REQUIRED STRUCTURE =====",
+    "The file MUST be exactly this shape:",
+    "  <template id=\"" + compositionId + "-template\">",
+    `    <div id="${compositionId}" data-composition-id="${compositionId}" data-width="1920" data-height="1080">`,
+    "      <!-- your content here: text, SVG, divs — whatever the scene needs -->",
+    "      <style>",
+    `        #${compositionId} { /* scoped CSS — use #${compositionId} NOT [data-composition-id="..."] */ }`,
+    `        #${compositionId} .some-child { /* every rule must start with #${compositionId} */ }`,
+    "      </style>",
+    "      <script>",
+    "        window.__timelines = window.__timelines || {};",
+    "        const tl = gsap.timeline({ paused: true });",
+    `        // GSAP selectors MUST be fully-qualified with the #${compositionId} prefix,`,
+    `        // e.g. tl.from('#${compositionId} .title', {...}).`,
+    `        // DO NOT call document.querySelector('#${compositionId}') — when the <script>`,
+    "        // runs, the <template> content is not yet in the live document tree and that",
+    "        // lookup returns null. The framework ensures the DOM is live by the time",
+    "        // the timeline plays, so fully-qualified selectors resolve correctly then.",
+    `        tl.from('#${compositionId} .some-child', { opacity: 0, duration: 1 }, 0);`,
+    `        window.__timelines["${compositionId}"] = tl;`,
+    "      </script>",
+    "    </div>",
+    "  </template>",
+    "",
+    "===== HARD RULES (lint-rejected if violated) =====",
+    `  1. Root <template id="${compositionId}-template"> with inner <div id="${compositionId}" data-composition-id="${compositionId}">.`,
+    `  2. CSS selectors inside <style> MUST use the id prefix \`#${compositionId}\` — NEVER \`[data-composition-id="..."]\`. The attribute-selector form leaks into sibling instances when the same sub-composition is embedded twice; id-selector form stays instance-isolated.`,
+    `  3. GSAP selectors inside <script> MUST also be fully-qualified with \`#${compositionId} \` prefix (e.g. \`'#${compositionId} .title'\`). Do NOT call \`document.querySelector\` or \`getElementById\` at script load time — the template content is not yet in the live DOM.`,
+    `  4. The <script> MUST register the timeline via window.__timelines["${compositionId}"] = tl;`,
+    "  5. GSAP timeline must use { paused: true }.",
+    "  6. NO repeat: -1 or other infinite animations — HyperFrames renders deterministic frames, infinite tweens break the capture engine. Use a finite `repeat` count derived from the scene duration (e.g. `repeat: Math.floor(totalDuration / cycleDuration) - 1`).",
+    "  7. NO Math.random(), NO Date.now(), NO fetch(), NO XMLHttpRequest, NO <iframe>, NO <object>, NO <embed>.",
+    "  8. All on-screen text MUST be in locale " + locale + ".",
+    "  9. DO NOT include <!doctype html>, <html>, <head>, or <body> tags — those belong to the parent composition.",
+    `  10. DO NOT include data-start, data-duration, or data-track-index attributes on your root — those are set by the parent composition.`,
+    "",
+    "===== VISUAL DIRECTION =====",
+    "This scene has " + scene.durationSec + " seconds of screen time. Design for that pace.",
+    "",
+    "QUALITY BAR: Aim for a polished, broadcast-quality animation. Think 3Blue1Brown / Kurzgesagt visual style:",
+    "  - Rich dark backgrounds (deep navy, near-black) with subtle radial gradients",
+    "  - Glowing accent colors (electric blue, amber, coral) with CSS filter: drop-shadow or box-shadow",
+    "  - Inline SVG for mathematical/scientific concepts — unit circles, wave curves, coordinate axes, geometric shapes",
+    "  - Multi-layer composition: background grid/texture + main visual element + text overlay",
+    "  - Typography: large bold Chinese title (80-120px), smaller subtitle (28-40px), caption at bottom",
+    "  - GSAP timeline should use the full scene duration — don't leave the last 30% empty",
+    "",
+    "Use the right visual weight for the scene's narrative role:",
+    "  - Concept/educational: inline SVG for visual metaphors (circles, waves, diagrams).",
+    "  - Text-heavy: typography + CSS gradients + GSAP reveals.",
+    "  - Data/comparison: SVG charts, animated paths, GSAP tween on values.",
+    "",
+    "Scene complexity guide (aim for the upper end):",
+    "  - Background layer: radial-gradient + optional perspective grid (CSS transform: perspective + rotateX)",
+    "  - Main visual: SVG with 5-15 elements (axes, circles, paths, labels, dots)",
+    "  - Text layer: title block (eyebrow + main title + subtitle) + bottom caption",
+    "  - Animation: 8-15 GSAP tweens spread across the full duration, staggered reveals",
+    "  - Total HTML: 6-12 KB is fine — quality matters more than file size",
+    "",
+    "Animation tips:",
+    "  - Use power3.out / power2.out for natural motion.",
+    "  - Stagger reveals within a scene to guide attention.",
+    "  - Animate SVG stroke-dashoffset for drawing effects (circles, paths appearing).",
+    "  - Use GSAP rotation on SVG groups for spinning/orbiting elements.",
+    "  - Fade out at the very end (duration - 0.7s) if your content doesn't need to linger.",
   ].join("\n");
 
-  // When a reference template is available, present it as a structural
-  // example BEFORE the user's storyboard. The LLM is instructed to mirror
-  // the structure exactly, substituting storyboard content for the demo
-  // content — this is significantly more reliable than rule recitation.
   const messages: LLMMessage[] = [{ role: "system", content: system }];
 
   if (referenceTemplate) {
     messages.push({
       role: "user",
       content: [
-        "Here is a reference HyperFrames composition that passes every lint rule.",
-        "Your job is to produce a composition with the SAME structure: same root attributes, same `<div class=\"scene clip\">` shape with cumulative data-start, same <style> organisation, same `__timelines[\"root\"]` registration pattern, same final `tl.set({}, {}, X)` duration-close.",
-        "Only the CONTENT of each scene (text, visual composition, animation choreography) should change to match the new storyboard.",
+        "For reference, here is the OFFICIAL HyperFrames minimal parent composition template (index.html). You are NOT generating this — you are generating a sub-composition that will be mounted inside it.",
         "",
         "```html",
         referenceTemplate,
@@ -851,29 +969,68 @@ function buildCompositionMessages(
     });
   }
 
+  const contextBlock = [
+    "Scene data:",
+    "```json",
+    JSON.stringify(
+      {
+        compositionId,
+        title: scene.title,
+        narration: scene.narration,
+        durationSec: scene.durationSec,
+        index: scene.index,
+      },
+      null,
+      2,
+    ),
+    "```",
+  ];
+
+  if (context.prevNarration || context.nextNarration) {
+    contextBlock.push("", "Narrative context (for visual continuity, do not render these):");
+    if (context.prevNarration) {
+      contextBlock.push(`  - Previous scene: ${snippet(context.prevNarration)}`);
+    }
+    if (context.nextNarration) {
+      contextBlock.push(`  - Next scene: ${snippet(context.nextNarration)}`);
+    }
+  }
+
+  contextBlock.push(
+    "",
+    "Project topic: " + snippet(project.topic),
+  );
+  if (project.brief?.suggestedStyle) {
+    contextBlock.push("Visual style hint: " + snippet(project.brief.suggestedStyle));
+  }
+
   messages.push({
     role: "user",
     content: [
-      "Now generate a composition HTML for this storyboard:",
+      "Generate the sub-composition HTML for this scene:",
       "",
-      "```json",
-      scenesJson,
-      "```",
+      contextBlock.join("\n"),
       "",
-      referenceTemplate
-        ? "Follow the reference template's structure exactly. Replace the demo content with scene-appropriate content. Use the scene's title and narration for the on-screen text."
-        : "",
-    ]
-      .filter((l) => l.length > 0)
-      .join("\n"),
+      `Your output MUST start with <template id="${compositionId}-template"> and end with </template>.`,
+    ].join("\n"),
   });
 
   if (lintError) {
     messages.push({
       role: "user",
-      content: `Previous output failed HyperFrames lint with:\n\n${snippet(
-        lintError,
-      )}\n\nFix every reported issue and regenerate the complete HTML document from scratch. Common causes: (a) missing \`window.__timelines[\"root\"]\` registration, (b) scenes missing \`class=\"clip\"\`, (c) data-start values not cumulative, (d) timeline duration not matching storyboard total.`,
+      content: [
+        "Previous output for this scene failed HyperFrames lint or validate with:",
+        "",
+        snippet(lintError),
+        "",
+        "Regenerate the scene from scratch, fixing every reported issue. Common causes:",
+        `  - Missing window.__timelines["${compositionId}"] registration at the end of <script>.`,
+        `  - CSS selectors using [data-composition-id="..."] instead of #${compositionId} — use id form to keep rules instance-isolated.`,
+        `  - GSAP selectors without the #${compositionId} prefix (e.g. '.title' instead of '#${compositionId} .title').`,
+        `  - Calling document.querySelector / getElementById on the scene root inside <script> — the template content is not yet in the live DOM at script execution time. Return null references crash the timeline.`,
+        "  - Infinite animations (repeat: -1) — must be finite for deterministic rendering.",
+        "  - Included <!doctype html>/<html>/<body> (this is a sub-composition, not a full document).",
+      ].join("\n"),
     });
   }
 
@@ -881,54 +1038,186 @@ function buildCompositionMessages(
 }
 
 /**
- * Generate a single pass of HyperFrames HTML from the project's storyboard.
- * The caller (route handler) runs `scanHtml` / `hyperframes lint` /
- * `hyperframes validate` on the output and may call this function again
- * with `lintError` populated for a single repair retry.
- *
- * _Requirements: 6.1, 6.3, 6.4, 6.6_
+ * Build the canonical `data-composition-id` for a scene. Format:
+ * `scene-{2-digit index}-{short safe slug}`. Kept deterministic so that
+ * `assembleIndexHtml` can reconstruct the file path without consulting the
+ * scene record.
  */
-export async function generateCompositionHtml(
-  project: Project,
-  lintError?: string,
-): Promise<string> {
-  if (!project.storyboard || project.storyboard.scenes.length === 0) {
-    throw new WorkbenchError(
-      ErrorCode.INVALID_STAGE,
-      "Storyboard not present — cannot generate composition",
-    );
-  }
-  const logger = createLogger(project.projectId, "composition");
+export function sceneCompositionId(scene: Scene): string {
+  const padded = String(scene.index).padStart(2, "0");
+  // Derive a short ASCII-safe slug from the last 6 chars of the sceneId.
+  // Skipping title-based slugs because titles carry CJK / punctuation we'd
+  // have to transliterate — the sceneId hex is already a stable anchor.
+  const hexTail = scene.sceneId.replace(/^sc_/, "").slice(0, 6);
+  return `scene-${padded}-${hexTail}`;
+}
 
+/**
+ * Canonical relative path (from composition dir) to a scene's
+ * sub-composition HTML file. Used by both the sub-composition writer and
+ * `assembleIndexHtml` to resolve `data-composition-src` targets.
+ */
+export function sceneCompositionPath(scene: Scene): string {
+  return `compositions/${sceneCompositionId(scene)}.html`;
+}
+
+/**
+ * Generate a single scene's sub-composition HTML via one LLM call.
+ *
+ * Returns the raw HTML body (inside `<template>…</template>`). The caller
+ * is responsible for:
+ *   1. Running `scanHtml()` to check for forbidden tokens.
+ *   2. Writing the output to the project's `composition/{sceneCompositionPath}`.
+ *   3. Running lint/validate on the full composition after all scenes
+ *      have been written AND `assembleIndexHtml()` has produced the parent.
+ *
+ * On first failure, pass the lint stderr as `lintError` for a single
+ * repair retry.
+ */
+export async function generateSceneCompositionHtml(
+  project: Project,
+  scene: Scene,
+  opts: {
+    lintError?: string;
+    context?: { prevNarration?: string; nextNarration?: string };
+  } = {},
+): Promise<string> {
+  const logger = createLogger(project.projectId, "composition");
   const referenceTemplate = await loadReferenceTemplate();
-  await logger.info("composition_attempt", {
-    repair: Boolean(lintError),
-    referenceTemplateLoaded: referenceTemplate !== null,
+
+  await logger.info("scene_composition_attempt", {
+    sceneId: scene.sceneId,
+    compositionId: sceneCompositionId(scene),
+    repair: Boolean(opts.lintError),
     referenceTemplateBytes: referenceTemplate?.length ?? 0,
   });
 
-  const messages = buildCompositionMessages(project, lintError, referenceTemplate);
+  const messages = buildSceneMessages(
+    project,
+    scene,
+    opts.context ?? {},
+    referenceTemplate,
+    opts.lintError,
+  );
 
   const raw = await callLLM(
     messages,
     {
       timeoutMs: TIMEOUTS_MS.LLM_COMPOSITION,
       responseFormat: "text",
-      // Composition output is the largest of the four tasks — raise the
-      // token cap so long scenes don't get truncated mid-document.
       maxOutputTokens: 8192,
     },
     logger,
   );
 
-  // Some models still wrap the document in ```html fences despite the
-  // system prompt — strip them but otherwise return as-is so the caller
-  // can run downstream validators against the unaltered text.
   const html = stripCodeFences(raw);
-
-  await logger.info("composition_success", { bytes: html.length });
+  await logger.info("scene_composition_success", {
+    sceneId: scene.sceneId,
+    bytes: html.length,
+  });
   return html;
 }
+
+// ---------------------------------------------------------------------------
+// Deterministic assembly of the parent index.html (no LLM call)
+// ---------------------------------------------------------------------------
+
+/**
+ * Assemble the parent `index.html` that mounts every scene via
+ * `data-composition-src`. The parent is entirely deterministic — no LLM
+ * call is required because the layout (cumulative data-start, total
+ * duration, viewport) is mechanical.
+ *
+ * Output shape (~800 bytes regardless of scene count):
+ *
+ *   <!doctype html>
+ *   <html lang="{locale}">
+ *     <head>... viewport + GSAP ...</head>
+ *     <body>
+ *       <div id="root" data-composition-id="main"
+ *            data-start="0" data-duration="{TOTAL}"
+ *            data-width="1920" data-height="1080">
+ *         <div data-composition-id="scene-01"
+ *              data-composition-src="compositions/scene-01-xxx.html"
+ *              data-start="0" data-duration="10" data-track-index="1"></div>
+ *         ... one per scene ...
+ *       </div>
+ *     </body>
+ *   </html>
+ *
+ * The parent does NOT register a root `window.__timelines["main"]` —
+ * each sub-composition registers its own timeline, which the HyperFrames
+ * runtime discovers during mount.
+ */
+export function assembleIndexHtml(project: Project): string {
+  if (!project.storyboard || project.storyboard.scenes.length === 0) {
+    throw new WorkbenchError(
+      ErrorCode.INVALID_STAGE,
+      "Storyboard required to assemble index.html",
+    );
+  }
+  const scenes = project.storyboard.scenes;
+  const locale = project.locale ?? DEFAULT_LOCALE;
+
+  // Accumulate data-start across scenes so each child's timeline is
+  // anchored at the correct point in the parent timeline.
+  let cursor = 0;
+  const sceneLines: string[] = [];
+  for (const scene of scenes) {
+    const id = sceneCompositionId(scene);
+    const src = sceneCompositionPath(scene);
+    sceneLines.push(
+      `    <div`,
+      `      data-composition-id="${id}"`,
+      `      data-composition-src="${src}"`,
+      `      data-start="${cursor}"`,
+      `      data-track-index="1"`,
+      `    ></div>`,
+    );
+    cursor += scene.durationSec;
+  }
+
+  const total = cursor;
+
+  return [
+    "<!doctype html>",
+    `<html lang="${locale}">`,
+    "<head>",
+    '  <meta charset="UTF-8" />',
+    '  <meta name="viewport" content="width=1920, height=1080" />',
+    '  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>',
+    "  <style>",
+    "    * { margin: 0; padding: 0; box-sizing: border-box; }",
+    "    html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }",
+    "  </style>",
+    "</head>",
+    "<body>",
+    `  <div id="root" data-composition-id="main" data-start="0" data-duration="${total}" data-width="1920" data-height="1080">`,
+    ...sceneLines,
+    "  </div>",
+    "  <script>",
+    "    // HyperFrames lint requires every data-composition-id root to have",
+    "    // a registered timeline on window.__timelines. The parent's main",
+    "    // timeline is otherwise empty — sub-composition timelines are",
+    "    // auto-nested by HyperFrames based on data-start. But the framework",
+    "    // uses the timeline's duration to compute composition duration:",
+    `    //   \`A composition's duration equals its GSAP timeline duration\``,
+    "    // An empty timeline has duration=0 → HF unmounts every clip",
+    "    // immediately → sub-comp scripts still run but cannot find their",
+    "    // DOM targets → 20k GSAP warnings and a black video.",
+    "    // Fix: extend the timeline to the composition's data-duration with",
+    "    // a zero-effect tl.set at the end, which is the official pattern",
+    "    // from https://hyperframes.heygen.com/guides/gsap-animation#timeline-duration",
+    "    window.__timelines = window.__timelines || {};",
+    `    window.__timelines["main"] = gsap.timeline({ paused: true }).set({}, {}, ${total});`,
+    "  </script>",
+    "</body>",
+    "</html>",
+    "",
+  ].join("\n");
+}
+
+
 
 // ---------------------------------------------------------------------------
 // Scene rewrite

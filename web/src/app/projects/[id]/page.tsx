@@ -193,7 +193,10 @@ export default function ProjectDetailPage(): React.JSX.Element {
     <main className="flex-1 px-6 py-8">
       <div className="mx-auto w-full max-w-6xl">
         <div className="flex flex-col gap-6 lg:flex-row">
-          <ProjectSidebar project={project} />
+          <ProjectSidebar
+            project={project}
+            onProjectChanged={handleProjectChanged}
+          />
           <ProjectTabs
             project={project}
             onProjectChanged={handleProjectChanged}
@@ -218,8 +221,10 @@ export default function ProjectDetailPage(): React.JSX.Element {
 
 function ProjectSidebar({
   project,
+  onProjectChanged,
 }: {
   project: Project;
+  onProjectChanged: (p: Project) => void;
 }): React.JSX.Element {
   return (
     <aside className="w-full shrink-0 lg:sticky lg:top-6 lg:w-64 lg:self-start">
@@ -243,6 +248,8 @@ function ProjectSidebar({
         <StagePanel
           stages={project.stageStatus}
           currentStage={project.stage}
+          projectId={project.projectId}
+          onProjectRegressed={onProjectChanged}
         />
       </div>
     </aside>

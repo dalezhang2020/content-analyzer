@@ -17,7 +17,7 @@
 import { describe, expect, it } from "vitest";
 import fc from "fast-check";
 
-import { STAGES, STAGE_ORDER } from "@/lib/workbench/constants";
+import { STAGES, STAGE_ORDER, LIMITS } from "@/lib/workbench/constants";
 import { ErrorCode, WorkbenchError } from "@/lib/workbench/errors";
 import {
   ALL_TRANSITIONS,
@@ -31,6 +31,7 @@ import {
   markStageFailed,
   markStageRunning,
   markStageSucceeded,
+  regressToStage,
   shouldSuggestRegress,
 } from "@/lib/workbench/state-machine";
 import type {
@@ -487,5 +488,137 @@ describe("Property 26: shouldSuggestRegress", () => {
         },
       ),
     );
+  });
+});
+
+// ---------------------------------------------------------------------------
+// regressToStage — manual override path (tasks: dev-regress-endpoint)
+// Validates: Requirements 1.4, 1.5
+// ---------------------------------------------------------------------------
+
+describe("regressToStage (manual override)", () => {
+  it("regressing published → composition resets composition+downstream to pending, preserves upstream, appends history entry", () => {
+    const populatedStatus: StageStatusMap = {
+      topic: { status: "succeeded", startedAt: "2024-01-01T00:00:00.000Z", finishedAt: "2024-01-01T00:01:00.000Z", attempts: 1 },
+      brief: { status: "succeeded", startedAt: "2024-01-01T00:02:00.000Z", finishedAt: "2024-01-01T00:03:00.000Z", attempts: 1 },
+      storyboard: { status: "succeeded", startedAt: "2024-01-01T00:04:00.000Z", finishedAt: "2024-01-01T00:05:00.000Z", attempts: 1 },
+      composition: { status: "succeeded", startedAt: "2024-01-01T00:06:00.000Z", finishedAt: "2024-01-01T00:07:00.000Z", attempts: 2 },
+      audio: { status: "succeeded", startedAt: "2024-01-01T00:08:00.000Z", finishedAt: "2024-01-01T00:09:00.000Z", attempts: 1 },
+      render: { status: "succeeded", startedAt: "2024-01-01T00:10:00.000Z", finishedAt: "2024-01-01T00:11:00.000Z", attempts: 1 },
+      qa: { status: "succeeded", startedAt: "2024-01-01T00:12:00.000Z", finishedAt: "2024-01-01T00:13:00.000Z", attempts: 1 },
+      published: { status: "succeeded", startedAt: "2024-01-01T00:14:00.000Z", finishedAt: "2024-01-01T00:15:00.000Z", attempts: 1 },
+    };
+    const project = makeProject({
+      stage: "published",
+      stageStatus: populatedStatus,
+    });
+
+    const now = "2024-02-01T00:00:00.000Z";
+    const next = regressToStage(project, "composition", { reason: "need to rework HTML", now });
+
+    // Stage reset to target.
+    expect(next.stage).toBe("composition");
+
+    // composition + audio + render + qa + published → pending.
+    for (const stage of STAGES) {
+      if (STAGE_ORDER[stage] >= STAGE_ORDER["composition"]) {
+        expect(next.stageStatus[stage]).toEqual({ status: "pending" });
+      } else {
+        // topic / brief / storyboard preserved unchanged.
+        expect(next.stageStatus[stage]).toEqual(populatedStatus[stage]);
+      }
+    }
+
+    // History entry appended with fromStage=published.
+    expect(next.stageHistory).toHaveLength(1);
+    expect(next.stageHistory[0]).toEqual({
+      fromStage: "published",
+      toStage: "composition",
+      at: now,
+      result: "success",
+      reason: "need to rework HTML",
+    });
+
+    // updatedAt refreshed.
+    expect(next.updatedAt).toBe(now);
+
+    // Input was not mutated.
+    expect(project.stage).toBe("published");
+    expect(project.stageStatus.composition.status).toBe("succeeded");
+    expect(project.stageHistory).toHaveLength(0);
+  });
+
+  it("regressing to the same stage throws INVALID_TRANSITION", () => {
+    const project = makeProject({ stage: "composition" });
+    let caught: unknown;
+    try {
+      regressToStage(project, "composition");
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(WorkbenchError);
+    expect((caught as WorkbenchError).code).toBe(ErrorCode.INVALID_TRANSITION);
+    expect((caught as WorkbenchError).details?.currentStage).toBe("composition");
+    expect((caught as WorkbenchError).details?.requestedStage).toBe("composition");
+  });
+
+  it("regressing forward (brief → audio) throws INVALID_TRANSITION", () => {
+    const project = makeProject({ stage: "brief" });
+    let caught: unknown;
+    try {
+      regressToStage(project, "audio");
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(WorkbenchError);
+    expect((caught as WorkbenchError).code).toBe(ErrorCode.INVALID_TRANSITION);
+    expect((caught as WorkbenchError).details?.currentStage).toBe("brief");
+    expect((caught as WorkbenchError).details?.requestedStage).toBe("audio");
+  });
+
+  it("multi-step regression: published → storyboard resets storyboard+downstream", () => {
+    const project = makeProject({
+      stage: "published",
+      stageStatus: {
+        topic: { status: "succeeded", attempts: 1 },
+        brief: { status: "succeeded", attempts: 1 },
+        storyboard: { status: "succeeded", attempts: 1 },
+        composition: { status: "succeeded", attempts: 1 },
+        audio: { status: "succeeded", attempts: 1 },
+        render: { status: "succeeded", attempts: 1 },
+        qa: { status: "succeeded", attempts: 1 },
+        published: { status: "succeeded", attempts: 1 },
+      },
+    });
+
+    const next = regressToStage(project, "storyboard", { now: "2024-02-01T12:00:00.000Z" });
+
+    expect(next.stage).toBe("storyboard");
+    for (const stage of STAGES) {
+      if (STAGE_ORDER[stage] >= STAGE_ORDER["storyboard"]) {
+        expect(next.stageStatus[stage]).toEqual({ status: "pending" });
+      } else {
+        // topic + brief unchanged.
+        expect(next.stageStatus[stage].status).toBe("succeeded");
+      }
+    }
+    expect(next.stageHistory.at(-1)).toEqual({
+      fromStage: "published",
+      toStage: "storyboard",
+      at: "2024-02-01T12:00:00.000Z",
+      result: "success",
+    });
+  });
+
+  it("truncates `reason` to LIMITS.REASON_MAX with a trailing ellipsis", () => {
+    const project = makeProject({ stage: "published" });
+    const longReason = "a".repeat(LIMITS.REASON_MAX + 50);
+
+    const next = regressToStage(project, "topic", { reason: longReason, now: "2024-02-01T00:00:00.000Z" });
+
+    const entry = next.stageHistory.at(-1);
+    expect(entry?.reason).toBeDefined();
+    expect(entry?.reason?.length).toBe(LIMITS.REASON_MAX);
+    expect(entry?.reason?.endsWith("…")).toBe(true);
   });
 });

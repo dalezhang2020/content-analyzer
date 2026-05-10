@@ -9,7 +9,10 @@
  *   AZURE_SPEECH_KEY       subscription key
  *
  * REST endpoint used:
- *   POST {endpoint}/cognitiveservices/v1
+ *   POST {endpoint}/tts/cognitiveservices/v1     (multi-service Cognitive
+ *                                                 Services resource)
+ *   POST {endpoint}/cognitiveservices/v1         (single-purpose Speech
+ *                                                 regional endpoint)
  *   Ocp-Apim-Subscription-Key: {key}
  *   Content-Type: application/ssml+xml
  *   X-Microsoft-OutputFormat: audio-16khz-128kbitrate-mono-mp3
@@ -169,7 +172,12 @@ async function synthesizeSceneBuffer(
   creds: AzureCredentials,
   logger: WorkbenchLogger,
 ): Promise<Buffer> {
-  const ttsUrl = `${creds.endpoint}/cognitiveservices/v1`;
+  // Azure Cognitive Services multi-service resources expose Speech TTS at
+  // `/tts/cognitiveservices/v1` (the `/tts/` segment disambiguates from
+  // other services like `/vision`, `/language` etc. on the same endpoint).
+  // Single-purpose Speech regional endpoints use `/cognitiveservices/v1`
+  // directly; we support both by checking the host.
+  const ttsUrl = `${creds.endpoint}/tts/cognitiveservices/v1`;
   const ssml = buildSsml(voice, scene.narration);
 
   let lastReason = "unknown";

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-duration="126" data-width="1920" data-height="1080">
+    <div
+      data-composition-id="scene-01-53c377"
+      data-composition-src="compositions/scene-01-53c377.html"
+      data-start="0"
+      data-duration="10"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-02-8114e6"
+      data-composition-src="compositions/scene-02-8114e6.html"
+      data-start="10"
+      data-duration="10"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-03-d0f99a"
+      data-composition-src="compositions/scene-03-d0f99a.html"
+      data-start="20"
+      data-duration="12"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-04-fda35e"
+      data-composition-src="compositions/scene-04-fda35e.html"
+      data-start="32"
+      data-duration="12"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-05-72ae5f"
+      data-composition-src="compositions/scene-05-72ae5f.html"
+      data-start="44"
+      data-duration="10"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-06-7833e7"
+      data-composition-src="compositions/scene-06-7833e7.html"
+      data-start="54"
+      data-duration="14"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-07-195f42"
+      data-composition-src="compositions/scene-07-195f42.html"
+      data-start="68"
+      data-duration="11"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-08-b97efe"
+      data-composition-src="compositions/scene-08-b97efe.html"
+      data-start="79"
+      data-duration="12"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-09-307448"
+      data-composition-src="compositions/scene-09-307448.html"
+      data-start="91"
+      data-duration="11"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-10-e2c4a3"
+      data-composition-src="compositions/scene-10-e2c4a3.html"
+      data-start="102"
+      data-duration="10"
+      data-track-index="1"
+    ></div>
+    <div
+      data-composition-id="scene-11-dbe503"
+      data-composition-src="compositions/scene-11-dbe503.html"
+      data-start="112"
+      data-duration="14"
+      data-track-index="1"
+    ></div>
+  </div>
+  <script>
+    // HyperFrames lint requires every data-composition-id root to have
+    // a registered timeline on window.__timelines. The parent's own
+    // timeline is a no-op container — the actual scene animations live
+    // in each sub-composition's own __timelines[scene-NN-xxx] entry.
+    window.__timelines = window.__timelines || {};
+    window.__timelines["main"] = gsap.timeline({ paused: true });
+  </script>
+</body>
+</html>

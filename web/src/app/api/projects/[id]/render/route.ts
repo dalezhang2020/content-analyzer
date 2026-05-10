@@ -81,13 +81,16 @@ export async function POST(
     const { runId } = await withProjectLock(projectId, async () => {
       const project = await readProject(projectId);
 
-      // Stage gate: `audio` is the only stage from which render can start.
-      // A fresh transition into `render` happens asynchronously once the
-      // subprocess finishes successfully (see background task below).
-      if (project.stage !== "audio") {
+      // Stage gate: `audio` is the canonical predecessor, but `render`
+      // itself is also accepted so a user who regressed to `render` (via
+      // StagePanel's "回退到此阶段") can retry the render step without
+      // being forced to regress further to `audio`. Any other stage
+      // (topic/brief/storyboard/composition/qa/published) is rejected —
+      // a render depends on `audio` having produced mp3s.
+      if (project.stage !== "audio" && project.stage !== "render") {
         throw new WorkbenchError(
           ErrorCode.INVALID_STAGE,
-          "Render requires stage=audio",
+          "Render requires stage=audio or stage=render",
           { currentStage: project.stage },
         );
       }
@@ -127,10 +130,14 @@ export async function POST(
                 },
               };
               finalProject = markStageSucceeded(finalProject, "render");
-              // Advance project-level stage only if we're still on the
-              // audio edge — a concurrent regression from QA could have
-              // changed it under us, in which case the edge is illegal
-              // and we skip the transition.
+              // Advance project-level stage only when coming from the
+              // canonical `audio` predecessor. When the caller was
+              // already on `render` (manual retry after regression), the
+              // project-level stage is already correct — just refresh
+              // the `succeeded` status. A concurrent regression from QA
+              // could also have bumped us off `audio` underneath; in
+              // that case we skip the forward transition to avoid an
+              // illegal edge.
               if (finalProject.stage === "audio") {
                 finalProject = applyTransition(finalProject, "render");
               }

@@ -1,0 +1,176 @@
+{"ts":"2026-05-10T04:01:52.175Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneCount":11,"force":false,"provider":"azure"}
+{"ts":"2026-05-10T04:01:52.176Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":1,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:01:52.400Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":1,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:01:53.402Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":1,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:01:53.432Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":1,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:01:56.434Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":1,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:01:56.464Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":1,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:01:56.465Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":1,"voice":"zh-CN-YunyangNeural","durationMs":4289,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:01:56.466Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":2,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:01:56.494Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":2,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:01:57.495Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":2,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:01:57.536Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":2,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:00.539Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":2,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:00.569Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":2,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:00.570Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":2,"voice":"zh-CN-YunyangNeural","durationMs":4104,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:00.570Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":3,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:00.601Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":3,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:01.604Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":3,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:01.637Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":3,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:04.640Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":3,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:04.668Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":3,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:04.669Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":3,"voice":"zh-CN-YunyangNeural","durationMs":4099,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:04.669Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":4,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:04.700Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":4,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:05.701Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":4,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:05.728Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":4,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:08.731Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":4,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:08.759Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":4,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:08.760Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":4,"voice":"zh-CN-YunyangNeural","durationMs":4091,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:08.760Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":5,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:08.792Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":5,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:09.794Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":5,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:09.828Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":5,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:12.829Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":5,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:12.860Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":5,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:12.860Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":5,"voice":"zh-CN-YunyangNeural","durationMs":4100,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:12.860Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":6,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:12.890Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":6,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:13.892Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":6,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:13.924Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":6,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:16.927Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":6,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:16.957Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":6,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:16.958Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":6,"voice":"zh-CN-YunyangNeural","durationMs":4098,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:16.958Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":7,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:16.988Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":7,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:17.991Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":7,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:18.016Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":7,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:21.017Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":7,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:21.044Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":7,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:21.045Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":7,"voice":"zh-CN-YunyangNeural","durationMs":4087,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:21.045Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":8,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:21.079Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":8,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:22.080Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":8,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:22.109Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":8,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:25.110Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":8,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:25.137Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":8,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:25.138Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":8,"voice":"zh-CN-YunyangNeural","durationMs":4093,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:25.138Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":9,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:25.168Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":9,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:26.170Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":9,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:26.200Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":9,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:29.202Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":9,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:29.232Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":9,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:29.233Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":9,"voice":"zh-CN-YunyangNeural","durationMs":4095,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:29.233Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":10,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:29.260Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":10,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:30.263Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":10,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:30.444Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":10,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:33.446Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":10,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:33.480Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":10,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:33.480Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":10,"voice":"zh-CN-YunyangNeural","durationMs":4247,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:33.481Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":11,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:33.516Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":11,"attempt":1,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:34.516Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":11,"attempt":2,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:34.548Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":11,"attempt":2,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:37.549Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":11,"attempt":3,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:02:37.580Z","level":"warn","stage":"audio","event":"tts_attempt_failed","sceneIndex":11,"attempt":3,"voice":"zh-CN-YunyangNeural","status":404,"body":"{\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}"}
+{"ts":"2026-05-10T04:02:37.581Z","level":"error","stage":"audio","event":"tts_call","sceneIndex":11,"voice":"zh-CN-YunyangNeural","durationMs":4100,"error":{"message":"TTS failed after 3 attempts: status 404: {\"error\":{\"code\":\"404\",\"message\": \"Resource not found\"}}","name":"TTSSynthesisError"}}
+{"ts":"2026-05-10T04:02:37.581Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","ok":0,"failed":11}
+{"ts":"2026-05-10T04:06:23.161Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneCount":11,"force":false,"provider":"azure"}
+{"ts":"2026-05-10T04:06:23.162Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":1,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:23.922Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":1,"voice":"zh-CN-YunyangNeural","durationMs":760}
+{"ts":"2026-05-10T04:06:23.928Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":2,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:24.592Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":2,"voice":"zh-CN-YunyangNeural","durationMs":664}
+{"ts":"2026-05-10T04:06:24.598Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":3,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:25.396Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":3,"voice":"zh-CN-YunyangNeural","durationMs":798}
+{"ts":"2026-05-10T04:06:25.404Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":4,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:26.110Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":4,"voice":"zh-CN-YunyangNeural","durationMs":706}
+{"ts":"2026-05-10T04:06:26.115Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":5,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:26.729Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":5,"voice":"zh-CN-YunyangNeural","durationMs":614}
+{"ts":"2026-05-10T04:06:26.736Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":6,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:28.048Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":6,"voice":"zh-CN-YunyangNeural","durationMs":1312}
+{"ts":"2026-05-10T04:06:28.056Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":7,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:28.714Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":7,"voice":"zh-CN-YunyangNeural","durationMs":658}
+{"ts":"2026-05-10T04:06:28.722Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":8,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:29.496Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":8,"voice":"zh-CN-YunyangNeural","durationMs":774}
+{"ts":"2026-05-10T04:06:29.505Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":9,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:30.296Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":9,"voice":"zh-CN-YunyangNeural","durationMs":791}
+{"ts":"2026-05-10T04:06:30.303Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":10,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:30.982Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":10,"voice":"zh-CN-YunyangNeural","durationMs":679}
+{"ts":"2026-05-10T04:06:30.992Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":11,"attempt":1,"voice":"zh-CN-YunyangNeural"}
+{"ts":"2026-05-10T04:06:31.821Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":11,"voice":"zh-CN-YunyangNeural","durationMs":829}
+{"ts":"2026-05-10T04:06:31.829Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","ok":11,"failed":0}
+{"ts":"2026-05-10T04:09:42.424Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneCount":11,"force":false,"provider":"azure"}
+{"ts":"2026-05-10T04:09:42.425Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":1,"sceneId":"sc_53c37704","audioPath":"assets/scene-1.mp3"}
+{"ts":"2026-05-10T04:09:42.425Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":2,"sceneId":"sc_8114e66c","audioPath":"assets/scene-2.mp3"}
+{"ts":"2026-05-10T04:09:42.425Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":3,"sceneId":"sc_d0f99a29","audioPath":"assets/scene-3.mp3"}
+{"ts":"2026-05-10T04:09:42.426Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":4,"sceneId":"sc_fda35eba","audioPath":"assets/scene-4.mp3"}
+{"ts":"2026-05-10T04:09:42.426Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":5,"sceneId":"sc_72ae5f1b","audioPath":"assets/scene-5.mp3"}
+{"ts":"2026-05-10T04:09:42.427Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":6,"sceneId":"sc_7833e77a","audioPath":"assets/scene-6.mp3"}
+{"ts":"2026-05-10T04:09:42.427Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":7,"sceneId":"sc_195f422d","audioPath":"assets/scene-7.mp3"}
+{"ts":"2026-05-10T04:09:42.427Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":8,"sceneId":"sc_b97efeef","audioPath":"assets/scene-8.mp3"}
+{"ts":"2026-05-10T04:09:42.427Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":9,"sceneId":"sc_30744836","audioPath":"assets/scene-9.mp3"}
+{"ts":"2026-05-10T04:09:42.427Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":10,"sceneId":"sc_e2c4a360","audioPath":"assets/scene-10.mp3"}
+{"ts":"2026-05-10T04:09:42.428Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":11,"sceneId":"sc_dbe5031e","audioPath":"assets/scene-11.mp3"}
+{"ts":"2026-05-10T04:09:42.428Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","ok":11,"failed":0}
+{"ts":"2026-05-10T13:32:44.792Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneIndex":1,"sceneId":"sc_53c37704","force":true,"provider":"azure"}
+{"ts":"2026-05-10T13:32:44.794Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":1,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:32:47.433Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2639}
+{"ts":"2026-05-10T13:32:47.446Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","sceneIndex":1,"sceneId":"sc_53c37704"}
+{"ts":"2026-05-10T13:33:01.085Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneIndex":1,"sceneId":"sc_53c37704","force":true,"provider":"azure"}
+{"ts":"2026-05-10T13:33:01.088Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":1,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:33:03.733Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2645}
+{"ts":"2026-05-10T13:33:03.745Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","sceneIndex":1,"sceneId":"sc_53c37704"}
+{"ts":"2026-05-10T13:37:31.426Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneIndex":2,"sceneId":"sc_8114e66c","force":true,"provider":"azure"}
+{"ts":"2026-05-10T13:37:31.427Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":2,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:37:34.282Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":2,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2855}
+{"ts":"2026-05-10T13:37:34.293Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","sceneIndex":2,"sceneId":"sc_8114e66c"}
+{"ts":"2026-05-10T13:58:46.550Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneCount":11,"force":false,"provider":"azure"}
+{"ts":"2026-05-10T13:58:46.551Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":1,"sceneId":"sc_53c37704","audioPath":"assets/scene-1.mp3"}
+{"ts":"2026-05-10T13:58:46.552Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":2,"sceneId":"sc_8114e66c","audioPath":"assets/scene-2.mp3"}
+{"ts":"2026-05-10T13:58:46.552Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":3,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:58:49.536Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":3,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2984}
+{"ts":"2026-05-10T13:58:49.547Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":4,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:58:52.522Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":4,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2975}
+{"ts":"2026-05-10T13:58:52.538Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":5,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:58:55.005Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":5,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2468}
+{"ts":"2026-05-10T13:58:55.015Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":6,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:58:58.357Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":6,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":3342}
+{"ts":"2026-05-10T13:58:58.368Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":7,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:59:01.218Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":7,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2850}
+{"ts":"2026-05-10T13:59:01.228Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":8,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:59:04.470Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":8,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":3242}
+{"ts":"2026-05-10T13:59:04.481Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":9,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:59:07.372Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":9,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2891}
+{"ts":"2026-05-10T13:59:07.378Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":10,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:59:10.331Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":10,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":2953}
+{"ts":"2026-05-10T13:59:10.341Z","level":"info","stage":"audio","event":"tts_attempt","sceneIndex":11,"attempt":1,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural"}
+{"ts":"2026-05-10T13:59:13.879Z","level":"info","stage":"audio","event":"tts_call","sceneIndex":11,"voice":"zh-CN-Xiaochen:DragonHDFlashLatestNeural","durationMs":3539}
+{"ts":"2026-05-10T13:59:13.886Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","ok":11,"failed":0}
+{"ts":"2026-05-10T14:02:58.532Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneCount":11,"force":false,"provider":"azure"}
+{"ts":"2026-05-10T14:02:58.533Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":1,"sceneId":"sc_53c37704","audioPath":"assets/scene-1.mp3"}
+{"ts":"2026-05-10T14:02:58.533Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":2,"sceneId":"sc_8114e66c","audioPath":"assets/scene-2.mp3"}
+{"ts":"2026-05-10T14:02:58.534Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":3,"sceneId":"sc_d0f99a29","audioPath":"assets/scene-3.mp3"}
+{"ts":"2026-05-10T14:02:58.534Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":4,"sceneId":"sc_fda35eba","audioPath":"assets/scene-4.mp3"}
+{"ts":"2026-05-10T14:02:58.535Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":5,"sceneId":"sc_72ae5f1b","audioPath":"assets/scene-5.mp3"}
+{"ts":"2026-05-10T14:02:58.535Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":6,"sceneId":"sc_7833e77a","audioPath":"assets/scene-6.mp3"}
+{"ts":"2026-05-10T14:02:58.535Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":7,"sceneId":"sc_195f422d","audioPath":"assets/scene-7.mp3"}
+{"ts":"2026-05-10T14:02:58.537Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":8,"sceneId":"sc_b97efeef","audioPath":"assets/scene-8.mp3"}
+{"ts":"2026-05-10T14:02:58.537Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":9,"sceneId":"sc_30744836","audioPath":"assets/scene-9.mp3"}
+{"ts":"2026-05-10T14:02:58.538Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":10,"sceneId":"sc_e2c4a360","audioPath":"assets/scene-10.mp3"}
+{"ts":"2026-05-10T14:02:58.538Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":11,"sceneId":"sc_dbe5031e","audioPath":"assets/scene-11.mp3"}
+{"ts":"2026-05-10T14:02:58.539Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","ok":11,"failed":0}
+{"ts":"2026-05-10T14:19:55.308Z","level":"info","stage":"audio","event":"tts_start","projectId":"proj_1778375317741_8af0bd","sceneCount":11,"force":false,"provider":"azure"}
+{"ts":"2026-05-10T14:19:55.309Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":1,"sceneId":"sc_53c37704","audioPath":"assets/scene-1.mp3"}
+{"ts":"2026-05-10T14:19:55.310Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":2,"sceneId":"sc_8114e66c","audioPath":"assets/scene-2.mp3"}
+{"ts":"2026-05-10T14:19:55.310Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":3,"sceneId":"sc_d0f99a29","audioPath":"assets/scene-3.mp3"}
+{"ts":"2026-05-10T14:19:55.311Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":4,"sceneId":"sc_fda35eba","audioPath":"assets/scene-4.mp3"}
+{"ts":"2026-05-10T14:19:55.311Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":5,"sceneId":"sc_72ae5f1b","audioPath":"assets/scene-5.mp3"}
+{"ts":"2026-05-10T14:19:55.311Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":6,"sceneId":"sc_7833e77a","audioPath":"assets/scene-6.mp3"}
+{"ts":"2026-05-10T14:19:55.312Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":7,"sceneId":"sc_195f422d","audioPath":"assets/scene-7.mp3"}
+{"ts":"2026-05-10T14:19:55.312Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":8,"sceneId":"sc_b97efeef","audioPath":"assets/scene-8.mp3"}
+{"ts":"2026-05-10T14:19:55.312Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":9,"sceneId":"sc_30744836","audioPath":"assets/scene-9.mp3"}
+{"ts":"2026-05-10T14:19:55.313Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":10,"sceneId":"sc_e2c4a360","audioPath":"assets/scene-10.mp3"}
+{"ts":"2026-05-10T14:19:55.313Z","level":"info","stage":"audio","event":"tts_skip","sceneIndex":11,"sceneId":"sc_dbe5031e","audioPath":"assets/scene-11.mp3"}
+{"ts":"2026-05-10T14:19:55.313Z","level":"info","stage":"audio","event":"tts_done","projectId":"proj_1778375317741_8af0bd","ok":11,"failed":0}

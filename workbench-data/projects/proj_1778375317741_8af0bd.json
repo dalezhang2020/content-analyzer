@@ -4,7 +4,7 @@
   "title": "该如何理解三角函数呢?",
   "topic": "可视化 3D 解析 三角函数的原理",
   "locale": "zh-CN",
-  "stage": "storyboard",
+  "stage": "composition",
   "stageStatus": {
     "topic": {
       "status": "pending"
@@ -22,13 +22,8 @@
       "attempts": 2
     },
     "composition": {
-      "status": "failed",
-      "startedAt": "2026-05-10T01:29:15.059Z",
-      "finishedAt": "2026-05-10T01:31:56.622Z",
-      "error": {
-        "code": "LINT_FAILED",
-        "message": "◆  Linting composition/index.html\n\n  ✗ missing_timeline_registry: Missing `window.__timelines` registration.\n    Fix: Register each composition timeline on `window.__timelines[compositionId]`.\n  ⚠ composition_file_too_large: This HTML composition file has 469 lines. Smaller sub-compositions are easier to read, iterate on, and diff.\n    Fix: Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays …"
-      },
+      "status": "running",
+      "startedAt": "2026-05-10T15:06:34.865Z",
       "attempts": 1
     },
     "audio": {
@@ -56,6 +51,91 @@
       "toStage": "storyboard",
       "at": "2026-05-10T01:24:14.524Z",
       "result": "success"
+    },
+    {
+      "fromStage": "storyboard",
+      "toStage": "composition",
+      "at": "2026-05-10T02:06:57.820Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "composition",
+      "toStage": "audio",
+      "at": "2026-05-10T04:09:49.217Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "audio",
+      "toStage": "render",
+      "at": "2026-05-10T04:12:02.782Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "render",
+      "toStage": "qa",
+      "at": "2026-05-10T04:12:53.496Z",
+      "reason": "auto-advanced by publish",
+      "result": "success"
+    },
+    {
+      "fromStage": "qa",
+      "toStage": "published",
+      "at": "2026-05-10T04:12:53.497Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "published",
+      "toStage": "render",
+      "at": "2026-05-10T13:56:02.516Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "render",
+      "toStage": "audio",
+      "at": "2026-05-10T13:57:01.433Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "audio",
+      "toStage": "render",
+      "at": "2026-05-10T13:57:39.979Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "render",
+      "toStage": "audio",
+      "at": "2026-05-10T13:58:16.250Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "audio",
+      "toStage": "render",
+      "at": "2026-05-10T14:04:04.752Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "render",
+      "toStage": "composition",
+      "at": "2026-05-10T14:05:03.447Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "composition",
+      "toStage": "audio",
+      "at": "2026-05-10T14:20:02.132Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "audio",
+      "toStage": "render",
+      "at": "2026-05-10T14:20:37.007Z",
+      "result": "success"
+    },
+    {
+      "fromStage": "render",
+      "toStage": "composition",
+      "at": "2026-05-10T15:06:27.287Z",
+      "result": "success"
     }
   ],
   "brief": {
@@ -80,10 +160,10 @@
         "title": "引入：什么是三角函数？",
         "narration": "三角函数，听起来抽象，但它其实藏在一个最简单的图形里——单位圆。今天，我们用3D视角，把它看个透彻。",
         "durationSec": 10,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-1.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_8114e66c",
@@ -91,10 +171,10 @@
         "title": "单位圆登场",
         "narration": "这是一个半径为1的圆，圆心在原点。圆上任意一点P，它的横坐标就是cos θ，纵坐标就是sin θ。",
         "durationSec": 10,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-2.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_d0f99a29",
@@ -102,10 +182,10 @@
         "title": "角度驱动坐标变化",
         "narration": "当角度θ从0开始增大，点P沿圆周旋转。注意看——纵坐标sin θ在上下波动，横坐标cos θ在左右摆动。",
         "durationSec": 12,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-3.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_fda35eba",
@@ -113,10 +193,10 @@
         "title": "展开sin波形",
         "narration": "现在，我们把圆\"拉直\"。将P点的纵坐标随角度的变化描绘出来，一条熟悉的波形曲线就自然浮现了——这就是正弦函数。",
         "durationSec": 12,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-4.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_72ae5f1b",
@@ -124,10 +204,10 @@
         "title": "展开cos波形",
         "narration": "同样地，横坐标随角度变化，描绘出余弦函数。它与正弦波形状完全相同，只是向左平移了90度。",
         "durationSec": 10,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-5.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_7833e77a",
@@ -135,10 +215,10 @@
         "title": "3D视角：圆与波的统一",
         "narration": "切换到3D视角！左边是旋转的单位圆，右边是展开的波形。你会发现，波形上的每一个点，都精确对应圆上的一个位置。它们本是同一件事。",
         "durationSec": 14,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-6.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_195f422d",
@@ -146,10 +226,10 @@
         "title": "tan函数：切线的斜率",
         "narration": "tan θ等于sin θ除以cos θ。在单位圆上，它对应过原点到P点连线的斜率——也就是圆上切线方向的陡峭程度。",
         "durationSec": 11,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-7.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_b97efeef",
@@ -157,10 +237,10 @@
         "title": "tan的特殊行为",
         "narration": "当θ趋近90度，cos θ趋近于0，tan θ趋向无穷大。这就是为什么tan函数在90度处有垂直渐近线——圆上的几何直接解释了这个奇点。",
         "durationSec": 12,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-8.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_30744836",
@@ -168,10 +248,10 @@
         "title": "周期性：转一圈回原点",
         "narration": "单位圆转满360度，点P回到起点。所以sin和cos的周期是2π——旋转一圈，波形重复一次。周期性不是规定，是圆的本质。",
         "durationSec": 11,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-9.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_e2c4a360",
@@ -179,10 +259,10 @@
         "title": "对称性一目了然",
         "narration": "sin是奇函数：关于原点对称。cos是偶函数：关于纵轴对称。在3D模型里，翻转圆的方向，对称性立刻显现。",
         "durationSec": 10,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-10.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       },
       {
         "sceneId": "sc_dbe5031e",
@@ -190,21 +270,33 @@
         "title": "总结：三角函数的几何灵魂",
         "narration": "三角函数的本质，是圆周运动在坐标轴上的投影。单位圆是它的心脏，波形是它的呼吸，周期与对称是它的骨架。记住这个3D图像，三角函数就不再抽象。",
         "durationSec": 14,
-        "voice": "zh-CN-YunyangNeural",
-        "audioPath": null,
+        "voice": "zh-CN-Xiaochen:DragonHDFlashLatestNeural",
+        "audioPath": "assets/scene-11.mp3",
         "qaNote": "",
-        "updatedAt": "2026-05-10T01:28:28.094Z"
+        "updatedAt": "2026-05-10T13:44:00.632Z"
       }
     ]
   },
   "artifacts": {
     "briefPath": "brief.json",
     "storyboardPath": "storyboard.json",
-    "compositionDir": null,
-    "indexHtmlPath": null,
-    "hyperframesJsonPath": null,
-    "audioPaths": [],
-    "videoPath": null
+    "compositionDir": "composition",
+    "indexHtmlPath": "composition/index.html",
+    "hyperframesJsonPath": "composition/hyperframes.json",
+    "audioPaths": [
+      "assets/scene-1.mp3",
+      "assets/scene-2.mp3",
+      "assets/scene-3.mp3",
+      "assets/scene-4.mp3",
+      "assets/scene-5.mp3",
+      "assets/scene-6.mp3",
+      "assets/scene-7.mp3",
+      "assets/scene-8.mp3",
+      "assets/scene-9.mp3",
+      "assets/scene-10.mp3",
+      "assets/scene-11.mp3"
+    ],
+    "videoPath": "/videos/project-proj_1778375317741_8af0bd.mp4"
   },
   "qaNotes": [],
   "templateSource": {
@@ -213,5 +305,5 @@
     "sourcePath": "/Users/dizhang/self-project/linear-launch"
   },
   "createdAt": "2026-05-10T01:08:37.742Z",
-  "updatedAt": "2026-05-10T01:31:56.622Z"
+  "updatedAt": "2026-05-10T15:06:34.865Z"
 }

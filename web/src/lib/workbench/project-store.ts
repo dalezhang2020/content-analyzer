@@ -33,7 +33,7 @@
  */
 
 import path from "node:path";
-import { readdir } from "node:fs/promises";
+import { readdir, rm } from "node:fs/promises";
 import { randomBytes } from "node:crypto";
 
 import {
@@ -572,6 +572,72 @@ export async function readCompositionHtml(projectId: string): Promise<string> {
     "index.html",
   );
   return readFileSafe(absPath);
+}
+
+/**
+ * Atomically persist a per-scene sub-composition HTML at
+ * `data/projects/{projectId}/composition/{relPath}`.
+ *
+ * `relPath` MUST be a composition-relative path under `compositions/` —
+ * typically produced by `sceneCompositionPath(scene)` from
+ * `ai-generator.ts`. The path is run through `assertUnderDataDir` to keep
+ * traversal attempts from escaping the project dir.
+ *
+ * Caller is responsible for having already passed the HTML through
+ * `html-scanner` for forbidden-token rejection.
+ */
+export async function writeSceneCompositionHtml(
+  projectId: string,
+  relPath: string,
+  html: string,
+): Promise<void> {
+  // Split the relative path into segments so `resolveProjectFile`'s
+  // traversal guard fires on any `..` injection.
+  const parts = relPath.split("/").filter((s) => s.length > 0);
+  if (parts.length === 0) {
+    throw new WorkbenchError(
+      ErrorCode.WRITE_FAILED,
+      "Scene composition path must not be empty",
+    );
+  }
+  const absPath = resolveProjectFile(
+    projectId,
+    STAGE_DIRS.COMPOSITION,
+    ...parts,
+  );
+  await atomicWriteBuffer(absPath, Buffer.from(html, "utf8"));
+}
+
+/**
+ * Remove every `.html` file under `composition/compositions/` for the
+ * given project. Used before a full regeneration so stale scene files
+ * from a previous run don't linger alongside the fresh ones (which would
+ * trip `multiple_root_compositions` on lint if the old scene IDs differ).
+ *
+ * Best-effort: if the directory is missing, this is a no-op.
+ */
+export async function clearSceneCompositions(projectId: string): Promise<void> {
+  const compositionsDir = resolveProjectFile(
+    projectId,
+    STAGE_DIRS.COMPOSITION,
+    "compositions",
+  );
+  try {
+    const entries = await readdir(compositionsDir);
+    await Promise.all(
+      entries
+        .filter((name) => name.endsWith(".html"))
+        .map(async (name) => {
+          try {
+            await rm(path.join(compositionsDir, name));
+          } catch {
+            // ignore — cleanup is best-effort
+          }
+        }),
+    );
+  } catch {
+    // directory missing — nothing to clean
+  }
 }
 
 /**

@@ -95,13 +95,17 @@ export async function POST(
     const result = await withProjectLock<LockedResult>(projectId, async () => {
       let project = await readProject(projectId);
 
-      // Stage guard — audio generation strictly requires stage=composition.
-      // `force` in this endpoint only controls the "skip existing mp3"
-      // shortcut inside `synthesizeAll`; it does NOT unlock a stage gate.
-      if (project.stage !== "composition") {
+      // Stage gate: `composition` is the canonical predecessor, but
+      // `audio` itself is also accepted so a user who regressed to
+      // `audio` (via StagePanel "回退到此阶段") can retry audio without
+      // being forced to regress further to `composition`. Any other
+      // stage is rejected — audio generation depends on scene HTML
+      // being on disk. `force` controls the "skip existing mp3"
+      // shortcut inside `synthesizeAll`; it does NOT unlock the gate.
+      if (project.stage !== "composition" && project.stage !== "audio") {
         throw new WorkbenchError(
           ErrorCode.INVALID_STAGE,
-          "Audio generation requires stage=composition",
+          "Audio generation requires stage=composition or stage=audio",
           { currentStage: project.stage },
         );
       }
@@ -160,10 +164,13 @@ export async function POST(
           STAGE_DIRS.COMPOSITION,
           "index.html",
         );
+        // Use `.bak` suffix instead of `.html` to keep hyperframes lint
+        // from discovering the backup as a second root composition (which
+        // triggers `multiple_root_compositions`).
         const prevHtmlPath = resolveProjectFile(
           projectId,
           STAGE_DIRS.COMPOSITION,
-          "index.prev.html",
+          "index.prev.html.bak",
         );
 
         // Backup current HTML BEFORE mutation so a lint/validate failure
@@ -247,7 +254,14 @@ export async function POST(
 
         // All clear — commit the stage transition.
         project = markStageSucceeded(project, "audio");
-        project = applyTransition(project, "audio");
+        // Only advance forward from `composition`. When the caller was
+        // already on `audio` (regressed from a later stage for a rerun),
+        // the project-level stage is already correct — skip the
+        // transition or `applyTransition` would reject `audio → audio`
+        // as an illegal edge.
+        if (project.stage === "composition") {
+          project = applyTransition(project, "audio");
+        }
         await writeProject(project);
         return { status: 200, project };
       } catch (err) {
