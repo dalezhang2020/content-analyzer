@@ -851,8 +851,10 @@ export async function clearSceneCompositions(projectId: string): Promise<void> {
 }
 
 /**
- * Atomically persist a scene's TTS audio buffer at
- * `data/projects/{projectId}/composition/assets/scene-{index}.mp3`.
+ * Atomically persist a scene's TTS audio buffer.
+ *
+ * - Local: writes to `data/projects/{projectId}/composition/assets/scene-{index}.mp3`
+ * - Vercel: stores base64-encoded MP3 in Neon `scenes.audio_data`
  *
  * `index` is the 1-based Scene index — not the sceneId — so audio files
  * line up with the positional slots the composition HTML wires via
@@ -870,6 +872,15 @@ export async function writeAudioFile(
       { projectId, index },
     );
   }
+
+  const { isLocalEnv } = await import("@/lib/env");
+  if (!isLocalEnv()) {
+    // On Vercel: persist to Neon (no local FS available)
+    const { syncAudioToNeon } = await import("./neon-sync");
+    await syncAudioToNeon(projectId, index, buf);
+    return;
+  }
+
   const absPath = resolveProjectFile(
     projectId,
     STAGE_DIRS.COMPOSITION,

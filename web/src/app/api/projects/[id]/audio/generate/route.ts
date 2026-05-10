@@ -38,7 +38,7 @@
  */
 
 import type { NextRequest } from "next/server";
-import { isLocalEnv, localOnlyResponse } from "@/lib/env";
+import { isLocalEnv } from "@/lib/env";
 
 import {
   parseJsonBody,
@@ -80,7 +80,6 @@ export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ id: string }> },
 ): Promise<Response> {
-  if (!isLocalEnv()) return localOnlyResponse("Audio generation (requires Azure TTS + local filesystem)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
 
@@ -159,97 +158,107 @@ export async function POST(
         // -----------------------------------------------------------------
         // Full success — inject audio into composition HTML.
         // -----------------------------------------------------------------
-        const htmlPath = resolveProjectFile(
-          projectId,
-          STAGE_DIRS.COMPOSITION,
-          "index.html",
-        );
-        // Use `.bak` suffix instead of `.html` to keep hyperframes lint
-        // from discovering the backup as a second root composition (which
-        // triggers `multiple_root_compositions`).
-        const prevHtmlPath = resolveProjectFile(
-          projectId,
-          STAGE_DIRS.COMPOSITION,
-          "index.prev.html.bak",
-        );
+        let currentHtml: string;
+        let prevHtmlPath: string | null = null;
 
-        // Backup current HTML BEFORE mutation so a lint/validate failure
-        // has something to roll back to. `readFileSafe` maps ENOENT to a
-        // READ_FAILED we want the caller to see — a missing index.html at
-        // this point is an unrecoverable state bug, not a rollback case.
-        const currentHtml = await readFileSafe(htmlPath);
-        await atomicWriteBuffer(
-          prevHtmlPath,
-          Buffer.from(currentHtml, "utf8"),
-        );
+        if (isLocalEnv()) {
+          // Local: read/write from filesystem, run lint/validate
+          const htmlPath = resolveProjectFile(
+            projectId,
+            STAGE_DIRS.COMPOSITION,
+            "index.html",
+          );
+          prevHtmlPath = resolveProjectFile(
+            projectId,
+            STAGE_DIRS.COMPOSITION,
+            "index.prev.html.bak",
+          );
+          currentHtml = await readFileSafe(htmlPath);
+          await atomicWriteBuffer(
+            prevHtmlPath,
+            Buffer.from(currentHtml, "utf8"),
+          );
 
-        // Inject canonical tags for every scene (all succeeded by this
-        // branch); `injectAudio` is pure and idempotent across re-runs.
-        const successfulIndexes = ttsResult.scenes.map((s) => s.index);
-        const newHtml = injectAudio(
-          currentHtml,
-          updatedStoryboard,
-          successfulIndexes,
-        );
-        await atomicWriteBuffer(htmlPath, Buffer.from(newHtml, "utf8"));
+          const successfulIndexes = ttsResult.scenes.map((s) => s.index);
+          const newHtml = injectAudio(
+            currentHtml,
+            updatedStoryboard,
+            successfulIndexes,
+          );
+          await atomicWriteBuffer(htmlPath, Buffer.from(newHtml, "utf8"));
 
-        // Lint first — validate runs only if lint passes so we surface the
-        // more actionable error shape when both would fail.
-        const lintRes = await runHyperframesLint(projectId);
-        const validateRes = lintRes.ok
-          ? await runHyperframesValidate(projectId)
-          : { ok: false, stderr: lintRes.stderr };
+          const lintRes = await runHyperframesLint(projectId);
+          const validateRes = lintRes.ok
+            ? await runHyperframesValidate(projectId)
+            : { ok: false, stderr: lintRes.stderr };
 
-        if (!lintRes.ok || !validateRes.ok) {
-          // Rollback: restore `index.html` from the pre-flight backup. If
-          // restore itself fails, Req 9.12 asks for a manual-intervention
-          // message — surface the same code with extra context in details.
-          try {
-            const prev = await readFileSafe(prevHtmlPath);
-            await atomicWriteBuffer(htmlPath, Buffer.from(prev, "utf8"));
-          } catch (restoreErr) {
+          if (!lintRes.ok || !validateRes.ok) {
+            try {
+              const prev = await readFileSafe(prevHtmlPath);
+              await atomicWriteBuffer(htmlPath, Buffer.from(prev, "utf8"));
+            } catch (restoreErr) {
+              project = markStageFailed(project, "audio", {
+                code: ErrorCode.AUDIO_INJECT_ROLLBACK,
+                message:
+                  "Audio injection failed AND rollback failed; manual intervention required",
+              });
+              await writeProject(project);
+              alreadyRecordedFailure = true;
+              throw new WorkbenchError(
+                ErrorCode.AUDIO_INJECT_ROLLBACK,
+                "Audio injection failed and rollback from index.prev.html also failed; manual intervention required",
+                {
+                  restoreError:
+                    restoreErr instanceof Error
+                      ? restoreErr.message
+                      : String(restoreErr),
+                  lintStderr: lintRes.stderr.slice(0, 2000),
+                  validateStderr: validateRes.stderr.slice(0, 2000),
+                },
+              );
+            }
+
             project = markStageFailed(project, "audio", {
               code: ErrorCode.AUDIO_INJECT_ROLLBACK,
-              message:
-                "Audio injection failed AND rollback failed; manual intervention required",
+              message: "Audio injection failed lint/validate; HTML rolled back",
             });
             await writeProject(project);
             alreadyRecordedFailure = true;
             throw new WorkbenchError(
               ErrorCode.AUDIO_INJECT_ROLLBACK,
-              "Audio injection failed and rollback from index.prev.html also failed; manual intervention required",
+              "Audio injection failed lint/validate; rolled back",
               {
-                restoreError:
-                  restoreErr instanceof Error
-                    ? restoreErr.message
-                    : String(restoreErr),
-                lintStderr: lintRes.stderr.slice(0, 2000),
-                validateStderr: validateRes.stderr.slice(0, 2000),
+                lintOk: lintRes.ok,
+                validateOk: validateRes.ok,
+                stderr: (!lintRes.ok ? lintRes.stderr : validateRes.stderr).slice(
+                  0,
+                  2000,
+                ),
               },
             );
           }
-
-          // Rollback succeeded — record the stage failure and surface the
-          // original lint/validate output so the client can show the user
-          // why the injected audio broke the template.
-          project = markStageFailed(project, "audio", {
-            code: ErrorCode.AUDIO_INJECT_ROLLBACK,
-            message: "Audio injection failed lint/validate; HTML rolled back",
-          });
-          await writeProject(project);
-          alreadyRecordedFailure = true;
-          throw new WorkbenchError(
-            ErrorCode.AUDIO_INJECT_ROLLBACK,
-            "Audio injection failed lint/validate; rolled back",
-            {
-              lintOk: lintRes.ok,
-              validateOk: validateRes.ok,
-              stderr: (!lintRes.ok ? lintRes.stderr : validateRes.stderr).slice(
-                0,
-                2000,
-              ),
-            },
+        } else {
+          // Vercel: read/write index.html from Neon, skip lint/validate
+          const { readIndexHtmlFromNeon, writeIndexHtmlToNeon } = await import(
+            "@/lib/workbench/neon-sync"
           );
+          const neonHtml = await readIndexHtmlFromNeon(projectId);
+          if (!neonHtml) {
+            throw new WorkbenchError(
+              ErrorCode.READ_FAILED,
+              "index.html not found in Neon — run composition stage first",
+              { projectId },
+            );
+          }
+          currentHtml = neonHtml;
+
+          const successfulIndexes = ttsResult.scenes.map((s) => s.index);
+          const newHtml = injectAudio(
+            currentHtml,
+            updatedStoryboard,
+            successfulIndexes,
+          );
+          await writeIndexHtmlToNeon(projectId, newHtml);
         }
 
         // All clear — commit the stage transition.

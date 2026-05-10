@@ -247,3 +247,80 @@ export async function syncIndexHtmlToNeon(
     console.warn("[neon-sync] index HTML sync failed:", err instanceof Error ? err.message : err);
   }
 }
+
+/**
+ * Store a scene's MP3 audio as base64 in Neon.
+ * Used on Vercel where local filesystem is not persistent.
+ *
+ * @param projectId   e.g. "proj_1778428922474_48e007"
+ * @param sceneIndex  1-based scene index
+ * @param buf         raw MP3 bytes
+ */
+export async function syncAudioToNeon(
+  projectId: string,
+  sceneIndex: number,
+  buf: Buffer,
+): Promise<void> {
+  const sql = await getSql();
+  if (!sql) return;
+
+  try {
+    const base64 = buf.toString("base64");
+    await sql`
+      UPDATE content_analyzer.scenes
+      SET audio_data  = ${base64},
+          audio_path  = ${"assets/scene-" + sceneIndex + ".mp3"},
+          updated_at  = NOW()
+      WHERE project_id  = ${projectId}
+        AND scene_index = ${sceneIndex}
+    `;
+  } catch (err) {
+    console.warn("[neon-sync] audio sync failed:", err instanceof Error ? err.message : err);
+  }
+}
+
+/**
+ * Read index.html from Neon.
+ * Returns null when not found.
+ */
+export async function readIndexHtmlFromNeon(
+  projectId: string,
+): Promise<string | null> {
+  const sql = await getSql();
+  if (!sql) return null;
+
+  try {
+    const rows = await sql`
+      SELECT index_html_content
+      FROM content_analyzer.projects
+      WHERE project_id = ${projectId}
+    ` as Array<{ index_html_content: string | null }>;
+    return rows[0]?.index_html_content ?? null;
+  } catch (err) {
+    console.warn("[neon-sync] readIndexHtml failed:", err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
+/**
+ * Write index.html to Neon (used on Vercel where FS is not persistent).
+ */
+export async function writeIndexHtmlToNeon(
+  projectId: string,
+  html: string,
+): Promise<void> {
+  const sql = await getSql();
+  if (!sql) return;
+
+  try {
+    await sql`
+      UPDATE content_analyzer.projects
+      SET index_html_content = ${html},
+          updated_at         = NOW()
+      WHERE project_id = ${projectId}
+    `;
+  } catch (err) {
+    console.warn("[neon-sync] writeIndexHtml failed:", err instanceof Error ? err.message : err);
+    throw err; // re-throw on Vercel — this is the primary storage
+  }
+}
