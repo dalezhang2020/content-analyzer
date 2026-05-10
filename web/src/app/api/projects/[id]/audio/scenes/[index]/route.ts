@@ -91,6 +91,27 @@ export async function GET(req: NextRequest, ctx: Ctx): Promise<Response> {
     const projectId = await requireProjectIdFromParams(ctx.params);
     const n = parseSceneIndex(rawIndex);
 
+    // On Vercel: look up the scene's blob URL in Neon and redirect.
+    // Audio files are stored in Vercel Blob, not on the local filesystem.
+    const { isLocalEnv } = await import("@/lib/env");
+    if (!isLocalEnv()) {
+      const { sqlOne } = await import("@/lib/db");
+      const row = await sqlOne<{ audio_blob_url: string | null; audio_path: string | null }>`
+        SELECT audio_blob_url, audio_path
+        FROM content_analyzer.scenes
+        WHERE project_id = ${projectId} AND scene_index = ${n}
+      `;
+      const blobUrl = row?.audio_blob_url ?? (row?.audio_path && (row.audio_path.startsWith("http://") || row.audio_path.startsWith("https://")) ? row.audio_path : null);
+      if (!blobUrl) {
+        throw new WorkbenchError(
+          ErrorCode.AUDIO_NOT_FOUND,
+          `Audio file not found for scene ${n}`,
+          { index: n },
+        );
+      }
+      return Response.redirect(blobUrl, 302);
+    }
+
     const absPath = resolveProjectFile(
       projectId,
       STAGE_DIRS.COMPOSITION,

@@ -495,7 +495,12 @@ export function AudioTab({
                     key={`${scene.audioPath}-${scene.updatedAt ?? ""}`}
                     controls
                     preload="metadata"
-                    src={`/api/projects/${encodeURIComponent(project.projectId)}/audio/scenes/${scene.index}?v=${encodeURIComponent(scene.updatedAt ?? "")}`}
+                    src={
+                      scene.audioPath.startsWith("http://") ||
+                      scene.audioPath.startsWith("https://")
+                        ? scene.audioPath
+                        : `/api/projects/${encodeURIComponent(project.projectId)}/audio/scenes/${scene.index}?v=${encodeURIComponent(scene.updatedAt ?? "")}`
+                    }
                     className="mt-2 w-full"
                     aria-label={`Scene ${scene.index} audio`}
                   />
