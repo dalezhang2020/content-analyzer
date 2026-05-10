@@ -77,7 +77,8 @@ export async function GET(
           html_content: string | null;
           updated_at: string;
         }>`
-          SELECT scene_id, html_content, updated_at::text AS updated_at
+          SELECT scene_id, html_content,
+                 to_char(updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS updated_at
           FROM content_analyzer.scenes
           WHERE project_id = ${projectId}
         `;

@@ -112,7 +112,7 @@ export async function getHistoryById(
     try {
       const row = await sqlOne<NeonHistoryRow>`
         SELECT history_id, url, platform,
-               analyzed_at::text AS analyzed_at,
+               to_char(analyzed_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS analyzed_at,
                result
         FROM content_analyzer.analysis_history
         WHERE history_id = ${id}
@@ -203,7 +203,7 @@ export async function listHistory(
       const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
       const queryText = `
         SELECT history_id, url, platform,
-               analyzed_at::text AS analyzed_at,
+               to_char(analyzed_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS analyzed_at,
                result
         FROM content_analyzer.analysis_history
         ${where}

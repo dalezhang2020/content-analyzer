@@ -361,8 +361,8 @@ export async function readProject(projectId: string): Promise<Project> {
         SELECT project_id, schema_version, title, topic, locale, stage,
                stage_status, stage_history, brief, artifacts,
                template_source,
-               created_at::text AS created_at,
-               updated_at::text AS updated_at
+               to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS created_at,
+               to_char(updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS updated_at
         FROM content_analyzer.projects
         WHERE project_id = ${projectId}
       `;
@@ -383,7 +383,8 @@ export async function readProject(projectId: string): Promise<Project> {
         updated_at: string;
       }>`
         SELECT scene_id, scene_index, title, narration, duration_sec,
-               voice, qa_note, audio_path, updated_at::text AS updated_at
+               voice, qa_note, audio_path,
+               to_char(updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS updated_at
         FROM content_analyzer.scenes
         WHERE project_id = ${projectId}
         ORDER BY scene_index
@@ -613,7 +614,7 @@ export async function listProjects(): Promise<ProjectSummary[]> {
         artifacts: { videoPath?: string | null } | null;
       }>`
         SELECT project_id, title, stage,
-               updated_at::text AS updated_at,
+               to_char(updated_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS updated_at,
                video_blob_url,
                artifacts
         FROM content_analyzer.projects

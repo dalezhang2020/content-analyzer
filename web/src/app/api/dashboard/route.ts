@@ -87,7 +87,7 @@ export async function GET(_request: NextRequest) {
         analyzed_at: string;
       }>`
         SELECT history_id, title, url, platform,
-               analyzed_at::text AS analyzed_at
+               to_char(analyzed_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') AS analyzed_at
         FROM content_analyzer.analysis_history
         ORDER BY analyzed_at DESC
         LIMIT 5
