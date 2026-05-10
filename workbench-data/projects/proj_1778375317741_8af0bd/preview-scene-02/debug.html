@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Debug scene-02</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; background: #111; }
+    #stage { width: 1920px; height: 1080px; position: relative; }
+    #controls { position: fixed; top: 10px; right: 10px; z-index: 9999; background: white; padding: 8px; font: 14px monospace; }
+    button { margin: 2px; padding: 6px 12px; }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+
+  <div id="controls">
+    <div>time: <span id="t">0.00</span>s / 12s</div>
+    <button onclick="seek(0)">0s</button>
+    <button onclick="seek(1)">1s</button>
+    <button onclick="seek(2)">2s</button>
+    <button onclick="seek(4)">4s</button>
+    <button onclick="seek(6)">6s</button>
+    <button onclick="seek(8)">8s</button>
+    <button onclick="seek(10)">10s</button>
+    <button onclick="play()">▶ play</button>
+    <button onclick="pause()">⏸</button>
+  </div>
+
+  <script>
+  // Manually load the sub-composition template, extract content, mount it.
+  (async () => {
+    const res = await fetch("compositions/scene-02-3e35eb.html");
+    const text = await res.text();
+
+    // Extract content inside <template>
+    const match = text.match(/<template[^>]*>([\s\S]*?)<\/template>/);
+    if (!match) {
+      document.getElementById("stage").innerHTML = "<p style='color:red'>No template found</p>";
+      return;
+    }
+    const templateContent = match[1];
+
+    // Mount into #stage
+    const stage = document.getElementById("stage");
+    stage.innerHTML = templateContent;
+
+    // The <style> tags inside are already mounted as part of innerHTML.
+    // The <script> tags are NOT executed by innerHTML — eval them manually.
+    const scripts = stage.querySelectorAll("script");
+    for (const s of scripts) {
+      if (s.src) continue; // skip external scripts (gsap is already loaded above)
+      try {
+        // eslint-disable-next-line no-eval
+        (0, eval)(s.textContent);
+      } catch (e) {
+        console.error("Script eval failed:", e);
+      }
+    }
+
+    // Now window.__timelines["scene-02-3e35eb"] should exist.
+    const tl = window.__timelines && window.__timelines["scene-02-3e35eb"];
+    if (!tl) {
+      document.getElementById("controls").insertAdjacentHTML("afterbegin",
+        "<div style='color:red'>No timeline registered!</div>");
+      return;
+    }
+
+    window.__tl = tl;
+    window.seek = (t) => {
+      tl.pause().seek(t);
+      document.getElementById("t").textContent = t.toFixed(2);
+    };
+    window.play = () => tl.play();
+    window.pause = () => tl.pause();
+
+    // Update time display while playing
+    gsap.ticker.add(() => {
+      document.getElementById("t").textContent = tl.time().toFixed(2);
+    });
+
+    // Auto-start paused at t=0
+    tl.pause().seek(0);
+  })();
+  </script>
+</body>
+</html>

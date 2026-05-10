@@ -1,217 +1,227 @@
 <template id="scene-06-2d4304-template">
   <div id="scene-06-2d4304" data-composition-id="scene-06-2d4304" data-width="1920" data-height="1080">
 
-    <div class="bg"></div>
-    <div class="grid-floor"></div>
-    <div class="bg-vignette"></div>
+    <div class="s06-bg"></div>
+    <div class="s06-vignette"></div>
+    <div class="s06-orb s06-orb-a"></div>
+    <div class="s06-orb s06-orb-b"></div>
 
-    <div class="eyebrow">第 06 幕 · tan 的几何</div>
-    <h1 class="title">tan θ <span class="eq">=</span> <span class="frac">sin θ <span class="bar"></span> cos θ</span></h1>
-    <div class="subtitle">= 圆上切线的斜率 · 当 cos&nbsp;→&nbsp;0,tan&nbsp;→&nbsp;∞</div>
+    <div class="s06-header">
+      <div class="s06-eyebrow">
+        <span class="s06-num">06</span>
+        <span class="s06-bar"></span>
+        <span class="s06-label">TANGENT &amp; SLOPE</span>
+      </div>
+      <h1 class="s06-title">
+        <span class="s06-t1">tan(θ) =</span>
+        <span class="s06-t2">sin/cos</span>
+      </h1>
+      <div class="s06-subtitle">切线的<span class="s06-em">斜率</span> · cos → 0 时 tan → <span class="s06-inf">∞</span></div>
+    </div>
 
-    <svg class="stage" viewBox="0 0 1920 720" xmlns="http://www.w3.org/2000/svg">
+    <!-- Formula card (right side) -->
+    <div class="s06-formula">
+      <div class="s06-f-title">FORMULA</div>
+      <div class="s06-f-main">
+        <span class="s06-f-tan">tan θ</span>
+        <span class="s06-f-eq">=</span>
+        <div class="s06-f-frac">
+          <span class="s06-f-num">sin θ</span>
+          <span class="s06-f-bar"></span>
+          <span class="s06-f-den">cos θ</span>
+        </div>
+      </div>
+      <div class="s06-f-note">
+        当 cos θ → 0, tan θ → ±∞
+      </div>
+    </div>
+
+    <svg class="s06-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="s06-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feGaussianBlur stdDeviation="5" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <filter id="s06-strong" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="10" result="b"/>
+        <filter id="s06-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <radialGradient id="s06-point-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#fffbeb"/>
-          <stop offset="60%" stop-color="#fbbf24"/>
-          <stop offset="100%" stop-color="#f59e0b"/>
+        <radialGradient id="s06-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
         </radialGradient>
         <linearGradient id="s06-tan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#f472b6" stop-opacity="0.15"/>
-          <stop offset="50%" stop-color="#f472b6" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#f472b6" stop-opacity="0.15"/>
+          <stop offset="0%" stop-color="#ff4d8f" stop-opacity="0.15"/>
+          <stop offset="50%" stop-color="#ff4d8f" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ff4d8f" stop-opacity="0.15"/>
         </linearGradient>
       </defs>
 
-      <!-- Left panel: unit circle with tangent line -->
-      <g class="circle-panel" transform="translate(460, 360)">
-        <line class="axis" x1="-260" y1="0" x2="260" y2="0" stroke="#4a6b99" stroke-width="1.5" opacity="0.6"/>
-        <line class="axis" x1="0" y1="-260" x2="0" y2="260" stroke="#4a6b99" stroke-width="1.5" opacity="0.6"/>
-        <text class="ax-x" x="268" y="8" fill="#94a3b8" font-size="22" font-style="italic" opacity="0">x</text>
-        <text class="ax-y" x="10" y="-260" fill="#94a3b8" font-size="22" font-style="italic" opacity="0">y</text>
+      <!-- Left: unit circle with tangent point -->
+      <g class="s06-circle-g" transform="translate(420, 680)">
+        <circle class="s06-halo" cx="0" cy="0" r="300" fill="url(#s06-halo)"/>
+        <line class="s06-ax-x" x1="-360" y1="0" x2="360" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s06-ax-y" x1="0" y1="360" x2="0" y2="-360" stroke="#5b6e93" stroke-width="1.5"/>
+        <text class="s06-ax-lbl" x="376" y="10" fill="#8da1c7" font-size="22" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="s06-ax-lbl" x="10" y="-368" fill="#8da1c7" font-size="22" font-style="italic" font-family="Georgia, serif">y</text>
 
-        <circle class="unit-circle" cx="0" cy="0" r="220" fill="none"
-                stroke="#4dd0ff" stroke-width="3"
-                stroke-dasharray="1382" stroke-dashoffset="1382"
-                filter="url(#s06-glow)"/>
+        <circle class="s06-origin" cx="0" cy="0" r="4" fill="#e6edf9"/>
 
-        <!-- Vertical line x=1 where tangent meets -->
-        <line class="tan-rail" x1="220" y1="-380" x2="220" y2="380"
-              stroke="#f472b6" stroke-width="2" stroke-dasharray="8 6"
+        <!-- Unit circle -->
+        <circle class="s06-unit" cx="0" cy="0" r="240" fill="none" stroke="#4dd0ff" stroke-width="3"
+                stroke-dasharray="1508" stroke-dashoffset="1508" filter="url(#s06-glow)"/>
+
+        <!-- Vertical tangent line at x=1 (highlighted because this is where tan lives geometrically) -->
+        <line class="s06-tan-line" x1="240" y1="-380" x2="240" y2="380"
+              stroke="#ff4d8f" stroke-width="2.5" stroke-dasharray="8 6"
               opacity="0" filter="url(#s06-glow)"/>
-        <text class="tan-rail-lbl" x="232" y="-360" fill="#f472b6" font-size="20" opacity="0">x = 1</text>
+        <text class="s06-tan-line-lbl" x="250" y="-340" fill="#ff4d8f" font-size="18" font-family="JetBrains Mono, monospace" opacity="0">x = 1</text>
+
+        <!-- Radius extending through the circle to meet the tangent line -->
+        <line class="s06-radius" x1="0" y1="0" x2="240" y2="-140" stroke="#ffffff" stroke-width="2.5" opacity="0"/>
+        <line class="s06-ray-ext" x1="240" y1="-140" x2="240" y2="-240" stroke="#c4b5fd" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
 
         <!-- Angle arc -->
-        <path class="angle-arc" d="M 60 0 A 60 60 0 0 0 42 -42" fill="none"
-              stroke="#fbbf24" stroke-width="2.5" opacity="0"/>
-        <text class="angle-label" x="48" y="-22" fill="#fbbf24" font-size="26"
-              font-family="Georgia, serif" font-style="italic" opacity="0">θ</text>
+        <path class="s06-arc" d="M 60 0 A 60 60 0 0 0 52 -30" fill="none" stroke="#fbbf24" stroke-width="2.5" opacity="0"/>
+        <text class="s06-arc-lbl" x="56" y="-20" fill="#fbbf24" font-size="26" font-style="italic" font-family="Georgia, serif" opacity="0">θ</text>
 
-        <!-- Radius and extended ray -->
-        <line class="radius" x1="0" y1="0" x2="0" y2="0"
-              stroke="#a78bfa" stroke-width="3" opacity="0" filter="url(#s06-glow)"/>
-        <line class="ray-ext" x1="0" y1="0" x2="0" y2="0"
-              stroke="#c4b5fd" stroke-width="2" stroke-dasharray="6 6" opacity="0"/>
+        <!-- Point on circle (P) -->
+        <circle class="s06-p-halo" cx="240" cy="-140" r="18" fill="#4dd0ff" opacity="0" filter="url(#s06-glow)"/>
+        <circle class="s06-p" cx="240" cy="-140" r="9" fill="#4dd0ff" stroke="#ffffff" stroke-width="2" opacity="0"/>
 
-        <!-- Point on circle -->
-        <circle class="pt-circle" cx="0" cy="0" r="10" fill="url(#s06-point-glow)"
-                filter="url(#s06-strong)" opacity="0"/>
-
-        <!-- Tangent intersection point (x = 1, y = -tan θ) -->
-        <circle class="pt-tan" cx="220" cy="0" r="10" fill="#f472b6"
-                filter="url(#s06-strong)" opacity="0"/>
-        <text class="pt-tan-lbl" x="238" y="-14" fill="#f472b6" font-size="24"
-              font-family="Georgia, serif" font-style="italic" font-weight="700" opacity="0">tan θ</text>
-
-        <!-- Projections -->
-        <line class="proj-cos" x1="0" y1="0" x2="0" y2="0"
-              stroke="#ffb36e" stroke-width="2.2" stroke-dasharray="6 6" opacity="0"/>
-        <line class="proj-sin" x1="0" y1="0" x2="0" y2="0"
-              stroke="#4dd0ff" stroke-width="2.2" stroke-dasharray="6 6" opacity="0"/>
-        <text class="lbl-cos" x="0" y="0" fill="#ffb36e" font-size="22"
-              font-style="italic" font-family="Georgia, serif" text-anchor="middle" opacity="0">cos θ</text>
-
-        <text class="lbl-pt" x="0" y="0" fill="#f8fafc" font-size="20"
-              font-family="Georgia, serif" text-anchor="start" opacity="0">P(cos θ, sin θ)</text>
+        <!-- Tan intersection point (where ray extended hits x=1 line) -->
+        <circle class="s06-tan-p-halo" cx="240" cy="-240" r="24" fill="#ff4d8f" opacity="0" filter="url(#s06-glow-strong)"/>
+        <circle class="s06-tan-p" cx="240" cy="-240" r="11" fill="#ff4d8f" stroke="#fffbeb" stroke-width="3" opacity="0"/>
+        <text class="s06-tan-p-lbl" x="264" y="-248" fill="#ff4d8f" font-size="24" font-style="italic" font-weight="700" font-family="Georgia, serif" opacity="0">tan θ</text>
       </g>
 
-      <!-- Right panel: tan(θ) curve across θ -->
-      <g class="curve-panel" transform="translate(1080, 360)">
-        <!-- axes -->
-        <line class="ax-curve-x" x1="0" y1="0" x2="760" y2="0" stroke="#5a7bb8" stroke-width="1.6" opacity="0.7"/>
-        <line class="ax-curve-y" x1="0" y1="-300" x2="0" y2="300" stroke="#5a7bb8" stroke-width="1.6" opacity="0.7"/>
-        <text class="axlbl-curve-x" x="770" y="10" fill="#8ba3c7" font-size="20" font-style="italic" opacity="0">θ</text>
-        <text class="axlbl-curve-y" x="10" y="-300" fill="#8ba3c7" font-size="20" font-style="italic" opacity="0">tan θ</text>
+      <!-- Right: tan curve with asymptotes -->
+      <g class="s06-tan-curve-g" transform="translate(1060, 600)">
+        <line class="s06-curve-ax-x" x1="0" y1="0" x2="760" y2="0" stroke="#5b6e93" stroke-width="1.5" opacity="0"/>
+        <line class="s06-curve-ax-y" x1="0" y1="-280" x2="0" y2="280" stroke="#5b6e93" stroke-width="1.5" opacity="0"/>
+        <text class="s06-curve-lbl-x" x="776" y="10" fill="#8da1c7" font-size="18" font-style="italic" opacity="0">θ</text>
+        <text class="s06-curve-lbl-y" x="10" y="-288" fill="#8da1c7" font-size="18" font-style="italic" font-family="Georgia, serif" opacity="0">tan θ</text>
 
-        <!-- Asymptote markers at π/2 and 3π/2 -->
-        <line class="asym asym-1" x1="190" y1="-300" x2="190" y2="300" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="4 6" opacity="0"/>
-        <line class="asym asym-2" x1="570" y1="-300" x2="570" y2="300" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="4 6" opacity="0"/>
-        <text class="asym-lbl-1" x="195" y="290" fill="#ff6b6b" font-size="18" opacity="0">π/2</text>
-        <text class="asym-lbl-2" x="575" y="290" fill="#ff6b6b" font-size="18" opacity="0">3π/2</text>
+        <!-- Asymptotes at π/2, 3π/2 -->
+        <line class="s06-asym s06-asym-1" x1="190" y1="-280" x2="190" y2="280" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0"/>
+        <line class="s06-asym s06-asym-2" x1="570" y1="-280" x2="570" y2="280" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0"/>
 
-        <!-- tick labels -->
-        <text class="tk-0"  x="0"   y="30"  fill="#94a3b8" font-size="16" text-anchor="middle" opacity="0">0</text>
-        <text class="tk-pi" x="380" y="30"  fill="#94a3b8" font-size="16" text-anchor="middle" opacity="0">π</text>
-        <text class="tk-2pi" x="760" y="30" fill="#94a3b8" font-size="16" text-anchor="middle" opacity="0">2π</text>
+        <text class="s06-asym-lbl s06-asym-lbl-1" x="198" y="270" fill="#ff4d8f" font-size="18" font-family="JetBrains Mono, monospace" opacity="0">π/2</text>
+        <text class="s06-asym-lbl s06-asym-lbl-2" x="578" y="270" fill="#ff4d8f" font-size="18" font-family="JetBrains Mono, monospace" opacity="0">3π/2</text>
 
-        <!-- tan curve (3 segments avoiding asymptotes) -->
-        <path class="tan-seg-1"
-              d="M 0 0 C 60 -20, 120 -80, 160 -200 C 175 -250, 185 -290, 188 -300"
-              fill="none" stroke="url(#s06-tan-grad)" stroke-width="3.5" stroke-linecap="round"
-              stroke-dasharray="700" stroke-dashoffset="700"
-              filter="url(#s06-glow)"/>
-        <path class="tan-seg-2"
-              d="M 192 300 C 200 270, 240 120, 380 0 C 520 -120, 560 -270, 568 -300"
-              fill="none" stroke="url(#s06-tan-grad)" stroke-width="3.5" stroke-linecap="round"
-              stroke-dasharray="1200" stroke-dashoffset="1200"
-              filter="url(#s06-glow)"/>
-        <path class="tan-seg-3"
-              d="M 572 300 C 580 280, 620 180, 700 80 C 740 30, 760 10, 760 0"
-              fill="none" stroke="url(#s06-tan-grad)" stroke-width="3.5" stroke-linecap="round"
-              stroke-dasharray="700" stroke-dashoffset="700"
-              filter="url(#s06-glow)"/>
+        <text class="s06-tick" x="0" y="24" fill="#5b6e93" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">0</text>
+        <text class="s06-tick" x="380" y="24" fill="#5b6e93" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">π</text>
+        <text class="s06-tick" x="760" y="24" fill="#5b6e93" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">2π</text>
 
-        <!-- Arrow to infinity -->
-        <text class="inf-arrow" x="170" y="-320" fill="#ff6b6b" font-size="26" font-style="italic" opacity="0" text-anchor="middle">→ ∞</text>
+        <!-- tan curve — 3 segments to avoid the asymptotes -->
+        <path class="s06-tan-seg s06-seg-1"
+              d="M 0 0 C 70 -30, 140 -120, 170 -220 L 186 -280"
+              fill="none" stroke="url(#s06-tan-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="500" stroke-dashoffset="500" filter="url(#s06-glow)"/>
+        <path class="s06-tan-seg s06-seg-2"
+              d="M 194 280 L 210 220 C 240 120, 350 0, 380 0 C 410 0, 520 -120, 550 -220 L 566 -280"
+              fill="none" stroke="url(#s06-tan-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="900" stroke-dashoffset="900" filter="url(#s06-glow)"/>
+        <path class="s06-tan-seg s06-seg-3"
+              d="M 574 280 L 590 220 C 620 120, 700 20, 760 0"
+              fill="none" stroke="url(#s06-tan-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="500" stroke-dashoffset="500" filter="url(#s06-glow)"/>
+
+        <!-- Infinity indicator -->
+        <text class="s06-inf-sign" x="180" y="-300" fill="#ff4d8f" font-size="36" font-weight="700" text-anchor="middle" opacity="0">→∞</text>
+        <text class="s06-inf-sign-2" x="200" y="310" fill="#ff4d8f" font-size="36" font-weight="700" text-anchor="middle" opacity="0">→-∞</text>
       </g>
     </svg>
 
-    <div class="caption">
-      <span class="cap-accent">cos → 0</span> 时,<span class="cap-accent2">tan</span> 冲向 <span class="cap-accent3">无穷</span>
+    <div class="s06-caption">
+      <span class="s06-cap-dot"></span>
+      cos → 0 时 tan 冲向 <span class="s06-cap-inf">无穷</span> — 这就是渐近线的由来
     </div>
 
     <style>
       #scene-06-2d4304 {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #05070f;
-        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
-        color: #e8eef7;
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
       }
-      #scene-06-2d4304 .bg {
+      #scene-06-2d4304 .s06-bg {
         position: absolute; inset: 0;
         background:
-          radial-gradient(ellipse 900px 700px at 25% 45%, rgba(77,208,255,0.14), transparent 60%),
-          radial-gradient(ellipse 900px 700px at 80% 58%, rgba(244,114,182,0.14), transparent 60%),
-          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(251,191,36,0.09), transparent 55%),
-          linear-gradient(180deg, #060913 0%, #0b1128 55%, #030610 100%);
+          radial-gradient(ellipse 1000px 700px at 25% 55%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 900px 700px at 80% 45%, rgba(255,77,143,0.18), transparent 58%),
+          radial-gradient(ellipse 700px 500px at 50% 100%, rgba(251,191,36,0.06), transparent 65%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
       }
-      #scene-06-2d4304 .grid-floor {
+      #scene-06-2d4304 .s06-vignette {
         position: absolute; inset: 0;
-        background-image:
-          linear-gradient(rgba(120,160,220,0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(120,160,220,0.05) 1px, transparent 1px);
-        background-size: 80px 80px;
-        mask-image: radial-gradient(ellipse 1400px 900px at 50% 55%, #000 30%, transparent 85%);
-        -webkit-mask-image: radial-gradient(ellipse 1400px 900px at 50% 55%, #000 30%, transparent 85%);
-      }
-      #scene-06-2d4304 .bg-vignette {
-        position: absolute; inset: 0;
-        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
         pointer-events: none;
       }
+      #scene-06-2d4304 .s06-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-06-2d4304 .s06-orb-a { width: 520px; height: 520px; left: -140px; top: 180px; background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%); }
+      #scene-06-2d4304 .s06-orb-b { width: 620px; height: 620px; right: -180px; bottom: -160px; background: radial-gradient(circle, rgba(255,77,143,0.3), transparent 70%); }
 
-      #scene-06-2d4304 .eyebrow {
-        position: absolute; top: 92px; left: 120px;
-        font-size: 26px; letter-spacing: 10px;
-        color: #f472b6; font-weight: 500;
+      #scene-06-2d4304 .s06-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-06-2d4304 .s06-eyebrow { display: flex; align-items: center; gap: 18px; font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500; }
+      #scene-06-2d4304 .s06-num { color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-06-2d4304 .s06-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-06-2d4304 .s06-label { color: #b5c4dd; }
+      #scene-06-2d4304 .s06-title {
+        margin-top: 18px; font-size: 120px; font-weight: 800; line-height: 1;
+        display: flex; gap: 24px; align-items: baseline; font-family: "Georgia", serif; font-style: italic;
+        letter-spacing: -0.01em;
       }
-      #scene-06-2d4304 .title {
-        position: absolute; top: 140px; left: 120px;
-        font-size: 92px; font-weight: 800; letter-spacing: 4px;
-        color: #f7fafc; line-height: 1.05;
-        text-shadow: 0 0 32px rgba(244,114,182,0.3);
-        display: flex; align-items: center; gap: 18px;
+      #scene-06-2d4304 .s06-t1 { color: #d9e4f5; font-weight: 300; }
+      #scene-06-2d4304 .s06-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #ff4d8f 60%, #fbbf24 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(255,77,143,0.4);
       }
-      #scene-06-2d4304 .title .eq {
-        color: #a78bfa; font-weight: 700; margin: 0 6px;
-      }
-      #scene-06-2d4304 .title .frac {
-        display: inline-flex; flex-direction: column; align-items: center;
-        font-size: 60px; font-style: italic; font-family: Georgia, serif;
-        line-height: 1.1; padding: 0 4px;
-      }
-      #scene-06-2d4304 .title .frac .bar {
-        width: 220px; height: 3px;
-        background: #f472b6;
-        margin: 4px 0;
-        filter: drop-shadow(0 0 8px rgba(244,114,182,0.6));
-      }
-      #scene-06-2d4304 .subtitle {
-        position: absolute; top: 306px; left: 124px;
-        font-size: 30px; color: #9fb4cc; letter-spacing: 4px;
-      }
+      #scene-06-2d4304 .s06-subtitle { margin-top: 20px; font-size: 30px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300; font-family: "PingFang SC", sans-serif; font-style: normal; }
+      #scene-06-2d4304 .s06-em { color: #fbbf24; font-weight: 700; padding: 0 4px; }
+      #scene-06-2d4304 .s06-inf { color: #ff4d8f; font-weight: 800; font-size: 40px; padding: 0 6px; text-shadow: 0 0 16px rgba(255,77,143,0.6); }
 
-      #scene-06-2d4304 .stage {
-        position: absolute; left: 0; top: 340px;
-        width: 1920px; height: 720px;
+      /* Formula card */
+      #scene-06-2d4304 .s06-formula {
+        position: absolute; right: 92px; top: 92px; width: 380px;
+        padding: 26px 30px;
+        background: rgba(10,18,36,0.75);
+        border: 1px solid rgba(255,77,143,0.3); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 60px rgba(255,77,143,0.08);
+        z-index: 8;
       }
+      #scene-06-2d4304 .s06-f-title { font-size: 16px; letter-spacing: 0.4em; color: #ff4d8f; font-weight: 600; margin-bottom: 18px; }
+      #scene-06-2d4304 .s06-f-main {
+        display: flex; align-items: center; gap: 14px;
+        font-family: "Georgia", serif; font-style: italic; font-size: 40px; color: #f1f5f9;
+        padding: 12px 0;
+      }
+      #scene-06-2d4304 .s06-f-tan { color: #ff4d8f; font-weight: 700; }
+      #scene-06-2d4304 .s06-f-eq { color: #4dd0ff; font-style: normal; }
+      #scene-06-2d4304 .s06-f-frac { display: flex; flex-direction: column; align-items: center; font-size: 32px; line-height: 1.1; }
+      #scene-06-2d4304 .s06-f-num { color: #fbbf24; font-weight: 700; padding: 4px 12px; }
+      #scene-06-2d4304 .s06-f-bar { display: block; width: 100%; height: 2px; background: #ffffff; opacity: 0.6; margin: 2px 0; }
+      #scene-06-2d4304 .s06-f-den { color: #ff6b9a; font-weight: 700; padding: 4px 12px; }
+      #scene-06-2d4304 .s06-f-note { margin-top: 12px; padding-top: 14px; border-top: 1px solid rgba(255,77,143,0.2); font-size: 18px; color: #c4b5fd; letter-spacing: 0.08em; text-align: center; }
 
-      #scene-06-2d4304 .caption {
-        position: absolute; left: 50%; bottom: 66px;
-        transform: translateX(-50%);
-        font-size: 30px; color: #d7e3f2;
-        letter-spacing: 6px; font-weight: 300;
-        padding: 16px 42px;
-        background: rgba(12, 20, 36, 0.6);
-        border: 1px solid rgba(244,114,182,0.28);
-        border-radius: 12px;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+      #scene-06-2d4304 .s06-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      #scene-06-2d4304 .s06-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px; color: #e2e8f0; letter-spacing: 0.08em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       }
-      #scene-06-2d4304 .cap-accent  { color: #ffb36e; font-weight: 600; text-shadow: 0 0 14px rgba(255,179,110,0.5); }
-      #scene-06-2d4304 .cap-accent2 { color: #f472b6; font-weight: 600; text-shadow: 0 0 14px rgba(244,114,182,0.5); }
-      #scene-06-2d4304 .cap-accent3 { color: #ff6b6b; font-weight: 700; text-shadow: 0 0 16px rgba(255,107,107,0.6); }
+      #scene-06-2d4304 .s06-cap-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ff4d8f; box-shadow: 0 0 12px #ff4d8f; }
+      #scene-06-2d4304 .s06-cap-inf {
+        color: #ff4d8f; font-weight: 800; padding: 0 4px;
+        text-shadow: 0 0 16px rgba(255,77,143,0.6);
+      }
     </style>
 
     <script>
@@ -219,121 +229,75 @@
       const tl = gsap.timeline({ paused: true });
       const ID = '#scene-06-2d4304';
 
-      // 0 - 1.3s: Atmosphere + title block
-      tl.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
-      tl.fromTo(ID + ' .grid-floor', { opacity: 0 }, { opacity: 1, duration: 1.3, ease: 'power2.out' }, 0.1);
-      tl.fromTo(ID + ' .eyebrow', { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }, 0.25);
-      tl.fromTo(ID + ' .title', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.45);
-      tl.fromTo(ID + ' .subtitle', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 1.0);
+      tl.fromTo(ID + ' .s06-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .s06-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .s06-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
 
-      // 1.4 - 3.0s: left panel axes + unit circle
-      tl.fromTo(ID + ' .circle-panel .axis', { opacity: 0 }, { opacity: 0.6, duration: 0.5, stagger: 0.1 }, 1.4);
-      tl.to(ID + ' .ax-x', { opacity: 0.85, duration: 0.35 }, 1.65);
-      tl.to(ID + ' .ax-y', { opacity: 0.85, duration: 0.35 }, 1.75);
-      tl.to(ID + ' .unit-circle', { strokeDashoffset: 0, duration: 1.35, ease: 'power2.inOut' }, 1.7);
+      // Header
+      tl.fromTo(ID + ' .s06-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .s06-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl.fromTo(ID + ' .s06-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl.fromTo(ID + ' .s06-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .s06-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl.fromTo(ID + ' .s06-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-      // 3.0 - 3.6s: tangent rail appears (x = 1 vertical)
-      tl.to(ID + ' .tan-rail', { opacity: 0.85, duration: 0.55, ease: 'power2.out' }, 3.0);
-      tl.to(ID + ' .tan-rail-lbl', { opacity: 1, duration: 0.4 }, 3.4);
+      // Formula card
+      tl.fromTo(ID + ' .s06-formula', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.0);
 
-      // 3.5 - 5.6s: drive radius angle θ (from 0 to ~60°), show P, cos/sin projections, tan intersection
-      const state = { theta: 0 };
-      const R = 220;
-      tl.to(state, {
-        theta: Math.PI / 3, // 60°
-        duration: 2.0,
-        ease: 'power2.inOut',
-        onUpdate: () => {
-          const t = state.theta;
-          const cx = Math.cos(t) * R;
-          const cy = -Math.sin(t) * R;
-          // extend ray to x = R (i.e. x/cos = R/cos)
-          const scale = R / Math.cos(t);
-          const ex = R;
-          const ey = -Math.sin(t) * scale;
+      // Circle
+      tl.fromTo(ID + ' .s06-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl.fromTo(ID + ' .s06-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '420px 680px' }, 2.0);
+      tl.fromTo(ID + ' .s06-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '420px 680px' }, 2.1);
+      tl.fromTo(ID + ' .s06-unit', { strokeDashoffset: 1508 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.3);
 
-          const rad = document.querySelector(ID + ' .radius');
-          if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
-          const ext = document.querySelector(ID + ' .ray-ext');
-          if (ext) {
-            ext.setAttribute('x1', cx.toFixed(2));
-            ext.setAttribute('y1', cy.toFixed(2));
-            ext.setAttribute('x2', ex.toFixed(2));
-            ext.setAttribute('y2', ey.toFixed(2));
-          }
-          const pt = document.querySelector(ID + ' .pt-circle');
-          if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
-          const pt2 = document.querySelector(ID + ' .pt-tan');
-          if (pt2) { pt2.setAttribute('cx', ex.toFixed(2)); pt2.setAttribute('cy', ey.toFixed(2)); }
+      // Tangent line x=1 appears (this is where tan "lives")
+      tl.to(ID + ' .s06-tan-line', { opacity: 0.85, duration: 0.6 }, 3.4);
+      tl.to(ID + ' .s06-tan-line-lbl', { opacity: 1, duration: 0.4 }, 3.7);
 
-          // projections
-          const pcos = document.querySelector(ID + ' .proj-cos');
-          if (pcos) {
-            pcos.setAttribute('x1', '0'); pcos.setAttribute('y1', '0');
-            pcos.setAttribute('x2', cx.toFixed(2)); pcos.setAttribute('y2', '0');
-          }
-          const psin = document.querySelector(ID + ' .proj-sin');
-          if (psin) {
-            psin.setAttribute('x1', cx.toFixed(2)); psin.setAttribute('y1', '0');
-            psin.setAttribute('x2', cx.toFixed(2)); psin.setAttribute('y2', cy.toFixed(2));
-          }
-          // labels
-          const lc = document.querySelector(ID + ' .lbl-cos');
-          if (lc) { lc.setAttribute('x', (cx / 2).toFixed(2)); lc.setAttribute('y', '30'); }
-          const lp = document.querySelector(ID + ' .lbl-pt');
-          if (lp) { lp.setAttribute('x', (cx + 14).toFixed(2)); lp.setAttribute('y', (cy - 18).toFixed(2)); }
-          const ltt = document.querySelector(ID + ' .pt-tan-lbl');
-          if (ltt) { ltt.setAttribute('y', (ey - 14).toFixed(2)); }
-        }
-      }, 3.5);
+      // Radius + point P on circle at angle 30° (cx=208, cy=-120)
+      tl.to(ID + ' .s06-radius', { opacity: 0.9, duration: 0.5 }, 4.0);
+      tl.to(ID + ' .s06-arc', { opacity: 1, duration: 0.4 }, 4.2);
+      tl.to(ID + ' .s06-arc-lbl', { opacity: 1, duration: 0.4 }, 4.4);
+      tl.to(ID + ' .s06-p-halo', { opacity: 1, duration: 0.5 }, 4.4);
+      tl.to(ID + ' .s06-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 4.5);
 
-      // Make elements visible as they take position
-      tl.to(ID + ' .radius', { opacity: 1, duration: 0.35 }, 3.4);
-      tl.to(ID + ' .angle-arc', { opacity: 1, duration: 0.35 }, 3.8);
-      tl.to(ID + ' .angle-label', { opacity: 1, duration: 0.35 }, 3.95);
-      tl.to(ID + ' .pt-circle', { opacity: 1, duration: 0.4, ease: 'back.out(2.2)' }, 4.0);
-      tl.to(ID + ' .proj-cos', { opacity: 0.85, duration: 0.4 }, 4.25);
-      tl.to(ID + ' .lbl-cos',  { opacity: 1, duration: 0.4 }, 4.45);
-      tl.to(ID + ' .proj-sin', { opacity: 0.85, duration: 0.4 }, 4.55);
-      tl.to(ID + ' .lbl-pt',   { opacity: 1, duration: 0.4 }, 4.75);
-      tl.to(ID + ' .ray-ext',  { opacity: 0.85, duration: 0.5 }, 4.9);
-      tl.to(ID + ' .pt-tan',   { opacity: 1, duration: 0.4, ease: 'back.out(2.2)' }, 5.2);
-      tl.to(ID + ' .pt-tan-lbl', { opacity: 1, duration: 0.4 }, 5.4);
+      // Ray extends to meet tangent line, showing tan as its y-intercept
+      tl.to(ID + ' .s06-ray-ext', { opacity: 0.85, duration: 0.6 }, 5.0);
+      tl.to(ID + ' .s06-tan-p-halo', { opacity: 1, duration: 0.6 }, 5.5);
+      tl.to(ID + ' .s06-tan-p', { opacity: 1, duration: 0.5, ease: 'back.out(2.5)' }, 5.6);
+      tl.to(ID + ' .s06-tan-p-lbl', { opacity: 1, duration: 0.5 }, 5.9);
 
-      // 5.6 - 6.6s: Right panel axes + asymptotes
-      tl.fromTo(ID + ' .ax-curve-x', { scaleX: 0, transformOrigin: '0% 50%' }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 5.6);
-      tl.fromTo(ID + ' .ax-curve-y', { scaleY: 0, transformOrigin: '50% 100%' }, { scaleY: 1, duration: 0.7, ease: 'power2.out' }, 5.75);
-      tl.to(ID + ' .axlbl-curve-x', { opacity: 1, duration: 0.35 }, 6.3);
-      tl.to(ID + ' .axlbl-curve-y', { opacity: 1, duration: 0.35 }, 6.4);
-      tl.to(ID + ' .tk-0',  { opacity: 0.9, duration: 0.35 }, 6.45);
-      tl.to(ID + ' .tk-pi', { opacity: 0.9, duration: 0.35 }, 6.55);
-      tl.to(ID + ' .tk-2pi', { opacity: 0.9, duration: 0.35 }, 6.65);
+      // Right: tan curve panel
+      tl.to(ID + ' .s06-curve-ax-x', { opacity: 0.8, duration: 0.6 }, 6.4);
+      tl.to(ID + ' .s06-curve-ax-y', { opacity: 0.8, duration: 0.6 }, 6.6);
+      tl.to(ID + ' .s06-curve-lbl-x', { opacity: 1, duration: 0.4 }, 7.1);
+      tl.to(ID + ' .s06-curve-lbl-y', { opacity: 1, duration: 0.4 }, 7.2);
+      tl.to(ID + ' .s06-tick', { opacity: 0.9, duration: 0.4, stagger: 0.1 }, 7.3);
 
-      // Asymptotes ignite (highlight the "explode to infinity")
-      tl.to(ID + ' .asym-1', { opacity: 0.9, duration: 0.4 }, 6.6);
-      tl.to(ID + ' .asym-lbl-1', { opacity: 0.95, duration: 0.35 }, 6.9);
-      tl.to(ID + ' .asym-2', { opacity: 0.9, duration: 0.4 }, 7.0);
-      tl.to(ID + ' .asym-lbl-2', { opacity: 0.95, duration: 0.35 }, 7.3);
+      // Asymptotes (the drama)
+      tl.to(ID + ' .s06-asym-1', { opacity: 0.9, duration: 0.5 }, 7.8);
+      tl.to(ID + ' .s06-asym-lbl-1', { opacity: 1, duration: 0.4 }, 8.0);
+      tl.to(ID + ' .s06-asym-2', { opacity: 0.9, duration: 0.5 }, 8.3);
+      tl.to(ID + ' .s06-asym-lbl-2', { opacity: 1, duration: 0.4 }, 8.5);
 
-      // 7.4 - 10.0s: tan curve draws segment by segment
-      tl.to(ID + ' .tan-seg-1', { strokeDashoffset: 0, duration: 1.1, ease: 'power1.inOut' }, 7.4);
-      tl.to(ID + ' .inf-arrow', { opacity: 1, y: -6, duration: 0.5, ease: 'power2.out' }, 8.3);
-      tl.to(ID + ' .tan-seg-2', { strokeDashoffset: 0, duration: 1.35, ease: 'power1.inOut' }, 8.3);
-      tl.to(ID + ' .tan-seg-3', { strokeDashoffset: 0, duration: 1.0, ease: 'power1.inOut' }, 9.5);
+      // tan curve draws in 3 segments
+      tl.to(ID + ' .s06-seg-1', { strokeDashoffset: 0, duration: 1.0, ease: 'power1.inOut' }, 8.8);
+      tl.to(ID + ' .s06-seg-2', { strokeDashoffset: 0, duration: 1.4, ease: 'power1.inOut' }, 9.6);
+      tl.to(ID + ' .s06-seg-3', { strokeDashoffset: 0, duration: 0.9, ease: 'power1.inOut' }, 10.8);
 
-      // 10.4 - 12.0: asymptote emphasis pulse
-      tl.to(ID + ' .asym-1', { strokeWidth: 3.2, duration: 0.4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.4);
-      tl.to(ID + ' .asym-2', { strokeWidth: 3.2, duration: 0.4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.7);
-      tl.to(ID + ' .inf-arrow', { fill: '#fff5f5', duration: 0.4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.6);
+      // Infinity signs
+      tl.fromTo(ID + ' .s06-inf-sign', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.8)' }, 10.2);
+      tl.fromTo(ID + ' .s06-inf-sign-2', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.8)' }, 10.4);
 
-      // 12.0 - 13.2: final caption
-      tl.fromTo(ID + ' .caption', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 12.0);
-      tl.to(ID + ' .cap-accent3', { scale: 1.15, transformOrigin: 'center center', duration: 0.45, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 13.0);
+      // Pulse asymptotes for emphasis
+      tl.to([ID + ' .s06-asym-1', ID + ' .s06-asym-2'], { strokeWidth: 3.5, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 11.5);
 
-      // 13.4 - 14.0: gentle settle
-      tl.to(ID + ' .bg-vignette', { opacity: 1.1, duration: 0.6 }, 13.4);
+      // Caption
+      tl.fromTo(ID + ' .s06-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 12.4);
+      tl.fromTo(ID + ' .s06-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 12.6);
 
-      window.__timelines["scene-06-2d4304"] = tl;
+      tl.set({}, {}, 14);
+      window.__timelines['scene-06-2d4304'] = tl;
     </script>
   </div>
 </template>

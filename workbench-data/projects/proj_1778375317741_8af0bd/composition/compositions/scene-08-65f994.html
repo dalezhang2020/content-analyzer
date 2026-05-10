@@ -1,449 +1,262 @@
 <template id="scene-08-65f994-template">
   <div id="scene-08-65f994" data-composition-id="scene-08-65f994" data-width="1920" data-height="1080">
 
-    <!-- Layered background -->
-    <div class="bg"></div>
-    <div class="grid"></div>
-    <div class="vignette"></div>
+    <div class="s08-bg"></div>
+    <div class="s08-vignette"></div>
+    <div class="s08-orb s08-orb-a"></div>
+    <div class="s08-orb s08-orb-b"></div>
 
-    <!-- Title block -->
-    <div class="title-block">
-      <div class="eyebrow">第 八 幕 · 几 何 的 必 然</div>
-      <div class="title">对称性的秘密</div>
-      <div class="subtitle">—— 当 角 度 翻 到 另 一 面 ——</div>
+    <div class="s08-header">
+      <div class="s08-eyebrow">
+        <span class="s08-num">08</span>
+        <span class="s08-bar"></span>
+        <span class="s08-label">SYMMETRY</span>
+      </div>
+      <h1 class="s08-title">
+        <span class="s08-t1">对称性的</span>
+        <span class="s08-t2">秘密</span>
+      </h1>
+      <div class="s08-subtitle"><span class="s08-em-sin">sin</span> 奇函数 · <span class="s08-em-cos">cos</span> 偶函数</div>
     </div>
 
-    <!-- Main SVG: unit circle with mirrored points -->
-    <svg class="main-svg" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <svg class="s08-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="circle-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.18"/>
-          <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+        <filter id="s08-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s08-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s08-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
         </radialGradient>
       </defs>
 
-      <!-- Soft halo behind circle -->
-      <circle class="halo" cx="960" cy="620" r="340" fill="url(#circle-glow)"/>
+      <!-- Unit circle, centered-ish -->
+      <g class="s08-circle-g" transform="translate(960, 620)">
+        <circle class="s08-halo" cx="0" cy="0" r="360" fill="url(#s08-halo)"/>
+        <line class="s08-ax-x" x1="-440" y1="0" x2="440" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s08-ax-y" x1="0" y1="440" x2="0" y2="-440" stroke="#5b6e93" stroke-width="1.5"/>
+        <text class="s08-ax-lbl" x="456" y="10" fill="#8da1c7" font-size="24" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="s08-ax-lbl" x="10" y="-450" fill="#8da1c7" font-size="24" font-style="italic" font-family="Georgia, serif">y</text>
+        <circle class="s08-origin" cx="0" cy="0" r="4" fill="#e6edf9"/>
 
-      <g class="axes" transform="translate(960, 620)">
-        <!-- Axes -->
-        <line class="axis axis-x" x1="-380" y1="0" x2="380" y2="0"/>
-        <line class="axis axis-y" x1="0" y1="-340" x2="0" y2="340"/>
-        <polygon class="arrow arrow-x" points="380,0 366,-9 366,9"/>
-        <polygon class="arrow arrow-y" points="0,-340 -9,-326 9,-326"/>
-        <text class="axis-label label-x" x="396" y="8">x</text>
-        <text class="axis-label label-y" x="14" y="-340">y</text>
+        <!-- Mirror highlight lines -->
+        <line class="s08-mirror-y" x1="0" y1="-420" x2="0" y2="420" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="8 6" opacity="0" filter="url(#s08-glow)"/>
+        <line class="s08-mirror-x" x1="-420" y1="0" x2="420" y2="0" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0"/>
 
-        <!-- Mirror highlight on y-axis (for even cos) -->
-        <line class="mirror-y" x1="0" y1="-320" x2="0" y2="320"/>
-        <!-- Mirror highlight on x-axis (for odd sin via origin) -->
-        <line class="mirror-x" x1="-320" y1="0" x2="320" y2="0"/>
+        <circle class="s08-unit" cx="0" cy="0" r="320" fill="none" stroke="#4dd0ff" stroke-width="3"
+                stroke-dasharray="2011" stroke-dashoffset="2011" filter="url(#s08-glow)"/>
 
-        <!-- Unit circle -->
-        <circle class="unit-circle" cx="0" cy="0" r="280"/>
-
-        <!-- Angle arcs -->
-        <path class="angle-arc-pos" d="M 56 0 A 56 56 0 0 0 28 -48.5" fill="none"/>
-        <text class="angle-label-pos" x="48" y="-30">θ</text>
-        <path class="angle-arc-neg" d="M 56 0 A 56 56 0 0 1 28 48.5" fill="none"/>
-        <text class="angle-label-neg" x="48" y="44">−θ</text>
-
-        <!-- Point P at θ (upper half) -->
-        <g class="point-p">
-          <line class="radius-line" x1="0" y1="0" x2="140" y2="-242.5"/>
-          <line class="proj-cos-p" x1="140" y1="-242.5" x2="140" y2="0"/>
-          <line class="proj-sin-p" x1="140" y1="-242.5" x2="0" y2="-242.5"/>
-          <circle class="dot-p" cx="140" cy="-242.5" r="9"/>
-          <text class="point-label-p" x="156" y="-250">P ( cos θ , sin θ )</text>
+        <!-- Point P at θ (upper half, 40°) and P' at -θ (lower half, mirror) -->
+        <!-- cos(40°) ≈ 0.766, sin(40°) ≈ 0.643 → x=245, y=-206 for 320r -->
+        <g class="s08-point-p">
+          <line class="s08-rad-p" x1="0" y1="0" x2="245" y2="-206" stroke="#ffffff" stroke-width="2.5" opacity="0"/>
+          <line class="s08-drop-cos-p" x1="245" y1="-206" x2="245" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <line class="s08-drop-sin-p" x1="245" y1="-206" x2="0" y2="-206" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <path class="s08-arc-p" d="M 70 0 A 70 70 0 0 0 54 -45" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0"/>
+          <text class="s08-arc-p-lbl" x="58" y="-28" fill="#fbbf24" font-size="22" font-style="italic" font-family="Georgia, serif" opacity="0">θ</text>
+          <circle class="s08-p-halo" cx="245" cy="-206" r="20" fill="#4dd0ff" opacity="0" filter="url(#s08-glow)"/>
+          <circle class="s08-p" cx="245" cy="-206" r="9" fill="#4dd0ff" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <text class="s08-p-lbl" x="270" y="-218" fill="#f1f5f9" font-size="22" font-style="italic" font-weight="600" font-family="Georgia, serif" opacity="0">P(cos θ, sin θ)</text>
         </g>
 
-        <!-- Point P' at -θ (lower half) -->
-        <g class="point-p2">
-          <line class="radius-line-2" x1="0" y1="0" x2="140" y2="242.5"/>
-          <line class="proj-cos-p2" x1="140" y1="242.5" x2="140" y2="0"/>
-          <line class="proj-sin-p2" x1="140" y1="242.5" x2="0" y2="242.5"/>
-          <circle class="dot-p2" cx="140" cy="242.5" r="9"/>
-          <text class="point-label-p2" x="156" y="272">P' ( cos θ , − sin θ )</text>
+        <g class="s08-point-p2">
+          <line class="s08-rad-p2" x1="0" y1="0" x2="245" y2="206" stroke="#ffffff" stroke-width="2.5" opacity="0"/>
+          <line class="s08-drop-cos-p2" x1="245" y1="206" x2="245" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <line class="s08-drop-sin-p2" x1="245" y1="206" x2="0" y2="206" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <path class="s08-arc-p2" d="M 70 0 A 70 70 0 0 1 54 45" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0"/>
+          <text class="s08-arc-p2-lbl" x="58" y="40" fill="#fbbf24" font-size="22" font-style="italic" font-family="Georgia, serif" opacity="0">-θ</text>
+          <circle class="s08-p2-halo" cx="245" cy="206" r="20" fill="#ff4d8f" opacity="0" filter="url(#s08-glow)"/>
+          <circle class="s08-p2" cx="245" cy="206" r="9" fill="#ff4d8f" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <text class="s08-p2-lbl" x="270" y="224" fill="#f1f5f9" font-size="22" font-style="italic" font-weight="600" font-family="Georgia, serif" opacity="0">P'(cos θ, -sin θ)</text>
         </g>
 
-        <!-- Symmetry highlights -->
-        <circle class="cos-highlight" cx="140" cy="0" r="11"/>
-        <circle class="sin-highlight-pos" cx="0" cy="-242.5" r="11"/>
-        <circle class="sin-highlight-neg" cx="0" cy="242.5" r="11"/>
+        <!-- Highlight dots at intersections -->
+        <circle class="s08-hl-cos" cx="245" cy="0" r="9" fill="#fbbf24" opacity="0" filter="url(#s08-glow-strong)"/>
+        <circle class="s08-hl-sin-pos" cx="0" cy="-206" r="9" fill="#ff4d8f" opacity="0" filter="url(#s08-glow-strong)"/>
+        <circle class="s08-hl-sin-neg" cx="0" cy="206" r="9" fill="#ff4d8f" opacity="0" filter="url(#s08-glow-strong)"/>
       </g>
     </svg>
 
-    <!-- Formula callouts -->
-    <div class="formula-box cos-box">
-      <div class="fb-tag">偶 函 数</div>
-      <div class="fb-desc">关于 y 轴 镜 像 对 称</div>
-      <div class="fb-formula">cos( −θ ) <span class="eq">=</span> cos( θ )</div>
+    <!-- Two formula cards -->
+    <div class="s08-card s08-card-cos">
+      <div class="s08-card-tag">偶函数</div>
+      <div class="s08-card-desc">关于 y 轴镜像对称</div>
+      <div class="s08-card-formula">
+        cos(−θ) <span class="s08-card-eq">=</span> cos θ
+      </div>
     </div>
 
-    <div class="formula-box sin-box">
-      <div class="fb-tag">奇 函 数</div>
-      <div class="fb-desc">关于 原 点 中 心 对 称</div>
-      <div class="fb-formula">sin( −θ ) <span class="eq">=</span> − sin( θ )</div>
+    <div class="s08-card s08-card-sin">
+      <div class="s08-card-tag">奇函数</div>
+      <div class="s08-card-desc">关于原点中心对称</div>
+      <div class="s08-card-formula">
+        sin(−θ) <span class="s08-card-eq">=</span> −sin θ
+      </div>
     </div>
 
-    <!-- Bottom caption -->
-    <div class="caption">
-      <span class="cap-accent">几 何</span>
-      告诉你：公式不是规定，是
-      <span class="cap-accent">必 然</span>
+    <div class="s08-caption">
+      <span class="s08-cap-dot"></span>
+      几何告诉你:公式不是规定,是<span class="s08-cap-em">必然</span>
     </div>
 
     <style>
       #scene-08-65f994 {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #040814;
-        color: #e2e8f0;
-        font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
       }
-
-      #scene-08-65f994 .bg {
-        position: absolute;
-        inset: 0;
+      #scene-08-65f994 .s08-bg {
+        position: absolute; inset: 0;
         background:
-          radial-gradient(ellipse 800px 600px at 28% 38%, rgba(96, 165, 250, 0.16), transparent 65%),
-          radial-gradient(ellipse 700px 500px at 72% 65%, rgba(251, 191, 36, 0.09), transparent 65%),
-          radial-gradient(ellipse 600px 400px at 50% 90%, rgba(248, 113, 113, 0.08), transparent 65%),
-          linear-gradient(180deg, #040814 0%, #0a1224 45%, #040814 100%);
+          radial-gradient(ellipse 900px 700px at 50% 60%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 22% 30%, rgba(251,191,36,0.1), transparent 65%),
+          radial-gradient(ellipse 700px 500px at 78% 30%, rgba(255,77,143,0.1), transparent 65%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #030612 100%);
       }
+      #scene-08-65f994 .s08-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.6) 100%); pointer-events: none; }
+      #scene-08-65f994 .s08-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-08-65f994 .s08-orb-a { width: 520px; height: 520px; left: -140px; top: 160px; background: radial-gradient(circle, rgba(251,191,36,0.22), transparent 70%); }
+      #scene-08-65f994 .s08-orb-b { width: 620px; height: 620px; right: -200px; bottom: -160px; background: radial-gradient(circle, rgba(255,77,143,0.22), transparent 70%); }
 
-      #scene-08-65f994 .grid {
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
-        background-size: 64px 64px;
-        transform: perspective(1100px) rotateX(42deg) translateY(22%);
-        transform-origin: center bottom;
-        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 35%, #000 75%, transparent 100%);
-                mask-image: linear-gradient(180deg, transparent 0%, #000 35%, #000 75%, transparent 100%);
-        opacity: 0.9;
+      #scene-08-65f994 .s08-header { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; }
+      #scene-08-65f994 .s08-eyebrow { display: flex; align-items: center; gap: 18px; justify-content: center; font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500; }
+      #scene-08-65f994 .s08-num { color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-08-65f994 .s08-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-08-65f994 .s08-label { color: #b5c4dd; }
+      #scene-08-65f994 .s08-title {
+        margin-top: 14px; font-size: 110px; font-weight: 800; line-height: 1;
+        display: flex; gap: 20px; align-items: baseline; justify-content: center; letter-spacing: -0.02em;
       }
-
-      #scene-08-65f994 .vignette {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
-        pointer-events: none;
+      #scene-08-65f994 .s08-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-08-65f994 .s08-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #fbbf24 40%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(251,191,36,0.4);
       }
+      #scene-08-65f994 .s08-subtitle { margin-top: 14px; font-size: 28px; color: #9fb0cc; letter-spacing: 0.1em; font-weight: 300; }
+      #scene-08-65f994 .s08-em-sin { color: #ff4d8f; font-weight: 700; padding: 0 6px; font-style: italic; font-family: "Georgia", serif; }
+      #scene-08-65f994 .s08-em-cos { color: #fbbf24; font-weight: 700; padding: 0 6px; font-style: italic; font-family: "Georgia", serif; }
 
-      #scene-08-65f994 .title-block {
-        position: absolute;
-        top: 52px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        z-index: 20;
+      #scene-08-65f994 .s08-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      /* Two cards flanking the circle */
+      #scene-08-65f994 .s08-card {
+        position: absolute; width: 320px; padding: 22px 28px;
+        background: rgba(10,18,36,0.78);
+        border-radius: 16px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        z-index: 8;
       }
-
-      #scene-08-65f994 .eyebrow {
-        font-size: 22px;
-        letter-spacing: 12px;
-        color: #fbbf24;
-        font-weight: 300;
-        margin-bottom: 14px;
-        text-shadow: 0 0 18px rgba(251, 191, 36, 0.5);
+      #scene-08-65f994 .s08-card-cos {
+        left: 92px; top: 480px;
+        border: 1px solid rgba(251,191,36,0.45);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 48px rgba(251,191,36,0.12);
       }
-
-      #scene-08-65f994 .title {
-        font-size: 96px;
-        font-weight: 700;
-        color: #f8fafc;
-        letter-spacing: 14px;
-        text-shadow:
-          0 0 36px rgba(96, 165, 250, 0.45),
-          0 0 72px rgba(96, 165, 250, 0.18);
-        line-height: 1;
+      #scene-08-65f994 .s08-card-sin {
+        right: 92px; top: 480px;
+        border: 1px solid rgba(255,77,143,0.45);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 48px rgba(255,77,143,0.12);
       }
-
-      #scene-08-65f994 .subtitle {
-        font-size: 24px;
-        letter-spacing: 6px;
-        color: #94a3b8;
-        font-weight: 300;
-        margin-top: 16px;
+      #scene-08-65f994 .s08-card-tag { font-size: 16px; letter-spacing: 0.32em; font-weight: 700; margin-bottom: 6px; }
+      #scene-08-65f994 .s08-card-cos .s08-card-tag { color: #fbbf24; }
+      #scene-08-65f994 .s08-card-sin .s08-card-tag { color: #ff4d8f; }
+      #scene-08-65f994 .s08-card-desc { font-size: 15px; color: #9fb4cc; letter-spacing: 0.15em; margin-bottom: 14px; }
+      #scene-08-65f994 .s08-card-formula {
+        font-family: "Georgia", serif; font-style: italic; font-size: 34px; font-weight: 700; color: #f1f5f9;
+        padding: 10px 0; border-top: 1px solid rgba(148,163,184,0.2);
       }
+      #scene-08-65f994 .s08-card-eq { color: #4dd0ff; font-style: normal; margin: 0 8px; }
 
-      #scene-08-65f994 .main-svg {
-        position: absolute;
-        inset: 0;
-        width: 1920px;
-        height: 1080px;
-        z-index: 5;
+      #scene-08-65f994 .s08-caption {
+        position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 30px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 18px 40px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       }
-
-      #scene-08-65f994 .halo { }
-
-      #scene-08-65f994 .axis {
-        stroke: rgba(148, 163, 184, 0.55);
-        stroke-width: 2;
-        stroke-linecap: round;
-      }
-
-      #scene-08-65f994 .arrow {
-        fill: rgba(148, 163, 184, 0.7);
-      }
-
-      #scene-08-65f994 .axis-label {
-        fill: #94a3b8;
-        font-size: 26px;
-        font-style: italic;
-        font-family: 'Georgia', 'Times New Roman', serif;
-      }
-
-      #scene-08-65f994 .mirror-y {
-        stroke: #fbbf24;
-        stroke-width: 3;
-        stroke-dasharray: 10 8;
-        opacity: 0;
-        filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6));
-      }
-
-      #scene-08-65f994 .mirror-x {
-        stroke: #f87171;
-        stroke-width: 2;
-        stroke-dasharray: 6 6;
-        opacity: 0;
-        filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.5));
-      }
-
-      #scene-08-65f994 .unit-circle {
-        fill: none;
-        stroke: #60a5fa;
-        stroke-width: 2.8;
-        filter: drop-shadow(0 0 14px rgba(96, 165, 250, 0.55));
-      }
-
-      #scene-08-65f994 .angle-arc-pos,
-      #scene-08-65f994 .angle-arc-neg {
-        stroke: #fbbf24;
-        stroke-width: 2.2;
-        fill: none;
-      }
-
-      #scene-08-65f994 .angle-label-pos,
-      #scene-08-65f994 .angle-label-neg {
-        fill: #fbbf24;
-        font-size: 22px;
-        font-style: italic;
-        font-family: 'Georgia', 'Times New Roman', serif;
-      }
-
-      #scene-08-65f994 .radius-line {
-        stroke: #e2e8f0;
-        stroke-width: 2.5;
-      }
-
-      #scene-08-65f994 .radius-line-2 {
-        stroke: #e2e8f0;
-        stroke-width: 2.5;
-      }
-
-      #scene-08-65f994 .proj-cos-p,
-      #scene-08-65f994 .proj-cos-p2 {
-        stroke: #fbbf24;
-        stroke-width: 2.4;
-        stroke-dasharray: 7 5;
-      }
-
-      #scene-08-65f994 .proj-sin-p,
-      #scene-08-65f994 .proj-sin-p2 {
-        stroke: #f87171;
-        stroke-width: 2.4;
-        stroke-dasharray: 7 5;
-      }
-
-      #scene-08-65f994 .dot-p,
-      #scene-08-65f994 .dot-p2 {
-        fill: #f8fafc;
-        stroke: #60a5fa;
-        stroke-width: 3;
-        filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.85));
-        transform-box: fill-box;
-        transform-origin: center;
-      }
-
-      #scene-08-65f994 .point-label-p,
-      #scene-08-65f994 .point-label-p2 {
-        fill: #f8fafc;
-        font-size: 22px;
-        font-style: italic;
-        font-family: 'Georgia', 'Times New Roman', serif;
-      }
-
-      #scene-08-65f994 .cos-highlight {
-        fill: #fbbf24;
-        filter: drop-shadow(0 0 16px rgba(251, 191, 36, 0.95));
-        transform-box: fill-box;
-        transform-origin: center;
-      }
-
-      #scene-08-65f994 .sin-highlight-pos,
-      #scene-08-65f994 .sin-highlight-neg {
-        fill: #f87171;
-        filter: drop-shadow(0 0 16px rgba(248, 113, 113, 0.95));
-        transform-box: fill-box;
-        transform-origin: center;
-      }
-
-      #scene-08-65f994 .formula-box {
-        position: absolute;
-        padding: 26px 34px;
-        border-radius: 14px;
-        background: rgba(10, 18, 36, 0.78);
-        -webkit-backdrop-filter: blur(10px);
-                backdrop-filter: blur(10px);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        z-index: 15;
-      }
-
-      #scene-08-65f994 .cos-box {
-        top: 298px;
-        left: 72px;
-        border-color: rgba(251, 191, 36, 0.5);
-        box-shadow:
-          0 0 40px rgba(251, 191, 36, 0.18),
-          inset 0 0 24px rgba(251, 191, 36, 0.05);
-      }
-
-      #scene-08-65f994 .sin-box {
-        top: 298px;
-        right: 72px;
-        border-color: rgba(248, 113, 113, 0.5);
-        box-shadow:
-          0 0 40px rgba(248, 113, 113, 0.18),
-          inset 0 0 24px rgba(248, 113, 113, 0.05);
-      }
-
-      #scene-08-65f994 .fb-tag {
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: 6px;
-        margin-bottom: 6px;
-      }
-
-      #scene-08-65f994 .cos-box .fb-tag { color: #fbbf24; }
-      #scene-08-65f994 .sin-box .fb-tag { color: #f87171; }
-
-      #scene-08-65f994 .fb-desc {
-        font-size: 18px;
-        color: #94a3b8;
-        letter-spacing: 3px;
-        font-weight: 300;
-        margin-bottom: 14px;
-      }
-
-      #scene-08-65f994 .fb-formula {
-        font-size: 38px;
-        font-weight: 600;
-        font-family: 'Georgia', 'Times New Roman', serif;
-        color: #f8fafc;
-        font-style: italic;
-        letter-spacing: 2px;
-      }
-
-      #scene-08-65f994 .fb-formula .eq {
-        color: #60a5fa;
-        margin: 0 6px;
-      }
-
-      #scene-08-65f994 .caption {
-        position: absolute;
-        bottom: 54px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        font-size: 34px;
-        color: #cbd5e1;
-        letter-spacing: 6px;
-        font-weight: 300;
-        z-index: 20;
-      }
-
-      #scene-08-65f994 .cap-accent {
-        color: #fbbf24;
-        font-weight: 500;
-        text-shadow: 0 0 16px rgba(251, 191, 36, 0.5);
+      #scene-08-65f994 .s08-cap-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 12px #fbbf24; }
+      #scene-08-65f994 .s08-cap-em {
+        background: linear-gradient(135deg, #fbbf24 0%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 800; padding: 0 6px; font-style: italic;
       }
     </style>
 
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-08-65f994';
 
-      // 0.0 – 1.4s: atmosphere + title
-      tl.from('#scene-08-65f994 .bg', { opacity: 0, duration: 0.6 }, 0);
-      tl.from('#scene-08-65f994 .grid', { opacity: 0, duration: 1.6, ease: 'power2.out' }, 0);
-      tl.from('#scene-08-65f994 .eyebrow', { opacity: 0, y: -18, duration: 0.7, ease: 'power3.out' }, 0.25);
-      tl.from('#scene-08-65f994 .title', { opacity: 0, y: -32, duration: 1.0, ease: 'power3.out' }, 0.5);
-      tl.from('#scene-08-65f994 .subtitle', { opacity: 0, y: 16, duration: 0.7, ease: 'power2.out' }, 1.0);
+      tl.fromTo(ID + ' .s08-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .s08-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .s08-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
 
-      // 1.2 – 2.1s: coordinate system
-      tl.from('#scene-08-65f994 .halo', { opacity: 0, duration: 1.0 }, 1.2);
-      tl.from('#scene-08-65f994 .axis-x', { opacity: 0, duration: 0.5 }, 1.3);
-      tl.from('#scene-08-65f994 .axis-y', { opacity: 0, duration: 0.5 }, 1.5);
-      tl.from('#scene-08-65f994 .arrow-x', { opacity: 0, duration: 0.35 }, 1.75);
-      tl.from('#scene-08-65f994 .arrow-y', { opacity: 0, duration: 0.35 }, 1.85);
-      tl.from('#scene-08-65f994 .label-x', { opacity: 0, duration: 0.4 }, 1.9);
-      tl.from('#scene-08-65f994 .label-y', { opacity: 0, duration: 0.4 }, 2.0);
+      tl.fromTo(ID + ' .s08-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .s08-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'center' }, 0.45);
+      tl.fromTo(ID + ' .s08-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl.fromTo(ID + ' .s08-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .s08-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl.fromTo(ID + ' .s08-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-      // 2.0 – 3.3s: unit circle draws on
-      tl.fromTo('#scene-08-65f994 .unit-circle',
-        { strokeDasharray: 1760, strokeDashoffset: 1760 },
-        { strokeDashoffset: 0, duration: 1.3, ease: 'power2.out' },
-        2.0);
+      // Circle
+      tl.fromTo(ID + ' .s08-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl.fromTo(ID + ' .s08-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 620px' }, 2.0);
+      tl.fromTo(ID + ' .s08-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 620px' }, 2.1);
+      tl.fromTo(ID + ' .s08-unit', { strokeDashoffset: 2011 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.3);
 
-      // 3.2 – 4.9s: Point P at θ reveals with projections
-      tl.from('#scene-08-65f994 .point-p .radius-line', { opacity: 0, duration: 0.5 }, 3.2);
-      tl.from('#scene-08-65f994 .angle-arc-pos', { opacity: 0, duration: 0.4 }, 3.45);
-      tl.from('#scene-08-65f994 .angle-label-pos', { opacity: 0, duration: 0.35 }, 3.65);
-      tl.from('#scene-08-65f994 .dot-p', { scale: 0, duration: 0.5, ease: 'back.out(2.2)' }, 3.75);
-      tl.from('#scene-08-65f994 .point-label-p', { opacity: 0, x: -18, duration: 0.5 }, 3.95);
-      tl.from('#scene-08-65f994 .proj-cos-p', { opacity: 0, duration: 0.4 }, 4.15);
-      tl.from('#scene-08-65f994 .proj-sin-p', { opacity: 0, duration: 0.4 }, 4.35);
+      // Point P (upper)
+      tl.to(ID + ' .s08-rad-p', { opacity: 0.9, duration: 0.5 }, 3.6);
+      tl.to(ID + ' .s08-arc-p', { opacity: 1, duration: 0.4 }, 3.8);
+      tl.to(ID + ' .s08-arc-p-lbl', { opacity: 1, duration: 0.4 }, 3.95);
+      tl.to(ID + ' .s08-p-halo', { opacity: 1, duration: 0.5 }, 4.0);
+      tl.to(ID + ' .s08-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 4.05);
+      tl.to(ID + ' .s08-p-lbl', { opacity: 1, duration: 0.5 }, 4.3);
+      tl.to(ID + ' .s08-drop-cos-p', { opacity: 0.85, duration: 0.5 }, 4.4);
+      tl.to(ID + ' .s08-drop-sin-p', { opacity: 0.85, duration: 0.5 }, 4.5);
 
-      // 4.9 – 5.4s: mirror axes activate
-      tl.to('#scene-08-65f994 .mirror-y', { opacity: 1, duration: 0.5 }, 4.9);
-      tl.to('#scene-08-65f994 .mirror-x', { opacity: 1, duration: 0.5 }, 5.05);
+      // Mirror lines activate
+      tl.to(ID + ' .s08-mirror-y', { opacity: 0.9, duration: 0.5 }, 5.0);
+      tl.to(ID + ' .s08-mirror-x', { opacity: 0.9, duration: 0.5 }, 5.15);
 
-      // 5.4 – 7.0s: Point P' at -θ mirrors across x-axis
-      tl.from('#scene-08-65f994 .point-p2 .radius-line-2', { opacity: 0, duration: 0.5 }, 5.4);
-      tl.from('#scene-08-65f994 .angle-arc-neg', { opacity: 0, duration: 0.4 }, 5.6);
-      tl.from('#scene-08-65f994 .angle-label-neg', { opacity: 0, duration: 0.35 }, 5.8);
-      tl.from('#scene-08-65f994 .dot-p2', { scale: 0, duration: 0.5, ease: 'back.out(2.2)' }, 5.9);
-      tl.from('#scene-08-65f994 .point-label-p2', { opacity: 0, x: -18, duration: 0.5 }, 6.1);
-      tl.from('#scene-08-65f994 .proj-cos-p2', { opacity: 0, duration: 0.4 }, 6.3);
-      tl.from('#scene-08-65f994 .proj-sin-p2', { opacity: 0, duration: 0.4 }, 6.5);
+      // Point P' (lower, mirrored)
+      tl.to(ID + ' .s08-rad-p2', { opacity: 0.9, duration: 0.5 }, 5.4);
+      tl.to(ID + ' .s08-arc-p2', { opacity: 1, duration: 0.4 }, 5.55);
+      tl.to(ID + ' .s08-arc-p2-lbl', { opacity: 1, duration: 0.4 }, 5.7);
+      tl.to(ID + ' .s08-p2-halo', { opacity: 1, duration: 0.5 }, 5.7);
+      tl.to(ID + ' .s08-p2', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 5.75);
+      tl.to(ID + ' .s08-p2-lbl', { opacity: 1, duration: 0.5 }, 6.0);
+      tl.to(ID + ' .s08-drop-cos-p2', { opacity: 0.85, duration: 0.5 }, 6.0);
+      tl.to(ID + ' .s08-drop-sin-p2', { opacity: 0.85, duration: 0.5 }, 6.1);
 
-      // 7.0 – 8.2s: cos even-function callout
-      tl.from('#scene-08-65f994 .cos-highlight', { scale: 0, duration: 0.5, ease: 'back.out(2.5)' }, 7.0);
-      tl.from('#scene-08-65f994 .cos-box', { opacity: 0, x: -44, duration: 0.8, ease: 'power3.out' }, 7.2);
+      // Highlight dots at symmetry points
+      tl.fromTo(ID + ' .s08-hl-cos', { scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 6.8);
+      tl.fromTo(ID + ' .s08-hl-sin-pos', { scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 7.0);
+      tl.fromTo(ID + ' .s08-hl-sin-neg', { scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 7.2);
 
-      // 8.2 – 9.4s: sin odd-function callout
-      tl.from('#scene-08-65f994 .sin-highlight-pos', { scale: 0, duration: 0.4, ease: 'back.out(2.5)' }, 8.2);
-      tl.from('#scene-08-65f994 .sin-highlight-neg', { scale: 0, duration: 0.4, ease: 'back.out(2.5)' }, 8.4);
-      tl.from('#scene-08-65f994 .sin-box', { opacity: 0, x: 44, duration: 0.8, ease: 'power3.out' }, 8.4);
+      // Formula cards
+      tl.fromTo(ID + ' .s08-card-cos', { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.4);
+      tl.fromTo(ID + ' .s08-card-sin', { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.6);
 
-      // 9.5 – 10.6s: concluding caption
-      tl.from('#scene-08-65f994 .caption', { opacity: 0, y: 28, duration: 1.0, ease: 'power3.out' }, 9.5);
+      // Pulse highlights
+      tl.to([ID + ' .s08-hl-cos', ID + ' .s08-hl-sin-pos', ID + ' .s08-hl-sin-neg'],
+        { scale: 1.5, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut', transformOrigin: 'center' }, 9.0);
 
-      // 10.6 – 11.4s: pulse highlights to reinforce symmetry
-      tl.to('#scene-08-65f994 .cos-highlight', { scale: 1.45, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.inOut' }, 10.6);
-      tl.to('#scene-08-65f994 .sin-highlight-pos', { scale: 1.45, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.inOut' }, 10.8);
-      tl.to('#scene-08-65f994 .sin-highlight-neg', { scale: 1.45, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.inOut' }, 10.8);
+      // Caption
+      tl.fromTo(ID + ' .s08-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 10.4);
+      tl.fromTo(ID + ' .s08-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 10.6);
 
-      // 11.4 – 12.0s: gentle settle
-      tl.to('#scene-08-65f994 .vignette', { opacity: 1.3, duration: 0.6 }, 11.4);
-
-      window.__timelines["scene-08-65f994"] = tl;
+      tl.set({}, {}, 12);
+      window.__timelines['scene-08-65f994'] = tl;
     </script>
   </div>
 </template>

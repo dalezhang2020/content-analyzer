@@ -1,165 +1,177 @@
 <template id="scene-05-f80eb7-template">
   <div id="scene-05-f80eb7" data-composition-id="scene-05-f80eb7" data-width="1920" data-height="1080">
-    <div class="bg-glow"></div>
-    <div class="grid-floor"></div>
 
-    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <div class="s05-bg"></div>
+    <div class="s05-grid-floor"></div>
+    <div class="s05-vignette"></div>
+    <div class="s05-orb s05-orb-a"></div>
+    <div class="s05-orb s05-orb-b"></div>
+    <div class="s05-orb s05-orb-c"></div>
+
+    <div class="s05-header">
+      <div class="s05-eyebrow">
+        <span class="s05-num">05</span>
+        <span class="s05-bar"></span>
+        <span class="s05-label">3D UNIFIED VIEW</span>
+      </div>
+      <h1 class="s05-title">
+        <span class="s05-t1">3D 视角的</span>
+        <span class="s05-t2">统一</span>
+      </h1>
+      <div class="s05-subtitle">波 = 圆周运动在<span class="s05-em">时间轴</span>上的<span class="s05-em2">投影</span></div>
+    </div>
+
+    <svg class="s05-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <filter id="scene-05-f80eb7-glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="5" result="blur"/>
-          <feMerge>
-            <feMergeNode in="blur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
+        <filter id="s05-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <linearGradient id="scene-05-f80eb7-wave" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#ffb347"/>
-          <stop offset="100%" stop-color="#ff8c6b"/>
+        <radialGradient id="s05-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s05-helix-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.2"/>
+          <stop offset="30%" stop-color="#4dd0ff" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#c4b5fd" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ff4d8f" stop-opacity="0.8"/>
         </linearGradient>
       </defs>
 
-      <!-- 3D tilted unit circle -->
-      <g class="circle-group" transform="translate(460, 640)">
-        <line class="ax-h" x1="-250" y1="0" x2="250" y2="0" stroke="#4a6b99" stroke-width="1.5" opacity="0.55"/>
-        <line class="ax-v" x1="0" y1="-235" x2="0" y2="235" stroke="#4a6b99" stroke-width="1.5" opacity="0.55"/>
+      <!-- 3D-looking perspective: tilted ellipse as unit circle + stretched time axis -->
+      <g class="s05-scene-g" transform="translate(460, 620)">
+        <!-- Shadow ellipse beneath -->
+        <ellipse class="s05-circle-shadow" cx="0" cy="20" rx="210" ry="40" fill="#3a5580" opacity="0.25"/>
 
-        <ellipse class="unit-circle" cx="0" cy="0" rx="215" ry="84" fill="none"
-                 stroke="#4a9eff" stroke-width="3.5"
-                 stroke-dasharray="980" stroke-dashoffset="980"
-                 filter="url(#scene-05-f80eb7-glow)"/>
+        <!-- Tilted ellipse (the unit circle in 3D perspective) -->
+        <circle class="s05-halo" cx="0" cy="0" r="240" fill="url(#s05-halo)"/>
+        <ellipse class="s05-unit-ellipse" cx="0" cy="0" rx="200" ry="70"
+                 fill="none" stroke="#4dd0ff" stroke-width="3.5"
+                 stroke-dasharray="880" stroke-dashoffset="880" filter="url(#s05-glow)"/>
 
-        <line class="drop-line" x1="215" y1="0" x2="215" y2="0"
-              stroke="#ff8c6b" stroke-width="2.5" stroke-dasharray="6,6" opacity="0"/>
+        <!-- Rotating point on the ellipse -->
+        <g class="s05-rotor">
+          <line class="s05-radius" x1="0" y1="0" x2="200" y2="0" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <circle class="s05-p-halo" cx="200" cy="0" r="22" fill="#fbbf24" opacity="0" filter="url(#s05-glow)"/>
+          <circle class="s05-p" cx="200" cy="0" r="11" fill="#fbbf24" stroke="#fffbeb" stroke-width="2.5" opacity="0"/>
+        </g>
 
-        <circle class="rot-point" cx="215" cy="0" r="14" fill="#ffb347"
-                filter="url(#scene-05-f80eb7-glow)" opacity="0"/>
-
-        <text class="circle-label" x="0" y="-275" fill="#8bb5ff" font-size="26"
-              text-anchor="middle" font-weight="600" letter-spacing="2">单位圆</text>
+        <text class="s05-circle-lbl" x="0" y="120" fill="#8da1c7" font-size="20" text-anchor="middle" letter-spacing="4">圆周运动</text>
       </g>
 
-      <!-- Time axis -->
-      <line class="time-axis" x1="460" y1="640" x2="460" y2="640"
-            stroke="#6b85ab" stroke-width="2.5" opacity="0.85"/>
-      <polygon class="time-arrow" points="1760,640 1740,632 1740,648" fill="#6b85ab" opacity="0"/>
-      <text class="time-label" x="1770" y="648" fill="#8ba3c7" font-size="22" opacity="0">时间 t</text>
+      <!-- Time axis stretches right -->
+      <line class="s05-time-axis" x1="460" y1="620" x2="460" y2="620" stroke="#6b85ab" stroke-width="2.5"/>
+      <polygon class="s05-time-arrow" points="1740,620 1720,612 1720,628" fill="#6b85ab" opacity="0"/>
+      <text class="s05-time-lbl" x="1720" y="600" fill="#8ba3c7" font-size="22" text-anchor="end" letter-spacing="3" opacity="0">时间轴 t →</text>
 
-      <!-- Sine wave -->
-      <path class="sine-wave"
-            d="M 460 640 Q 540 540, 620 640 T 780 640 T 940 640 T 1100 640 T 1260 640 T 1420 640 T 1580 640 T 1720 640"
-            fill="none" stroke="url(#scene-05-f80eb7-wave)" stroke-width="4.5"
-            stroke-linecap="round"
-            stroke-dasharray="2000" stroke-dashoffset="2000"
-            filter="url(#scene-05-f80eb7-glow)"/>
+      <!-- Sine wave being "unfolded" from the circle -->
+      <path class="s05-wave"
+            d="M 460 620 Q 520 480, 580 480 T 700 620 T 820 760 T 940 760 T 1060 620 T 1180 480 T 1300 480 T 1420 620 T 1540 760 T 1660 760 T 1740 620"
+            fill="none" stroke="url(#s05-helix-grad)" stroke-width="4.5" stroke-linecap="round"
+            stroke-dasharray="2000" stroke-dashoffset="2000" filter="url(#s05-glow)"/>
 
-      <!-- Trace dots on wave -->
-      <g class="trace-dots">
-        <circle class="trace-dot" cx="620" cy="540" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
-        <circle class="trace-dot" cx="940" cy="740" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
-        <circle class="trace-dot" cx="1260" cy="540" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
-        <circle class="trace-dot" cx="1580" cy="740" r="10" fill="#ff6b6b" opacity="0" filter="url(#scene-05-f80eb7-glow)"/>
+      <!-- Projection lines from the rotating point to the wave -->
+      <line class="s05-proj-line" x1="460" y1="620" x2="460" y2="620" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4 4" opacity="0"/>
+
+      <!-- Trace dots along the wave (strobe-like sampling) -->
+      <g class="s05-trace-dots">
+        <circle class="s05-trace-dot" cx="580" cy="480" r="8" fill="#ff4d8f" opacity="0"/>
+        <circle class="s05-trace-dot" cx="820" cy="760" r="8" fill="#ff4d8f" opacity="0"/>
+        <circle class="s05-trace-dot" cx="1060" cy="620" r="8" fill="#c4b5fd" opacity="0"/>
+        <circle class="s05-trace-dot" cx="1300" cy="480" r="8" fill="#4dd0ff" opacity="0"/>
+        <circle class="s05-trace-dot" cx="1540" cy="760" r="8" fill="#ff4d8f" opacity="0"/>
       </g>
 
-      <text class="sin-label" x="720" y="560" fill="#ff8c6b" font-size="24" opacity="0" font-style="italic" font-weight="500">sin(θ)</text>
-      <text class="wave-label" x="1620" y="595" fill="#ffb347" font-size="24" opacity="0" font-weight="600" letter-spacing="1">正弦波</text>
+      <text class="s05-wave-lbl" x="1640" y="570" fill="#c4b5fd" font-size="26" text-anchor="end" font-style="italic" font-family="Georgia, serif" opacity="0">sin(t)</text>
     </svg>
 
-    <div class="eyebrow">第五幕 · 投影的秘密</div>
-    <h1 class="title">3D视角的<span class="highlight">统一</span></h1>
-    <p class="subtitle">波，是圆周运动在时间轴上的<span class="accent">投影</span></p>
-    <div class="caption">旋转 &times; 时间 = 正弦波</div>
+    <div class="s05-caption">
+      <span class="s05-cap-dot"></span>
+      旋转 <span class="s05-times">×</span> 时间 = <span class="s05-cap-wave">正弦波</span>
+    </div>
 
     <style>
       #scene-05-f80eb7 {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: radial-gradient(ellipse 1300px 900px at 28% 42%, #1a2847 0%, #0c1426 55%, #05070f 100%);
-        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
-        color: #fff;
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
       }
-      #scene-05-f80eb7 .bg-glow {
+      #scene-05-f80eb7 .s05-bg {
         position: absolute; inset: 0;
         background:
-          radial-gradient(circle at 78% 82%, rgba(255, 179, 71, 0.14) 0%, transparent 38%),
-          radial-gradient(circle at 18% 28%, rgba(74, 158, 255, 0.20) 0%, transparent 46%);
-        pointer-events: none;
+          radial-gradient(ellipse 1300px 900px at 28% 42%, rgba(77,208,255,0.22), transparent 55%),
+          radial-gradient(ellipse 900px 700px at 78% 60%, rgba(255,77,143,0.14), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 50% 90%, rgba(200,163,255,0.10), transparent 60%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
       }
-      #scene-05-f80eb7 .grid-floor {
-        position: absolute;
-        left: 0; bottom: 0;
-        width: 100%; height: 540px;
+      #scene-05-f80eb7 .s05-grid-floor {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 480px;
         background-image:
-          linear-gradient(rgba(74, 158, 255, 0.24) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(74, 158, 255, 0.24) 1px, transparent 1px);
+          linear-gradient(rgba(77,208,255,0.3) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(77,208,255,0.3) 1px, transparent 1px);
         background-size: 100px 100px;
         transform: perspective(950px) rotateX(62deg);
         transform-origin: bottom center;
-        opacity: 0.55;
-        mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        opacity: 0.45;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
         pointer-events: none;
       }
-      #scene-05-f80eb7 .stage {
+      #scene-05-f80eb7 .s05-vignette {
         position: absolute; inset: 0;
-        width: 100%; height: 100%;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
       }
-      #scene-05-f80eb7 .eyebrow {
-        position: absolute;
-        top: 95px; left: 128px;
-        font-size: 26px;
-        letter-spacing: 10px;
-        color: #ffb347;
-        font-weight: 500;
-        opacity: 0;
+      #scene-05-f80eb7 .s05-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-05-f80eb7 .s05-orb-a { width: 520px; height: 520px; left: -120px; top: 180px; background: radial-gradient(circle, rgba(77,208,255,0.4), transparent 70%); }
+      #scene-05-f80eb7 .s05-orb-b { width: 620px; height: 620px; right: -200px; bottom: 80px; background: radial-gradient(circle, rgba(255,77,143,0.25), transparent 70%); }
+      #scene-05-f80eb7 .s05-orb-c { width: 460px; height: 460px; left: 45%; top: 50%; background: radial-gradient(circle, rgba(251,191,36,0.12), transparent 70%); }
+
+      #scene-05-f80eb7 .s05-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-05-f80eb7 .s05-eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
       }
-      #scene-05-f80eb7 .title {
-        position: absolute;
-        top: 145px; left: 128px;
-        font-size: 122px;
-        font-weight: 800;
-        line-height: 1.05;
-        letter-spacing: 2px;
-        background: linear-gradient(135deg, #ffffff 0%, #a9c4ff 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        filter: drop-shadow(0 6px 26px rgba(74, 158, 255, 0.38));
-        opacity: 0;
-        margin: 0;
+      #scene-05-f80eb7 .s05-num { color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-05-f80eb7 .s05-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-05-f80eb7 .s05-label { color: #b5c4dd; }
+      #scene-05-f80eb7 .s05-title {
+        margin-top: 18px; font-size: 140px; font-weight: 800; line-height: 1;
+        display: flex; gap: 22px; align-items: baseline; letter-spacing: -0.02em;
       }
-      #scene-05-f80eb7 .title .highlight {
-        background: linear-gradient(135deg, #ffb347 0%, #ff8c6b 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+      #scene-05-f80eb7 .s05-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-05-f80eb7 .s05-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 50%, #c4b5fd 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(77,208,255,0.4);
       }
-      #scene-05-f80eb7 .subtitle {
-        position: absolute;
-        top: 320px; left: 132px;
-        font-size: 40px;
-        color: #c8d4e6;
-        font-weight: 400;
-        letter-spacing: 1px;
-        opacity: 0;
-        margin: 0;
+      #scene-05-f80eb7 .s05-subtitle { margin-top: 20px; font-size: 32px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300; }
+      #scene-05-f80eb7 .s05-em { color: #4dd0ff; font-weight: 700; padding: 0 4px; }
+      #scene-05-f80eb7 .s05-em2 { color: #fbbf24; font-weight: 700; padding: 0 4px; }
+
+      #scene-05-f80eb7 .s05-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      #scene-05-f80eb7 .s05-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 30px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       }
-      #scene-05-f80eb7 .subtitle .accent {
-        color: #ffb347;
-        font-weight: 600;
-        padding: 0 6px;
+      #scene-05-f80eb7 .s05-cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #c4b5fd; box-shadow: 0 0 12px #c4b5fd;
       }
-      #scene-05-f80eb7 .caption {
-        position: absolute;
-        bottom: 74px; left: 50%;
-        transform: translateX(-50%);
-        font-size: 28px;
-        color: #8ba3c7;
-        letter-spacing: 8px;
-        font-weight: 300;
-        opacity: 0;
-        white-space: nowrap;
+      #scene-05-f80eb7 .s05-times { color: #5b6e93; margin: 0 8px; font-weight: 300; }
+      #scene-05-f80eb7 .s05-cap-wave {
+        background: linear-gradient(135deg, #4dd0ff 0%, #c4b5fd 60%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 800; padding: 0 6px;
       }
     </style>
 
@@ -168,91 +180,71 @@
       const tl = gsap.timeline({ paused: true });
       const ID = '#scene-05-f80eb7';
 
-      // Background layers
-      tl.from(ID + ' .bg-glow', { opacity: 0, duration: 0.9, ease: 'power2.out' }, 0);
-      tl.from(ID + ' .grid-floor', { opacity: 0, duration: 1.4, ease: 'power2.out' }, 0.15);
+      tl.fromTo(ID + ' .s05-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .s05-grid-floor', { opacity: 0 }, { opacity: 0.45, duration: 1.5 }, 0.1);
+      tl.fromTo(ID + ' .s05-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .s05-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0.2);
+      tl.fromTo(ID + ' .s05-orb-c', { opacity: 0 }, { opacity: 1, duration: 2.0 }, 0.4);
 
-      // Headline copy
-      tl.fromTo(ID + ' .eyebrow',
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.3);
-      tl.fromTo(ID + ' .title',
-        { opacity: 0, y: 45 },
-        { opacity: 1, y: 0, duration: 0.95, ease: 'power3.out' }, 0.55);
-      tl.fromTo(ID + ' .subtitle',
-        { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' }, 1.25);
+      tl.fromTo(ID + ' .s05-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .s05-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl.fromTo(ID + ' .s05-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl.fromTo(ID + ' .s05-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .s05-t2', { opacity: 0, y: 60, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: 'expo.out', transformOrigin: 'center' }, 0.85);
+      tl.fromTo(ID + ' .s05-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-      // Circle group fades in
-      tl.from(ID + ' .circle-group', { opacity: 0, duration: 0.8, ease: 'power2.out' }, 1.8);
+      // 3D-tilted circle appears
+      tl.fromTo(ID + ' .s05-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl.fromTo(ID + ' .s05-circle-shadow', { opacity: 0, scaleX: 0.5 }, { opacity: 0.25, scaleX: 1, duration: 0.9, transformOrigin: 'center' }, 2.0);
+      tl.fromTo(ID + ' .s05-unit-ellipse', { strokeDashoffset: 880 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.2);
+      tl.fromTo(ID + ' .s05-circle-lbl', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.3);
 
-      // Axes appear
-      tl.from(ID + ' .ax-h', { opacity: 0, duration: 0.7, ease: 'power2.out' }, 2.05);
-      tl.from(ID + ' .ax-v', { opacity: 0, duration: 0.7, ease: 'power2.out' }, 2.15);
+      // Point lands on the circle
+      tl.to(ID + ' .s05-radius', { opacity: 0.9, duration: 0.5 }, 3.2);
+      tl.to(ID + ' .s05-p-halo', { opacity: 1, duration: 0.6 }, 3.4);
+      tl.to(ID + ' .s05-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 3.5);
 
-      // Unit circle draws
-      tl.to(ID + ' .unit-circle', { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, 2.25);
-      tl.from(ID + ' .circle-label', { opacity: 0, y: 12, duration: 0.55, ease: 'power2.out' }, 3.05);
+      // Time axis stretches across
+      tl.to(ID + ' .s05-time-axis', { attr: { x2: 1720 }, duration: 1.6, ease: 'power3.out' }, 4.0);
+      tl.to(ID + ' .s05-time-arrow', { opacity: 1, duration: 0.4 }, 5.5);
+      tl.to(ID + ' .s05-time-lbl', { opacity: 1, duration: 0.5 }, 5.6);
 
-      // Time axis extends right
-      tl.to(ID + ' .time-axis', { attr: { x2: 1740 }, duration: 1.7, ease: 'power2.out' }, 3.5);
-      tl.to(ID + ' .time-arrow', { opacity: 1, duration: 0.4 }, 5.05);
-      tl.to(ID + ' .time-label', { opacity: 1, duration: 0.5 }, 5.15);
-
-      // Rotating point + projection line appear
-      tl.to(ID + ' .rot-point', { opacity: 1, duration: 0.4, ease: 'power2.out' }, 3.9);
-      tl.to(ID + ' .drop-line', { opacity: 0.9, duration: 0.4 }, 4.1);
-
-      // Drive rotation around ellipse; projection drops to the horizontal plane
-      const proxy = { a: -Math.PI / 2 };
-      tl.to(proxy, {
-        a: -Math.PI / 2 + Math.PI * 2.5,
-        duration: 6.8,
-        ease: 'none',
-        onUpdate: function() {
-          const rx = 215, ry = 84;
-          const px = Math.cos(proxy.a) * rx;
-          const py = Math.sin(proxy.a) * ry;
-          const pt = document.querySelector(ID + ' .rot-point');
-          const dl = document.querySelector(ID + ' .drop-line');
-          if (pt) {
-            pt.setAttribute('cx', px.toFixed(2));
-            pt.setAttribute('cy', py.toFixed(2));
-          }
-          if (dl) {
-            dl.setAttribute('x1', px.toFixed(2));
-            dl.setAttribute('y1', py.toFixed(2));
-            dl.setAttribute('x2', px.toFixed(2));
-            dl.setAttribute('y2', '0');
+      // Rotation driver (3 cycles over 6 seconds)
+      const state = { t: 0 };
+      tl.to(state, {
+        t: Math.PI * 6,
+        duration: 6.5,
+        ease: 'power1.inOut',
+        onUpdate: () => {
+          const theta = state.t;
+          // ellipse: rx=200, ry=70 (tilted perspective)
+          const cx = Math.cos(theta) * 200;
+          const cy = Math.sin(theta) * 70;
+          const rotor = document.querySelector(ID + ' .s05-rotor');
+          if (rotor) {
+            // Just update radius and point positions directly
+            const rad = rotor.querySelector('.s05-radius');
+            const pt = rotor.querySelector('.s05-p');
+            const halo = rotor.querySelector('.s05-p-halo');
+            if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
+            if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
+            if (halo) { halo.setAttribute('cx', cx.toFixed(2)); halo.setAttribute('cy', cy.toFixed(2)); }
           }
         }
-      }, 4.3);
+      }, 4.5);
 
-      // Sine wave draws in, synchronized with rotation
-      tl.to(ID + ' .sine-wave', { strokeDashoffset: 0, duration: 6.5, ease: 'power1.inOut' }, 4.4);
+      // Wave draws in parallel
+      tl.to(ID + ' .s05-wave', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.0);
+      tl.to(ID + ' .s05-wave-lbl', { opacity: 1, duration: 0.5 }, 10.5);
 
-      // sin(θ) annotation
-      tl.to(ID + ' .sin-label', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 5.6);
+      // Trace dots flash in sequence
+      tl.to(ID + ' .s05-trace-dot', { opacity: 1, duration: 0.3, stagger: 0.2, ease: 'back.out(1.5)' }, 9.0);
 
-      // Trace dots appear along the wave
-      tl.to(ID + ' .trace-dot', {
-        opacity: 1, duration: 0.35, stagger: 0.55, ease: 'power2.out'
-      }, 6.1);
+      // Caption
+      tl.fromTo(ID + ' .s05-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 11.2);
+      tl.fromTo(ID + ' .s05-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 11.4);
 
-      // Wave label at end
-      tl.to(ID + ' .wave-label', { opacity: 1, duration: 0.5, ease: 'power2.out' }, 8.8);
-
-      // Final caption reveals near end
-      tl.fromTo(ID + ' .caption',
-        { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 9.7);
-
-      // Gentle hold emphasis on title at the end
-      tl.to(ID + ' .title', {
-        filter: 'drop-shadow(0 6px 34px rgba(255, 179, 71, 0.45))',
-        duration: 1.4, ease: 'power1.inOut'
-      }, 11.2);
-
+      tl.set({}, {}, 13);
       window.__timelines['scene-05-f80eb7'] = tl;
     </script>
   </div>

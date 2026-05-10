@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  </style>
+</head>
+<body>
+
+  <div id="scene-02-3e35eb" data-composition-id="scene-02-3e35eb" data-width="1920" data-height="1080">
+
+    <!-- ============ Backdrop layers ============ -->
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <!-- ============ Ambient orbs (out-of-focus bokeh) ============ -->
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <!-- ============ Header typography ============ -->
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">02</span>
+        <span class="bar"></span>
+        <span class="label">THE UNIT CIRCLE</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">认识</span>
+        <span class="t2">单位圆</span>
+      </h1>
+      <div class="subtitle">半径为 1 · 三角函数的<span class="em">心脏</span></div>
+    </div>
+
+    <!-- ============ Main stage (1920 centered) ============ -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Soft glow -->
+        <filter id="s02-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="s02-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Radial gradient behind the circle to make it feel lit -->
+        <radialGradient id="s02-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.35"/>
+          <stop offset="35%" stop-color="#4dd0ff" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Point P radial gradient -->
+        <radialGradient id="s02-point" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#fff6cc"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Grid dots (subtle texture anchors the eye) -->
+      <g class="dot-grid">
+        <!-- we render only a diamond pattern, 14 visible dots as layout anchors -->
+        <g fill="#3a4a70" opacity="0.5">
+          <circle cx="480"  cy="180" r="2"/>
+          <circle cx="960"  cy="120" r="2"/>
+          <circle cx="1440" cy="180" r="2"/>
+          <circle cx="260"  cy="540" r="2"/>
+          <circle cx="1660" cy="540" r="2"/>
+          <circle cx="480"  cy="900" r="2"/>
+          <circle cx="960"  cy="960" r="2"/>
+          <circle cx="1440" cy="900" r="2"/>
+        </g>
+      </g>
+
+      <!-- ====== Circle group: centered on (960, 600) ====== -->
+      <g class="circle-group" transform="translate(960, 600)">
+        <!-- Halo behind circle (big, soft, colored) -->
+        <circle class="halo" cx="0" cy="0" r="340" fill="url(#s02-halo)"/>
+
+        <!-- Concentric ghost rings -->
+        <circle class="ghost" cx="0" cy="0" r="260" fill="none" stroke="#253856" stroke-width="1" opacity="0.6"/>
+        <circle class="ghost" cx="0" cy="0" r="310" fill="none" stroke="#1e2c45" stroke-width="1" opacity="0.4"/>
+
+        <!-- Axes (long, subtle, with arrows) -->
+        <line class="axis axis-x" x1="-520" y1="0" x2="520" y2="0"
+              stroke="#5b6e93" stroke-width="1.5" opacity="0.9"/>
+        <line class="axis axis-y" x1="0" y1="520" x2="0" y2="-520"
+              stroke="#5b6e93" stroke-width="1.5" opacity="0.9"/>
+        <polygon class="ax-arrow" points="520,0 500,-8 500,8" fill="#5b6e93"/>
+        <polygon class="ax-arrow" points="0,-520 -8,-500 8,-500" fill="#5b6e93"/>
+        <text class="ax-lbl" x="536" y="10" fill="#8da1c7" font-size="28" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="ax-lbl" x="10" y="-528" fill="#8da1c7" font-size="28" font-style="italic" font-family="Georgia, serif">y</text>
+
+        <!-- Tick marks at 1 and -1 -->
+        <g class="ticks" fill="#5b6e93" font-size="22" font-family="JetBrains Mono, monospace">
+          <line x1="280" y1="-8" x2="280" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-280" y1="-8" x2="-280" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-8" y1="-280" x2="8" y2="-280" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-8" y1="280" x2="8" y2="280" stroke="#5b6e93" stroke-width="1.5"/>
+          <text x="278" y="40" text-anchor="middle">1</text>
+          <text x="-282" y="40" text-anchor="middle">−1</text>
+          <text x="-22" y="-274" text-anchor="end">1</text>
+        </g>
+
+        <!-- Origin -->
+        <circle class="origin-dot" cx="0" cy="0" r="5" fill="#e6edf9"/>
+        <text class="origin-lbl" x="-18" y="24" fill="#8da1c7" font-size="20" text-anchor="end" font-style="italic" font-family="Georgia, serif">O</text>
+
+        <!-- Unit circle (main) -->
+        <circle class="unit-circle" cx="0" cy="0" r="280" fill="none"
+                stroke="#4dd0ff" stroke-width="4"
+                stroke-dasharray="1760" stroke-dashoffset="1760"
+                filter="url(#s02-glow)"/>
+
+        <!-- Radius line to P at 60° (heroic angle, looks good) -->
+        <line class="radius" x1="0" y1="0" x2="140" y2="-242.5"
+              stroke="#ffffff" stroke-width="2.5" opacity="0.85"
+              filter="url(#s02-glow)"/>
+
+        <!-- Angle arc (θ) -->
+        <path class="arc" d="M 68 0 A 68 68 0 0 0 34 -58.8"
+              fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+        <text class="arc-lbl" x="60" y="-34" fill="#fbbf24"
+              font-size="32" font-style="italic" font-family="Georgia, serif">θ</text>
+
+        <!-- cos projection (x-axis segment, amber) -->
+        <line class="cos-seg" x1="0" y1="0" x2="140" y2="0"
+              stroke="#fbbf24" stroke-width="7" stroke-linecap="round"
+              filter="url(#s02-glow)"/>
+        <!-- cos dashed drop from P down to x-axis -->
+        <line class="cos-drop" x1="140" y1="-242.5" x2="140" y2="0"
+              stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.7"/>
+        <text class="cos-lbl" x="70" y="42" fill="#fbbf24"
+              font-size="34" font-weight="700" font-style="italic"
+              text-anchor="middle" font-family="Georgia, serif">cos θ</text>
+
+        <!-- sin projection (y-axis segment, magenta) -->
+        <line class="sin-seg" x1="0" y1="0" x2="0" y2="-242.5"
+              stroke="#ff4d8f" stroke-width="7" stroke-linecap="round"
+              filter="url(#s02-glow)"/>
+        <!-- sin dashed drop from P across to y-axis -->
+        <line class="sin-drop" x1="140" y1="-242.5" x2="0" y2="-242.5"
+              stroke="#ff4d8f" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.7"/>
+        <text class="sin-lbl" x="-36" y="-118" fill="#ff4d8f"
+              font-size="34" font-weight="700" font-style="italic"
+              text-anchor="end" font-family="Georgia, serif">sin θ</text>
+
+        <!-- Radius "1" label -->
+        <text class="radius-lbl" x="82" y="-140" fill="#d7e3f2"
+              font-size="26" font-weight="600" font-style="italic"
+              font-family="Georgia, serif">1</text>
+
+        <!-- Point P (glowing) -->
+        <circle class="point-halo" cx="140" cy="-242.5" r="24"
+                fill="#fbbf24" opacity="0.35" filter="url(#s02-glow-strong)"/>
+        <circle class="point-p" cx="140" cy="-242.5" r="11"
+                fill="url(#s02-point)" stroke="#fbbf24" stroke-width="3"/>
+        <text class="point-lbl" x="162" y="-258" fill="#f8fafc"
+              font-size="24" font-weight="600" font-family="Georgia, serif">
+          P ( cos θ , sin θ )
+        </text>
+      </g>
+    </svg>
+
+    <!-- ============ Data panel (right side) ============ -->
+    <div class="panel">
+      <div class="panel-title">圆 · 心脏</div>
+      <div class="panel-row">
+        <span class="k">半径</span>
+        <span class="v">r = 1</span>
+      </div>
+      <div class="panel-row">
+        <span class="k cos-k">横坐标</span>
+        <span class="v cos-v">cos θ</span>
+      </div>
+      <div class="panel-row">
+        <span class="k sin-k">纵坐标</span>
+        <span class="v sin-v">sin θ</span>
+      </div>
+      <div class="panel-foot">
+        <span class="eqn">x² + y² = 1</span>
+      </div>
+    </div>
+
+    <!-- ============ Bottom caption ============ -->
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">圆上任取一点,横坐标即 <em class="cos-em">cos θ</em>,纵坐标即 <em class="sin-em">sin θ</em></span>
+    </div>
+
+    <style>
+      #scene-02-3e35eb {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #050914;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                     -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
+        color: #f1f5f9;
+        letter-spacing: 0.01em;
+      }
+
+      /* ============ Background ============ */
+      #scene-02-3e35eb .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1100px 780px at 50% 62%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 22% 30%, rgba(77,208,255,0.08), transparent 65%),
+          radial-gradient(ellipse 700px 500px at 78% 30%, rgba(255,77,143,0.06), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-02-3e35eb .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);
+        pointer-events: none;
+      }
+      /* Very light film grain (procedural via inline SVG would be best, but
+         a gradient striping here works at 1080p) */
+      #scene-02-3e35eb .grain {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      #scene-02-3e35eb .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px);
+        pointer-events: none;
+      }
+      #scene-02-3e35eb .orb-a {
+        width: 520px; height: 520px;
+        left: -180px; top: -180px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
+      }
+      #scene-02-3e35eb .orb-b {
+        width: 620px; height: 620px;
+        right: -220px; bottom: -240px;
+        background: radial-gradient(circle, rgba(255,77,143,0.25), transparent 70%);
+      }
+
+      /* ============ Header ============ */
+      #scene-02-3e35eb .header {
+        position: absolute; top: 84px; left: 128px;
+        z-index: 10;
+        max-width: 980px;
+      }
+      #scene-02-3e35eb .eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em;
+        color: #8da1c7; font-weight: 500;
+      }
+      #scene-02-3e35eb .eyebrow .num {
+        color: #fbbf24;
+        font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+        font-size: 22px;
+        padding: 4px 10px;
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        border-radius: 4px;
+        letter-spacing: 0.12em;
+      }
+      #scene-02-3e35eb .eyebrow .bar {
+        display: inline-block;
+        width: 56px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-02-3e35eb .eyebrow .label {
+        color: #b5c4dd;
+      }
+      #scene-02-3e35eb .title {
+        margin-top: 18px;
+        font-size: 150px;
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        display: flex; gap: 22px; align-items: baseline;
+      }
+      #scene-02-3e35eb .title .t1 {
+        color: #d9e4f5;
+        font-weight: 200;
+      }
+      #scene-02-3e35eb .title .t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 50%, #4dd0ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(77, 208, 255, 0.3);
+      }
+      #scene-02-3e35eb .subtitle {
+        margin-top: 22px;
+        font-size: 34px;
+        color: #9fb0cc;
+        letter-spacing: 0.05em;
+        font-weight: 300;
+      }
+      #scene-02-3e35eb .subtitle .em {
+        color: #ff4d8f;
+        font-weight: 600;
+        margin: 0 6px;
+        padding: 0 6px;
+        font-style: italic;
+      }
+
+      /* ============ Stage SVG ============ */
+      #scene-02-3e35eb .stage {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+      }
+
+      /* ============ Side panel ============ */
+      #scene-02-3e35eb .panel {
+        position: absolute;
+        right: 92px; top: 400px;
+        width: 340px;
+        padding: 28px 30px;
+        background: rgba(10, 18, 36, 0.72);
+        border: 1px solid rgba(77, 208, 255, 0.25);
+        border-radius: 18px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          0 0 60px rgba(77, 208, 255, 0.06);
+        z-index: 8;
+      }
+      #scene-02-3e35eb .panel-title {
+        font-size: 18px;
+        letter-spacing: 0.35em;
+        color: #4dd0ff;
+        font-weight: 600;
+        margin-bottom: 22px;
+      }
+      #scene-02-3e35eb .panel-row {
+        display: flex; align-items: baseline; justify-content: space-between;
+        padding: 14px 0;
+        border-top: 1px solid rgba(77, 208, 255, 0.12);
+        font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+      }
+      #scene-02-3e35eb .panel-row:first-of-type { border-top: none; }
+      #scene-02-3e35eb .panel-row .k {
+        color: #8da1c7; font-size: 17px; letter-spacing: 0.08em;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-02-3e35eb .panel-row .v {
+        color: #f1f5f9; font-size: 30px; font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      #scene-02-3e35eb .panel-row .cos-k { color: #fbbf24; }
+      #scene-02-3e35eb .panel-row .cos-v { color: #fbbf24; font-style: italic; }
+      #scene-02-3e35eb .panel-row .sin-k { color: #ff4d8f; }
+      #scene-02-3e35eb .panel-row .sin-v { color: #ff4d8f; font-style: italic; }
+      #scene-02-3e35eb .panel-foot {
+        margin-top: 18px;
+        padding: 14px 0 4px;
+        border-top: 1px solid rgba(77, 208, 255, 0.25);
+        text-align: center;
+      }
+      #scene-02-3e35eb .panel-foot .eqn {
+        font-family: "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-size: 32px;
+        color: #4dd0ff;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-shadow: 0 0 18px rgba(77, 208, 255, 0.4);
+      }
+
+      /* ============ Caption ============ */
+      #scene-02-3e35eb .caption {
+        position: absolute;
+        left: 50%; bottom: 72px;
+        transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px;
+        color: #e2e8f0;
+        letter-spacing: 0.08em;
+        padding: 18px 36px;
+        background: rgba(10, 18, 36, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 999px;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-02-3e35eb .caption .cap-dot {
+        display: inline-block;
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: #4dd0ff;
+        box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-02-3e35eb .caption .cos-em {
+        color: #fbbf24; font-weight: 700; font-style: italic;
+        margin: 0 4px;
+      }
+      #scene-02-3e35eb .caption .sin-em {
+        color: #ff4d8f; font-weight: 700; font-style: italic;
+        margin: 0 4px;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-02-3e35eb';
+
+      // ============================================================
+      // BEAT 0 — 0.0-0.6s — atmosphere wakes up
+      // ============================================================
+      tl.fromTo(ID + ' .bg',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0);
+      tl.fromTo(ID + ' .orb-a',
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 1.4, ease: 'power2.out', transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .orb-b',
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out', transformOrigin: 'center' }, 0.2);
+      tl.fromTo(ID + ' .grain',
+        { opacity: 0 },
+        { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      // ============================================================
+      // BEAT 1 — 0.2-1.8s — header slides in, establishes context
+      // ============================================================
+      tl.fromTo(ID + ' .eyebrow .num',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .eyebrow .bar',
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'left center' }, 0.45);
+      tl.fromTo(ID + ' .eyebrow .label',
+        { opacity: 0, x: -12 },
+        { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, 0.55);
+
+      tl.fromTo(ID + ' .title .t1',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .title .t2',
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl.fromTo(ID + ' .subtitle',
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.4);
+
+      // Dot grid fades in as subtle depth
+      tl.fromTo(ID + ' .dot-grid',
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0.5);
+
+      // ============================================================
+      // BEAT 2 — 1.6-4.0s — geometry materializes
+      // ============================================================
+      // Circle halo + ghost rings breathe in first
+      tl.fromTo(ID + ' .halo',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 1.3, ease: 'power2.out', transformOrigin: 'center' }, 1.6);
+      tl.fromTo(ID + ' .ghost',
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.9, ease: 'power2.out', stagger: 0.1, transformOrigin: 'center' }, 1.8);
+
+      // Axes draw in from origin outward
+      tl.fromTo(ID + ' .axis-x',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.9, ease: 'power3.out', transformOrigin: '960px 600px' }, 2.0);
+      tl.fromTo(ID + ' .axis-y',
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.9, ease: 'power3.out', transformOrigin: '960px 600px' }, 2.1);
+      tl.fromTo(ID + ' .ax-arrow',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, stagger: 0.08 }, 2.85);
+      tl.fromTo(ID + ' .ax-lbl',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, transformOrigin: 'center' }, 2.9);
+
+      // Origin + ticks
+      tl.fromTo(ID + ' .origin-dot',
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2.4)', transformOrigin: 'center' }, 2.4);
+      tl.fromTo(ID + ' .origin-lbl',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4 }, 2.6);
+      tl.fromTo(ID + ' .ticks',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 }, 2.95);
+
+      // The unit circle — the hero — draws on as a confident arc
+      tl.fromTo(ID + ' .unit-circle',
+        { strokeDashoffset: 1760 },
+        { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 2.3);
+
+      // ============================================================
+      // BEAT 3 — 4.0-7.0s — point P, radius, angle θ
+      // ============================================================
+      // Radius vector draws from origin outward
+      tl.fromTo(ID + ' .radius',
+        { opacity: 0, scaleX: 0 },
+        { opacity: 0.9, scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 600px' }, 4.0);
+      tl.fromTo(ID + ' .radius-lbl',
+        { opacity: 0, x: -8 },
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' }, 4.55);
+
+      // Angle arc + theta
+      tl.fromTo(ID + ' .arc',
+        { opacity: 0, strokeDasharray: 100, strokeDashoffset: 100 },
+        { opacity: 1, strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }, 4.2);
+      tl.fromTo(ID + ' .arc-lbl',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 4.7);
+
+      // Point P lands with a glow pop
+      tl.fromTo(ID + ' .point-halo',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(2.2)', transformOrigin: '1100px 357.5px' }, 4.6);
+      tl.fromTo(ID + ' .point-p',
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.8)', transformOrigin: '1100px 357.5px' }, 4.7);
+      // Subtle pulse on the point halo to draw attention (finite repeat)
+      tl.to(ID + ' .point-halo',
+        { scale: 1.3, opacity: 0.55, duration: 0.9, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: '1100px 357.5px' }, 5.3);
+      tl.fromTo(ID + ' .point-lbl',
+        { opacity: 0, x: 12 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 5.0);
+
+      // ============================================================
+      // BEAT 4 — 6.5-9.5s — cos / sin projections
+      // ============================================================
+      // cos drop + segment + label
+      tl.fromTo(ID + ' .cos-drop',
+        { opacity: 0, scaleY: 0 },
+        { opacity: 0.7, scaleY: 1, duration: 0.5, ease: 'power2.out', transformOrigin: '1100px 600px' }, 6.5);
+      tl.fromTo(ID + ' .cos-seg',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 600px' }, 6.7);
+      tl.fromTo(ID + ' .cos-lbl',
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 7.15);
+
+      // sin drop + segment + label
+      tl.fromTo(ID + ' .sin-drop',
+        { opacity: 0, scaleX: 0 },
+        { opacity: 0.7, scaleX: 1, duration: 0.5, ease: 'power2.out', transformOrigin: '1100px 357.5px' }, 7.2);
+      tl.fromTo(ID + ' .sin-seg',
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 600px' }, 7.4);
+      tl.fromTo(ID + ' .sin-lbl',
+        { opacity: 0, y: -14 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 7.85);
+
+      // ============================================================
+      // BEAT 5 — 7.5-11.0s — data panel slides in, caption crystallizes
+      // ============================================================
+      tl.fromTo(ID + ' .panel',
+        { opacity: 0, x: 80 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.5);
+      tl.fromTo(ID + ' .panel-title',
+        { opacity: 0, letterSpacing: '0.5em' },
+        { opacity: 1, letterSpacing: '0.35em', duration: 0.6, ease: 'power2.out' }, 7.9);
+      tl.fromTo(ID + ' .panel-row',
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.55, stagger: 0.15, ease: 'power3.out' }, 8.1);
+      tl.fromTo(ID + ' .panel-foot',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 8.9);
+
+      // Caption at the bottom: last piece
+      tl.fromTo(ID + ' .caption',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 9.4);
+      tl.fromTo(ID + ' .cap-dot',
+        { scale: 0 },
+        { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 9.6);
+
+      // ============================================================
+      // BEAT 6 — 11.0-12.0s — hold and breathe
+      // ============================================================
+      // Subtle halo pulse to end on
+      tl.to(ID + ' .halo',
+        { opacity: 1.15, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.6);
+      // Ensure final frame holds everything visible until 12.0
+      tl.set({}, {}, 12);
+
+      window.__timelines['scene-02-3e35eb'] = tl;
+    </script>
+  </div>
+
+</body>
+</html>

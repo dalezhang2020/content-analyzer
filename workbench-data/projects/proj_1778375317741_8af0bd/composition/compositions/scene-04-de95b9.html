@@ -1,282 +1,246 @@
 <template id="scene-04-de95b9-template">
   <div id="scene-04-de95b9" data-composition-id="scene-04-de95b9" data-width="1920" data-height="1080">
 
-    <!-- Background layers -->
-    <div class="bg"></div>
-    <div class="grid-floor"></div>
-    <div class="bg-vignette"></div>
+    <div class="s04-bg"></div>
+    <div class="s04-vignette"></div>
+    <div class="s04-orb s04-orb-a"></div>
+    <div class="s04-orb s04-orb-b"></div>
 
-    <div class="eyebrow">第 04 幕 · 把圆展开成波</div>
-    <h1 class="title">让 <span class="hl">圆</span> 沿 <span class="hl2">时间</span> 延展</h1>
-    <div class="subtitle">纵坐标 → 正弦波 · 横坐标 → 余弦波</div>
+    <div class="s04-header">
+      <div class="s04-eyebrow">
+        <span class="s04-num">04</span>
+        <span class="s04-bar"></span>
+        <span class="s04-label">CIRCLE → WAVE</span>
+      </div>
+      <h1 class="s04-title">
+        <span class="s04-t1">把圆</span>
+        <span class="s04-t2">展开成波</span>
+      </h1>
+      <div class="s04-subtitle">纵坐标 → <span class="s04-em-sin">正弦波</span> · 横坐标 → <span class="s04-em-cos">余弦波</span></div>
+    </div>
 
-    <svg class="stage" viewBox="0 0 1920 720" xmlns="http://www.w3.org/2000/svg">
+    <svg class="s04-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="s04-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feGaussianBlur stdDeviation="5" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <filter id="s04-strong" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="10" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <linearGradient id="s04-sine-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.2"/>
-          <stop offset="30%" stop-color="#4dd0ff" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#c8a3ff" stop-opacity="1"/>
+        <radialGradient id="s04-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s04-sin-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff4d8f" stop-opacity="0.2"/>
+          <stop offset="30%" stop-color="#ff4d8f" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#c4b5fd" stop-opacity="1"/>
         </linearGradient>
         <linearGradient id="s04-cos-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#ffb36e" stop-opacity="0.2"/>
-          <stop offset="30%" stop-color="#ffb36e" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#ff7a9c" stop-opacity="0.95"/>
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
+          <stop offset="30%" stop-color="#fbbf24" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ffb36e" stop-opacity="1"/>
         </linearGradient>
-        <radialGradient id="s04-point-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#fffbeb"/>
-          <stop offset="60%" stop-color="#fbbf24"/>
-          <stop offset="100%" stop-color="#f59e0b"/>
-        </radialGradient>
       </defs>
 
       <!-- Left: unit circle -->
-      <g class="circle-group" transform="translate(300, 360)">
-        <line class="axis" x1="-180" y1="0" x2="180" y2="0" stroke="#4a6b99" stroke-width="1.5" opacity="0.6"/>
-        <line class="axis" x1="0" y1="-180" x2="0" y2="180" stroke="#4a6b99" stroke-width="1.5" opacity="0.6"/>
-        <circle class="unit-circle" cx="0" cy="0" r="160" fill="none"
-                stroke="#4dd0ff" stroke-width="3"
-                stroke-dasharray="1005" stroke-dashoffset="1005"
-                filter="url(#s04-glow)"/>
-        <circle class="origin" cx="0" cy="0" r="4" fill="#cbd5e1"/>
-        <text class="circle-label" x="0" y="210" fill="#94a3b8" font-size="20" text-anchor="middle" letter-spacing="2">单位圆</text>
-
-        <!-- Rotating radius + point -->
-        <line class="radius" x1="0" y1="0" x2="160" y2="0" stroke="#fbbf24" stroke-width="2.5" opacity="0" filter="url(#s04-glow)"/>
-        <line class="drop-to-x" x1="160" y1="0" x2="160" y2="0" stroke="#ffb36e" stroke-width="1.8" stroke-dasharray="5 5" opacity="0"/>
-        <line class="drop-to-y" x1="160" y1="0" x2="0" y2="0" stroke="#4dd0ff" stroke-width="1.8" stroke-dasharray="5 5" opacity="0"/>
-        <circle class="point" cx="160" cy="0" r="10" fill="url(#s04-point-glow)" filter="url(#s04-strong)" opacity="0"/>
+      <g class="s04-circle-g" transform="translate(360, 620)">
+        <circle class="s04-halo" cx="0" cy="0" r="240" fill="url(#s04-halo)"/>
+        <line class="s04-ax-x" x1="-220" y1="0" x2="220" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s04-ax-y" x1="0" y1="220" x2="0" y2="-220" stroke="#5b6e93" stroke-width="1.5"/>
+        <circle class="s04-unit" cx="0" cy="0" r="180" fill="none" stroke="#4dd0ff" stroke-width="3"
+                stroke-dasharray="1131" stroke-dashoffset="1131" filter="url(#s04-glow)"/>
+        <line class="s04-radius" x1="0" y1="0" x2="180" y2="0" stroke="#ffffff" stroke-width="2.5" opacity="0.9"/>
+        <circle class="s04-p-halo" cx="180" cy="0" r="20" fill="#fbbf24" opacity="0.4" filter="url(#s04-glow)"/>
+        <circle class="s04-p" cx="180" cy="0" r="10" fill="#fbbf24" stroke="#fffbeb" stroke-width="2"/>
+        <text class="s04-circle-lbl" x="0" y="260" fill="#8da1c7" font-size="20" text-anchor="middle" letter-spacing="4">单位圆</text>
       </g>
 
-      <!-- Connector arrow -->
-      <g class="connector">
-        <line class="conn-line" x1="500" y1="360" x2="600" y2="360" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 6" opacity="0"/>
-        <polygon class="conn-arrow" points="600,360 588,354 588,366" fill="#fbbf24" opacity="0"/>
-        <text class="conn-label" x="550" y="340" fill="#fbbf24" font-size="18" text-anchor="middle" letter-spacing="1" opacity="0">展开</text>
+      <!-- Arrow from circle to wave (transition indicator) -->
+      <g class="s04-arrow-g" transform="translate(620, 620)">
+        <line class="s04-arrow-line" x1="0" y1="0" x2="100" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 4" opacity="0"/>
+        <polygon class="s04-arrow-head" points="100,0 80,-8 80,8" fill="#fbbf24" opacity="0"/>
+        <text class="s04-arrow-lbl" x="50" y="-18" fill="#fbbf24" font-size="18" text-anchor="middle" letter-spacing="2" opacity="0">展开</text>
       </g>
 
-      <!-- Right: waveform canvas -->
-      <g class="wave-group" transform="translate(640, 360)">
-        <!-- time axis -->
-        <line class="time-axis" x1="0" y1="0" x2="0" y2="0" stroke="#6b85ab" stroke-width="2.5" opacity="0.85"/>
-        <polygon class="time-arrow" points="1180,360 1160,352 1160,368" fill="#6b85ab" opacity="0"/>
-        <text class="time-label" x="1140" y="340" fill="#8ba3c7" font-size="20" opacity="0" text-anchor="middle">时间 t</text>
+      <!-- Right: wave panel -->
+      <g class="s04-wave-g" transform="translate(740, 620)">
+        <line class="s04-wave-ax" x1="0" y1="0" x2="1100" y2="0" stroke="#5b6e93" stroke-width="1.5" opacity="0"/>
+        <line class="s04-wave-amp" x1="0" y1="-200" x2="0" y2="200" stroke="#3a4a70" stroke-width="1" stroke-dasharray="4 4" opacity="0"/>
+        <polygon class="s04-time-arr" points="1100,0 1080,-8 1080,8" fill="#5b6e93" opacity="0"/>
+        <text class="s04-time-lbl" x="1080" y="-18" fill="#8da1c7" font-size="18" text-anchor="end" letter-spacing="2" opacity="0">时间 t →</text>
+        <text class="s04-amp-plus" x="-16" y="-194" fill="#5b6e93" font-size="16" text-anchor="end" font-family="JetBrains Mono, monospace" opacity="0">+1</text>
+        <text class="s04-amp-minus" x="-16" y="210" fill="#5b6e93" font-size="16" text-anchor="end" font-family="JetBrains Mono, monospace" opacity="0">-1</text>
 
-        <!-- amplitude axis -->
-        <line class="amp-axis" x1="0" y1="-170" x2="0" y2="170" stroke="#5a7bb8" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.5"/>
-        <text class="amp-plus" x="-14" y="-165" fill="#6b85ab" font-size="16" text-anchor="end" opacity="0">+1</text>
-        <text class="amp-minus" x="-14" y="175" fill="#6b85ab" font-size="16" text-anchor="end" opacity="0">-1</text>
-
-        <!-- sin wave (upper visualization line, y = -sin) -->
-        <path class="sin-path"
-              d="M 0 0 Q 40 -150, 80 -160 T 160 0 T 240 160 T 320 160 T 400 0 T 480 -160 T 560 -160 T 640 0 T 720 160 T 800 160 T 880 0 T 960 -160 T 1040 -160 T 1120 0"
-              fill="none" stroke="url(#s04-sine-grad)" stroke-width="4" stroke-linecap="round"
-              stroke-dasharray="1800" stroke-dashoffset="1800"
-              filter="url(#s04-glow)"/>
-        <!-- cos wave -->
-        <path class="cos-path"
-              d="M 0 -160 Q 40 -160, 80 0 T 160 160 T 240 160 T 320 0 T 400 -160 T 480 -160 T 560 0 T 640 160 T 720 160 T 800 0 T 880 -160 T 960 -160 T 1040 0 T 1120 160"
+        <!-- Sine wave: 3 cycles across 1100px, amplitude 180 -->
+        <path class="s04-sin-wave"
+              d="M 0 0 Q 46 -180, 92 -180 T 184 0 T 276 180 T 368 180 T 460 0 T 552 -180 T 644 -180 T 736 0 T 828 180 T 920 180 T 1012 0 T 1100 -140"
+              fill="none" stroke="url(#s04-sin-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="1800" stroke-dashoffset="1800" filter="url(#s04-glow)"/>
+        <!-- Cosine wave: shifted 90° -->
+        <path class="s04-cos-wave"
+              d="M 0 -180 Q 46 -180, 92 0 T 184 180 T 276 180 T 368 0 T 460 -180 T 552 -180 T 644 0 T 736 180 T 828 180 T 920 0 T 1012 -180 T 1100 -180"
               fill="none" stroke="url(#s04-cos-grad)" stroke-width="3.5" stroke-linecap="round"
-              stroke-dasharray="1800" stroke-dashoffset="1800"
-              opacity="0.88"/>
+              stroke-dasharray="1800" stroke-dashoffset="1800" opacity="0.9"/>
 
-        <!-- moving indicator point (traces the sine) -->
-        <circle class="sin-tracer" cx="0" cy="0" r="8" fill="#4dd0ff" filter="url(#s04-glow)" opacity="0"/>
-        <circle class="cos-tracer" cx="0" cy="-160" r="7" fill="#ffb36e" filter="url(#s04-glow)" opacity="0"/>
-
-        <!-- labels -->
-        <text class="sin-label" x="40" y="-180" fill="#4dd0ff" font-size="28" font-style="italic" font-family="Georgia, serif" opacity="0">sin θ</text>
-        <text class="cos-label" x="40" y="200" fill="#ffb36e" font-size="28" font-style="italic" font-family="Georgia, serif" opacity="0">cos θ</text>
+        <text class="s04-sin-lbl" x="30" y="-200" fill="#ff4d8f" font-size="26" font-style="italic" font-family="Georgia, serif" opacity="0">sin θ</text>
+        <text class="s04-cos-lbl" x="30" y="230" fill="#fbbf24" font-size="26" font-style="italic" font-family="Georgia, serif" opacity="0">cos θ</text>
       </g>
     </svg>
 
-    <div class="caption">
-      <span class="cap-accent">旋转</span> &times; <span class="cap-accent2">时间</span> = <span class="cap-accent3">波形</span>
+    <div class="s04-caption">
+      <span class="s04-cap-dot"></span>
+      <span class="s04-cap-accent">旋转</span> &times; <span class="s04-cap-accent2">时间</span> = <span class="s04-cap-accent3">波形曲线</span>
     </div>
 
     <style>
       #scene-04-de95b9 {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #05070f;
-        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
-        color: #e8eef7;
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #040813; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
       }
-      #scene-04-de95b9 .bg {
+      #scene-04-de95b9 .s04-bg {
         position: absolute; inset: 0;
         background:
           radial-gradient(ellipse 900px 700px at 22% 45%, rgba(77,208,255,0.16), transparent 58%),
-          radial-gradient(ellipse 900px 700px at 78% 62%, rgba(255,179,110,0.14), transparent 58%),
-          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(200,163,255,0.10), transparent 55%),
-          linear-gradient(180deg, #05070f 0%, #081225 55%, #030610 100%);
+          radial-gradient(ellipse 900px 700px at 78% 62%, rgba(251,191,36,0.12), transparent 58%),
+          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(255,77,143,0.08), transparent 55%),
+          linear-gradient(180deg, #040813 0%, #060b20 55%, #030612 100%);
       }
-      #scene-04-de95b9 .grid-floor {
+      #scene-04-de95b9 .s04-vignette {
         position: absolute; inset: 0;
-        background-image:
-          linear-gradient(rgba(120,160,220,0.06) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(120,160,220,0.06) 1px, transparent 1px);
-        background-size: 80px 80px;
-        mask-image: radial-gradient(ellipse 1400px 900px at 50% 55%, #000 30%, transparent 85%);
-        -webkit-mask-image: radial-gradient(ellipse 1400px 900px at 50% 55%, #000 30%, transparent 85%);
-      }
-      #scene-04-de95b9 .bg-vignette {
-        position: absolute; inset: 0;
-        background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.6) 100%);
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
         pointer-events: none;
       }
-
-      #scene-04-de95b9 .eyebrow {
-        position: absolute; top: 90px; left: 120px;
-        font-size: 26px; letter-spacing: 10px;
-        color: #fbbf24; font-weight: 500;
+      #scene-04-de95b9 .s04-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-04-de95b9 .s04-orb-a {
+        width: 520px; height: 520px; left: -180px; top: 120px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
       }
-      #scene-04-de95b9 .title {
-        position: absolute; top: 140px; left: 120px;
-        font-size: 108px; font-weight: 800; letter-spacing: 4px;
-        color: #f7fafc; line-height: 1;
-        text-shadow: 0 0 36px rgba(77,208,255,0.32);
+      #scene-04-de95b9 .s04-orb-b {
+        width: 620px; height: 620px; right: -220px; bottom: -200px;
+        background: radial-gradient(circle, rgba(251,191,36,0.22), transparent 70%);
       }
-      #scene-04-de95b9 .title .hl {
-        background: linear-gradient(135deg, #4dd0ff 0%, #7fd4ff 100%);
+      #scene-04-de95b9 .s04-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-04-de95b9 .s04-eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-04-de95b9 .s04-num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em;
+      }
+      #scene-04-de95b9 .s04-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-04-de95b9 .s04-label { color: #b5c4dd; }
+      #scene-04-de95b9 .s04-title {
+        margin-top: 18px; font-size: 130px; font-weight: 800; line-height: 1;
+        letter-spacing: -0.02em;
+        display: flex; gap: 22px; align-items: baseline;
+      }
+      #scene-04-de95b9 .s04-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-04-de95b9 .s04-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #ff4d8f 50%, #fbbf24 100%);
         -webkit-background-clip: text; background-clip: text;
         -webkit-text-fill-color: transparent; color: transparent;
-        filter: drop-shadow(0 0 24px rgba(77,208,255,0.45));
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(255,77,143,0.35);
       }
-      #scene-04-de95b9 .title .hl2 {
-        background: linear-gradient(135deg, #ffd27a 0%, #ffb36e 100%);
-        -webkit-background-clip: text; background-clip: text;
-        -webkit-text-fill-color: transparent; color: transparent;
-        filter: drop-shadow(0 0 22px rgba(255,179,110,0.45));
+      #scene-04-de95b9 .s04-subtitle {
+        margin-top: 20px; font-size: 30px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300;
       }
-      #scene-04-de95b9 .subtitle {
-        position: absolute; top: 274px; left: 124px;
-        font-size: 32px; color: #9fb4cc; letter-spacing: 6px;
-      }
+      #scene-04-de95b9 .s04-em-sin { color: #ff4d8f; font-weight: 700; padding: 0 4px; }
+      #scene-04-de95b9 .s04-em-cos { color: #fbbf24; font-weight: 700; padding: 0 4px; }
 
-      #scene-04-de95b9 .stage {
-        position: absolute; left: 0; top: 340px;
-        width: 1920px; height: 720px;
-      }
+      #scene-04-de95b9 .s04-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-      #scene-04-de95b9 .caption {
-        position: absolute; left: 50%; bottom: 68px;
-        transform: translateX(-50%);
-        font-size: 32px; color: #e2e8f0;
-        letter-spacing: 8px; font-weight: 300;
-        padding: 16px 42px;
-        background: rgba(12, 20, 36, 0.55);
-        border: 1px solid rgba(77,208,255,0.25);
-        border-radius: 12px;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+      #scene-04-de95b9 .s04-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       }
-      #scene-04-de95b9 .cap-accent  { color: #fbbf24; font-weight: 600; text-shadow: 0 0 14px rgba(251,191,36,0.45); }
-      #scene-04-de95b9 .cap-accent2 { color: #4dd0ff; font-weight: 600; text-shadow: 0 0 14px rgba(77,208,255,0.45); }
-      #scene-04-de95b9 .cap-accent3 { color: #ffb36e; font-weight: 600; text-shadow: 0 0 14px rgba(255,179,110,0.45); }
+      #scene-04-de95b9 .s04-cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #fbbf24; box-shadow: 0 0 12px #fbbf24;
+      }
+      #scene-04-de95b9 .s04-cap-accent { color: #fbbf24; font-weight: 700; text-shadow: 0 0 14px rgba(251,191,36,0.5); }
+      #scene-04-de95b9 .s04-cap-accent2 { color: #4dd0ff; font-weight: 700; text-shadow: 0 0 14px rgba(77,208,255,0.5); }
+      #scene-04-de95b9 .s04-cap-accent3 { color: #ff4d8f; font-weight: 700; text-shadow: 0 0 14px rgba(255,77,143,0.5); }
     </style>
 
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
       const ID = '#scene-04-de95b9';
+      const R = 180;
 
-      // 0 - 1.2s: Background + title block
-      tl.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power2.out' }, 0);
-      tl.fromTo(ID + ' .grid-floor', { opacity: 0 }, { opacity: 1, duration: 1.3, ease: 'power2.out' }, 0.15);
-      tl.fromTo(ID + ' .eyebrow', { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }, 0.25);
-      tl.fromTo(ID + ' .title', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.45);
-      tl.fromTo(ID + ' .subtitle', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.95);
+      tl.fromTo(ID + ' .s04-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .s04-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .s04-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
 
-      // 1.4 - 2.8s: Unit circle
-      tl.fromTo(ID + ' .circle-group .axis', { opacity: 0 }, { opacity: 0.6, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, 1.4);
-      tl.fromTo(ID + ' .origin', { opacity: 0, scale: 0, transformOrigin: 'center center' }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 1.6);
-      tl.to(ID + ' .unit-circle', { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, 1.7);
-      tl.fromTo(ID + ' .circle-label', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 2.7);
+      tl.fromTo(ID + ' .s04-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .s04-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl.fromTo(ID + ' .s04-label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, 0.55);
+      tl.fromTo(ID + ' .s04-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .s04-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl.fromTo(ID + ' .s04-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-      // 2.6 - 3.2s: Radius + point appear
-      tl.to(ID + ' .radius', { opacity: 1, duration: 0.4 }, 2.7);
-      tl.to(ID + ' .point', { opacity: 1, duration: 0.4, ease: 'back.out(2.2)' }, 2.85);
-      tl.to(ID + ' .drop-to-x', { opacity: 0.75, duration: 0.35 }, 3.0);
-      tl.to(ID + ' .drop-to-y', { opacity: 0.75, duration: 0.35 }, 3.1);
+      // Circle appears
+      tl.fromTo(ID + ' .s04-halo', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.6);
+      tl.fromTo(ID + ' .s04-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '360px 620px' }, 1.8);
+      tl.fromTo(ID + ' .s04-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '360px 620px' }, 1.9);
+      tl.fromTo(ID + ' .s04-unit', { strokeDashoffset: 1131 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.0);
+      tl.fromTo(ID + ' .s04-circle-lbl', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.0);
+      tl.fromTo(ID + ' .s04-radius', { opacity: 0, scaleX: 0 }, { opacity: 0.9, scaleX: 1, duration: 0.6, transformOrigin: '360px 620px' }, 3.2);
+      tl.fromTo(ID + ' .s04-p-halo', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: '540px 620px' }, 3.3);
+      tl.fromTo(ID + ' .s04-p', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: '540px 620px' }, 3.4);
 
-      // 3.2 - 3.8s: Connector arrow
-      tl.fromTo(ID + ' .conn-line', { opacity: 0 }, { opacity: 0.9, duration: 0.5, ease: 'power2.out' }, 3.2);
-      tl.to(ID + ' .conn-arrow', { opacity: 1, duration: 0.3 }, 3.55);
-      tl.to(ID + ' .conn-label', { opacity: 1, duration: 0.4 }, 3.45);
+      // Arrow
+      tl.to(ID + ' .s04-arrow-line', { opacity: 0.9, duration: 0.5 }, 3.8);
+      tl.to(ID + ' .s04-arrow-head', { opacity: 1, duration: 0.4 }, 4.0);
+      tl.to(ID + ' .s04-arrow-lbl', { opacity: 1, duration: 0.4 }, 4.1);
 
-      // 3.4 - 4.6s: Time axis extends across
-      tl.to(ID + ' .time-axis', { attr: { x2: 1160 }, duration: 1.3, ease: 'power2.out' }, 3.5);
-      tl.to(ID + ' .time-arrow', { opacity: 1, duration: 0.35 }, 4.75);
-      tl.to(ID + ' .time-label', { opacity: 1, duration: 0.4 }, 4.85);
+      // Wave axes
+      tl.to(ID + ' .s04-wave-ax', { opacity: 0.8, duration: 0.6 }, 4.3);
+      tl.to(ID + ' .s04-wave-amp', { opacity: 0.5, duration: 0.5 }, 4.5);
+      tl.to(ID + ' .s04-time-arr', { opacity: 1, duration: 0.4 }, 5.0);
+      tl.to(ID + ' .s04-time-lbl', { opacity: 1, duration: 0.4 }, 5.1);
+      tl.to(ID + ' .s04-amp-plus', { opacity: 0.9, duration: 0.4 }, 5.2);
+      tl.to(ID + ' .s04-amp-minus', { opacity: 0.9, duration: 0.4 }, 5.3);
 
-      // 4.2 - 4.9s: Amplitude axis + labels
-      tl.fromTo(ID + ' .amp-axis', { opacity: 0 }, { opacity: 0.5, duration: 0.5 }, 4.2);
-      tl.to(ID + ' .amp-plus', { opacity: 0.85, duration: 0.4 }, 4.55);
-      tl.to(ID + ' .amp-minus', { opacity: 0.85, duration: 0.4 }, 4.65);
-
-      // 4.4 - 11.2s: Drive rotation; sine/cos waves draw along the right panel
-      //   The point rotates clockwise on the circle; simultaneously the sine & cos
-      //   waves unveil at matching rate across the time axis.
-      const rotState = { a: 0 };
-      const R = 160;
-      tl.to(rotState, {
-        a: -Math.PI * 4,
-        duration: 6.6,
-        ease: 'none',
+      // Rotation + wave drawing in parallel
+      const state = { t: 0 };
+      tl.to(state, {
+        t: Math.PI * 4,
+        duration: 7.0,
+        ease: 'power1.inOut',
         onUpdate: () => {
-          const theta = rotState.a;
+          const theta = state.t;
           const cx = Math.cos(theta) * R;
-          const cy = Math.sin(theta) * R;
-          const pt = document.querySelector(ID + ' .point');
-          const rad = document.querySelector(ID + ' .radius');
-          const dx = document.querySelector(ID + ' .drop-to-x');
-          const dy = document.querySelector(ID + ' .drop-to-y');
+          const cy = -Math.sin(theta) * R;
+          const radius = document.querySelector(ID + ' .s04-radius');
+          const pt = document.querySelector(ID + ' .s04-p');
+          const ptHalo = document.querySelector(ID + ' .s04-p-halo');
+          if (radius) { radius.setAttribute('x2', cx.toFixed(2)); radius.setAttribute('y2', cy.toFixed(2)); }
           if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
-          if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
-          if (dx) { dx.setAttribute('x1', cx.toFixed(2)); dx.setAttribute('y1', cy.toFixed(2)); dx.setAttribute('x2', cx.toFixed(2)); }
-          if (dy) { dy.setAttribute('x1', cx.toFixed(2)); dy.setAttribute('y1', cy.toFixed(2)); dy.setAttribute('y2', cy.toFixed(2)); }
-
-          // tracers follow the progress along the unfolding wave
-          const progress = (theta / (-Math.PI * 4)); // 0 → 1
-          const x = 1120 * progress;
-          const sinY = -Math.sin(-theta) * R; // matches path y (up is negative in SVG)
-          // cos(θ): at θ=0 cos=1 so tracer starts at y = -160 (top). Our path y = -cos*R.
-          const cosY = -Math.cos(-theta) * R;
-          const sinT = document.querySelector(ID + ' .sin-tracer');
-          const cosT = document.querySelector(ID + ' .cos-tracer');
-          if (sinT) { sinT.setAttribute('cx', x.toFixed(2)); sinT.setAttribute('cy', sinY.toFixed(2)); }
-          if (cosT) { cosT.setAttribute('cx', x.toFixed(2)); cosT.setAttribute('cy', cosY.toFixed(2)); }
+          if (ptHalo) { ptHalo.setAttribute('cx', cx.toFixed(2)); ptHalo.setAttribute('cy', cy.toFixed(2)); }
         }
-      }, 4.6);
+      }, 5.0);
 
-      // Wave strokes draw in sync with rotation (sin leads, cos follows slightly)
-      tl.to(ID + ' .sin-path', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 4.8);
-      tl.to(ID + ' .cos-path', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.1);
-      tl.to(ID + ' .sin-tracer', { opacity: 1, duration: 0.4 }, 4.7);
-      tl.to(ID + ' .cos-tracer', { opacity: 1, duration: 0.4 }, 4.9);
-      tl.to(ID + ' .sin-label', { opacity: 1, duration: 0.5 }, 6.3);
-      tl.to(ID + ' .cos-label', { opacity: 1, duration: 0.5 }, 6.7);
+      // Waves draw in over 6s
+      tl.to(ID + ' .s04-sin-wave', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.0);
+      tl.to(ID + ' .s04-cos-wave', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.3);
 
-      // 11.4 - 12.4s: Final caption reveal + gentle pulse
-      tl.fromTo(ID + ' .caption', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 11.4);
-      tl.to(ID + ' .cap-accent, ' + ID + ' .cap-accent2, ' + ID + ' .cap-accent3', {
-        textShadow: '0 0 22px currentColor',
-        duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut'
-      }, 12.3);
+      // Wave labels
+      tl.to(ID + ' .s04-sin-lbl', { opacity: 1, duration: 0.5 }, 6.5);
+      tl.to(ID + ' .s04-cos-lbl', { opacity: 1, duration: 0.5 }, 6.9);
 
-      // 13.2 - 14.0: very gentle settle
-      tl.to(ID + ' .bg-vignette', { opacity: 1.1, duration: 0.7 }, 13.3);
+      // Caption
+      tl.fromTo(ID + ' .s04-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 12.4);
+      tl.fromTo(ID + ' .s04-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 12.6);
 
-      window.__timelines["scene-04-de95b9"] = tl;
+      tl.set({}, {}, 14);
+      window.__timelines['scene-04-de95b9'] = tl;
     </script>
   </div>
 </template>

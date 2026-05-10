@@ -1,254 +1,220 @@
 <template id="scene-07-0d91b0-template">
   <div id="scene-07-0d91b0" data-composition-id="scene-07-0d91b0" data-width="1920" data-height="1080">
 
-    <div class="bg"></div>
-    <div class="grid-floor"></div>
-    <div class="bg-vignette"></div>
+    <div class="s07-bg"></div>
+    <div class="s07-grid-floor"></div>
+    <div class="s07-vignette"></div>
+    <div class="s07-orb s07-orb-a"></div>
+    <div class="s07-orb s07-orb-b"></div>
 
-    <div class="eyebrow">第 07 幕 · 周期的自然</div>
-    <h1 class="title">转 <span class="hl">一圈</span>,回到 <span class="hl2">原位</span></h1>
-    <div class="subtitle">每 2π 重复一次 · 在 3D 中像螺旋延伸</div>
-
-    <!-- Right-hand readout panel (shows cycle count during rotation) -->
-    <div class="readout">
-      <div class="readout-title">圈数</div>
-      <div class="readout-row">
-        <span class="rlabel">N</span>
-        <span class="rval cycle-val">0</span>
+    <div class="s07-header">
+      <div class="s07-eyebrow">
+        <span class="s07-num">07</span>
+        <span class="s07-bar"></span>
+        <span class="s07-label">PERIODICITY</span>
       </div>
-      <div class="readout-row">
-        <span class="rlabel">2π · N</span>
-        <span class="rval phase-val">0.00</span>
+      <h1 class="s07-title">
+        <span class="s07-t1">每 2π</span>
+        <span class="s07-t2">重复一次</span>
+      </h1>
+      <div class="s07-subtitle">周期性就像<span class="s07-em">螺旋</span>一样自然延伸</div>
+    </div>
+
+    <!-- Counter panel -->
+    <div class="s07-counter">
+      <div class="s07-c-title">CYCLES</div>
+      <div class="s07-c-main">
+        <span class="s07-c-label">N =</span>
+        <span class="s07-c-val s07-cycle-val">0</span>
+      </div>
+      <div class="s07-c-sub">
+        <span class="s07-c-sub-label">累计相位</span>
+        <span class="s07-c-sub-val s07-phase-val">0.00</span>
+        <span class="s07-c-sub-unit">rad</span>
       </div>
     </div>
 
-    <svg class="stage" viewBox="0 0 1920 780" xmlns="http://www.w3.org/2000/svg">
+    <svg class="s07-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="s07-glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feGaussianBlur stdDeviation="5" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <filter id="s07-strong" x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="10" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <radialGradient id="s07-point-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#fffbeb"/>
-          <stop offset="60%" stop-color="#fbbf24"/>
-          <stop offset="100%" stop-color="#f59e0b"/>
+        <radialGradient id="s07-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0"/>
         </radialGradient>
         <linearGradient id="s07-helix-grad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.15"/>
           <stop offset="30%" stop-color="#4dd0ff" stop-opacity="1"/>
-          <stop offset="65%" stop-color="#c8a3ff" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#f472b6" stop-opacity="0.85"/>
+          <stop offset="60%" stop-color="#c4b5fd" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ff4d8f" stop-opacity="0.9"/>
         </linearGradient>
       </defs>
 
-      <!-- Left: tilted 3D-looking unit ellipse (rotation viewport) -->
-      <g class="circle-panel" transform="translate(330, 390)">
-        <ellipse class="circle-shadow" cx="0" cy="12" rx="220" ry="56" fill="#3a6bc8" opacity="0.18"/>
-        <line class="ax-h" x1="-260" y1="0" x2="260" y2="0" stroke="#4a6b99" stroke-width="1.5" opacity="0.55"/>
-        <line class="ax-v" x1="0" y1="-260" x2="0" y2="260" stroke="#4a6b99" stroke-width="1.5" opacity="0.55"/>
+      <!-- Left: tilted circle (perspective) -->
+      <g class="s07-circle-g" transform="translate(380, 620)">
+        <circle class="s07-halo" cx="0" cy="0" r="280" fill="url(#s07-halo)"/>
+        <ellipse class="s07-shadow" cx="0" cy="20" rx="210" ry="40" fill="#3a5580" opacity="0.2"/>
+        <line class="s07-ax-h" x1="-240" y1="0" x2="240" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+        <line class="s07-ax-v" x1="0" y1="-90" x2="0" y2="90" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
 
-        <ellipse class="unit-ellipse" cx="0" cy="0" rx="220" ry="88" fill="none"
-                 stroke="#4dd0ff" stroke-width="3"
-                 stroke-dasharray="1000" stroke-dashoffset="1000"
-                 filter="url(#s07-glow)"/>
+        <ellipse class="s07-unit-ellipse" cx="0" cy="0" rx="210" ry="80"
+                 fill="none" stroke="#4dd0ff" stroke-width="3"
+                 stroke-dasharray="950" stroke-dashoffset="950" filter="url(#s07-glow)"/>
 
-        <!-- Tick anchor points on the ellipse (quarter markers) -->
-        <circle class="anchor a-1" cx="220" cy="0" r="5" fill="#4dd0ff" opacity="0"/>
-        <circle class="anchor a-2" cx="0" cy="-88" r="5" fill="#4dd0ff" opacity="0"/>
-        <circle class="anchor a-3" cx="-220" cy="0" r="5" fill="#4dd0ff" opacity="0"/>
-        <circle class="anchor a-4" cx="0" cy="88" r="5" fill="#4dd0ff" opacity="0"/>
-        <text class="anc-lbl a-lbl-1" x="232" y="8" fill="#9fb4cc" font-size="16" opacity="0">0</text>
-        <text class="anc-lbl a-lbl-2" x="8" y="-98" fill="#9fb4cc" font-size="16" opacity="0">π/2</text>
-        <text class="anc-lbl a-lbl-3" x="-246" y="8" fill="#9fb4cc" font-size="16" opacity="0">π</text>
-        <text class="anc-lbl a-lbl-4" x="8" y="112" fill="#9fb4cc" font-size="16" opacity="0">3π/2</text>
-
-        <!-- Rotor group: radius + point -->
-        <g class="rotor">
-          <line class="radius" x1="0" y1="0" x2="220" y2="0" stroke="#fbbf24" stroke-width="3" opacity="0" filter="url(#s07-glow)"/>
-          <circle class="point-halo" cx="220" cy="0" r="24" fill="url(#s07-point-glow)" opacity="0"/>
-          <circle class="point" cx="220" cy="0" r="10" fill="#ffe2a6" filter="url(#s07-strong)" opacity="0"/>
+        <!-- Quadrant markers -->
+        <g class="s07-markers">
+          <circle class="s07-mark" cx="210" cy="0" r="4" fill="#4dd0ff" opacity="0"/>
+          <circle class="s07-mark" cx="0" cy="-80" r="4" fill="#4dd0ff" opacity="0"/>
+          <circle class="s07-mark" cx="-210" cy="0" r="4" fill="#4dd0ff" opacity="0"/>
+          <circle class="s07-mark" cx="0" cy="80" r="4" fill="#4dd0ff" opacity="0"/>
+          <text class="s07-mark-lbl" x="230" y="6" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">0</text>
+          <text class="s07-mark-lbl" x="10" y="-94" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">π/2</text>
+          <text class="s07-mark-lbl" x="-246" y="6" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">π</text>
+          <text class="s07-mark-lbl" x="10" y="110" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">3π/2</text>
         </g>
 
-        <text class="label-o" x="-20" y="24" fill="#9fb4cc" font-family="Georgia, serif" font-size="18" font-style="italic" opacity="0">O</text>
-        <text class="label-circ" x="0" y="250" fill="#94a3b8" font-size="20" text-anchor="middle" letter-spacing="2" opacity="0">旋转一周 = 2π</text>
+        <!-- Rotating point -->
+        <g class="s07-rotor">
+          <line class="s07-radius" x1="0" y1="0" x2="210" y2="0" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <circle class="s07-p-halo" cx="210" cy="0" r="20" fill="#fbbf24" opacity="0" filter="url(#s07-glow)"/>
+          <circle class="s07-p" cx="210" cy="0" r="10" fill="#fbbf24" stroke="#fffbeb" stroke-width="2.5" opacity="0"/>
+        </g>
+
+        <text class="s07-circle-lbl" x="0" y="150" fill="#8da1c7" font-size="18" text-anchor="middle" letter-spacing="3">单位圆</text>
       </g>
 
-      <!-- Right: helix emerging from time axis -->
-      <g class="helix-panel" transform="translate(640, 390)">
-        <!-- time axis -->
-        <line class="time-axis" x1="0" y1="0" x2="0" y2="0" stroke="#6b85ab" stroke-width="2.2" opacity="0.85"/>
-        <polygon class="time-arrow" points="1160,390 1140,382 1140,398" fill="#6b85ab" opacity="0"/>
-        <text class="time-label" x="1150" y="420" fill="#8ba3c7" font-size="20" text-anchor="end" opacity="0">时间 t →</text>
+      <!-- Right: helix / waveform extending along time -->
+      <g class="s07-helix-g" transform="translate(680, 620)">
+        <line class="s07-time-ax" x1="0" y1="0" x2="1140" y2="0" stroke="#6b85ab" stroke-width="2" opacity="0"/>
+        <polygon class="s07-time-arr" points="1140,0 1120,-8 1120,8" fill="#6b85ab" opacity="0"/>
+        <text class="s07-time-lbl" x="1120" y="-18" fill="#8ba3c7" font-size="18" text-anchor="end" letter-spacing="3" opacity="0">时间 t →</text>
 
-        <!-- cycle boundary markers at multiples of 2π -->
-        <g class="cycle-markers">
-          <line class="cm cm-1" x1="240" y1="-180" x2="240" y2="180" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 6" opacity="0"/>
-          <line class="cm cm-2" x1="480" y1="-180" x2="480" y2="180" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 6" opacity="0"/>
-          <line class="cm cm-3" x1="720" y1="-180" x2="720" y2="180" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 6" opacity="0"/>
-          <line class="cm cm-4" x1="960" y1="-180" x2="960" y2="180" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="4 6" opacity="0"/>
-          <text class="cm-lbl" x="240" y="210" fill="#c4b5fd" font-size="18" text-anchor="middle" opacity="0">2π</text>
-          <text class="cm-lbl" x="480" y="210" fill="#c4b5fd" font-size="18" text-anchor="middle" opacity="0">4π</text>
-          <text class="cm-lbl" x="720" y="210" fill="#c4b5fd" font-size="18" text-anchor="middle" opacity="0">6π</text>
-          <text class="cm-lbl" x="960" y="210" fill="#c4b5fd" font-size="18" text-anchor="middle" opacity="0">8π</text>
+        <!-- Cycle boundary markers -->
+        <g class="s07-cycle-markers">
+          <line class="s07-cm s07-cm-1" x1="240" y1="-180" x2="240" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+          <line class="s07-cm s07-cm-2" x1="480" y1="-180" x2="480" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+          <line class="s07-cm s07-cm-3" x1="720" y1="-180" x2="720" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+          <line class="s07-cm s07-cm-4" x1="960" y1="-180" x2="960" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+
+          <text class="s07-cm-lbl s07-cm-lbl-1" x="240" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">2π</text>
+          <text class="s07-cm-lbl s07-cm-lbl-2" x="480" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">4π</text>
+          <text class="s07-cm-lbl s07-cm-lbl-3" x="720" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">6π</text>
+          <text class="s07-cm-lbl s07-cm-lbl-4" x="960" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">8π</text>
         </g>
 
-        <!-- Helix path — sinusoidal core, drawn across 4 cycles.
-             Each cycle spans 240px. Amplitude 160. -->
-        <path class="helix-path"
+        <!-- Helix-like wave (4 cycles, amplitude 160) -->
+        <path class="s07-helix-path"
               d="M 0 0
-                 C 20 -60, 40 -140, 60 -160
-                 C 80 -180, 100 -180, 120 -160
-                 C 140 -140, 160 -60, 180 0
-                 C 200 60, 220 140, 240 160
-                 C 260 180, 280 180, 300 160
-                 C 320 140, 340 60, 360 0
-                 C 380 -60, 400 -140, 420 -160
-                 C 440 -180, 460 -180, 480 -160
-                 C 500 -140, 520 -60, 540 0
-                 C 560 60, 580 140, 600 160
-                 C 620 180, 640 180, 660 160
-                 C 680 140, 700 60, 720 0
-                 C 740 -60, 760 -140, 780 -160
-                 C 800 -180, 820 -180, 840 -160
-                 C 860 -140, 880 -60, 900 0
-                 C 920 60, 940 140, 960 160
-                 C 980 180, 1000 180, 1020 160
-                 C 1040 140, 1060 60, 1080 0"
+                 C 30 -80, 60 -160, 90 -160 C 120 -160, 150 -80, 180 0 C 210 80, 240 160, 240 160
+                 C 270 160, 300 80, 330 0 C 360 -80, 390 -160, 420 -160 C 450 -160, 480 -80, 480 0
+                 C 510 80, 540 160, 570 160 C 600 160, 630 80, 660 0 C 690 -80, 720 -160, 720 -160
+                 C 750 -160, 780 -80, 810 0 C 840 80, 870 160, 900 160 C 930 160, 960 80, 960 0
+                 C 990 -80, 1020 -160, 1050 -160 C 1080 -160, 1110 -80, 1140 0"
               fill="none" stroke="url(#s07-helix-grad)" stroke-width="4" stroke-linecap="round"
-              stroke-dasharray="3400" stroke-dashoffset="3400"
-              filter="url(#s07-glow)"/>
+              stroke-dasharray="2800" stroke-dashoffset="2800" filter="url(#s07-glow)"/>
 
-        <!-- Moving trace dot along the helix -->
-        <circle class="trace-dot" cx="0" cy="0" r="9" fill="#fbbf24" filter="url(#s07-strong)" opacity="0"/>
+        <!-- Trace dot along helix -->
+        <circle class="s07-trace-dot" cx="0" cy="0" r="10" fill="#fbbf24" filter="url(#s07-glow)" opacity="0"/>
 
-        <!-- Annotations -->
-        <text class="helix-label" x="540" y="-200" fill="#c8a3ff" font-size="24"
-              text-anchor="middle" letter-spacing="4" opacity="0">周期性 · 像螺旋一样自然延伸</text>
+        <text class="s07-helix-lbl" x="570" y="-200" fill="#c4b5fd" font-size="22" text-anchor="middle" letter-spacing="4" opacity="0">无限延伸的螺旋</text>
       </g>
     </svg>
 
-    <div class="caption">
-      <span class="cap-accent">2π</span> 的重复,是 <span class="cap-accent2">几何</span> 的自然,不是 <span class="cap-strike">死记硬背</span>
+    <div class="s07-caption">
+      <span class="s07-cap-dot"></span>
+      <span class="s07-cap-accent">2π</span> 的重复是几何的必然 — 不是死记硬背
     </div>
 
     <style>
       #scene-07-0d91b0 {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #05070f;
-        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
-        color: #e8eef7;
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
       }
-      #scene-07-0d91b0 .bg {
+      #scene-07-0d91b0 .s07-bg {
         position: absolute; inset: 0;
         background:
-          radial-gradient(ellipse 950px 720px at 22% 45%, rgba(77,208,255,0.16), transparent 60%),
-          radial-gradient(ellipse 950px 720px at 78% 62%, rgba(200,163,255,0.14), transparent 60%),
-          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(244,114,182,0.08), transparent 55%),
-          linear-gradient(180deg, #060913 0%, #0b1130 55%, #030610 100%);
+          radial-gradient(ellipse 1000px 700px at 22% 45%, rgba(77,208,255,0.18), transparent 58%),
+          radial-gradient(ellipse 900px 700px at 78% 62%, rgba(200,163,255,0.18), transparent 58%),
+          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(255,77,143,0.10), transparent 55%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #030612 100%);
       }
-      #scene-07-0d91b0 .grid-floor {
-        position: absolute; inset: 0;
+      #scene-07-0d91b0 .s07-grid-floor {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 440px;
         background-image:
-          linear-gradient(rgba(120,160,220,0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(120,160,220,0.05) 1px, transparent 1px);
-        background-size: 80px 80px;
-        mask-image: radial-gradient(ellipse 1400px 900px at 50% 60%, #000 30%, transparent 85%);
-        -webkit-mask-image: radial-gradient(ellipse 1400px 900px at 50% 60%, #000 30%, transparent 85%);
+          linear-gradient(rgba(200,163,255,0.22) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(200,163,255,0.22) 1px, transparent 1px);
+        background-size: 100px 100px;
+        transform: perspective(900px) rotateX(62deg);
+        transform-origin: bottom center;
+        opacity: 0.4;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
       }
-      #scene-07-0d91b0 .bg-vignette {
-        position: absolute; inset: 0;
-        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
-        pointer-events: none;
-      }
+      #scene-07-0d91b0 .s07-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%); pointer-events: none; }
+      #scene-07-0d91b0 .s07-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-07-0d91b0 .s07-orb-a { width: 520px; height: 520px; left: -140px; top: 140px; background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%); }
+      #scene-07-0d91b0 .s07-orb-b { width: 620px; height: 620px; right: -200px; bottom: -100px; background: radial-gradient(circle, rgba(200,163,255,0.3), transparent 70%); }
 
-      #scene-07-0d91b0 .eyebrow {
-        position: absolute; top: 90px; left: 120px;
-        font-size: 26px; letter-spacing: 10px;
-        color: #c8a3ff; font-weight: 500;
+      #scene-07-0d91b0 .s07-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-07-0d91b0 .s07-eyebrow { display: flex; align-items: center; gap: 18px; font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500; }
+      #scene-07-0d91b0 .s07-num { color: #c4b5fd; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(200,163,255,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-07-0d91b0 .s07-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-07-0d91b0 .s07-label { color: #b5c4dd; }
+      #scene-07-0d91b0 .s07-title {
+        margin-top: 18px; font-size: 130px; font-weight: 800; line-height: 1;
+        display: flex; gap: 22px; align-items: baseline; letter-spacing: -0.02em;
       }
-      #scene-07-0d91b0 .title {
-        position: absolute; top: 140px; left: 120px;
-        font-size: 108px; font-weight: 800; letter-spacing: 4px;
-        color: #f7fafc; line-height: 1;
-        text-shadow: 0 0 32px rgba(200,163,255,0.3);
-      }
-      #scene-07-0d91b0 .title .hl {
-        background: linear-gradient(135deg, #fbbf24 0%, #ffb36e 100%);
+      #scene-07-0d91b0 .s07-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-07-0d91b0 .s07-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #4dd0ff 100%);
         -webkit-background-clip: text; background-clip: text;
         -webkit-text-fill-color: transparent; color: transparent;
-        filter: drop-shadow(0 0 22px rgba(251,191,36,0.45));
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(200,163,255,0.4);
       }
-      #scene-07-0d91b0 .title .hl2 {
-        background: linear-gradient(135deg, #4dd0ff 0%, #c8a3ff 100%);
-        -webkit-background-clip: text; background-clip: text;
-        -webkit-text-fill-color: transparent; color: transparent;
-        filter: drop-shadow(0 0 22px rgba(77,208,255,0.45));
-      }
-      #scene-07-0d91b0 .subtitle {
-        position: absolute; top: 272px; left: 124px;
-        font-size: 32px; color: #9fb4cc; letter-spacing: 6px;
-      }
+      #scene-07-0d91b0 .s07-subtitle { margin-top: 20px; font-size: 30px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300; }
+      #scene-07-0d91b0 .s07-em { color: #c4b5fd; font-weight: 700; padding: 0 4px; }
 
-      #scene-07-0d91b0 .readout {
-        position: absolute; top: 106px; right: 120px;
-        padding: 22px 30px;
-        background: rgba(12, 20, 36, 0.55);
-        border: 1px solid rgba(200,163,255,0.3);
-        border-radius: 14px;
-        min-width: 260px;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        opacity: 0;
+      #scene-07-0d91b0 .s07-counter {
+        position: absolute; top: 106px; right: 92px; width: 300px;
+        padding: 24px 28px;
+        background: rgba(10,18,36,0.72);
+        border: 1px solid rgba(200,163,255,0.3); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(200,163,255,0.08);
+        z-index: 8;
       }
-      #scene-07-0d91b0 .readout-title {
-        font-size: 18px; letter-spacing: 6px;
-        color: #c4b5fd; margin-bottom: 12px; font-weight: 500;
+      #scene-07-0d91b0 .s07-c-title { font-size: 16px; letter-spacing: 0.4em; color: #c4b5fd; font-weight: 600; margin-bottom: 14px; }
+      #scene-07-0d91b0 .s07-c-main {
+        display: flex; align-items: baseline; gap: 14px; padding: 10px 0;
+        font-family: "JetBrains Mono", monospace;
       }
-      #scene-07-0d91b0 .readout-row {
-        display: flex; align-items: baseline; gap: 16px;
-        padding: 8px 0;
-        font-family: 'SF Mono', 'Monaco', Consolas, monospace;
-        font-size: 26px;
+      #scene-07-0d91b0 .s07-c-label { color: #9fb4cc; font-size: 22px; font-style: italic; }
+      #scene-07-0d91b0 .s07-c-val { color: #fbbf24; font-size: 72px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; text-shadow: 0 0 24px rgba(251,191,36,0.4); }
+      #scene-07-0d91b0 .s07-c-sub {
+        margin-top: 10px; padding-top: 14px; border-top: 1px solid rgba(200,163,255,0.2);
+        display: flex; align-items: baseline; gap: 10px;
+        font-family: "JetBrains Mono", monospace;
       }
-      #scene-07-0d91b0 .readout-row + .readout-row {
-        border-top: 1px solid rgba(200,163,255,0.2);
-      }
-      #scene-07-0d91b0 .rlabel {
-        color: #a78bfa; font-weight: 500; width: 72px; font-style: italic;
-      }
-      #scene-07-0d91b0 .rval {
-        color: #f7fafc; font-weight: 600; flex: 1; text-align: right;
-        font-variant-numeric: tabular-nums;
-      }
+      #scene-07-0d91b0 .s07-c-sub-label { color: #8da1c7; font-size: 14px; font-family: "PingFang SC", sans-serif; letter-spacing: 0.1em; }
+      #scene-07-0d91b0 .s07-c-sub-val { color: #c4b5fd; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; flex: 1; text-align: right; }
+      #scene-07-0d91b0 .s07-c-sub-unit { color: #5b6e93; font-size: 14px; }
 
-      #scene-07-0d91b0 .stage {
-        position: absolute; left: 0; top: 320px;
-        width: 1920px; height: 780px;
-      }
+      #scene-07-0d91b0 .s07-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-      #scene-07-0d91b0 .caption {
-        position: absolute; left: 50%; bottom: 66px;
-        transform: translateX(-50%);
-        font-size: 30px; color: #d7e3f2;
-        letter-spacing: 6px; font-weight: 300;
-        padding: 16px 42px;
-        background: rgba(12, 20, 36, 0.6);
-        border: 1px solid rgba(200,163,255,0.28);
-        border-radius: 12px;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+      #scene-07-0d91b0 .s07-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       }
-      #scene-07-0d91b0 .cap-accent  { color: #c8a3ff; font-weight: 700; text-shadow: 0 0 14px rgba(200,163,255,0.55); }
-      #scene-07-0d91b0 .cap-accent2 { color: #4dd0ff; font-weight: 600; text-shadow: 0 0 14px rgba(77,208,255,0.5); }
-      #scene-07-0d91b0 .cap-strike  { color: #6b7a99; text-decoration: line-through; text-decoration-color: rgba(244,114,182,0.55); }
+      #scene-07-0d91b0 .s07-cap-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #c4b5fd; box-shadow: 0 0 12px #c4b5fd; }
+      #scene-07-0d91b0 .s07-cap-accent { color: #c4b5fd; font-weight: 800; padding: 0 4px; text-shadow: 0 0 16px rgba(200,163,255,0.5); }
     </style>
 
     <script>
@@ -256,107 +222,100 @@
       const tl = gsap.timeline({ paused: true });
       const ID = '#scene-07-0d91b0';
 
-      // 0 - 1.3s: atmosphere + title
-      tl.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
-      tl.fromTo(ID + ' .grid-floor', { opacity: 0 }, { opacity: 1, duration: 1.3, ease: 'power2.out' }, 0.1);
-      tl.fromTo(ID + ' .eyebrow', { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }, 0.25);
-      tl.fromTo(ID + ' .title', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.45);
-      tl.fromTo(ID + ' .subtitle', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.95);
+      tl.fromTo(ID + ' .s07-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .s07-grid-floor', { opacity: 0 }, { opacity: 0.4, duration: 1.5 }, 0.1);
+      tl.fromTo(ID + ' .s07-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .s07-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
 
-      // 1.1 - 1.6s: readout panel slides in
-      tl.fromTo(ID + ' .readout', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, 1.1);
+      tl.fromTo(ID + ' .s07-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .s07-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl.fromTo(ID + ' .s07-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl.fromTo(ID + ' .s07-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .s07-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl.fromTo(ID + ' .s07-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-      // 1.4 - 3.0s: left panel setup + ellipse draws
-      tl.fromTo(ID + ' .ax-h', { opacity: 0 }, { opacity: 0.55, duration: 0.5 }, 1.5);
-      tl.fromTo(ID + ' .ax-v', { opacity: 0 }, { opacity: 0.55, duration: 0.5 }, 1.6);
-      tl.to(ID + ' .unit-ellipse', { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 1.7);
-      tl.to(ID + ' .label-o', { opacity: 1, duration: 0.35 }, 2.6);
-      tl.to(ID + ' .anchor', { opacity: 1, duration: 0.35, stagger: 0.08 }, 2.7);
-      tl.to(ID + ' .anc-lbl', { opacity: 0.9, duration: 0.35, stagger: 0.08 }, 2.85);
-      tl.to(ID + ' .label-circ', { opacity: 1, duration: 0.4 }, 3.2);
+      // Counter slides in
+      tl.fromTo(ID + ' .s07-counter', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.2);
 
-      // 3.0 - 3.5s: time axis extends
-      tl.to(ID + ' .time-axis', { attr: { x2: 1140 }, duration: 1.1, ease: 'power2.out' }, 3.0);
-      tl.to(ID + ' .time-arrow', { opacity: 1, duration: 0.35 }, 4.05);
-      tl.to(ID + ' .time-label', { opacity: 1, duration: 0.4 }, 4.15);
+      // Circle
+      tl.fromTo(ID + ' .s07-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl.fromTo(ID + ' .s07-ax-h, ' + ID + ' .s07-ax-v', { opacity: 0 }, { opacity: 0.6, duration: 0.6 }, 2.0);
+      tl.fromTo(ID + ' .s07-unit-ellipse', { strokeDashoffset: 950 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.2);
+      tl.fromTo(ID + ' .s07-circle-lbl', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.2);
+      tl.to(ID + ' .s07-mark', { opacity: 1, duration: 0.3, stagger: 0.1 }, 3.0);
+      tl.to(ID + ' .s07-mark-lbl', { opacity: 0.9, duration: 0.4, stagger: 0.1 }, 3.2);
 
-      // 3.6 - 4.2s: rotor point reveals
-      tl.to(ID + ' .radius', { opacity: 1, duration: 0.4 }, 3.5);
-      tl.to(ID + ' .point-halo', { opacity: 1, duration: 0.5 }, 3.6);
-      tl.to(ID + ' .point', { opacity: 1, duration: 0.4, ease: 'back.out(2)' }, 3.7);
+      // Time axis extends
+      tl.to(ID + ' .s07-time-ax', { opacity: 0.85, duration: 0.6 }, 3.4);
+      tl.to(ID + ' .s07-time-arr', { opacity: 1, duration: 0.4 }, 4.0);
+      tl.to(ID + ' .s07-time-lbl', { opacity: 1, duration: 0.4 }, 4.1);
 
-      // 4.0 - 11.2s: drive rotation — 4 full revolutions over ~7s; update cycle counter + phase;
-      // simultaneously trace dot glides across helix and helix path draws in.
-      const state = { a: 0 };
-      const R = 220;
+      // Rotor reveals
+      tl.to(ID + ' .s07-radius', { opacity: 0.9, duration: 0.4 }, 3.8);
+      tl.to(ID + ' .s07-p-halo', { opacity: 1, duration: 0.5 }, 3.9);
+      tl.to(ID + ' .s07-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 4.0);
+      tl.to(ID + ' .s07-trace-dot', { opacity: 1, duration: 0.4 }, 4.2);
+
+      // Driver: 4 full rotations over 7s; update counter and helix trace
+      const state = { phase: 0 };
       tl.to(state, {
-        a: -Math.PI * 8, // 4 full revolutions
-        duration: 7.2,
+        phase: Math.PI * 8,
+        duration: 7.0,
         ease: 'none',
         onUpdate: () => {
-          const t = state.a;
-          const cx = Math.cos(t) * R;
-          // elliptical y: tilt the circle — ellipse ratio 88/220 ≈ 0.4
-          const cy = Math.sin(t) * 88;
-          // update rotor transform
-          const rotor = document.querySelector(ID + ' .rotor');
+          const p = state.phase;
+          const theta = p;
+          // Rotor on tilted ellipse
+          const cx = Math.cos(theta) * 210;
+          const cy = Math.sin(theta) * 80;
+          const rotor = document.querySelector(ID + ' .s07-rotor');
           if (rotor) {
-            rotor.setAttribute('transform',
-              'matrix(' + Math.cos(t) + ' ' + (-0.4 * Math.sin(t)) + ' ' +
-              (-Math.sin(t)) + ' ' + (-0.4 * Math.cos(t)) + ' 0 0)');
+            const rad = rotor.querySelector('.s07-radius');
+            const pt = rotor.querySelector('.s07-p');
+            const halo = rotor.querySelector('.s07-p-halo');
+            if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
+            if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
+            if (halo) { halo.setAttribute('cx', cx.toFixed(2)); halo.setAttribute('cy', cy.toFixed(2)); }
           }
 
-          // cycle progress (0..1 over the 4 revolutions)
-          const progress = Math.min(1, Math.abs(t) / (Math.PI * 8));
-          const n = Math.floor(Math.abs(t) / (Math.PI * 2));
-          const phase = (Math.abs(t) / (Math.PI * 2)) * 2 * Math.PI;
+          // Trace dot on helix
+          const progress = Math.min(1, p / (Math.PI * 8));
+          const hx = progress * 1080;
+          const localT = p % (Math.PI * 2);
+          const hy = -Math.sin(localT) * 160;
+          const dot = document.querySelector(ID + ' .s07-trace-dot');
+          if (dot) { dot.setAttribute('cx', hx.toFixed(2)); dot.setAttribute('cy', hy.toFixed(2)); }
 
-          // trace dot follows helix across the panel; cycle span 240px
-          const dx = progress * 1080;
-          // sin wave relative to cycle position
-          const local = (Math.abs(t) % (Math.PI * 2));
-          const dy = -Math.sin(local) * 160;
-          const dot = document.querySelector(ID + ' .trace-dot');
-          if (dot) { dot.setAttribute('cx', dx.toFixed(2)); dot.setAttribute('cy', dy.toFixed(2)); }
-
-          const cval = document.querySelector(ID + ' .cycle-val');
-          if (cval) cval.textContent = n.toString();
-          const pval = document.querySelector(ID + ' .phase-val');
-          if (pval) pval.textContent = phase.toFixed(2);
+          // Counter
+          const n = Math.floor(p / (Math.PI * 2));
+          const cv = document.querySelector(ID + ' .s07-cycle-val');
+          const pv = document.querySelector(ID + ' .s07-phase-val');
+          if (cv) cv.textContent = String(n);
+          if (pv) pv.textContent = p.toFixed(2);
         }
-      }, 4.0);
+      }, 4.3);
 
-      tl.to(ID + ' .trace-dot', { opacity: 1, duration: 0.4 }, 4.0);
+      // Helix path draws
+      tl.to(ID + ' .s07-helix-path', { strokeDashoffset: 0, duration: 6.6, ease: 'power1.inOut' }, 4.5);
 
-      // helix draws in sync
-      tl.to(ID + ' .helix-path', { strokeDashoffset: 0, duration: 6.8, ease: 'power1.inOut' }, 4.2);
+      // Cycle markers fade in progressively
+      tl.to(ID + ' .s07-cm-1', { opacity: 0.85, duration: 0.4 }, 5.2);
+      tl.to(ID + ' .s07-cm-lbl-1', { opacity: 1, duration: 0.4 }, 5.4);
+      tl.to(ID + ' .s07-cm-2', { opacity: 0.85, duration: 0.4 }, 6.8);
+      tl.to(ID + ' .s07-cm-lbl-2', { opacity: 1, duration: 0.4 }, 7.0);
+      tl.to(ID + ' .s07-cm-3', { opacity: 0.85, duration: 0.4 }, 8.4);
+      tl.to(ID + ' .s07-cm-lbl-3', { opacity: 1, duration: 0.4 }, 8.6);
+      tl.to(ID + ' .s07-cm-4', { opacity: 0.85, duration: 0.4 }, 10.0);
+      tl.to(ID + ' .s07-cm-lbl-4', { opacity: 1, duration: 0.4 }, 10.2);
 
-      // cycle markers ignite as each cycle completes
-      tl.to(ID + ' .cm-1', { opacity: 0.75, duration: 0.4 }, 5.5);
-      tl.to(ID + ' .cycle-markers text:nth-of-type(1)', { opacity: 0.95, duration: 0.35 }, 5.7);
-      tl.to(ID + ' .cm-2', { opacity: 0.75, duration: 0.4 }, 7.3);
-      tl.to(ID + ' .cycle-markers text:nth-of-type(2)', { opacity: 0.95, duration: 0.35 }, 7.5);
-      tl.to(ID + ' .cm-3', { opacity: 0.75, duration: 0.4 }, 9.0);
-      tl.to(ID + ' .cycle-markers text:nth-of-type(3)', { opacity: 0.95, duration: 0.35 }, 9.2);
-      tl.to(ID + ' .cm-4', { opacity: 0.75, duration: 0.4 }, 10.6);
-      tl.to(ID + ' .cycle-markers text:nth-of-type(4)', { opacity: 0.95, duration: 0.35 }, 10.8);
+      tl.to(ID + ' .s07-helix-lbl', { opacity: 1, duration: 0.6 }, 10.5);
 
-      // helix caption reveal near end
-      tl.fromTo(ID + ' .helix-label', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 9.5);
+      // Caption
+      tl.fromTo(ID + ' .s07-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 11.4);
+      tl.fromTo(ID + ' .s07-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 11.6);
 
-      // 11.4 - 12.4s: final caption
-      tl.fromTo(ID + ' .caption', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 11.4);
-
-      // Gentle halo breathing on the rotor
-      tl.to(ID + ' .point-halo', {
-        scale: 1.3, transformOrigin: '50% 50%',
-        duration: 1.2, yoyo: true, repeat: 4, ease: 'sine.inOut'
-      }, 4.4);
-
-      // 12.6 - 13.0 final settle
-      tl.to(ID + ' .bg-vignette', { opacity: 1.1, duration: 0.5 }, 12.6);
-
-      window.__timelines["scene-07-0d91b0"] = tl;
+      tl.set({}, {}, 13);
+      window.__timelines['scene-07-0d91b0'] = tl;
     </script>
   </div>
 </template>

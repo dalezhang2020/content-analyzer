@@ -11,77 +11,3261 @@
 </head>
 <body>
   <div id="root" data-composition-id="main" data-start="0" data-duration="112" data-width="1920" data-height="1080">
-    <div
-      data-composition-id="scene-01-c6fdc7"
-      data-composition-src="compositions/scene-01-c6fdc7.html"
-      data-start="0"
-      data-duration="10"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-02-3e35eb"
-      data-composition-src="compositions/scene-02-3e35eb.html"
-      data-start="10"
-      data-duration="12"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-03-c185b8"
-      data-composition-src="compositions/scene-03-c185b8.html"
-      data-start="22"
-      data-duration="12"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-04-de95b9"
-      data-composition-src="compositions/scene-04-de95b9.html"
-      data-start="34"
-      data-duration="14"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-05-f80eb7"
-      data-composition-src="compositions/scene-05-f80eb7.html"
-      data-start="48"
-      data-duration="13"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-06-2d4304"
-      data-composition-src="compositions/scene-06-2d4304.html"
-      data-start="61"
-      data-duration="14"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-07-0d91b0"
-      data-composition-src="compositions/scene-07-0d91b0.html"
-      data-start="75"
-      data-duration="13"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-08-65f994"
-      data-composition-src="compositions/scene-08-65f994.html"
-      data-start="88"
-      data-duration="12"
-      data-track-index="1"
-    ></div>
-    <div
-      data-composition-id="scene-09-3a8664"
-      data-composition-src="compositions/scene-09-3a8664.html"
-      data-start="100"
-      data-duration="12"
-      data-track-index="1"
-    ></div>
+
+  <!-- ================== scene-01-c6fdc7 (offset=0s, dur=10s) ================== -->
+
+  <div id="scene-01-c6fdc7" data-composition-id="scene-01-c6fdc7" data-width="1920" data-height="1080">
+
+    <!-- ============ Backdrop ============ -->
+    <div class="s01-bg"></div>
+    <div class="s01-grid-floor"></div>
+    <div class="s01-vignette"></div>
+
+    <!-- ============ Atmospheric orbs ============ -->
+    <div class="s01-orb s01-orb-a"></div>
+    <div class="s01-orb s01-orb-b"></div>
+    <div class="s01-orb s01-orb-c"></div>
+
+    <!-- ============ Chapter marker ============ -->
+    <div class="s01-chapter">
+      <div class="s01-chapter-line"></div>
+      <div class="s01-chapter-text">
+        <span class="s01-ch-num">CHAPTER 01</span>
+        <span class="s01-ch-sep">·</span>
+        <span class="s01-ch-label">序章</span>
+      </div>
+      <div class="s01-chapter-line"></div>
+    </div>
+
+    <!-- ============ Big floating question marks (ambient) ============ -->
+    <div class="s01-q s01-q1">?</div>
+    <div class="s01-q s01-q2">?</div>
+    <div class="s01-q s01-q3">?</div>
+    <div class="s01-q s01-q4">?</div>
+    <div class="s01-q s01-q5">?</div>
+
+    <!-- ============ Question 1 (0-3s): why waves ============ -->
+    <div class="s01-line1">
+      <div class="s01-l1-prefix">为什么</div>
+      <div class="s01-l1-core">
+        <span class="s01-sin">sin</span>
+        <span class="s01-and">&</span>
+        <span class="s01-cos">cos</span>
+      </div>
+      <div class="s01-l1-suffix">的图像是<span class="s01-wave">波浪形</span>?</div>
+    </div>
+
+    <!-- ============ Question 2 (3-6s): why inseparable ============ -->
+    <div class="s01-line2">
+      为什么它们<span class="s01-em">如影随形</span>?
+    </div>
+
+    <!-- ============ Hero title (6-10s): reveal the mission ============ -->
+    <div class="s01-hero">
+      <div class="s01-hero-eyebrow">今天,我们用 3D 可视化</div>
+      <h1 class="s01-hero-title">
+        <span class="s01-t1">揭开三角函数</span>
+        <span class="s01-t2">最本质的</span>
+        <span class="s01-t3">几何秘密</span>
+      </h1>
+      <div class="s01-hero-accent"></div>
+    </div>
+
+    <!-- ============ Preview teaser: mini circle + wave in bottom corner ============ -->
+    <svg class="s01-teaser" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s01-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <circle class="s01-teaser-circle" cx="80" cy="80" r="48" fill="none"
+              stroke="#4dd0ff" stroke-width="2.5"
+              stroke-dasharray="302" stroke-dashoffset="302"
+              filter="url(#s01-glow)"/>
+      <path class="s01-teaser-wave"
+            d="M 140 80 Q 170 40, 200 80 T 260 80 T 320 80 T 380 80"
+            fill="none" stroke="#ff4d8f" stroke-width="2.5"
+            stroke-dasharray="240" stroke-dashoffset="240"
+            filter="url(#s01-glow)"/>
+    </svg>
+
+    <!-- ============ Bottom hint ============ -->
+    <div class="s01-hint">
+      <span class="s01-hint-dot"></span>
+      一场关于三角函数的三维之旅,即将展开
+    </div>
+
+    <style>
+      #scene-01-c6fdc7 {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                     -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
+        color: #f1f5f9;
+        letter-spacing: 0.01em;
+      }
+
+      #scene-01-c6fdc7 .s01-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 28% 35%, rgba(77,208,255,0.22), transparent 60%),
+          radial-gradient(ellipse 1000px 700px at 72% 75%, rgba(255,77,143,0.14), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 50% 60%, rgba(251,191,36,0.06), transparent 65%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
+      }
+      #scene-01-c6fdc7 .s01-grid-floor {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        height: 520px;
+        background-image:
+          linear-gradient(rgba(77,208,255,0.25) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(77,208,255,0.25) 1px, transparent 1px);
+        background-size: 110px 110px;
+        transform: perspective(900px) rotateX(62deg);
+        transform-origin: bottom center;
+        opacity: 0.4;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        pointer-events: none;
+      }
+      #scene-01-c6fdc7 .s01-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+      }
+
+      #scene-01-c6fdc7 .s01-orb {
+        position: absolute; border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+      }
+      #scene-01-c6fdc7 .s01-orb-a {
+        width: 620px; height: 620px;
+        left: -200px; top: -220px;
+        background: radial-gradient(circle, rgba(77,208,255,0.4), transparent 70%);
+      }
+      #scene-01-c6fdc7 .s01-orb-b {
+        width: 760px; height: 760px;
+        right: -280px; bottom: -300px;
+        background: radial-gradient(circle, rgba(255,77,143,0.28), transparent 70%);
+      }
+      #scene-01-c6fdc7 .s01-orb-c {
+        width: 480px; height: 480px;
+        left: 45%; top: 35%;
+        background: radial-gradient(circle, rgba(251,191,36,0.14), transparent 70%);
+      }
+
+      /* ============ Chapter marker ============ */
+      #scene-01-c6fdc7 .s01-chapter {
+        position: absolute;
+        top: 92px; left: 50%;
+        transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px;
+        z-index: 10;
+      }
+      #scene-01-c6fdc7 .s01-chapter-line {
+        width: 120px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-01-c6fdc7 .s01-chapter-text {
+        display: flex; align-items: center; gap: 16px;
+        padding: 10px 22px;
+        background: rgba(10, 18, 36, 0.4);
+        border: 1px solid rgba(77, 208, 255, 0.25);
+        border-radius: 999px;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-01-c6fdc7 .s01-ch-num {
+        font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+        font-size: 20px;
+        letter-spacing: 0.3em;
+        color: #4dd0ff;
+        font-weight: 600;
+      }
+      #scene-01-c6fdc7 .s01-ch-sep {
+        color: #5b6e93;
+      }
+      #scene-01-c6fdc7 .s01-ch-label {
+        font-size: 20px;
+        letter-spacing: 0.4em;
+        color: #b5c4dd;
+      }
+
+      /* ============ Ambient question marks ============ */
+      #scene-01-c6fdc7 .s01-q {
+        position: absolute;
+        font-family: "Georgia", "Times New Roman", serif;
+        font-weight: 700;
+        pointer-events: none;
+      }
+      #scene-01-c6fdc7 .s01-q1 {
+        left: 180px; top: 260px;
+        font-size: 120px;
+        color: rgba(251, 191, 36, 0.25);
+        text-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+      }
+      #scene-01-c6fdc7 .s01-q2 {
+        right: 260px; top: 180px;
+        font-size: 160px;
+        color: rgba(77, 208, 255, 0.3);
+        text-shadow: 0 0 50px rgba(77, 208, 255, 0.5);
+      }
+      #scene-01-c6fdc7 .s01-q3 {
+        left: 240px; bottom: 280px;
+        font-size: 100px;
+        color: rgba(255, 77, 143, 0.3);
+        text-shadow: 0 0 40px rgba(255, 77, 143, 0.5);
+      }
+      #scene-01-c6fdc7 .s01-q4 {
+        right: 200px; bottom: 320px;
+        font-size: 140px;
+        color: rgba(251, 191, 36, 0.22);
+        text-shadow: 0 0 44px rgba(251, 191, 36, 0.4);
+      }
+      #scene-01-c6fdc7 .s01-q5 {
+        left: 50%; top: 44%;
+        transform: translateX(-50%);
+        font-size: 80px;
+        color: rgba(200, 163, 255, 0.28);
+        text-shadow: 0 0 30px rgba(200, 163, 255, 0.5);
+      }
+
+      /* ============ Line 1 ============ */
+      #scene-01-c6fdc7 .s01-line1 {
+        position: absolute;
+        top: 280px; left: 50%;
+        transform: translateX(-50%);
+        display: flex; align-items: baseline; gap: 24px;
+        white-space: nowrap;
+        z-index: 5;
+      }
+      #scene-01-c6fdc7 .s01-l1-prefix {
+        font-size: 88px;
+        font-weight: 300;
+        color: #d9e4f5;
+        letter-spacing: 0.02em;
+      }
+      #scene-01-c6fdc7 .s01-l1-core {
+        display: flex; align-items: baseline; gap: 14px;
+        font-family: "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-size: 100px;
+        font-weight: 700;
+      }
+      #scene-01-c6fdc7 .s01-sin {
+        color: #ff4d8f;
+        text-shadow: 0 0 36px rgba(255, 77, 143, 0.55);
+      }
+      #scene-01-c6fdc7 .s01-and {
+        color: #5b6e93;
+        font-style: normal;
+        font-weight: 300;
+        font-size: 80px;
+      }
+      #scene-01-c6fdc7 .s01-cos {
+        color: #fbbf24;
+        text-shadow: 0 0 36px rgba(251, 191, 36, 0.55);
+      }
+      #scene-01-c6fdc7 .s01-l1-suffix {
+        font-size: 88px;
+        font-weight: 300;
+        color: #d9e4f5;
+        letter-spacing: 0.02em;
+      }
+      #scene-01-c6fdc7 .s01-wave {
+        color: #4dd0ff;
+        font-weight: 700;
+        padding: 0 6px;
+        text-shadow: 0 0 28px rgba(77, 208, 255, 0.6);
+      }
+
+      /* ============ Line 2 ============ */
+      #scene-01-c6fdc7 .s01-line2 {
+        position: absolute;
+        top: 440px; left: 50%;
+        transform: translateX(-50%);
+        font-size: 82px;
+        font-weight: 300;
+        color: #d9e4f5;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        z-index: 5;
+      }
+      #scene-01-c6fdc7 .s01-em {
+        background: linear-gradient(135deg, #ff4d8f 0%, #fbbf24 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        font-weight: 800;
+        padding: 0 8px;
+        font-style: italic;
+      }
+
+      /* ============ Hero (final big title) ============ */
+      #scene-01-c6fdc7 .s01-hero {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 8;
+      }
+      #scene-01-c6fdc7 .s01-hero-eyebrow {
+        font-size: 30px;
+        letter-spacing: 0.4em;
+        color: #4dd0ff;
+        font-weight: 400;
+        margin-bottom: 32px;
+        text-shadow: 0 0 20px rgba(77, 208, 255, 0.4);
+      }
+      #scene-01-c6fdc7 .s01-hero-title {
+        font-size: 160px;
+        font-weight: 900;
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        display: flex; flex-direction: column; gap: 10px;
+        align-items: center;
+      }
+      #scene-01-c6fdc7 .s01-t1 {
+        color: #d9e4f5;
+        font-weight: 300;
+        font-size: 104px;
+      }
+      #scene-01-c6fdc7 .s01-t2 {
+        color: #9fb4cc;
+        font-weight: 200;
+        font-size: 86px;
+        letter-spacing: 0.04em;
+      }
+      #scene-01-c6fdc7 .s01-t3 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 40%, #ff4d8f 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        font-weight: 900;
+        font-size: 180px;
+        letter-spacing: -0.01em;
+        text-shadow: 0 0 60px rgba(77, 208, 255, 0.5);
+        padding: 0 12px;
+      }
+      #scene-01-c6fdc7 .s01-hero-accent {
+        margin: 36px auto 0;
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #4dd0ff, #ff4d8f, transparent);
+        border-radius: 2px;
+      }
+
+      /* ============ Teaser (bottom right decoration) ============ */
+      #scene-01-c6fdc7 .s01-teaser {
+        position: absolute;
+        right: 120px; bottom: 160px;
+        width: 400px; height: 160px;
+        opacity: 0;
+        z-index: 3;
+      }
+
+      /* ============ Bottom hint ============ */
+      #scene-01-c6fdc7 .s01-hint {
+        position: absolute;
+        left: 50%; bottom: 72px;
+        transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 22px;
+        color: #8da1c7;
+        letter-spacing: 0.28em;
+        font-weight: 300;
+        padding: 14px 30px;
+        background: rgba(10, 18, 36, 0.5);
+        border: 1px solid rgba(77, 208, 255, 0.18);
+        border-radius: 999px;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-01-c6fdc7 .s01-hint-dot {
+        display: inline-block;
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #4dd0ff;
+        box-shadow: 0 0 12px #4dd0ff;
+      }
+    </style>
+
+    
   </div>
+
+  <!-- ================== scene-02-3e35eb (offset=10s, dur=12s) ================== -->
+
+  <div id="scene-02-3e35eb" data-composition-id="scene-02-3e35eb" data-width="1920" data-height="1080">
+
+    <!-- ============ Backdrop layers ============ -->
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <!-- ============ Ambient orbs (out-of-focus bokeh) ============ -->
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <!-- ============ Header typography ============ -->
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">02</span>
+        <span class="bar"></span>
+        <span class="label">THE UNIT CIRCLE</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">认识</span>
+        <span class="t2">单位圆</span>
+      </h1>
+      <div class="subtitle">半径为 1 · 三角函数的<span class="em">心脏</span></div>
+    </div>
+
+    <!-- ============ Main stage (1920 centered) ============ -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Soft glow -->
+        <filter id="s02-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="s02-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Radial gradient behind the circle to make it feel lit -->
+        <radialGradient id="s02-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.35"/>
+          <stop offset="35%" stop-color="#4dd0ff" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Point P radial gradient -->
+        <radialGradient id="s02-point" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#fff6cc"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Grid dots (subtle texture anchors the eye) -->
+      <g class="dot-grid">
+        <!-- we render only a diamond pattern, 14 visible dots as layout anchors -->
+        <g fill="#3a4a70" opacity="0.5">
+          <circle cx="480"  cy="180" r="2"/>
+          <circle cx="960"  cy="120" r="2"/>
+          <circle cx="1440" cy="180" r="2"/>
+          <circle cx="260"  cy="540" r="2"/>
+          <circle cx="1660" cy="540" r="2"/>
+          <circle cx="480"  cy="900" r="2"/>
+          <circle cx="960"  cy="960" r="2"/>
+          <circle cx="1440" cy="900" r="2"/>
+        </g>
+      </g>
+
+      <!-- ====== Circle group: centered on (960, 600) ====== -->
+      <g class="circle-group" transform="translate(960, 600)">
+        <!-- Halo behind circle (big, soft, colored) -->
+        <circle class="halo" cx="0" cy="0" r="340" fill="url(#s02-halo)"/>
+
+        <!-- Concentric ghost rings -->
+        <circle class="ghost" cx="0" cy="0" r="260" fill="none" stroke="#253856" stroke-width="1" opacity="0.6"/>
+        <circle class="ghost" cx="0" cy="0" r="310" fill="none" stroke="#1e2c45" stroke-width="1" opacity="0.4"/>
+
+        <!-- Axes (long, subtle, with arrows) -->
+        <line class="axis axis-x" x1="-520" y1="0" x2="520" y2="0"
+              stroke="#5b6e93" stroke-width="1.5" opacity="0.9"/>
+        <line class="axis axis-y" x1="0" y1="520" x2="0" y2="-520"
+              stroke="#5b6e93" stroke-width="1.5" opacity="0.9"/>
+        <polygon class="ax-arrow" points="520,0 500,-8 500,8" fill="#5b6e93"/>
+        <polygon class="ax-arrow" points="0,-520 -8,-500 8,-500" fill="#5b6e93"/>
+        <text class="ax-lbl" x="536" y="10" fill="#8da1c7" font-size="28" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="ax-lbl" x="10" y="-528" fill="#8da1c7" font-size="28" font-style="italic" font-family="Georgia, serif">y</text>
+
+        <!-- Tick marks at 1 and -1 -->
+        <g class="ticks" fill="#5b6e93" font-size="22" font-family="JetBrains Mono, monospace">
+          <line x1="280" y1="-8" x2="280" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-280" y1="-8" x2="-280" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-8" y1="-280" x2="8" y2="-280" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-8" y1="280" x2="8" y2="280" stroke="#5b6e93" stroke-width="1.5"/>
+          <text x="278" y="40" text-anchor="middle">1</text>
+          <text x="-282" y="40" text-anchor="middle">−1</text>
+          <text x="-22" y="-274" text-anchor="end">1</text>
+        </g>
+
+        <!-- Origin -->
+        <circle class="origin-dot" cx="0" cy="0" r="5" fill="#e6edf9"/>
+        <text class="origin-lbl" x="-18" y="24" fill="#8da1c7" font-size="20" text-anchor="end" font-style="italic" font-family="Georgia, serif">O</text>
+
+        <!-- Unit circle (main) -->
+        <circle class="unit-circle" cx="0" cy="0" r="280" fill="none"
+                stroke="#4dd0ff" stroke-width="4"
+                stroke-dasharray="1760" stroke-dashoffset="1760"
+                filter="url(#s02-glow)"/>
+
+        <!-- Radius line to P at 60° (heroic angle, looks good) -->
+        <line class="radius" x1="0" y1="0" x2="140" y2="-242.5"
+              stroke="#ffffff" stroke-width="2.5" opacity="0.85"
+              filter="url(#s02-glow)"/>
+
+        <!-- Angle arc (θ) -->
+        <path class="arc" d="M 68 0 A 68 68 0 0 0 34 -58.8"
+              fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+        <text class="arc-lbl" x="60" y="-34" fill="#fbbf24"
+              font-size="32" font-style="italic" font-family="Georgia, serif">θ</text>
+
+        <!-- cos projection (x-axis segment, amber) -->
+        <line class="cos-seg" x1="0" y1="0" x2="140" y2="0"
+              stroke="#fbbf24" stroke-width="7" stroke-linecap="round"
+              filter="url(#s02-glow)"/>
+        <!-- cos dashed drop from P down to x-axis -->
+        <line class="cos-drop" x1="140" y1="-242.5" x2="140" y2="0"
+              stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.7"/>
+        <text class="cos-lbl" x="70" y="42" fill="#fbbf24"
+              font-size="34" font-weight="700" font-style="italic"
+              text-anchor="middle" font-family="Georgia, serif">cos θ</text>
+
+        <!-- sin projection (y-axis segment, magenta) -->
+        <line class="sin-seg" x1="0" y1="0" x2="0" y2="-242.5"
+              stroke="#ff4d8f" stroke-width="7" stroke-linecap="round"
+              filter="url(#s02-glow)"/>
+        <!-- sin dashed drop from P across to y-axis -->
+        <line class="sin-drop" x1="140" y1="-242.5" x2="0" y2="-242.5"
+              stroke="#ff4d8f" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.7"/>
+        <text class="sin-lbl" x="-36" y="-118" fill="#ff4d8f"
+              font-size="34" font-weight="700" font-style="italic"
+              text-anchor="end" font-family="Georgia, serif">sin θ</text>
+
+        <!-- Radius "1" label -->
+        <text class="radius-lbl" x="82" y="-140" fill="#d7e3f2"
+              font-size="26" font-weight="600" font-style="italic"
+              font-family="Georgia, serif">1</text>
+
+        <!-- Point P (glowing) -->
+        <circle class="point-halo" cx="140" cy="-242.5" r="24"
+                fill="#fbbf24" opacity="0.35" filter="url(#s02-glow-strong)"/>
+        <circle class="point-p" cx="140" cy="-242.5" r="11"
+                fill="url(#s02-point)" stroke="#fbbf24" stroke-width="3"/>
+        <text class="point-lbl" x="162" y="-258" fill="#f8fafc"
+              font-size="24" font-weight="600" font-family="Georgia, serif">
+          P ( cos θ , sin θ )
+        </text>
+      </g>
+    </svg>
+
+    <!-- ============ Data panel (right side) ============ -->
+    <div class="panel">
+      <div class="panel-title">圆 · 心脏</div>
+      <div class="panel-row">
+        <span class="k">半径</span>
+        <span class="v">r = 1</span>
+      </div>
+      <div class="panel-row">
+        <span class="k cos-k">横坐标</span>
+        <span class="v cos-v">cos θ</span>
+      </div>
+      <div class="panel-row">
+        <span class="k sin-k">纵坐标</span>
+        <span class="v sin-v">sin θ</span>
+      </div>
+      <div class="panel-foot">
+        <span class="eqn">x² + y² = 1</span>
+      </div>
+    </div>
+
+    <!-- ============ Bottom caption ============ -->
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">圆上任取一点,横坐标即 <em class="cos-em">cos θ</em>,纵坐标即 <em class="sin-em">sin θ</em></span>
+    </div>
+
+    <style>
+      #scene-02-3e35eb {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #050914;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                     -apple-system, BlinkMacSystemFont, "Inter Variable", sans-serif;
+        color: #f1f5f9;
+        letter-spacing: 0.01em;
+      }
+
+      /* ============ Background ============ */
+      #scene-02-3e35eb .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1100px 780px at 50% 62%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 22% 30%, rgba(77,208,255,0.08), transparent 65%),
+          radial-gradient(ellipse 700px 500px at 78% 30%, rgba(255,77,143,0.06), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-02-3e35eb .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);
+        pointer-events: none;
+      }
+      /* Very light film grain (procedural via inline SVG would be best, but
+         a gradient striping here works at 1080p) */
+      #scene-02-3e35eb .grain {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      #scene-02-3e35eb .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px);
+        pointer-events: none;
+      }
+      #scene-02-3e35eb .orb-a {
+        width: 520px; height: 520px;
+        left: -180px; top: -180px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
+      }
+      #scene-02-3e35eb .orb-b {
+        width: 620px; height: 620px;
+        right: -220px; bottom: -240px;
+        background: radial-gradient(circle, rgba(255,77,143,0.25), transparent 70%);
+      }
+
+      /* ============ Header ============ */
+      #scene-02-3e35eb .header {
+        position: absolute; top: 84px; left: 128px;
+        z-index: 10;
+        max-width: 980px;
+      }
+      #scene-02-3e35eb .eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em;
+        color: #8da1c7; font-weight: 500;
+      }
+      #scene-02-3e35eb .eyebrow .num {
+        color: #fbbf24;
+        font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+        font-size: 22px;
+        padding: 4px 10px;
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        border-radius: 4px;
+        letter-spacing: 0.12em;
+      }
+      #scene-02-3e35eb .eyebrow .bar {
+        display: inline-block;
+        width: 56px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-02-3e35eb .eyebrow .label {
+        color: #b5c4dd;
+      }
+      #scene-02-3e35eb .title {
+        margin-top: 18px;
+        font-size: 150px;
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        display: flex; gap: 22px; align-items: baseline;
+      }
+      #scene-02-3e35eb .title .t1 {
+        color: #d9e4f5;
+        font-weight: 200;
+      }
+      #scene-02-3e35eb .title .t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 50%, #4dd0ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(77, 208, 255, 0.3);
+      }
+      #scene-02-3e35eb .subtitle {
+        margin-top: 22px;
+        font-size: 34px;
+        color: #9fb0cc;
+        letter-spacing: 0.05em;
+        font-weight: 300;
+      }
+      #scene-02-3e35eb .subtitle .em {
+        color: #ff4d8f;
+        font-weight: 600;
+        margin: 0 6px;
+        padding: 0 6px;
+        font-style: italic;
+      }
+
+      /* ============ Stage SVG ============ */
+      #scene-02-3e35eb .stage {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+      }
+
+      /* ============ Side panel ============ */
+      #scene-02-3e35eb .panel {
+        position: absolute;
+        right: 92px; top: 400px;
+        width: 340px;
+        padding: 28px 30px;
+        background: rgba(10, 18, 36, 0.72);
+        border: 1px solid rgba(77, 208, 255, 0.25);
+        border-radius: 18px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          0 0 60px rgba(77, 208, 255, 0.06);
+        z-index: 8;
+      }
+      #scene-02-3e35eb .panel-title {
+        font-size: 18px;
+        letter-spacing: 0.35em;
+        color: #4dd0ff;
+        font-weight: 600;
+        margin-bottom: 22px;
+      }
+      #scene-02-3e35eb .panel-row {
+        display: flex; align-items: baseline; justify-content: space-between;
+        padding: 14px 0;
+        border-top: 1px solid rgba(77, 208, 255, 0.12);
+        font-family: "JetBrains Mono", "SF Mono", Consolas, monospace;
+      }
+      #scene-02-3e35eb .panel-row:first-of-type { border-top: none; }
+      #scene-02-3e35eb .panel-row .k {
+        color: #8da1c7; font-size: 17px; letter-spacing: 0.08em;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-02-3e35eb .panel-row .v {
+        color: #f1f5f9; font-size: 30px; font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+      #scene-02-3e35eb .panel-row .cos-k { color: #fbbf24; }
+      #scene-02-3e35eb .panel-row .cos-v { color: #fbbf24; font-style: italic; }
+      #scene-02-3e35eb .panel-row .sin-k { color: #ff4d8f; }
+      #scene-02-3e35eb .panel-row .sin-v { color: #ff4d8f; font-style: italic; }
+      #scene-02-3e35eb .panel-foot {
+        margin-top: 18px;
+        padding: 14px 0 4px;
+        border-top: 1px solid rgba(77, 208, 255, 0.25);
+        text-align: center;
+      }
+      #scene-02-3e35eb .panel-foot .eqn {
+        font-family: "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-size: 32px;
+        color: #4dd0ff;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-shadow: 0 0 18px rgba(77, 208, 255, 0.4);
+      }
+
+      /* ============ Caption ============ */
+      #scene-02-3e35eb .caption {
+        position: absolute;
+        left: 50%; bottom: 72px;
+        transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px;
+        color: #e2e8f0;
+        letter-spacing: 0.08em;
+        padding: 18px 36px;
+        background: rgba(10, 18, 36, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 999px;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-02-3e35eb .caption .cap-dot {
+        display: inline-block;
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: #4dd0ff;
+        box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-02-3e35eb .caption .cos-em {
+        color: #fbbf24; font-weight: 700; font-style: italic;
+        margin: 0 4px;
+      }
+      #scene-02-3e35eb .caption .sin-em {
+        color: #ff4d8f; font-weight: 700; font-style: italic;
+        margin: 0 4px;
+      }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-03-c185b8 (offset=22s, dur=12s) ================== -->
+
+  <div id="scene-03-c185b8" data-composition-id="scene-03-c185b8" data-width="1920" data-height="1080">
+
+    <div class="s03-bg"></div>
+    <div class="s03-vignette"></div>
+    <div class="s03-orb s03-orb-a"></div>
+    <div class="s03-orb s03-orb-b"></div>
+
+    <!-- Header -->
+    <div class="s03-header">
+      <div class="s03-eyebrow">
+        <span class="s03-num">03</span>
+        <span class="s03-bar"></span>
+        <span class="s03-label">ROTATING POINT</span>
+      </div>
+      <h1 class="s03-title">
+        <span class="s03-t1">点在圆上</span>
+        <span class="s03-t2">旋转</span>
+      </h1>
+      <div class="s03-subtitle">角度 θ 变化 · 坐标随之<span class="s03-em">振荡</span></div>
+    </div>
+
+    <!-- Live coordinate readout -->
+    <div class="s03-readout">
+      <div class="s03-r-title">REAL-TIME</div>
+      <div class="s03-r-row s03-r-theta">
+        <span class="s03-r-k">θ</span>
+        <span class="s03-r-v s03-r-theta-val">0.00</span>
+        <span class="s03-r-u">rad</span>
+      </div>
+      <div class="s03-r-row s03-r-cos">
+        <span class="s03-r-k">cos θ</span>
+        <span class="s03-r-v s03-r-cos-val">+1.000</span>
+      </div>
+      <div class="s03-r-row s03-r-sin">
+        <span class="s03-r-k">sin θ</span>
+        <span class="s03-r-v s03-r-sin-val">+0.000</span>
+      </div>
+    </div>
+
+    <!-- Stage: unit circle with rotating point -->
+    <svg class="s03-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s03-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s03-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="14" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s03-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s03-point-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="70%" stop-color="#fbbf24"/>
+          <stop offset="100%" stop-color="#f59e0b"/>
+        </radialGradient>
+      </defs>
+
+      <g class="s03-circle-g" transform="translate(960, 600)">
+        <circle class="s03-halo" cx="0" cy="0" r="340" fill="url(#s03-halo)"/>
+        <line class="s03-ax-x" x1="-480" y1="0" x2="480" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s03-ax-y" x1="0" y1="480" x2="0" y2="-480" stroke="#5b6e93" stroke-width="1.5"/>
+        <polygon class="s03-arr s03-arr-x" points="480,0 460,-8 460,8" fill="#5b6e93"/>
+        <polygon class="s03-arr s03-arr-y" points="0,-480 -8,-460 8,-460" fill="#5b6e93"/>
+        <text class="s03-ax-lbl" x="496" y="10" fill="#8da1c7" font-size="26" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="s03-ax-lbl" x="10" y="-488" fill="#8da1c7" font-size="26" font-style="italic" font-family="Georgia, serif">y</text>
+
+        <!-- Tick labels -->
+        <text class="s03-tick" x="280" y="40" fill="#5b6e93" font-size="18" text-anchor="middle" font-family="JetBrains Mono, monospace">1</text>
+        <text class="s03-tick" x="-280" y="40" fill="#5b6e93" font-size="18" text-anchor="middle" font-family="JetBrains Mono, monospace">-1</text>
+
+        <circle class="s03-origin" cx="0" cy="0" r="5" fill="#e6edf9"/>
+
+        <!-- Unit circle -->
+        <circle class="s03-unit" cx="0" cy="0" r="280" fill="none" stroke="#4dd0ff" stroke-width="3.5"
+                stroke-dasharray="1760" stroke-dashoffset="1760" filter="url(#s03-glow)"/>
+
+        <!-- Rotating group: radius + drops + point -->
+        <g class="s03-rotor">
+          <line class="s03-radius" x1="0" y1="0" x2="280" y2="0" stroke="#ffffff" stroke-width="3" opacity="0.9"/>
+          <line class="s03-drop-x" x1="280" y1="0" x2="280" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 5" opacity="0.7"/>
+          <line class="s03-drop-y" x1="280" y1="0" x2="0" y2="0" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0.7"/>
+          <circle class="s03-p-halo" cx="280" cy="0" r="28" fill="#fbbf24" opacity="0.4" filter="url(#s03-glow-strong)"/>
+          <circle class="s03-p" cx="280" cy="0" r="12" fill="url(#s03-point-grad)" stroke="#fbbf24" stroke-width="3"/>
+        </g>
+
+        <!-- cos segment (amber on x-axis) -->
+        <line class="s03-cos-seg" x1="0" y1="0" x2="280" y2="0" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" filter="url(#s03-glow)"/>
+        <!-- sin segment (magenta on y-axis) -->
+        <line class="s03-sin-seg" x1="0" y1="0" x2="0" y2="0" stroke="#ff4d8f" stroke-width="7" stroke-linecap="round" filter="url(#s03-glow)"/>
+
+        <!-- Angle arc + label -->
+        <path class="s03-arc" d="M 60 0" fill="none" stroke="#c4b5fd" stroke-width="2.5"/>
+        <text class="s03-arc-lbl" x="80" y="-28" fill="#c4b5fd" font-size="32" font-style="italic" font-family="Georgia, serif" opacity="0">θ</text>
+      </g>
+    </svg>
+
+    <!-- Caption -->
+    <div class="s03-caption">
+      <span class="s03-cap-dot"></span>
+      匀速旋转 · 横纵坐标就是 <em class="s03-cap-cos">cos θ</em> 与 <em class="s03-cap-sin">sin θ</em> 的<b>几何定义</b>
+    </div>
+
+    <style>
+      #scene-03-c185b8 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #040813; color: #f1f5f9;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      #scene-03-c185b8 .s03-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 700px at 50% 60%, rgba(77,208,255,0.16), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 22% 30%, rgba(251,191,36,0.08), transparent 65%),
+          radial-gradient(ellipse 700px 500px at 78% 30%, rgba(255,77,143,0.07), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #060b20 55%, #030612 100%);
+      }
+      #scene-03-c185b8 .s03-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%);
+        pointer-events: none;
+      }
+      #scene-03-c185b8 .s03-orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-03-c185b8 .s03-orb-a {
+        width: 520px; height: 520px; left: -180px; top: -160px;
+        background: radial-gradient(circle, rgba(77,208,255,0.38), transparent 70%);
+      }
+      #scene-03-c185b8 .s03-orb-b {
+        width: 620px; height: 620px; right: -220px; bottom: -240px;
+        background: radial-gradient(circle, rgba(255,77,143,0.26), transparent 70%);
+      }
+      #scene-03-c185b8 .s03-header {
+        position: absolute; top: 88px; left: 128px; z-index: 10;
+      }
+      #scene-03-c185b8 .s03-eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-03-c185b8 .s03-num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35);
+        border-radius: 4px; letter-spacing: 0.12em;
+      }
+      #scene-03-c185b8 .s03-bar {
+        display: inline-block; width: 56px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-03-c185b8 .s03-label { color: #b5c4dd; }
+      #scene-03-c185b8 .s03-title {
+        margin-top: 18px; font-size: 140px; font-weight: 800; line-height: 0.98;
+        letter-spacing: -0.02em; color: #ffffff;
+        display: flex; gap: 22px; align-items: baseline;
+      }
+      #scene-03-c185b8 .s03-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-03-c185b8 .s03-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 50%, #c4b5fd 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(77,208,255,0.35);
+      }
+      #scene-03-c185b8 .s03-subtitle {
+        margin-top: 20px; font-size: 32px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300;
+      }
+      #scene-03-c185b8 .s03-em { color: #fbbf24; font-weight: 700; margin: 0 6px; padding: 0 6px; font-style: italic; }
+
+      /* Readout panel */
+      #scene-03-c185b8 .s03-readout {
+        position: absolute; right: 92px; top: 380px; width: 340px;
+        padding: 26px 28px;
+        background: rgba(10,18,36,0.72);
+        border: 1px solid rgba(77,208,255,0.25); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 60px rgba(77,208,255,0.06);
+        z-index: 8;
+      }
+      #scene-03-c185b8 .s03-r-title {
+        font-size: 16px; letter-spacing: 0.4em; color: #4dd0ff; font-weight: 600; margin-bottom: 18px;
+      }
+      #scene-03-c185b8 .s03-r-row {
+        display: flex; align-items: baseline; justify-content: space-between;
+        padding: 12px 0; border-top: 1px solid rgba(77,208,255,0.12);
+        font-family: "JetBrains Mono", "SF Mono", monospace;
+      }
+      #scene-03-c185b8 .s03-r-row:first-of-type { border-top: none; }
+      #scene-03-c185b8 .s03-r-k {
+        color: #c4b5fd; font-size: 18px; letter-spacing: 0.08em; font-style: italic;
+        font-family: "Georgia", serif;
+      }
+      #scene-03-c185b8 .s03-r-v {
+        color: #f1f5f9; font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums;
+      }
+      #scene-03-c185b8 .s03-r-u {
+        color: #5b6e93; font-size: 18px; margin-left: 8px;
+      }
+      #scene-03-c185b8 .s03-r-theta .s03-r-v { color: #c4b5fd; }
+      #scene-03-c185b8 .s03-r-cos .s03-r-v,
+      #scene-03-c185b8 .s03-r-cos .s03-r-k { color: #fbbf24; }
+      #scene-03-c185b8 .s03-r-sin .s03-r-v,
+      #scene-03-c185b8 .s03-r-sin .s03-r-k { color: #ff4d8f; }
+
+      #scene-03-c185b8 .s03-stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-03-c185b8 .s03-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.08em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-03-c185b8 .s03-cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 12px #4dd0ff;
+      }
+      #scene-03-c185b8 .s03-cap-cos { color: #fbbf24; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-03-c185b8 .s03-cap-sin { color: #ff4d8f; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-03-c185b8 .s03-caption b { color: #4dd0ff; font-weight: 600; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-04-de95b9 (offset=34s, dur=14s) ================== -->
+
+  <div id="scene-04-de95b9" data-composition-id="scene-04-de95b9" data-width="1920" data-height="1080">
+
+    <div class="s04-bg"></div>
+    <div class="s04-vignette"></div>
+    <div class="s04-orb s04-orb-a"></div>
+    <div class="s04-orb s04-orb-b"></div>
+
+    <div class="s04-header">
+      <div class="s04-eyebrow">
+        <span class="s04-num">04</span>
+        <span class="s04-bar"></span>
+        <span class="s04-label">CIRCLE → WAVE</span>
+      </div>
+      <h1 class="s04-title">
+        <span class="s04-t1">把圆</span>
+        <span class="s04-t2">展开成波</span>
+      </h1>
+      <div class="s04-subtitle">纵坐标 → <span class="s04-em-sin">正弦波</span> · 横坐标 → <span class="s04-em-cos">余弦波</span></div>
+    </div>
+
+    <svg class="s04-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s04-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s04-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s04-sin-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff4d8f" stop-opacity="0.2"/>
+          <stop offset="30%" stop-color="#ff4d8f" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#c4b5fd" stop-opacity="1"/>
+        </linearGradient>
+        <linearGradient id="s04-cos-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.2"/>
+          <stop offset="30%" stop-color="#fbbf24" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ffb36e" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Left: unit circle -->
+      <g class="s04-circle-g" transform="translate(360, 620)">
+        <circle class="s04-halo" cx="0" cy="0" r="240" fill="url(#s04-halo)"/>
+        <line class="s04-ax-x" x1="-220" y1="0" x2="220" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s04-ax-y" x1="0" y1="220" x2="0" y2="-220" stroke="#5b6e93" stroke-width="1.5"/>
+        <circle class="s04-unit" cx="0" cy="0" r="180" fill="none" stroke="#4dd0ff" stroke-width="3"
+                stroke-dasharray="1131" stroke-dashoffset="1131" filter="url(#s04-glow)"/>
+        <line class="s04-radius" x1="0" y1="0" x2="180" y2="0" stroke="#ffffff" stroke-width="2.5" opacity="0.9"/>
+        <circle class="s04-p-halo" cx="180" cy="0" r="20" fill="#fbbf24" opacity="0.4" filter="url(#s04-glow)"/>
+        <circle class="s04-p" cx="180" cy="0" r="10" fill="#fbbf24" stroke="#fffbeb" stroke-width="2"/>
+        <text class="s04-circle-lbl" x="0" y="260" fill="#8da1c7" font-size="20" text-anchor="middle" letter-spacing="4">单位圆</text>
+      </g>
+
+      <!-- Arrow from circle to wave (transition indicator) -->
+      <g class="s04-arrow-g" transform="translate(620, 620)">
+        <line class="s04-arrow-line" x1="0" y1="0" x2="100" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 4" opacity="0"/>
+        <polygon class="s04-arrow-head" points="100,0 80,-8 80,8" fill="#fbbf24" opacity="0"/>
+        <text class="s04-arrow-lbl" x="50" y="-18" fill="#fbbf24" font-size="18" text-anchor="middle" letter-spacing="2" opacity="0">展开</text>
+      </g>
+
+      <!-- Right: wave panel -->
+      <g class="s04-wave-g" transform="translate(740, 620)">
+        <line class="s04-wave-ax" x1="0" y1="0" x2="1100" y2="0" stroke="#5b6e93" stroke-width="1.5" opacity="0"/>
+        <line class="s04-wave-amp" x1="0" y1="-200" x2="0" y2="200" stroke="#3a4a70" stroke-width="1" stroke-dasharray="4 4" opacity="0"/>
+        <polygon class="s04-time-arr" points="1100,0 1080,-8 1080,8" fill="#5b6e93" opacity="0"/>
+        <text class="s04-time-lbl" x="1080" y="-18" fill="#8da1c7" font-size="18" text-anchor="end" letter-spacing="2" opacity="0">时间 t →</text>
+        <text class="s04-amp-plus" x="-16" y="-194" fill="#5b6e93" font-size="16" text-anchor="end" font-family="JetBrains Mono, monospace" opacity="0">+1</text>
+        <text class="s04-amp-minus" x="-16" y="210" fill="#5b6e93" font-size="16" text-anchor="end" font-family="JetBrains Mono, monospace" opacity="0">-1</text>
+
+        <!-- Sine wave: 3 cycles across 1100px, amplitude 180 -->
+        <path class="s04-sin-wave"
+              d="M 0 0 Q 46 -180, 92 -180 T 184 0 T 276 180 T 368 180 T 460 0 T 552 -180 T 644 -180 T 736 0 T 828 180 T 920 180 T 1012 0 T 1100 -140"
+              fill="none" stroke="url(#s04-sin-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="1800" stroke-dashoffset="1800" filter="url(#s04-glow)"/>
+        <!-- Cosine wave: shifted 90° -->
+        <path class="s04-cos-wave"
+              d="M 0 -180 Q 46 -180, 92 0 T 184 180 T 276 180 T 368 0 T 460 -180 T 552 -180 T 644 0 T 736 180 T 828 180 T 920 0 T 1012 -180 T 1100 -180"
+              fill="none" stroke="url(#s04-cos-grad)" stroke-width="3.5" stroke-linecap="round"
+              stroke-dasharray="1800" stroke-dashoffset="1800" opacity="0.9"/>
+
+        <text class="s04-sin-lbl" x="30" y="-200" fill="#ff4d8f" font-size="26" font-style="italic" font-family="Georgia, serif" opacity="0">sin θ</text>
+        <text class="s04-cos-lbl" x="30" y="230" fill="#fbbf24" font-size="26" font-style="italic" font-family="Georgia, serif" opacity="0">cos θ</text>
+      </g>
+    </svg>
+
+    <div class="s04-caption">
+      <span class="s04-cap-dot"></span>
+      <span class="s04-cap-accent">旋转</span> &times; <span class="s04-cap-accent2">时间</span> = <span class="s04-cap-accent3">波形曲线</span>
+    </div>
+
+    <style>
+      #scene-04-de95b9 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #040813; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-04-de95b9 .s04-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 22% 45%, rgba(77,208,255,0.16), transparent 58%),
+          radial-gradient(ellipse 900px 700px at 78% 62%, rgba(251,191,36,0.12), transparent 58%),
+          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(255,77,143,0.08), transparent 55%),
+          linear-gradient(180deg, #040813 0%, #060b20 55%, #030612 100%);
+      }
+      #scene-04-de95b9 .s04-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+      }
+      #scene-04-de95b9 .s04-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-04-de95b9 .s04-orb-a {
+        width: 520px; height: 520px; left: -180px; top: 120px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
+      }
+      #scene-04-de95b9 .s04-orb-b {
+        width: 620px; height: 620px; right: -220px; bottom: -200px;
+        background: radial-gradient(circle, rgba(251,191,36,0.22), transparent 70%);
+      }
+      #scene-04-de95b9 .s04-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-04-de95b9 .s04-eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-04-de95b9 .s04-num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em;
+      }
+      #scene-04-de95b9 .s04-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-04-de95b9 .s04-label { color: #b5c4dd; }
+      #scene-04-de95b9 .s04-title {
+        margin-top: 18px; font-size: 130px; font-weight: 800; line-height: 1;
+        letter-spacing: -0.02em;
+        display: flex; gap: 22px; align-items: baseline;
+      }
+      #scene-04-de95b9 .s04-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-04-de95b9 .s04-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #ff4d8f 50%, #fbbf24 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(255,77,143,0.35);
+      }
+      #scene-04-de95b9 .s04-subtitle {
+        margin-top: 20px; font-size: 30px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300;
+      }
+      #scene-04-de95b9 .s04-em-sin { color: #ff4d8f; font-weight: 700; padding: 0 4px; }
+      #scene-04-de95b9 .s04-em-cos { color: #fbbf24; font-weight: 700; padding: 0 4px; }
+
+      #scene-04-de95b9 .s04-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      #scene-04-de95b9 .s04-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-04-de95b9 .s04-cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #fbbf24; box-shadow: 0 0 12px #fbbf24;
+      }
+      #scene-04-de95b9 .s04-cap-accent { color: #fbbf24; font-weight: 700; text-shadow: 0 0 14px rgba(251,191,36,0.5); }
+      #scene-04-de95b9 .s04-cap-accent2 { color: #4dd0ff; font-weight: 700; text-shadow: 0 0 14px rgba(77,208,255,0.5); }
+      #scene-04-de95b9 .s04-cap-accent3 { color: #ff4d8f; font-weight: 700; text-shadow: 0 0 14px rgba(255,77,143,0.5); }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-05-f80eb7 (offset=48s, dur=13s) ================== -->
+
+  <div id="scene-05-f80eb7" data-composition-id="scene-05-f80eb7" data-width="1920" data-height="1080">
+
+    <div class="s05-bg"></div>
+    <div class="s05-grid-floor"></div>
+    <div class="s05-vignette"></div>
+    <div class="s05-orb s05-orb-a"></div>
+    <div class="s05-orb s05-orb-b"></div>
+    <div class="s05-orb s05-orb-c"></div>
+
+    <div class="s05-header">
+      <div class="s05-eyebrow">
+        <span class="s05-num">05</span>
+        <span class="s05-bar"></span>
+        <span class="s05-label">3D UNIFIED VIEW</span>
+      </div>
+      <h1 class="s05-title">
+        <span class="s05-t1">3D 视角的</span>
+        <span class="s05-t2">统一</span>
+      </h1>
+      <div class="s05-subtitle">波 = 圆周运动在<span class="s05-em">时间轴</span>上的<span class="s05-em2">投影</span></div>
+    </div>
+
+    <svg class="s05-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s05-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s05-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s05-helix-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.2"/>
+          <stop offset="30%" stop-color="#4dd0ff" stop-opacity="1"/>
+          <stop offset="70%" stop-color="#c4b5fd" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ff4d8f" stop-opacity="0.8"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 3D-looking perspective: tilted ellipse as unit circle + stretched time axis -->
+      <g class="s05-scene-g" transform="translate(460, 620)">
+        <!-- Shadow ellipse beneath -->
+        <ellipse class="s05-circle-shadow" cx="0" cy="20" rx="210" ry="40" fill="#3a5580" opacity="0.25"/>
+
+        <!-- Tilted ellipse (the unit circle in 3D perspective) -->
+        <circle class="s05-halo" cx="0" cy="0" r="240" fill="url(#s05-halo)"/>
+        <ellipse class="s05-unit-ellipse" cx="0" cy="0" rx="200" ry="70"
+                 fill="none" stroke="#4dd0ff" stroke-width="3.5"
+                 stroke-dasharray="880" stroke-dashoffset="880" filter="url(#s05-glow)"/>
+
+        <!-- Rotating point on the ellipse -->
+        <g class="s05-rotor">
+          <line class="s05-radius" x1="0" y1="0" x2="200" y2="0" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <circle class="s05-p-halo" cx="200" cy="0" r="22" fill="#fbbf24" opacity="0" filter="url(#s05-glow)"/>
+          <circle class="s05-p" cx="200" cy="0" r="11" fill="#fbbf24" stroke="#fffbeb" stroke-width="2.5" opacity="0"/>
+        </g>
+
+        <text class="s05-circle-lbl" x="0" y="120" fill="#8da1c7" font-size="20" text-anchor="middle" letter-spacing="4">圆周运动</text>
+      </g>
+
+      <!-- Time axis stretches right -->
+      <line class="s05-time-axis" x1="460" y1="620" x2="460" y2="620" stroke="#6b85ab" stroke-width="2.5"/>
+      <polygon class="s05-time-arrow" points="1740,620 1720,612 1720,628" fill="#6b85ab" opacity="0"/>
+      <text class="s05-time-lbl" x="1720" y="600" fill="#8ba3c7" font-size="22" text-anchor="end" letter-spacing="3" opacity="0">时间轴 t →</text>
+
+      <!-- Sine wave being "unfolded" from the circle -->
+      <path class="s05-wave"
+            d="M 460 620 Q 520 480, 580 480 T 700 620 T 820 760 T 940 760 T 1060 620 T 1180 480 T 1300 480 T 1420 620 T 1540 760 T 1660 760 T 1740 620"
+            fill="none" stroke="url(#s05-helix-grad)" stroke-width="4.5" stroke-linecap="round"
+            stroke-dasharray="2000" stroke-dashoffset="2000" filter="url(#s05-glow)"/>
+
+      <!-- Projection lines from the rotating point to the wave -->
+      <line class="s05-proj-line" x1="460" y1="620" x2="460" y2="620" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4 4" opacity="0"/>
+
+      <!-- Trace dots along the wave (strobe-like sampling) -->
+      <g class="s05-trace-dots">
+        <circle class="s05-trace-dot" cx="580" cy="480" r="8" fill="#ff4d8f" opacity="0"/>
+        <circle class="s05-trace-dot" cx="820" cy="760" r="8" fill="#ff4d8f" opacity="0"/>
+        <circle class="s05-trace-dot" cx="1060" cy="620" r="8" fill="#c4b5fd" opacity="0"/>
+        <circle class="s05-trace-dot" cx="1300" cy="480" r="8" fill="#4dd0ff" opacity="0"/>
+        <circle class="s05-trace-dot" cx="1540" cy="760" r="8" fill="#ff4d8f" opacity="0"/>
+      </g>
+
+      <text class="s05-wave-lbl" x="1640" y="570" fill="#c4b5fd" font-size="26" text-anchor="end" font-style="italic" font-family="Georgia, serif" opacity="0">sin(t)</text>
+    </svg>
+
+    <div class="s05-caption">
+      <span class="s05-cap-dot"></span>
+      旋转 <span class="s05-times">×</span> 时间 = <span class="s05-cap-wave">正弦波</span>
+    </div>
+
+    <style>
+      #scene-05-f80eb7 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-05-f80eb7 .s05-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1300px 900px at 28% 42%, rgba(77,208,255,0.22), transparent 55%),
+          radial-gradient(ellipse 900px 700px at 78% 60%, rgba(255,77,143,0.14), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 50% 90%, rgba(200,163,255,0.10), transparent 60%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
+      }
+      #scene-05-f80eb7 .s05-grid-floor {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 480px;
+        background-image:
+          linear-gradient(rgba(77,208,255,0.3) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(77,208,255,0.3) 1px, transparent 1px);
+        background-size: 100px 100px;
+        transform: perspective(950px) rotateX(62deg);
+        transform-origin: bottom center;
+        opacity: 0.45;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        pointer-events: none;
+      }
+      #scene-05-f80eb7 .s05-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+      }
+      #scene-05-f80eb7 .s05-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-05-f80eb7 .s05-orb-a { width: 520px; height: 520px; left: -120px; top: 180px; background: radial-gradient(circle, rgba(77,208,255,0.4), transparent 70%); }
+      #scene-05-f80eb7 .s05-orb-b { width: 620px; height: 620px; right: -200px; bottom: 80px; background: radial-gradient(circle, rgba(255,77,143,0.25), transparent 70%); }
+      #scene-05-f80eb7 .s05-orb-c { width: 460px; height: 460px; left: 45%; top: 50%; background: radial-gradient(circle, rgba(251,191,36,0.12), transparent 70%); }
+
+      #scene-05-f80eb7 .s05-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-05-f80eb7 .s05-eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-05-f80eb7 .s05-num { color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-05-f80eb7 .s05-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-05-f80eb7 .s05-label { color: #b5c4dd; }
+      #scene-05-f80eb7 .s05-title {
+        margin-top: 18px; font-size: 140px; font-weight: 800; line-height: 1;
+        display: flex; gap: 22px; align-items: baseline; letter-spacing: -0.02em;
+      }
+      #scene-05-f80eb7 .s05-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-05-f80eb7 .s05-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 50%, #c4b5fd 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(77,208,255,0.4);
+      }
+      #scene-05-f80eb7 .s05-subtitle { margin-top: 20px; font-size: 32px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300; }
+      #scene-05-f80eb7 .s05-em { color: #4dd0ff; font-weight: 700; padding: 0 4px; }
+      #scene-05-f80eb7 .s05-em2 { color: #fbbf24; font-weight: 700; padding: 0 4px; }
+
+      #scene-05-f80eb7 .s05-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      #scene-05-f80eb7 .s05-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 30px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-05-f80eb7 .s05-cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #c4b5fd; box-shadow: 0 0 12px #c4b5fd;
+      }
+      #scene-05-f80eb7 .s05-times { color: #5b6e93; margin: 0 8px; font-weight: 300; }
+      #scene-05-f80eb7 .s05-cap-wave {
+        background: linear-gradient(135deg, #4dd0ff 0%, #c4b5fd 60%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 800; padding: 0 6px;
+      }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-06-2d4304 (offset=61s, dur=14s) ================== -->
+
+  <div id="scene-06-2d4304" data-composition-id="scene-06-2d4304" data-width="1920" data-height="1080">
+
+    <div class="s06-bg"></div>
+    <div class="s06-vignette"></div>
+    <div class="s06-orb s06-orb-a"></div>
+    <div class="s06-orb s06-orb-b"></div>
+
+    <div class="s06-header">
+      <div class="s06-eyebrow">
+        <span class="s06-num">06</span>
+        <span class="s06-bar"></span>
+        <span class="s06-label">TANGENT &amp; SLOPE</span>
+      </div>
+      <h1 class="s06-title">
+        <span class="s06-t1">tan(θ) =</span>
+        <span class="s06-t2">sin/cos</span>
+      </h1>
+      <div class="s06-subtitle">切线的<span class="s06-em">斜率</span> · cos → 0 时 tan → <span class="s06-inf">∞</span></div>
+    </div>
+
+    <!-- Formula card (right side) -->
+    <div class="s06-formula">
+      <div class="s06-f-title">FORMULA</div>
+      <div class="s06-f-main">
+        <span class="s06-f-tan">tan θ</span>
+        <span class="s06-f-eq">=</span>
+        <div class="s06-f-frac">
+          <span class="s06-f-num">sin θ</span>
+          <span class="s06-f-bar"></span>
+          <span class="s06-f-den">cos θ</span>
+        </div>
+      </div>
+      <div class="s06-f-note">
+        当 cos θ → 0, tan θ → ±∞
+      </div>
+    </div>
+
+    <svg class="s06-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s06-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s06-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s06-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s06-tan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff4d8f" stop-opacity="0.15"/>
+          <stop offset="50%" stop-color="#ff4d8f" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ff4d8f" stop-opacity="0.15"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Left: unit circle with tangent point -->
+      <g class="s06-circle-g" transform="translate(420, 680)">
+        <circle class="s06-halo" cx="0" cy="0" r="300" fill="url(#s06-halo)"/>
+        <line class="s06-ax-x" x1="-360" y1="0" x2="360" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s06-ax-y" x1="0" y1="360" x2="0" y2="-360" stroke="#5b6e93" stroke-width="1.5"/>
+        <text class="s06-ax-lbl" x="376" y="10" fill="#8da1c7" font-size="22" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="s06-ax-lbl" x="10" y="-368" fill="#8da1c7" font-size="22" font-style="italic" font-family="Georgia, serif">y</text>
+
+        <circle class="s06-origin" cx="0" cy="0" r="4" fill="#e6edf9"/>
+
+        <!-- Unit circle -->
+        <circle class="s06-unit" cx="0" cy="0" r="240" fill="none" stroke="#4dd0ff" stroke-width="3"
+                stroke-dasharray="1508" stroke-dashoffset="1508" filter="url(#s06-glow)"/>
+
+        <!-- Vertical tangent line at x=1 (highlighted because this is where tan lives geometrically) -->
+        <line class="s06-tan-line" x1="240" y1="-380" x2="240" y2="380"
+              stroke="#ff4d8f" stroke-width="2.5" stroke-dasharray="8 6"
+              opacity="0" filter="url(#s06-glow)"/>
+        <text class="s06-tan-line-lbl" x="250" y="-340" fill="#ff4d8f" font-size="18" font-family="JetBrains Mono, monospace" opacity="0">x = 1</text>
+
+        <!-- Radius extending through the circle to meet the tangent line -->
+        <line class="s06-radius" x1="0" y1="0" x2="240" y2="-140" stroke="#ffffff" stroke-width="2.5" opacity="0"/>
+        <line class="s06-ray-ext" x1="240" y1="-140" x2="240" y2="-240" stroke="#c4b5fd" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+
+        <!-- Angle arc -->
+        <path class="s06-arc" d="M 60 0 A 60 60 0 0 0 52 -30" fill="none" stroke="#fbbf24" stroke-width="2.5" opacity="0"/>
+        <text class="s06-arc-lbl" x="56" y="-20" fill="#fbbf24" font-size="26" font-style="italic" font-family="Georgia, serif" opacity="0">θ</text>
+
+        <!-- Point on circle (P) -->
+        <circle class="s06-p-halo" cx="240" cy="-140" r="18" fill="#4dd0ff" opacity="0" filter="url(#s06-glow)"/>
+        <circle class="s06-p" cx="240" cy="-140" r="9" fill="#4dd0ff" stroke="#ffffff" stroke-width="2" opacity="0"/>
+
+        <!-- Tan intersection point (where ray extended hits x=1 line) -->
+        <circle class="s06-tan-p-halo" cx="240" cy="-240" r="24" fill="#ff4d8f" opacity="0" filter="url(#s06-glow-strong)"/>
+        <circle class="s06-tan-p" cx="240" cy="-240" r="11" fill="#ff4d8f" stroke="#fffbeb" stroke-width="3" opacity="0"/>
+        <text class="s06-tan-p-lbl" x="264" y="-248" fill="#ff4d8f" font-size="24" font-style="italic" font-weight="700" font-family="Georgia, serif" opacity="0">tan θ</text>
+      </g>
+
+      <!-- Right: tan curve with asymptotes -->
+      <g class="s06-tan-curve-g" transform="translate(1060, 600)">
+        <line class="s06-curve-ax-x" x1="0" y1="0" x2="760" y2="0" stroke="#5b6e93" stroke-width="1.5" opacity="0"/>
+        <line class="s06-curve-ax-y" x1="0" y1="-280" x2="0" y2="280" stroke="#5b6e93" stroke-width="1.5" opacity="0"/>
+        <text class="s06-curve-lbl-x" x="776" y="10" fill="#8da1c7" font-size="18" font-style="italic" opacity="0">θ</text>
+        <text class="s06-curve-lbl-y" x="10" y="-288" fill="#8da1c7" font-size="18" font-style="italic" font-family="Georgia, serif" opacity="0">tan θ</text>
+
+        <!-- Asymptotes at π/2, 3π/2 -->
+        <line class="s06-asym s06-asym-1" x1="190" y1="-280" x2="190" y2="280" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0"/>
+        <line class="s06-asym s06-asym-2" x1="570" y1="-280" x2="570" y2="280" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0"/>
+
+        <text class="s06-asym-lbl s06-asym-lbl-1" x="198" y="270" fill="#ff4d8f" font-size="18" font-family="JetBrains Mono, monospace" opacity="0">π/2</text>
+        <text class="s06-asym-lbl s06-asym-lbl-2" x="578" y="270" fill="#ff4d8f" font-size="18" font-family="JetBrains Mono, monospace" opacity="0">3π/2</text>
+
+        <text class="s06-tick" x="0" y="24" fill="#5b6e93" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">0</text>
+        <text class="s06-tick" x="380" y="24" fill="#5b6e93" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">π</text>
+        <text class="s06-tick" x="760" y="24" fill="#5b6e93" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">2π</text>
+
+        <!-- tan curve — 3 segments to avoid the asymptotes -->
+        <path class="s06-tan-seg s06-seg-1"
+              d="M 0 0 C 70 -30, 140 -120, 170 -220 L 186 -280"
+              fill="none" stroke="url(#s06-tan-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="500" stroke-dashoffset="500" filter="url(#s06-glow)"/>
+        <path class="s06-tan-seg s06-seg-2"
+              d="M 194 280 L 210 220 C 240 120, 350 0, 380 0 C 410 0, 520 -120, 550 -220 L 566 -280"
+              fill="none" stroke="url(#s06-tan-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="900" stroke-dashoffset="900" filter="url(#s06-glow)"/>
+        <path class="s06-tan-seg s06-seg-3"
+              d="M 574 280 L 590 220 C 620 120, 700 20, 760 0"
+              fill="none" stroke="url(#s06-tan-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="500" stroke-dashoffset="500" filter="url(#s06-glow)"/>
+
+        <!-- Infinity indicator -->
+        <text class="s06-inf-sign" x="180" y="-300" fill="#ff4d8f" font-size="36" font-weight="700" text-anchor="middle" opacity="0">→∞</text>
+        <text class="s06-inf-sign-2" x="200" y="310" fill="#ff4d8f" font-size="36" font-weight="700" text-anchor="middle" opacity="0">→-∞</text>
+      </g>
+    </svg>
+
+    <div class="s06-caption">
+      <span class="s06-cap-dot"></span>
+      cos → 0 时 tan 冲向 <span class="s06-cap-inf">无穷</span> — 这就是渐近线的由来
+    </div>
+
+    <style>
+      #scene-06-2d4304 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-06-2d4304 .s06-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 700px at 25% 55%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 900px 700px at 80% 45%, rgba(255,77,143,0.18), transparent 58%),
+          radial-gradient(ellipse 700px 500px at 50% 100%, rgba(251,191,36,0.06), transparent 65%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
+      }
+      #scene-06-2d4304 .s06-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+        pointer-events: none;
+      }
+      #scene-06-2d4304 .s06-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-06-2d4304 .s06-orb-a { width: 520px; height: 520px; left: -140px; top: 180px; background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%); }
+      #scene-06-2d4304 .s06-orb-b { width: 620px; height: 620px; right: -180px; bottom: -160px; background: radial-gradient(circle, rgba(255,77,143,0.3), transparent 70%); }
+
+      #scene-06-2d4304 .s06-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-06-2d4304 .s06-eyebrow { display: flex; align-items: center; gap: 18px; font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500; }
+      #scene-06-2d4304 .s06-num { color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-06-2d4304 .s06-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-06-2d4304 .s06-label { color: #b5c4dd; }
+      #scene-06-2d4304 .s06-title {
+        margin-top: 18px; font-size: 120px; font-weight: 800; line-height: 1;
+        display: flex; gap: 24px; align-items: baseline; font-family: "Georgia", serif; font-style: italic;
+        letter-spacing: -0.01em;
+      }
+      #scene-06-2d4304 .s06-t1 { color: #d9e4f5; font-weight: 300; }
+      #scene-06-2d4304 .s06-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #ff4d8f 60%, #fbbf24 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(255,77,143,0.4);
+      }
+      #scene-06-2d4304 .s06-subtitle { margin-top: 20px; font-size: 30px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300; font-family: "PingFang SC", sans-serif; font-style: normal; }
+      #scene-06-2d4304 .s06-em { color: #fbbf24; font-weight: 700; padding: 0 4px; }
+      #scene-06-2d4304 .s06-inf { color: #ff4d8f; font-weight: 800; font-size: 40px; padding: 0 6px; text-shadow: 0 0 16px rgba(255,77,143,0.6); }
+
+      /* Formula card */
+      #scene-06-2d4304 .s06-formula {
+        position: absolute; right: 92px; top: 92px; width: 380px;
+        padding: 26px 30px;
+        background: rgba(10,18,36,0.75);
+        border: 1px solid rgba(255,77,143,0.3); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 60px rgba(255,77,143,0.08);
+        z-index: 8;
+      }
+      #scene-06-2d4304 .s06-f-title { font-size: 16px; letter-spacing: 0.4em; color: #ff4d8f; font-weight: 600; margin-bottom: 18px; }
+      #scene-06-2d4304 .s06-f-main {
+        display: flex; align-items: center; gap: 14px;
+        font-family: "Georgia", serif; font-style: italic; font-size: 40px; color: #f1f5f9;
+        padding: 12px 0;
+      }
+      #scene-06-2d4304 .s06-f-tan { color: #ff4d8f; font-weight: 700; }
+      #scene-06-2d4304 .s06-f-eq { color: #4dd0ff; font-style: normal; }
+      #scene-06-2d4304 .s06-f-frac { display: flex; flex-direction: column; align-items: center; font-size: 32px; line-height: 1.1; }
+      #scene-06-2d4304 .s06-f-num { color: #fbbf24; font-weight: 700; padding: 4px 12px; }
+      #scene-06-2d4304 .s06-f-bar { display: block; width: 100%; height: 2px; background: #ffffff; opacity: 0.6; margin: 2px 0; }
+      #scene-06-2d4304 .s06-f-den { color: #ff6b9a; font-weight: 700; padding: 4px 12px; }
+      #scene-06-2d4304 .s06-f-note { margin-top: 12px; padding-top: 14px; border-top: 1px solid rgba(255,77,143,0.2); font-size: 18px; color: #c4b5fd; letter-spacing: 0.08em; text-align: center; }
+
+      #scene-06-2d4304 .s06-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      #scene-06-2d4304 .s06-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px; color: #e2e8f0; letter-spacing: 0.08em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-06-2d4304 .s06-cap-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ff4d8f; box-shadow: 0 0 12px #ff4d8f; }
+      #scene-06-2d4304 .s06-cap-inf {
+        color: #ff4d8f; font-weight: 800; padding: 0 4px;
+        text-shadow: 0 0 16px rgba(255,77,143,0.6);
+      }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-07-0d91b0 (offset=75s, dur=13s) ================== -->
+
+  <div id="scene-07-0d91b0" data-composition-id="scene-07-0d91b0" data-width="1920" data-height="1080">
+
+    <div class="s07-bg"></div>
+    <div class="s07-grid-floor"></div>
+    <div class="s07-vignette"></div>
+    <div class="s07-orb s07-orb-a"></div>
+    <div class="s07-orb s07-orb-b"></div>
+
+    <div class="s07-header">
+      <div class="s07-eyebrow">
+        <span class="s07-num">07</span>
+        <span class="s07-bar"></span>
+        <span class="s07-label">PERIODICITY</span>
+      </div>
+      <h1 class="s07-title">
+        <span class="s07-t1">每 2π</span>
+        <span class="s07-t2">重复一次</span>
+      </h1>
+      <div class="s07-subtitle">周期性就像<span class="s07-em">螺旋</span>一样自然延伸</div>
+    </div>
+
+    <!-- Counter panel -->
+    <div class="s07-counter">
+      <div class="s07-c-title">CYCLES</div>
+      <div class="s07-c-main">
+        <span class="s07-c-label">N =</span>
+        <span class="s07-c-val s07-cycle-val">0</span>
+      </div>
+      <div class="s07-c-sub">
+        <span class="s07-c-sub-label">累计相位</span>
+        <span class="s07-c-sub-val s07-phase-val">0.00</span>
+        <span class="s07-c-sub-unit">rad</span>
+      </div>
+    </div>
+
+    <svg class="s07-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s07-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s07-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c4b5fd" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#c4b5fd" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="s07-helix-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.15"/>
+          <stop offset="30%" stop-color="#4dd0ff" stop-opacity="1"/>
+          <stop offset="60%" stop-color="#c4b5fd" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#ff4d8f" stop-opacity="0.9"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Left: tilted circle (perspective) -->
+      <g class="s07-circle-g" transform="translate(380, 620)">
+        <circle class="s07-halo" cx="0" cy="0" r="280" fill="url(#s07-halo)"/>
+        <ellipse class="s07-shadow" cx="0" cy="20" rx="210" ry="40" fill="#3a5580" opacity="0.2"/>
+        <line class="s07-ax-h" x1="-240" y1="0" x2="240" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+        <line class="s07-ax-v" x1="0" y1="-90" x2="0" y2="90" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+
+        <ellipse class="s07-unit-ellipse" cx="0" cy="0" rx="210" ry="80"
+                 fill="none" stroke="#4dd0ff" stroke-width="3"
+                 stroke-dasharray="950" stroke-dashoffset="950" filter="url(#s07-glow)"/>
+
+        <!-- Quadrant markers -->
+        <g class="s07-markers">
+          <circle class="s07-mark" cx="210" cy="0" r="4" fill="#4dd0ff" opacity="0"/>
+          <circle class="s07-mark" cx="0" cy="-80" r="4" fill="#4dd0ff" opacity="0"/>
+          <circle class="s07-mark" cx="-210" cy="0" r="4" fill="#4dd0ff" opacity="0"/>
+          <circle class="s07-mark" cx="0" cy="80" r="4" fill="#4dd0ff" opacity="0"/>
+          <text class="s07-mark-lbl" x="230" y="6" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">0</text>
+          <text class="s07-mark-lbl" x="10" y="-94" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">π/2</text>
+          <text class="s07-mark-lbl" x="-246" y="6" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">π</text>
+          <text class="s07-mark-lbl" x="10" y="110" fill="#8da1c7" font-size="14" font-family="JetBrains Mono, monospace" opacity="0">3π/2</text>
+        </g>
+
+        <!-- Rotating point -->
+        <g class="s07-rotor">
+          <line class="s07-radius" x1="0" y1="0" x2="210" y2="0" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <circle class="s07-p-halo" cx="210" cy="0" r="20" fill="#fbbf24" opacity="0" filter="url(#s07-glow)"/>
+          <circle class="s07-p" cx="210" cy="0" r="10" fill="#fbbf24" stroke="#fffbeb" stroke-width="2.5" opacity="0"/>
+        </g>
+
+        <text class="s07-circle-lbl" x="0" y="150" fill="#8da1c7" font-size="18" text-anchor="middle" letter-spacing="3">单位圆</text>
+      </g>
+
+      <!-- Right: helix / waveform extending along time -->
+      <g class="s07-helix-g" transform="translate(680, 620)">
+        <line class="s07-time-ax" x1="0" y1="0" x2="1140" y2="0" stroke="#6b85ab" stroke-width="2" opacity="0"/>
+        <polygon class="s07-time-arr" points="1140,0 1120,-8 1120,8" fill="#6b85ab" opacity="0"/>
+        <text class="s07-time-lbl" x="1120" y="-18" fill="#8ba3c7" font-size="18" text-anchor="end" letter-spacing="3" opacity="0">时间 t →</text>
+
+        <!-- Cycle boundary markers -->
+        <g class="s07-cycle-markers">
+          <line class="s07-cm s07-cm-1" x1="240" y1="-180" x2="240" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+          <line class="s07-cm s07-cm-2" x1="480" y1="-180" x2="480" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+          <line class="s07-cm s07-cm-3" x1="720" y1="-180" x2="720" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+          <line class="s07-cm s07-cm-4" x1="960" y1="-180" x2="960" y2="180" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 5" opacity="0"/>
+
+          <text class="s07-cm-lbl s07-cm-lbl-1" x="240" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">2π</text>
+          <text class="s07-cm-lbl s07-cm-lbl-2" x="480" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">4π</text>
+          <text class="s07-cm-lbl s07-cm-lbl-3" x="720" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">6π</text>
+          <text class="s07-cm-lbl s07-cm-lbl-4" x="960" y="210" fill="#c4b5fd" font-size="16" text-anchor="middle" font-family="JetBrains Mono, monospace" opacity="0">8π</text>
+        </g>
+
+        <!-- Helix-like wave (4 cycles, amplitude 160) -->
+        <path class="s07-helix-path"
+              d="M 0 0
+                 C 30 -80, 60 -160, 90 -160 C 120 -160, 150 -80, 180 0 C 210 80, 240 160, 240 160
+                 C 270 160, 300 80, 330 0 C 360 -80, 390 -160, 420 -160 C 450 -160, 480 -80, 480 0
+                 C 510 80, 540 160, 570 160 C 600 160, 630 80, 660 0 C 690 -80, 720 -160, 720 -160
+                 C 750 -160, 780 -80, 810 0 C 840 80, 870 160, 900 160 C 930 160, 960 80, 960 0
+                 C 990 -80, 1020 -160, 1050 -160 C 1080 -160, 1110 -80, 1140 0"
+              fill="none" stroke="url(#s07-helix-grad)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="2800" stroke-dashoffset="2800" filter="url(#s07-glow)"/>
+
+        <!-- Trace dot along helix -->
+        <circle class="s07-trace-dot" cx="0" cy="0" r="10" fill="#fbbf24" filter="url(#s07-glow)" opacity="0"/>
+
+        <text class="s07-helix-lbl" x="570" y="-200" fill="#c4b5fd" font-size="22" text-anchor="middle" letter-spacing="4" opacity="0">无限延伸的螺旋</text>
+      </g>
+    </svg>
+
+    <div class="s07-caption">
+      <span class="s07-cap-dot"></span>
+      <span class="s07-cap-accent">2π</span> 的重复是几何的必然 — 不是死记硬背
+    </div>
+
+    <style>
+      #scene-07-0d91b0 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-07-0d91b0 .s07-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 700px at 22% 45%, rgba(77,208,255,0.18), transparent 58%),
+          radial-gradient(ellipse 900px 700px at 78% 62%, rgba(200,163,255,0.18), transparent 58%),
+          radial-gradient(ellipse 1100px 800px at 50% 110%, rgba(255,77,143,0.10), transparent 55%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #030612 100%);
+      }
+      #scene-07-0d91b0 .s07-grid-floor {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 440px;
+        background-image:
+          linear-gradient(rgba(200,163,255,0.22) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(200,163,255,0.22) 1px, transparent 1px);
+        background-size: 100px 100px;
+        transform: perspective(900px) rotateX(62deg);
+        transform-origin: bottom center;
+        opacity: 0.4;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      }
+      #scene-07-0d91b0 .s07-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%); pointer-events: none; }
+      #scene-07-0d91b0 .s07-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-07-0d91b0 .s07-orb-a { width: 520px; height: 520px; left: -140px; top: 140px; background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%); }
+      #scene-07-0d91b0 .s07-orb-b { width: 620px; height: 620px; right: -200px; bottom: -100px; background: radial-gradient(circle, rgba(200,163,255,0.3), transparent 70%); }
+
+      #scene-07-0d91b0 .s07-header { position: absolute; top: 88px; left: 128px; z-index: 10; }
+      #scene-07-0d91b0 .s07-eyebrow { display: flex; align-items: center; gap: 18px; font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500; }
+      #scene-07-0d91b0 .s07-num { color: #c4b5fd; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(200,163,255,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-07-0d91b0 .s07-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-07-0d91b0 .s07-label { color: #b5c4dd; }
+      #scene-07-0d91b0 .s07-title {
+        margin-top: 18px; font-size: 130px; font-weight: 800; line-height: 1;
+        display: flex; gap: 22px; align-items: baseline; letter-spacing: -0.02em;
+      }
+      #scene-07-0d91b0 .s07-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-07-0d91b0 .s07-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(200,163,255,0.4);
+      }
+      #scene-07-0d91b0 .s07-subtitle { margin-top: 20px; font-size: 30px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300; }
+      #scene-07-0d91b0 .s07-em { color: #c4b5fd; font-weight: 700; padding: 0 4px; }
+
+      #scene-07-0d91b0 .s07-counter {
+        position: absolute; top: 106px; right: 92px; width: 300px;
+        padding: 24px 28px;
+        background: rgba(10,18,36,0.72);
+        border: 1px solid rgba(200,163,255,0.3); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 60px rgba(200,163,255,0.08);
+        z-index: 8;
+      }
+      #scene-07-0d91b0 .s07-c-title { font-size: 16px; letter-spacing: 0.4em; color: #c4b5fd; font-weight: 600; margin-bottom: 14px; }
+      #scene-07-0d91b0 .s07-c-main {
+        display: flex; align-items: baseline; gap: 14px; padding: 10px 0;
+        font-family: "JetBrains Mono", monospace;
+      }
+      #scene-07-0d91b0 .s07-c-label { color: #9fb4cc; font-size: 22px; font-style: italic; }
+      #scene-07-0d91b0 .s07-c-val { color: #fbbf24; font-size: 72px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; text-shadow: 0 0 24px rgba(251,191,36,0.4); }
+      #scene-07-0d91b0 .s07-c-sub {
+        margin-top: 10px; padding-top: 14px; border-top: 1px solid rgba(200,163,255,0.2);
+        display: flex; align-items: baseline; gap: 10px;
+        font-family: "JetBrains Mono", monospace;
+      }
+      #scene-07-0d91b0 .s07-c-sub-label { color: #8da1c7; font-size: 14px; font-family: "PingFang SC", sans-serif; letter-spacing: 0.1em; }
+      #scene-07-0d91b0 .s07-c-sub-val { color: #c4b5fd; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; flex: 1; text-align: right; }
+      #scene-07-0d91b0 .s07-c-sub-unit { color: #5b6e93; font-size: 14px; }
+
+      #scene-07-0d91b0 .s07-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      #scene-07-0d91b0 .s07-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 28px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-07-0d91b0 .s07-cap-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #c4b5fd; box-shadow: 0 0 12px #c4b5fd; }
+      #scene-07-0d91b0 .s07-cap-accent { color: #c4b5fd; font-weight: 800; padding: 0 4px; text-shadow: 0 0 16px rgba(200,163,255,0.5); }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-08-65f994 (offset=88s, dur=12s) ================== -->
+
+  <div id="scene-08-65f994" data-composition-id="scene-08-65f994" data-width="1920" data-height="1080">
+
+    <div class="s08-bg"></div>
+    <div class="s08-vignette"></div>
+    <div class="s08-orb s08-orb-a"></div>
+    <div class="s08-orb s08-orb-b"></div>
+
+    <div class="s08-header">
+      <div class="s08-eyebrow">
+        <span class="s08-num">08</span>
+        <span class="s08-bar"></span>
+        <span class="s08-label">SYMMETRY</span>
+      </div>
+      <h1 class="s08-title">
+        <span class="s08-t1">对称性的</span>
+        <span class="s08-t2">秘密</span>
+      </h1>
+      <div class="s08-subtitle"><span class="s08-em-sin">sin</span> 奇函数 · <span class="s08-em-cos">cos</span> 偶函数</div>
+    </div>
+
+    <svg class="s08-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s08-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s08-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s08-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Unit circle, centered-ish -->
+      <g class="s08-circle-g" transform="translate(960, 620)">
+        <circle class="s08-halo" cx="0" cy="0" r="360" fill="url(#s08-halo)"/>
+        <line class="s08-ax-x" x1="-440" y1="0" x2="440" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s08-ax-y" x1="0" y1="440" x2="0" y2="-440" stroke="#5b6e93" stroke-width="1.5"/>
+        <text class="s08-ax-lbl" x="456" y="10" fill="#8da1c7" font-size="24" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="s08-ax-lbl" x="10" y="-450" fill="#8da1c7" font-size="24" font-style="italic" font-family="Georgia, serif">y</text>
+        <circle class="s08-origin" cx="0" cy="0" r="4" fill="#e6edf9"/>
+
+        <!-- Mirror highlight lines -->
+        <line class="s08-mirror-y" x1="0" y1="-420" x2="0" y2="420" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="8 6" opacity="0" filter="url(#s08-glow)"/>
+        <line class="s08-mirror-x" x1="-420" y1="0" x2="420" y2="0" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0"/>
+
+        <circle class="s08-unit" cx="0" cy="0" r="320" fill="none" stroke="#4dd0ff" stroke-width="3"
+                stroke-dasharray="2011" stroke-dashoffset="2011" filter="url(#s08-glow)"/>
+
+        <!-- Point P at θ (upper half, 40°) and P' at -θ (lower half, mirror) -->
+        <!-- cos(40°) ≈ 0.766, sin(40°) ≈ 0.643 → x=245, y=-206 for 320r -->
+        <g class="s08-point-p">
+          <line class="s08-rad-p" x1="0" y1="0" x2="245" y2="-206" stroke="#ffffff" stroke-width="2.5" opacity="0"/>
+          <line class="s08-drop-cos-p" x1="245" y1="-206" x2="245" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <line class="s08-drop-sin-p" x1="245" y1="-206" x2="0" y2="-206" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <path class="s08-arc-p" d="M 70 0 A 70 70 0 0 0 54 -45" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0"/>
+          <text class="s08-arc-p-lbl" x="58" y="-28" fill="#fbbf24" font-size="22" font-style="italic" font-family="Georgia, serif" opacity="0">θ</text>
+          <circle class="s08-p-halo" cx="245" cy="-206" r="20" fill="#4dd0ff" opacity="0" filter="url(#s08-glow)"/>
+          <circle class="s08-p" cx="245" cy="-206" r="9" fill="#4dd0ff" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <text class="s08-p-lbl" x="270" y="-218" fill="#f1f5f9" font-size="22" font-style="italic" font-weight="600" font-family="Georgia, serif" opacity="0">P(cos θ, sin θ)</text>
+        </g>
+
+        <g class="s08-point-p2">
+          <line class="s08-rad-p2" x1="0" y1="0" x2="245" y2="206" stroke="#ffffff" stroke-width="2.5" opacity="0"/>
+          <line class="s08-drop-cos-p2" x1="245" y1="206" x2="245" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <line class="s08-drop-sin-p2" x1="245" y1="206" x2="0" y2="206" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>
+          <path class="s08-arc-p2" d="M 70 0 A 70 70 0 0 1 54 45" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0"/>
+          <text class="s08-arc-p2-lbl" x="58" y="40" fill="#fbbf24" font-size="22" font-style="italic" font-family="Georgia, serif" opacity="0">-θ</text>
+          <circle class="s08-p2-halo" cx="245" cy="206" r="20" fill="#ff4d8f" opacity="0" filter="url(#s08-glow)"/>
+          <circle class="s08-p2" cx="245" cy="206" r="9" fill="#ff4d8f" stroke="#ffffff" stroke-width="2" opacity="0"/>
+          <text class="s08-p2-lbl" x="270" y="224" fill="#f1f5f9" font-size="22" font-style="italic" font-weight="600" font-family="Georgia, serif" opacity="0">P'(cos θ, -sin θ)</text>
+        </g>
+
+        <!-- Highlight dots at intersections -->
+        <circle class="s08-hl-cos" cx="245" cy="0" r="9" fill="#fbbf24" opacity="0" filter="url(#s08-glow-strong)"/>
+        <circle class="s08-hl-sin-pos" cx="0" cy="-206" r="9" fill="#ff4d8f" opacity="0" filter="url(#s08-glow-strong)"/>
+        <circle class="s08-hl-sin-neg" cx="0" cy="206" r="9" fill="#ff4d8f" opacity="0" filter="url(#s08-glow-strong)"/>
+      </g>
+    </svg>
+
+    <!-- Two formula cards -->
+    <div class="s08-card s08-card-cos">
+      <div class="s08-card-tag">偶函数</div>
+      <div class="s08-card-desc">关于 y 轴镜像对称</div>
+      <div class="s08-card-formula">
+        cos(−θ) <span class="s08-card-eq">=</span> cos θ
+      </div>
+    </div>
+
+    <div class="s08-card s08-card-sin">
+      <div class="s08-card-tag">奇函数</div>
+      <div class="s08-card-desc">关于原点中心对称</div>
+      <div class="s08-card-formula">
+        sin(−θ) <span class="s08-card-eq">=</span> −sin θ
+      </div>
+    </div>
+
+    <div class="s08-caption">
+      <span class="s08-cap-dot"></span>
+      几何告诉你:公式不是规定,是<span class="s08-cap-em">必然</span>
+    </div>
+
+    <style>
+      #scene-08-65f994 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-08-65f994 .s08-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 50% 60%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 22% 30%, rgba(251,191,36,0.1), transparent 65%),
+          radial-gradient(ellipse 700px 500px at 78% 30%, rgba(255,77,143,0.1), transparent 65%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #030612 100%);
+      }
+      #scene-08-65f994 .s08-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.6) 100%); pointer-events: none; }
+      #scene-08-65f994 .s08-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+      #scene-08-65f994 .s08-orb-a { width: 520px; height: 520px; left: -140px; top: 160px; background: radial-gradient(circle, rgba(251,191,36,0.22), transparent 70%); }
+      #scene-08-65f994 .s08-orb-b { width: 620px; height: 620px; right: -200px; bottom: -160px; background: radial-gradient(circle, rgba(255,77,143,0.22), transparent 70%); }
+
+      #scene-08-65f994 .s08-header { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; }
+      #scene-08-65f994 .s08-eyebrow { display: flex; align-items: center; gap: 18px; justify-content: center; font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500; }
+      #scene-08-65f994 .s08-num { color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px; padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px; letter-spacing: 0.12em; }
+      #scene-08-65f994 .s08-bar { display: inline-block; width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-08-65f994 .s08-label { color: #b5c4dd; }
+      #scene-08-65f994 .s08-title {
+        margin-top: 14px; font-size: 110px; font-weight: 800; line-height: 1;
+        display: flex; gap: 20px; align-items: baseline; justify-content: center; letter-spacing: -0.02em;
+      }
+      #scene-08-65f994 .s08-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-08-65f994 .s08-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #fbbf24 40%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(251,191,36,0.4);
+      }
+      #scene-08-65f994 .s08-subtitle { margin-top: 14px; font-size: 28px; color: #9fb0cc; letter-spacing: 0.1em; font-weight: 300; }
+      #scene-08-65f994 .s08-em-sin { color: #ff4d8f; font-weight: 700; padding: 0 6px; font-style: italic; font-family: "Georgia", serif; }
+      #scene-08-65f994 .s08-em-cos { color: #fbbf24; font-weight: 700; padding: 0 6px; font-style: italic; font-family: "Georgia", serif; }
+
+      #scene-08-65f994 .s08-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      /* Two cards flanking the circle */
+      #scene-08-65f994 .s08-card {
+        position: absolute; width: 320px; padding: 22px 28px;
+        background: rgba(10,18,36,0.78);
+        border-radius: 16px;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        z-index: 8;
+      }
+      #scene-08-65f994 .s08-card-cos {
+        left: 92px; top: 480px;
+        border: 1px solid rgba(251,191,36,0.45);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 48px rgba(251,191,36,0.12);
+      }
+      #scene-08-65f994 .s08-card-sin {
+        right: 92px; top: 480px;
+        border: 1px solid rgba(255,77,143,0.45);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 48px rgba(255,77,143,0.12);
+      }
+      #scene-08-65f994 .s08-card-tag { font-size: 16px; letter-spacing: 0.32em; font-weight: 700; margin-bottom: 6px; }
+      #scene-08-65f994 .s08-card-cos .s08-card-tag { color: #fbbf24; }
+      #scene-08-65f994 .s08-card-sin .s08-card-tag { color: #ff4d8f; }
+      #scene-08-65f994 .s08-card-desc { font-size: 15px; color: #9fb4cc; letter-spacing: 0.15em; margin-bottom: 14px; }
+      #scene-08-65f994 .s08-card-formula {
+        font-family: "Georgia", serif; font-style: italic; font-size: 34px; font-weight: 700; color: #f1f5f9;
+        padding: 10px 0; border-top: 1px solid rgba(148,163,184,0.2);
+      }
+      #scene-08-65f994 .s08-card-eq { color: #4dd0ff; font-style: normal; margin: 0 8px; }
+
+      #scene-08-65f994 .s08-caption {
+        position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 30px; color: #e2e8f0; letter-spacing: 0.1em; font-weight: 300;
+        padding: 18px 40px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-08-65f994 .s08-cap-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 12px #fbbf24; }
+      #scene-08-65f994 .s08-cap-em {
+        background: linear-gradient(135deg, #fbbf24 0%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 800; padding: 0 6px; font-style: italic;
+      }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-09-3a8664 (offset=100s, dur=12s) ================== -->
+
+  <div id="scene-09-3a8664" data-composition-id="scene-09-3a8664" data-width="1920" data-height="1080">
+
+    <div class="s09-bg"></div>
+    <div class="s09-grid-floor"></div>
+    <div class="s09-vignette"></div>
+    <div class="s09-orb s09-orb-a"></div>
+    <div class="s09-orb s09-orb-b"></div>
+    <div class="s09-orb s09-orb-c"></div>
+
+    <!-- Chapter marker top -->
+    <div class="s09-chapter">
+      <div class="s09-chapter-line"></div>
+      <div class="s09-chapter-text">
+        <span class="s09-ch-num">CHAPTER 09</span>
+        <span class="s09-ch-sep">·</span>
+        <span class="s09-ch-label">尾声</span>
+      </div>
+      <div class="s09-chapter-line"></div>
+    </div>
+
+    <!-- Hero title -->
+    <div class="s09-hero">
+      <div class="s09-hero-eyebrow">当你用 3D 看懂单位圆</div>
+      <h1 class="s09-hero-title">
+        <span class="s09-t1">三角函数</span>
+        <span class="s09-t2">不再是公式</span>
+      </h1>
+      <div class="s09-hero-subtitle">而是一场 <span class="s09-hero-em">优雅</span> 的几何之舞</div>
+      <div class="s09-hero-accent"></div>
+    </div>
+
+    <!-- Central ambient rotating circle (decorative, endless gentle motion) -->
+    <svg class="s09-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s09-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s09-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s09-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <g class="s09-circle-g" transform="translate(1520, 320)">
+        <circle class="s09-halo" cx="0" cy="0" r="200" fill="url(#s09-halo)"/>
+        <circle class="s09-ring-a" cx="0" cy="0" r="120" fill="none" stroke="#4dd0ff" stroke-width="2.5" opacity="0" filter="url(#s09-glow)"/>
+        <circle class="s09-ring-b" cx="0" cy="0" r="150" fill="none" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="4 6" opacity="0"/>
+        <g class="s09-rotor">
+          <line class="s09-rad" x1="0" y1="0" x2="120" y2="0" stroke="#fbbf24" stroke-width="2" opacity="0"/>
+          <circle class="s09-p-halo" cx="120" cy="0" r="16" fill="#fbbf24" opacity="0" filter="url(#s09-glow-strong)"/>
+          <circle class="s09-p" cx="120" cy="0" r="8" fill="#fbbf24" stroke="#fffbeb" stroke-width="2" opacity="0"/>
+        </g>
+      </g>
+
+      <!-- Gentle waveform flowing at the bottom -->
+      <path class="s09-wave"
+            d="M 0 960 Q 120 880, 240 960 T 480 960 T 720 960 T 960 960 T 1200 960 T 1440 960 T 1680 960 T 1920 960"
+            fill="none" stroke="#4dd0ff" stroke-width="2.5" stroke-linecap="round"
+            opacity="0" filter="url(#s09-glow)"/>
+    </svg>
+
+    <!-- Quote caption -->
+    <div class="s09-quote">
+      <div class="s09-quote-mark">"</div>
+      <div class="s09-quote-lines">
+        <div class="s09-quote-line s09-quote-line-1">下次再看到 <em>sin</em> 与 <em>cos</em>,</div>
+        <div class="s09-quote-line s09-quote-line-2">愿你眼前浮现的,</div>
+        <div class="s09-quote-line s09-quote-line-3">是那个<span class="s09-quote-bold">旋转的圆</span>。</div>
+      </div>
+    </div>
+
+    <!-- Signature -->
+    <div class="s09-signature">
+      <span class="s09-sig-line"></span>
+      <span class="s09-sig-text">THE END · θ ∈ [0, 2π]</span>
+      <span class="s09-sig-line"></span>
+    </div>
+
+    <style>
+      #scene-09-3a8664 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", sans-serif;
+      }
+      #scene-09-3a8664 .s09-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 800px at 30% 35%, rgba(77,208,255,0.25), transparent 55%),
+          radial-gradient(ellipse 900px 700px at 70% 70%, rgba(255,77,143,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 50% 55%, rgba(251,191,36,0.1), transparent 65%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
+      }
+      #scene-09-3a8664 .s09-grid-floor {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 540px;
+        background-image:
+          linear-gradient(rgba(77,208,255,0.3) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(77,208,255,0.3) 1px, transparent 1px);
+        background-size: 110px 110px;
+        transform: perspective(950px) rotateX(60deg);
+        transform-origin: bottom center;
+        opacity: 0.4;
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      }
+      #scene-09-3a8664 .s09-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%); pointer-events: none; }
+      #scene-09-3a8664 .s09-orb { position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; }
+      #scene-09-3a8664 .s09-orb-a { width: 620px; height: 620px; left: -220px; top: -220px; background: radial-gradient(circle, rgba(77,208,255,0.45), transparent 70%); }
+      #scene-09-3a8664 .s09-orb-b { width: 720px; height: 720px; right: -260px; bottom: -280px; background: radial-gradient(circle, rgba(255,77,143,0.3), transparent 70%); }
+      #scene-09-3a8664 .s09-orb-c { width: 480px; height: 480px; left: 48%; top: 40%; background: radial-gradient(circle, rgba(251,191,36,0.14), transparent 70%); }
+
+      /* Chapter marker */
+      #scene-09-3a8664 .s09-chapter {
+        position: absolute; top: 88px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-09-3a8664 .s09-chapter-line { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-09-3a8664 .s09-chapter-text {
+        display: flex; align-items: center; gap: 16px;
+        padding: 10px 22px; background: rgba(10,18,36,0.4);
+        border: 1px solid rgba(251,191,36,0.25); border-radius: 999px;
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-09-3a8664 .s09-ch-num { font-family: "JetBrains Mono", monospace; font-size: 20px; letter-spacing: 0.3em; color: #fbbf24; font-weight: 600; }
+      #scene-09-3a8664 .s09-ch-sep { color: #5b6e93; }
+      #scene-09-3a8664 .s09-ch-label { font-size: 20px; letter-spacing: 0.4em; color: #b5c4dd; }
+
+      /* Hero */
+      #scene-09-3a8664 .s09-hero {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        text-align: center; z-index: 8;
+        max-width: 1400px;
+      }
+      #scene-09-3a8664 .s09-hero-eyebrow { font-size: 30px; letter-spacing: 0.4em; color: #4dd0ff; font-weight: 400; margin-bottom: 28px; text-shadow: 0 0 20px rgba(77,208,255,0.4); }
+      #scene-09-3a8664 .s09-hero-title {
+        font-size: 140px; font-weight: 900; line-height: 1.02; letter-spacing: -0.02em;
+        display: flex; flex-direction: column; gap: 8px; align-items: center;
+      }
+      #scene-09-3a8664 .s09-t1 { color: #d9e4f5; font-weight: 200; font-size: 110px; }
+      #scene-09-3a8664 .s09-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 40%, #c4b5fd 70%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900; font-size: 150px;
+        text-shadow: 0 0 60px rgba(77,208,255,0.5);
+      }
+      #scene-09-3a8664 .s09-hero-subtitle { margin-top: 24px; font-size: 40px; color: #9fb0cc; letter-spacing: 0.08em; font-weight: 300; }
+      #scene-09-3a8664 .s09-hero-em {
+        background: linear-gradient(135deg, #fbbf24 0%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 800; padding: 0 6px; font-style: italic;
+      }
+      #scene-09-3a8664 .s09-hero-accent {
+        margin: 28px auto 0; width: 0; height: 3px;
+        background: linear-gradient(90deg, transparent, #4dd0ff 30%, #ff4d8f 70%, transparent);
+        border-radius: 2px;
+      }
+
+      #scene-09-3a8664 .s09-stage { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+      /* Quote */
+      #scene-09-3a8664 .s09-quote {
+        position: absolute; left: 120px; bottom: 180px;
+        display: flex; gap: 20px; align-items: flex-start;
+        max-width: 900px; z-index: 9;
+      }
+      #scene-09-3a8664 .s09-quote-mark {
+        font-family: "Georgia", serif; font-size: 120px; color: #4dd0ff;
+        font-weight: 900; line-height: 0.9; opacity: 0.5; margin-top: -12px;
+      }
+      #scene-09-3a8664 .s09-quote-lines { display: flex; flex-direction: column; gap: 10px; }
+      #scene-09-3a8664 .s09-quote-line {
+        font-size: 36px; color: #d9e4f5; letter-spacing: 0.04em; font-weight: 300;
+      }
+      #scene-09-3a8664 .s09-quote-line em {
+        color: #fbbf24; font-family: "Georgia", serif; font-weight: 700;
+        padding: 0 6px; font-style: italic;
+      }
+      #scene-09-3a8664 .s09-quote-line:nth-of-type(2) em { color: #ff4d8f; }
+      #scene-09-3a8664 .s09-quote-bold {
+        color: #4dd0ff; font-weight: 700; padding: 0 6px;
+        text-shadow: 0 0 18px rgba(77,208,255,0.5);
+      }
+
+      /* Signature */
+      #scene-09-3a8664 .s09-signature {
+        position: absolute; left: 50%; bottom: 80px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 20px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 16px; letter-spacing: 0.4em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-09-3a8664 .s09-sig-line { display: inline-block; width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #5b6e93, transparent); }
+      #scene-09-3a8664 .s09-sig-text { padding: 0 6px; }
+    </style>
+
+    
+  </div>
+
+
+  </div>
+
+  <audio id="scene-1-audio" class="scene-audio" data-scene-index="1" data-start="0" data-duration="10" src="assets/scene-1.mp3"></audio>
+  <audio id="scene-2-audio" class="scene-audio" data-scene-index="2" data-start="10" data-duration="12" src="assets/scene-2.mp3"></audio>
+  <audio id="scene-3-audio" class="scene-audio" data-scene-index="3" data-start="22" data-duration="12" src="assets/scene-3.mp3"></audio>
+  <audio id="scene-4-audio" class="scene-audio" data-scene-index="4" data-start="34" data-duration="14" src="assets/scene-4.mp3"></audio>
+  <audio id="scene-5-audio" class="scene-audio" data-scene-index="5" data-start="48" data-duration="13" src="assets/scene-5.mp3"></audio>
+  <audio id="scene-6-audio" class="scene-audio" data-scene-index="6" data-start="61" data-duration="14" src="assets/scene-6.mp3"></audio>
+  <audio id="scene-7-audio" class="scene-audio" data-scene-index="7" data-start="75" data-duration="13" src="assets/scene-7.mp3"></audio>
+  <audio id="scene-8-audio" class="scene-audio" data-scene-index="8" data-start="88" data-duration="12" src="assets/scene-8.mp3"></audio>
+  <audio id="scene-9-audio" class="scene-audio" data-scene-index="9" data-start="100" data-duration="12" src="assets/scene-9.mp3"></audio>
+
   <script>
-    // HyperFrames lint requires every data-composition-id root to have
-    // a registered timeline on window.__timelines. The parent's own
-    // timeline is a no-op container — the actual scene animations live
-    // in each sub-composition's own __timelines[scene-NN-xxx] entry.
     window.__timelines = window.__timelines || {};
-    window.__timelines["main"] = gsap.timeline({ paused: true }).set({}, {}, 112);
+    const __master = gsap.timeline({ paused: true });
+
+    // Scene visibility is driven by seek-safe tweens (not .call()),
+    // because hyperframes seeks frame-by-frame during render and .call()
+    // callbacks do not fire on seek.
+    //
+    // For each scene, we:
+    //   1. Set opacity:0 visibility:hidden at t=0 (hidden by default)
+    //   2. Set opacity:1 visibility:visible at its start time
+    //   3. Set opacity:0 visibility:hidden at its end time (next scene)
+    __master.set('[data-composition-id="scene-01-c6fdc7"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-01-c6fdc7"]', { opacity: 1, visibility: 'visible' }, 0);
+    __master.set('[data-composition-id="scene-01-c6fdc7"]', { opacity: 0, visibility: 'hidden' }, 10);
+    __master.set('[data-composition-id="scene-02-3e35eb"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-02-3e35eb"]', { opacity: 1, visibility: 'visible' }, 10);
+    __master.set('[data-composition-id="scene-02-3e35eb"]', { opacity: 0, visibility: 'hidden' }, 22);
+    __master.set('[data-composition-id="scene-03-c185b8"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-03-c185b8"]', { opacity: 1, visibility: 'visible' }, 22);
+    __master.set('[data-composition-id="scene-03-c185b8"]', { opacity: 0, visibility: 'hidden' }, 34);
+    __master.set('[data-composition-id="scene-04-de95b9"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-04-de95b9"]', { opacity: 1, visibility: 'visible' }, 34);
+    __master.set('[data-composition-id="scene-04-de95b9"]', { opacity: 0, visibility: 'hidden' }, 48);
+    __master.set('[data-composition-id="scene-05-f80eb7"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-05-f80eb7"]', { opacity: 1, visibility: 'visible' }, 48);
+    __master.set('[data-composition-id="scene-05-f80eb7"]', { opacity: 0, visibility: 'hidden' }, 61);
+    __master.set('[data-composition-id="scene-06-2d4304"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-06-2d4304"]', { opacity: 1, visibility: 'visible' }, 61);
+    __master.set('[data-composition-id="scene-06-2d4304"]', { opacity: 0, visibility: 'hidden' }, 75);
+    __master.set('[data-composition-id="scene-07-0d91b0"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-07-0d91b0"]', { opacity: 1, visibility: 'visible' }, 75);
+    __master.set('[data-composition-id="scene-07-0d91b0"]', { opacity: 0, visibility: 'hidden' }, 88);
+    __master.set('[data-composition-id="scene-08-65f994"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-08-65f994"]', { opacity: 1, visibility: 'visible' }, 88);
+    __master.set('[data-composition-id="scene-08-65f994"]', { opacity: 0, visibility: 'hidden' }, 100);
+    __master.set('[data-composition-id="scene-09-3a8664"]', { opacity: 0, visibility: 'hidden' }, 0);
+    __master.set('[data-composition-id="scene-09-3a8664"]', { opacity: 1, visibility: 'visible' }, 100);
+    __master.set('[data-composition-id="scene-09-3a8664"]', { opacity: 0, visibility: 'hidden' }, 112);
+
+
+// --- Scene 1 (scene-01-c6fdc7) --- offset=0s dur=10s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s00 = gsap.timeline({ });
+      const ID = '#scene-01-c6fdc7';
+
+      // ============================================================
+      // BEAT 0 — 0.0-1.0s — atmosphere
+      // ============================================================
+      tl_s00.fromTo(ID + ' .s01-bg',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0);
+      tl_s00.fromTo(ID + ' .s01-grid-floor',
+        { opacity: 0 },
+        { opacity: 0.4, duration: 1.4, ease: 'power2.out' }, 0.1);
+      tl_s00.fromTo(ID + ' .s01-orb-a',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out', transformOrigin: 'center' }, 0);
+      tl_s00.fromTo(ID + ' .s01-orb-b',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 1.8, ease: 'power2.out', transformOrigin: 'center' }, 0.2);
+      tl_s00.fromTo(ID + ' .s01-orb-c',
+        { opacity: 0 },
+        { opacity: 1, duration: 2.0, ease: 'power2.out' }, 0.5);
+
+      // ============================================================
+      // BEAT 1 — 0.3-1.0s — chapter marker at top
+      // ============================================================
+      tl_s00.fromTo(ID + ' .s01-chapter-line',
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s00.fromTo(ID + ' .s01-chapter-text',
+        { opacity: 0, y: -16 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.5);
+
+      // ============================================================
+      // BEAT 2 — 0.6-3.0s — Question 1 cascades in word by word
+      // ============================================================
+      tl_s00.fromTo(ID + ' .s01-l1-prefix',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 0.6);
+      tl_s00.fromTo(ID + ' .s01-sin',
+        { opacity: 0, y: 40, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.7)', transformOrigin: 'center' }, 0.95);
+      tl_s00.fromTo(ID + ' .s01-and',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out', transformOrigin: 'center' }, 1.2);
+      tl_s00.fromTo(ID + ' .s01-cos',
+        { opacity: 0, y: 40, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.7)', transformOrigin: 'center' }, 1.35);
+      tl_s00.fromTo(ID + ' .s01-l1-suffix',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 1.7);
+      tl_s00.fromTo(ID + ' .s01-wave',
+        { color: '#d9e4f5' },
+        { color: '#4dd0ff', duration: 0.5, ease: 'power2.inOut' }, 2.3);
+
+      // Float ambient question marks during Q1
+      tl_s00.fromTo(ID + ' .s01-q1',
+        { opacity: 0, y: -30, rotation: -12 },
+        { opacity: 1, y: 0, rotation: 0, duration: 1.2, ease: 'power3.out' }, 0.9);
+      tl_s00.fromTo(ID + ' .s01-q2',
+        { opacity: 0, y: -40, rotation: 15 },
+        { opacity: 1, y: 0, rotation: 8, duration: 1.3, ease: 'power3.out' }, 1.3);
+      tl_s00.fromTo(ID + ' .s01-q5',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 1.0, ease: 'back.out(1.4)', transformOrigin: 'center' }, 1.6);
+
+      // ============================================================
+      // BEAT 3 — 3.2-5.8s — Question 1 slides out, Question 2 in
+      // ============================================================
+      // Fade out line 1 (exit exception allowed because it's replaced, not the last scene)
+      tl_s00.to(ID + ' .s01-line1',
+        { opacity: 0, y: -50, duration: 0.7, ease: 'power2.in' }, 3.2);
+
+      // Line 2 appears with a strong emphasis word
+      tl_s00.fromTo(ID + ' .s01-line2',
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 3.7);
+
+      // More floating Qs during Q2
+      tl_s00.fromTo(ID + ' .s01-q3',
+        { opacity: 0, y: 40, rotation: -10 },
+        { opacity: 1, y: 0, rotation: 0, duration: 1.1, ease: 'power3.out' }, 3.9);
+      tl_s00.fromTo(ID + ' .s01-q4',
+        { opacity: 0, y: 40, rotation: 8 },
+        { opacity: 1, y: 0, rotation: -5, duration: 1.2, ease: 'power3.out' }, 4.2);
+
+      // Gentle bob on question marks (finite repeat)
+      tl_s00.to(ID + ' .s01-q1, ' + ID + ' .s01-q3, ' + ID + ' .s01-q5',
+        { y: '-=16', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 4.5);
+      tl_s00.to(ID + ' .s01-q2, ' + ID + ' .s01-q4',
+        { y: '+=14', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 4.7);
+
+      // ============================================================
+      // BEAT 4 — 5.8-7.0s — clear the question marks and line 2, reveal the mission
+      // ============================================================
+      tl_s00.to([ID + ' .s01-q1', ID + ' .s01-q2', ID + ' .s01-q3', ID + ' .s01-q4', ID + ' .s01-q5'],
+        { opacity: 0, scale: 0.7, duration: 0.8, ease: 'power2.in', stagger: 0.05, transformOrigin: 'center' }, 5.8);
+      tl_s00.to(ID + ' .s01-line2',
+        { opacity: 0, y: -40, duration: 0.7, ease: 'power2.in' }, 5.9);
+
+      // ============================================================
+      // BEAT 5 — 6.2-9.0s — HERO title — the moment
+      // ============================================================
+      tl_s00.fromTo(ID + ' .s01-hero-eyebrow',
+        { opacity: 0, y: 20, letterSpacing: '0.6em' },
+        { opacity: 1, y: 0, letterSpacing: '0.4em', duration: 0.9, ease: 'power3.out' }, 6.4);
+
+      tl_s00.fromTo(ID + ' .s01-t1',
+        { opacity: 0, y: 60, filter: 'blur(12px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'expo.out' }, 6.8);
+      tl_s00.fromTo(ID + ' .s01-t2',
+        { opacity: 0, y: 60, filter: 'blur(12px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'expo.out' }, 7.1);
+      tl_s00.fromTo(ID + ' .s01-t3',
+        { opacity: 0, y: 80, scale: 0.88, filter: 'blur(16px)' },
+        { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out', transformOrigin: 'center' }, 7.5);
+
+      // Accent line spreads under the hero title
+      tl_s00.fromTo(ID + ' .s01-hero-accent',
+        { width: 0 },
+        { width: 480, duration: 1.0, ease: 'power3.out' }, 8.5);
+
+      // ============================================================
+      // BEAT 6 — 8.5-10.0s — teaser preview + hint
+      // ============================================================
+      tl_s00.fromTo(ID + ' .s01-teaser',
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 8.6);
+      tl_s00.to(ID + ' .s01-teaser-circle',
+        { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 8.7);
+      tl_s00.to(ID + ' .s01-teaser-wave',
+        { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 8.9);
+
+      tl_s00.fromTo(ID + ' .s01-hint',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 9.0);
+      tl_s00.fromTo(ID + ' .s01-hint-dot',
+        { scale: 0 },
+        { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 9.2);
+
+      // Gentle halo pulse on hero title as the last beat lands
+      tl_s00.to(ID + ' .s01-t3',
+        { textShadow: '0 0 80px rgba(77, 208, 255, 0.8)', duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 9.2);
+
+      // Lock the scene to 10s
+      tl_s00.set({}, {}, 10);
+
+      window.__timelines['scene-01-c6fdc7'] = tl;
+    
+  if (typeof tl_s00 !== 'undefined') {
+    __master.add(tl_s00, 0);
+  }
+})();
+
+// --- Scene 2 (scene-02-3e35eb) --- offset=10s dur=12s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s01 = gsap.timeline({ });
+      const ID = '#scene-02-3e35eb';
+
+      // ============================================================
+      // BEAT 0 — 0.0-0.6s — atmosphere wakes up
+      // ============================================================
+      tl_s01.fromTo(ID + ' .bg',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0);
+      tl_s01.fromTo(ID + ' .orb-a',
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 1.4, ease: 'power2.out', transformOrigin: 'center' }, 0);
+      tl_s01.fromTo(ID + ' .orb-b',
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out', transformOrigin: 'center' }, 0.2);
+      tl_s01.fromTo(ID + ' .grain',
+        { opacity: 0 },
+        { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      // ============================================================
+      // BEAT 1 — 0.2-1.8s — header slides in, establishes context
+      // ============================================================
+      tl_s01.fromTo(ID + ' .eyebrow .num',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.3);
+      tl_s01.fromTo(ID + ' .eyebrow .bar',
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'left center' }, 0.45);
+      tl_s01.fromTo(ID + ' .eyebrow .label',
+        { opacity: 0, x: -12 },
+        { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, 0.55);
+
+      tl_s01.fromTo(ID + ' .title .t1',
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s01.fromTo(ID + ' .title .t2',
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl_s01.fromTo(ID + ' .subtitle',
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.4);
+
+      // Dot grid fades in as subtle depth
+      tl_s01.fromTo(ID + ' .dot-grid',
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0.5);
+
+      // ============================================================
+      // BEAT 2 — 1.6-4.0s — geometry materializes
+      // ============================================================
+      // Circle halo + ghost rings breathe in first
+      tl_s01.fromTo(ID + ' .halo',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 1.3, ease: 'power2.out', transformOrigin: 'center' }, 1.6);
+      tl_s01.fromTo(ID + ' .ghost',
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.9, ease: 'power2.out', stagger: 0.1, transformOrigin: 'center' }, 1.8);
+
+      // Axes draw in from origin outward
+      tl_s01.fromTo(ID + ' .axis-x',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.9, ease: 'power3.out', transformOrigin: '960px 600px' }, 2.0);
+      tl_s01.fromTo(ID + ' .axis-y',
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.9, ease: 'power3.out', transformOrigin: '960px 600px' }, 2.1);
+      tl_s01.fromTo(ID + ' .ax-arrow',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, stagger: 0.08 }, 2.85);
+      tl_s01.fromTo(ID + ' .ax-lbl',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, transformOrigin: 'center' }, 2.9);
+
+      // Origin + ticks
+      tl_s01.fromTo(ID + ' .origin-dot',
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2.4)', transformOrigin: 'center' }, 2.4);
+      tl_s01.fromTo(ID + ' .origin-lbl',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4 }, 2.6);
+      tl_s01.fromTo(ID + ' .ticks',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 }, 2.95);
+
+      // The unit circle — the hero — draws on as a confident arc
+      tl_s01.fromTo(ID + ' .unit-circle',
+        { strokeDashoffset: 1760 },
+        { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 2.3);
+
+      // ============================================================
+      // BEAT 3 — 4.0-7.0s — point P, radius, angle θ
+      // ============================================================
+      // Radius vector draws from origin outward
+      tl_s01.fromTo(ID + ' .radius',
+        { opacity: 0, scaleX: 0 },
+        { opacity: 0.9, scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 600px' }, 4.0);
+      tl_s01.fromTo(ID + ' .radius-lbl',
+        { opacity: 0, x: -8 },
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' }, 4.55);
+
+      // Angle arc + theta
+      tl_s01.fromTo(ID + ' .arc',
+        { opacity: 0, strokeDasharray: 100, strokeDashoffset: 100 },
+        { opacity: 1, strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }, 4.2);
+      tl_s01.fromTo(ID + ' .arc-lbl',
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 4.7);
+
+      // Point P lands with a glow pop
+      tl_s01.fromTo(ID + ' .point-halo',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(2.2)', transformOrigin: '1100px 357.5px' }, 4.6);
+      tl_s01.fromTo(ID + ' .point-p',
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.8)', transformOrigin: '1100px 357.5px' }, 4.7);
+      // Subtle pulse on the point halo to draw attention (finite repeat)
+      tl_s01.to(ID + ' .point-halo',
+        { scale: 1.3, opacity: 0.55, duration: 0.9, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: '1100px 357.5px' }, 5.3);
+      tl_s01.fromTo(ID + ' .point-lbl',
+        { opacity: 0, x: 12 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 5.0);
+
+      // ============================================================
+      // BEAT 4 — 6.5-9.5s — cos / sin projections
+      // ============================================================
+      // cos drop + segment + label
+      tl_s01.fromTo(ID + ' .cos-drop',
+        { opacity: 0, scaleY: 0 },
+        { opacity: 0.7, scaleY: 1, duration: 0.5, ease: 'power2.out', transformOrigin: '1100px 600px' }, 6.5);
+      tl_s01.fromTo(ID + ' .cos-seg',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 600px' }, 6.7);
+      tl_s01.fromTo(ID + ' .cos-lbl',
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 7.15);
+
+      // sin drop + segment + label
+      tl_s01.fromTo(ID + ' .sin-drop',
+        { opacity: 0, scaleX: 0 },
+        { opacity: 0.7, scaleX: 1, duration: 0.5, ease: 'power2.out', transformOrigin: '1100px 357.5px' }, 7.2);
+      tl_s01.fromTo(ID + ' .sin-seg',
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 600px' }, 7.4);
+      tl_s01.fromTo(ID + ' .sin-lbl',
+        { opacity: 0, y: -14 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 7.85);
+
+      // ============================================================
+      // BEAT 5 — 7.5-11.0s — data panel slides in, caption crystallizes
+      // ============================================================
+      tl_s01.fromTo(ID + ' .panel',
+        { opacity: 0, x: 80 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.5);
+      tl_s01.fromTo(ID + ' .panel-title',
+        { opacity: 0, letterSpacing: '0.5em' },
+        { opacity: 1, letterSpacing: '0.35em', duration: 0.6, ease: 'power2.out' }, 7.9);
+      tl_s01.fromTo(ID + ' .panel-row',
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.55, stagger: 0.15, ease: 'power3.out' }, 8.1);
+      tl_s01.fromTo(ID + ' .panel-foot',
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 8.9);
+
+      // Caption at the bottom: last piece
+      tl_s01.fromTo(ID + ' .caption',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 9.4);
+      tl_s01.fromTo(ID + ' .cap-dot',
+        { scale: 0 },
+        { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 9.6);
+
+      // ============================================================
+      // BEAT 6 — 11.0-12.0s — hold and breathe
+      // ============================================================
+      // Subtle halo pulse to end on
+      tl_s01.to(ID + ' .halo',
+        { opacity: 1.15, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.6);
+      // Ensure final frame holds everything visible until 12.0
+      tl_s01.set({}, {}, 12);
+
+      window.__timelines['scene-02-3e35eb'] = tl;
+    
+  if (typeof tl_s01 !== 'undefined') {
+    __master.add(tl_s01, 10);
+  }
+})();
+
+// --- Scene 3 (scene-03-c185b8) --- offset=22s dur=12s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s02 = gsap.timeline({ });
+      const ID = '#scene-03-c185b8';
+      const R = 280;
+
+      // Atmosphere
+      tl_s02.fromTo(ID + ' .s03-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s02.fromTo(ID + ' .s03-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl_s02.fromTo(ID + ' .s03-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
+
+      // Header
+      tl_s02.fromTo(ID + ' .s03-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl_s02.fromTo(ID + ' .s03-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'left' }, 0.45);
+      tl_s02.fromTo(ID + ' .s03-label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, 0.55);
+      tl_s02.fromTo(ID + ' .s03-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s02.fromTo(ID + ' .s03-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl_s02.fromTo(ID + ' .s03-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
+
+      // Circle + axes
+      tl_s02.fromTo(ID + ' .s03-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.4);
+      tl_s02.fromTo(ID + ' .s03-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '960px 600px' }, 1.6);
+      tl_s02.fromTo(ID + ' .s03-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '960px 600px' }, 1.7);
+      tl_s02.fromTo(ID + ' .s03-arr-x', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.3);
+      tl_s02.fromTo(ID + ' .s03-arr-y', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.4);
+      tl_s02.fromTo(ID + ' .s03-origin', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 2.0);
+      tl_s02.fromTo(ID + ' .s03-unit', { strokeDashoffset: 1760 }, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, 2.0);
+
+      // Readout appears
+      tl_s02.fromTo(ID + ' .s03-readout', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, 2.6);
+
+      // Rotation: 0 → 2π over 7 seconds (3.2s to 10.2s)
+      const state = { theta: 0 };
+      tl_s02.to(state, {
+        theta: Math.PI * 2,
+        duration: 7.0,
+        ease: 'none',
+        onUpdate: () => {
+          const t = state.theta;
+          const cx = Math.cos(t) * R;
+          const cy = -Math.sin(t) * R; // SVG y inverted
+          const rotor = document.querySelector(ID + ' .s03-rotor');
+          if (rotor) rotor.setAttribute('transform', 'rotate(' + (-t * 180 / Math.PI) + ')');
+          // Update segment endpoints
+          const cosSeg = document.querySelector(ID + ' .s03-cos-seg');
+          const sinSeg = document.querySelector(ID + ' .s03-sin-seg');
+          if (cosSeg) cosSeg.setAttribute('x2', cx.toFixed(2));
+          if (sinSeg) { sinSeg.setAttribute('x2', cx.toFixed(2)); sinSeg.setAttribute('y2', cy.toFixed(2)); }
+          // Update drop lines inside rotor (they rotate with it)
+          // Actually with rotor rotating, drops need special handling:
+          const dropX = document.querySelector(ID + ' .s03-drop-x');
+          const dropY = document.querySelector(ID + ' .s03-drop-y');
+          // reset x2 of drops back to R (local coords before rotation)
+          if (dropX) { dropX.setAttribute('x1', String(R)); dropX.setAttribute('y1', '0'); dropX.setAttribute('x2', String(R)); dropX.setAttribute('y2', '0'); }
+          if (dropY) { dropY.setAttribute('x1', String(R)); dropY.setAttribute('y1', '0'); dropY.setAttribute('x2', String(R)); dropY.setAttribute('y2', '0'); }
+
+          // Angle arc
+          const arc = document.querySelector(ID + ' .s03-arc');
+          if (arc) {
+            const rArc = 60;
+            const endX = Math.cos(t) * rArc;
+            const endY = -Math.sin(t) * rArc;
+            const largeArc = t > Math.PI ? 1 : 0;
+            arc.setAttribute('d', 'M ' + rArc + ' 0 A ' + rArc + ' ' + rArc + ' 0 ' + largeArc + ' 0 ' + endX.toFixed(2) + ' ' + endY.toFixed(2));
+          }
+          // Arc label position (bisect)
+          const arcLbl = document.querySelector(ID + ' .s03-arc-lbl');
+          if (arcLbl) {
+            const bisect = t / 2;
+            const rLbl = 96;
+            arcLbl.setAttribute('x', (Math.cos(bisect) * rLbl).toFixed(2));
+            arcLbl.setAttribute('y', (-Math.sin(bisect) * rLbl + 10).toFixed(2));
+          }
+          // Readout
+          const thetaEl = document.querySelector(ID + ' .s03-r-theta-val');
+          const cosEl = document.querySelector(ID + ' .s03-r-cos-val');
+          const sinEl = document.querySelector(ID + ' .s03-r-sin-val');
+          if (thetaEl) thetaEl.textContent = t.toFixed(2);
+          const fmt = n => (n >= 0 ? '+' : '') + n.toFixed(3);
+          if (cosEl) cosEl.textContent = fmt(Math.cos(t));
+          if (sinEl) sinEl.textContent = fmt(Math.sin(t));
+        }
+      }, 3.2);
+
+      // Arc label fades in
+      tl_s02.to(ID + ' .s03-arc-lbl', { opacity: 1, duration: 0.5 }, 3.5);
+
+      // Caption at the end
+      tl_s02.fromTo(ID + ' .s03-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 10.3);
+      tl_s02.fromTo(ID + ' .s03-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 10.5);
+
+      tl_s02.set({}, {}, 12);
+      window.__timelines['scene-03-c185b8'] = tl;
+    
+  if (typeof tl_s02 !== 'undefined') {
+    __master.add(tl_s02, 22);
+  }
+})();
+
+// --- Scene 4 (scene-04-de95b9) --- offset=34s dur=14s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s03 = gsap.timeline({ });
+      const ID = '#scene-04-de95b9';
+      const R = 180;
+
+      tl_s03.fromTo(ID + ' .s04-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s03.fromTo(ID + ' .s04-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl_s03.fromTo(ID + ' .s04-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
+
+      tl_s03.fromTo(ID + ' .s04-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl_s03.fromTo(ID + ' .s04-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl_s03.fromTo(ID + ' .s04-label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, 0.55);
+      tl_s03.fromTo(ID + ' .s04-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s03.fromTo(ID + ' .s04-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl_s03.fromTo(ID + ' .s04-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
+
+      // Circle appears
+      tl_s03.fromTo(ID + ' .s04-halo', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.6);
+      tl_s03.fromTo(ID + ' .s04-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '360px 620px' }, 1.8);
+      tl_s03.fromTo(ID + ' .s04-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '360px 620px' }, 1.9);
+      tl_s03.fromTo(ID + ' .s04-unit', { strokeDashoffset: 1131 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.0);
+      tl_s03.fromTo(ID + ' .s04-circle-lbl', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.0);
+      tl_s03.fromTo(ID + ' .s04-radius', { opacity: 0, scaleX: 0 }, { opacity: 0.9, scaleX: 1, duration: 0.6, transformOrigin: '360px 620px' }, 3.2);
+      tl_s03.fromTo(ID + ' .s04-p-halo', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: '540px 620px' }, 3.3);
+      tl_s03.fromTo(ID + ' .s04-p', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: '540px 620px' }, 3.4);
+
+      // Arrow
+      tl_s03.to(ID + ' .s04-arrow-line', { opacity: 0.9, duration: 0.5 }, 3.8);
+      tl_s03.to(ID + ' .s04-arrow-head', { opacity: 1, duration: 0.4 }, 4.0);
+      tl_s03.to(ID + ' .s04-arrow-lbl', { opacity: 1, duration: 0.4 }, 4.1);
+
+      // Wave axes
+      tl_s03.to(ID + ' .s04-wave-ax', { opacity: 0.8, duration: 0.6 }, 4.3);
+      tl_s03.to(ID + ' .s04-wave-amp', { opacity: 0.5, duration: 0.5 }, 4.5);
+      tl_s03.to(ID + ' .s04-time-arr', { opacity: 1, duration: 0.4 }, 5.0);
+      tl_s03.to(ID + ' .s04-time-lbl', { opacity: 1, duration: 0.4 }, 5.1);
+      tl_s03.to(ID + ' .s04-amp-plus', { opacity: 0.9, duration: 0.4 }, 5.2);
+      tl_s03.to(ID + ' .s04-amp-minus', { opacity: 0.9, duration: 0.4 }, 5.3);
+
+      // Rotation + wave drawing in parallel
+      const state = { t: 0 };
+      tl_s03.to(state, {
+        t: Math.PI * 4,
+        duration: 7.0,
+        ease: 'power1.inOut',
+        onUpdate: () => {
+          const theta = state.t;
+          const cx = Math.cos(theta) * R;
+          const cy = -Math.sin(theta) * R;
+          const radius = document.querySelector(ID + ' .s04-radius');
+          const pt = document.querySelector(ID + ' .s04-p');
+          const ptHalo = document.querySelector(ID + ' .s04-p-halo');
+          if (radius) { radius.setAttribute('x2', cx.toFixed(2)); radius.setAttribute('y2', cy.toFixed(2)); }
+          if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
+          if (ptHalo) { ptHalo.setAttribute('cx', cx.toFixed(2)); ptHalo.setAttribute('cy', cy.toFixed(2)); }
+        }
+      }, 5.0);
+
+      // Waves draw in over 6s
+      tl_s03.to(ID + ' .s04-sin-wave', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.0);
+      tl_s03.to(ID + ' .s04-cos-wave', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.3);
+
+      // Wave labels
+      tl_s03.to(ID + ' .s04-sin-lbl', { opacity: 1, duration: 0.5 }, 6.5);
+      tl_s03.to(ID + ' .s04-cos-lbl', { opacity: 1, duration: 0.5 }, 6.9);
+
+      // Caption
+      tl_s03.fromTo(ID + ' .s04-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 12.4);
+      tl_s03.fromTo(ID + ' .s04-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 12.6);
+
+      tl_s03.set({}, {}, 14);
+      window.__timelines['scene-04-de95b9'] = tl;
+    
+  if (typeof tl_s03 !== 'undefined') {
+    __master.add(tl_s03, 34);
+  }
+})();
+
+// --- Scene 5 (scene-05-f80eb7) --- offset=48s dur=13s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s04 = gsap.timeline({ });
+      const ID = '#scene-05-f80eb7';
+
+      tl_s04.fromTo(ID + ' .s05-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s04.fromTo(ID + ' .s05-grid-floor', { opacity: 0 }, { opacity: 0.45, duration: 1.5 }, 0.1);
+      tl_s04.fromTo(ID + ' .s05-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0);
+      tl_s04.fromTo(ID + ' .s05-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0.2);
+      tl_s04.fromTo(ID + ' .s05-orb-c', { opacity: 0 }, { opacity: 1, duration: 2.0 }, 0.4);
+
+      tl_s04.fromTo(ID + ' .s05-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl_s04.fromTo(ID + ' .s05-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl_s04.fromTo(ID + ' .s05-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl_s04.fromTo(ID + ' .s05-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s04.fromTo(ID + ' .s05-t2', { opacity: 0, y: 60, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 1.0, ease: 'expo.out', transformOrigin: 'center' }, 0.85);
+      tl_s04.fromTo(ID + ' .s05-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
+
+      // 3D-tilted circle appears
+      tl_s04.fromTo(ID + ' .s05-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl_s04.fromTo(ID + ' .s05-circle-shadow', { opacity: 0, scaleX: 0.5 }, { opacity: 0.25, scaleX: 1, duration: 0.9, transformOrigin: 'center' }, 2.0);
+      tl_s04.fromTo(ID + ' .s05-unit-ellipse', { strokeDashoffset: 880 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.2);
+      tl_s04.fromTo(ID + ' .s05-circle-lbl', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.3);
+
+      // Point lands on the circle
+      tl_s04.to(ID + ' .s05-radius', { opacity: 0.9, duration: 0.5 }, 3.2);
+      tl_s04.to(ID + ' .s05-p-halo', { opacity: 1, duration: 0.6 }, 3.4);
+      tl_s04.to(ID + ' .s05-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 3.5);
+
+      // Time axis stretches across
+      tl_s04.to(ID + ' .s05-time-axis', { attr: { x2: 1720 }, duration: 1.6, ease: 'power3.out' }, 4.0);
+      tl_s04.to(ID + ' .s05-time-arrow', { opacity: 1, duration: 0.4 }, 5.5);
+      tl_s04.to(ID + ' .s05-time-lbl', { opacity: 1, duration: 0.5 }, 5.6);
+
+      // Rotation driver (3 cycles over 6 seconds)
+      const state = { t: 0 };
+      tl_s04.to(state, {
+        t: Math.PI * 6,
+        duration: 6.5,
+        ease: 'power1.inOut',
+        onUpdate: () => {
+          const theta = state.t;
+          // ellipse: rx=200, ry=70 (tilted perspective)
+          const cx = Math.cos(theta) * 200;
+          const cy = Math.sin(theta) * 70;
+          const rotor = document.querySelector(ID + ' .s05-rotor');
+          if (rotor) {
+            // Just update radius and point positions directly
+            const rad = rotor.querySelector('.s05-radius');
+            const pt = rotor.querySelector('.s05-p');
+            const halo = rotor.querySelector('.s05-p-halo');
+            if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
+            if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
+            if (halo) { halo.setAttribute('cx', cx.toFixed(2)); halo.setAttribute('cy', cy.toFixed(2)); }
+          }
+        }
+      }, 4.5);
+
+      // Wave draws in parallel
+      tl_s04.to(ID + ' .s05-wave', { strokeDashoffset: 0, duration: 6.0, ease: 'power1.inOut' }, 5.0);
+      tl_s04.to(ID + ' .s05-wave-lbl', { opacity: 1, duration: 0.5 }, 10.5);
+
+      // Trace dots flash in sequence
+      tl_s04.to(ID + ' .s05-trace-dot', { opacity: 1, duration: 0.3, stagger: 0.2, ease: 'back.out(1.5)' }, 9.0);
+
+      // Caption
+      tl_s04.fromTo(ID + ' .s05-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 11.2);
+      tl_s04.fromTo(ID + ' .s05-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 11.4);
+
+      tl_s04.set({}, {}, 13);
+      window.__timelines['scene-05-f80eb7'] = tl;
+    
+  if (typeof tl_s04 !== 'undefined') {
+    __master.add(tl_s04, 48);
+  }
+})();
+
+// --- Scene 6 (scene-06-2d4304) --- offset=61s dur=14s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s05 = gsap.timeline({ });
+      const ID = '#scene-06-2d4304';
+
+      tl_s05.fromTo(ID + ' .s06-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s05.fromTo(ID + ' .s06-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl_s05.fromTo(ID + ' .s06-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
+
+      // Header
+      tl_s05.fromTo(ID + ' .s06-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl_s05.fromTo(ID + ' .s06-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl_s05.fromTo(ID + ' .s06-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl_s05.fromTo(ID + ' .s06-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s05.fromTo(ID + ' .s06-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl_s05.fromTo(ID + ' .s06-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
+
+      // Formula card
+      tl_s05.fromTo(ID + ' .s06-formula', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.0);
+
+      // Circle
+      tl_s05.fromTo(ID + ' .s06-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl_s05.fromTo(ID + ' .s06-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '420px 680px' }, 2.0);
+      tl_s05.fromTo(ID + ' .s06-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '420px 680px' }, 2.1);
+      tl_s05.fromTo(ID + ' .s06-unit', { strokeDashoffset: 1508 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.3);
+
+      // Tangent line x=1 appears (this is where tan "lives")
+      tl_s05.to(ID + ' .s06-tan-line', { opacity: 0.85, duration: 0.6 }, 3.4);
+      tl_s05.to(ID + ' .s06-tan-line-lbl', { opacity: 1, duration: 0.4 }, 3.7);
+
+      // Radius + point P on circle at angle 30° (cx=208, cy=-120)
+      tl_s05.to(ID + ' .s06-radius', { opacity: 0.9, duration: 0.5 }, 4.0);
+      tl_s05.to(ID + ' .s06-arc', { opacity: 1, duration: 0.4 }, 4.2);
+      tl_s05.to(ID + ' .s06-arc-lbl', { opacity: 1, duration: 0.4 }, 4.4);
+      tl_s05.to(ID + ' .s06-p-halo', { opacity: 1, duration: 0.5 }, 4.4);
+      tl_s05.to(ID + ' .s06-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 4.5);
+
+      // Ray extends to meet tangent line, showing tan as its y-intercept
+      tl_s05.to(ID + ' .s06-ray-ext', { opacity: 0.85, duration: 0.6 }, 5.0);
+      tl_s05.to(ID + ' .s06-tan-p-halo', { opacity: 1, duration: 0.6 }, 5.5);
+      tl_s05.to(ID + ' .s06-tan-p', { opacity: 1, duration: 0.5, ease: 'back.out(2.5)' }, 5.6);
+      tl_s05.to(ID + ' .s06-tan-p-lbl', { opacity: 1, duration: 0.5 }, 5.9);
+
+      // Right: tan curve panel
+      tl_s05.to(ID + ' .s06-curve-ax-x', { opacity: 0.8, duration: 0.6 }, 6.4);
+      tl_s05.to(ID + ' .s06-curve-ax-y', { opacity: 0.8, duration: 0.6 }, 6.6);
+      tl_s05.to(ID + ' .s06-curve-lbl-x', { opacity: 1, duration: 0.4 }, 7.1);
+      tl_s05.to(ID + ' .s06-curve-lbl-y', { opacity: 1, duration: 0.4 }, 7.2);
+      tl_s05.to(ID + ' .s06-tick', { opacity: 0.9, duration: 0.4, stagger: 0.1 }, 7.3);
+
+      // Asymptotes (the drama)
+      tl_s05.to(ID + ' .s06-asym-1', { opacity: 0.9, duration: 0.5 }, 7.8);
+      tl_s05.to(ID + ' .s06-asym-lbl-1', { opacity: 1, duration: 0.4 }, 8.0);
+      tl_s05.to(ID + ' .s06-asym-2', { opacity: 0.9, duration: 0.5 }, 8.3);
+      tl_s05.to(ID + ' .s06-asym-lbl-2', { opacity: 1, duration: 0.4 }, 8.5);
+
+      // tan curve draws in 3 segments
+      tl_s05.to(ID + ' .s06-seg-1', { strokeDashoffset: 0, duration: 1.0, ease: 'power1.inOut' }, 8.8);
+      tl_s05.to(ID + ' .s06-seg-2', { strokeDashoffset: 0, duration: 1.4, ease: 'power1.inOut' }, 9.6);
+      tl_s05.to(ID + ' .s06-seg-3', { strokeDashoffset: 0, duration: 0.9, ease: 'power1.inOut' }, 10.8);
+
+      // Infinity signs
+      tl_s05.fromTo(ID + ' .s06-inf-sign', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.8)' }, 10.2);
+      tl_s05.fromTo(ID + ' .s06-inf-sign-2', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.8)' }, 10.4);
+
+      // Pulse asymptotes for emphasis
+      tl_s05.to([ID + ' .s06-asym-1', ID + ' .s06-asym-2'], { strokeWidth: 3.5, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 11.5);
+
+      // Caption
+      tl_s05.fromTo(ID + ' .s06-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 12.4);
+      tl_s05.fromTo(ID + ' .s06-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 12.6);
+
+      tl_s05.set({}, {}, 14);
+      window.__timelines['scene-06-2d4304'] = tl;
+    
+  if (typeof tl_s05 !== 'undefined') {
+    __master.add(tl_s05, 61);
+  }
+})();
+
+// --- Scene 7 (scene-07-0d91b0) --- offset=75s dur=13s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s06 = gsap.timeline({ });
+      const ID = '#scene-07-0d91b0';
+
+      tl_s06.fromTo(ID + ' .s07-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s06.fromTo(ID + ' .s07-grid-floor', { opacity: 0 }, { opacity: 0.4, duration: 1.5 }, 0.1);
+      tl_s06.fromTo(ID + ' .s07-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl_s06.fromTo(ID + ' .s07-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
+
+      tl_s06.fromTo(ID + ' .s07-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl_s06.fromTo(ID + ' .s07-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left' }, 0.45);
+      tl_s06.fromTo(ID + ' .s07-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl_s06.fromTo(ID + ' .s07-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s06.fromTo(ID + ' .s07-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl_s06.fromTo(ID + ' .s07-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
+
+      // Counter slides in
+      tl_s06.fromTo(ID + ' .s07-counter', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 1.2);
+
+      // Circle
+      tl_s06.fromTo(ID + ' .s07-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl_s06.fromTo(ID + ' .s07-ax-h, ' + ID + ' .s07-ax-v', { opacity: 0 }, { opacity: 0.6, duration: 0.6 }, 2.0);
+      tl_s06.fromTo(ID + ' .s07-unit-ellipse', { strokeDashoffset: 950 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.2);
+      tl_s06.fromTo(ID + ' .s07-circle-lbl', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.2);
+      tl_s06.to(ID + ' .s07-mark', { opacity: 1, duration: 0.3, stagger: 0.1 }, 3.0);
+      tl_s06.to(ID + ' .s07-mark-lbl', { opacity: 0.9, duration: 0.4, stagger: 0.1 }, 3.2);
+
+      // Time axis extends
+      tl_s06.to(ID + ' .s07-time-ax', { opacity: 0.85, duration: 0.6 }, 3.4);
+      tl_s06.to(ID + ' .s07-time-arr', { opacity: 1, duration: 0.4 }, 4.0);
+      tl_s06.to(ID + ' .s07-time-lbl', { opacity: 1, duration: 0.4 }, 4.1);
+
+      // Rotor reveals
+      tl_s06.to(ID + ' .s07-radius', { opacity: 0.9, duration: 0.4 }, 3.8);
+      tl_s06.to(ID + ' .s07-p-halo', { opacity: 1, duration: 0.5 }, 3.9);
+      tl_s06.to(ID + ' .s07-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 4.0);
+      tl_s06.to(ID + ' .s07-trace-dot', { opacity: 1, duration: 0.4 }, 4.2);
+
+      // Driver: 4 full rotations over 7s; update counter and helix trace
+      const state = { phase: 0 };
+      tl_s06.to(state, {
+        phase: Math.PI * 8,
+        duration: 7.0,
+        ease: 'none',
+        onUpdate: () => {
+          const p = state.phase;
+          const theta = p;
+          // Rotor on tilted ellipse
+          const cx = Math.cos(theta) * 210;
+          const cy = Math.sin(theta) * 80;
+          const rotor = document.querySelector(ID + ' .s07-rotor');
+          if (rotor) {
+            const rad = rotor.querySelector('.s07-radius');
+            const pt = rotor.querySelector('.s07-p');
+            const halo = rotor.querySelector('.s07-p-halo');
+            if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
+            if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
+            if (halo) { halo.setAttribute('cx', cx.toFixed(2)); halo.setAttribute('cy', cy.toFixed(2)); }
+          }
+
+          // Trace dot on helix
+          const progress = Math.min(1, p / (Math.PI * 8));
+          const hx = progress * 1080;
+          const localT = p % (Math.PI * 2);
+          const hy = -Math.sin(localT) * 160;
+          const dot = document.querySelector(ID + ' .s07-trace-dot');
+          if (dot) { dot.setAttribute('cx', hx.toFixed(2)); dot.setAttribute('cy', hy.toFixed(2)); }
+
+          // Counter
+          const n = Math.floor(p / (Math.PI * 2));
+          const cv = document.querySelector(ID + ' .s07-cycle-val');
+          const pv = document.querySelector(ID + ' .s07-phase-val');
+          if (cv) cv.textContent = String(n);
+          if (pv) pv.textContent = p.toFixed(2);
+        }
+      }, 4.3);
+
+      // Helix path draws
+      tl_s06.to(ID + ' .s07-helix-path', { strokeDashoffset: 0, duration: 6.6, ease: 'power1.inOut' }, 4.5);
+
+      // Cycle markers fade in progressively
+      tl_s06.to(ID + ' .s07-cm-1', { opacity: 0.85, duration: 0.4 }, 5.2);
+      tl_s06.to(ID + ' .s07-cm-lbl-1', { opacity: 1, duration: 0.4 }, 5.4);
+      tl_s06.to(ID + ' .s07-cm-2', { opacity: 0.85, duration: 0.4 }, 6.8);
+      tl_s06.to(ID + ' .s07-cm-lbl-2', { opacity: 1, duration: 0.4 }, 7.0);
+      tl_s06.to(ID + ' .s07-cm-3', { opacity: 0.85, duration: 0.4 }, 8.4);
+      tl_s06.to(ID + ' .s07-cm-lbl-3', { opacity: 1, duration: 0.4 }, 8.6);
+      tl_s06.to(ID + ' .s07-cm-4', { opacity: 0.85, duration: 0.4 }, 10.0);
+      tl_s06.to(ID + ' .s07-cm-lbl-4', { opacity: 1, duration: 0.4 }, 10.2);
+
+      tl_s06.to(ID + ' .s07-helix-lbl', { opacity: 1, duration: 0.6 }, 10.5);
+
+      // Caption
+      tl_s06.fromTo(ID + ' .s07-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 11.4);
+      tl_s06.fromTo(ID + ' .s07-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 11.6);
+
+      tl_s06.set({}, {}, 13);
+      window.__timelines['scene-07-0d91b0'] = tl;
+    
+  if (typeof tl_s06 !== 'undefined') {
+    __master.add(tl_s06, 75);
+  }
+})();
+
+// --- Scene 8 (scene-08-65f994) --- offset=88s dur=12s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s07 = gsap.timeline({ });
+      const ID = '#scene-08-65f994';
+
+      tl_s07.fromTo(ID + ' .s08-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s07.fromTo(ID + ' .s08-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl_s07.fromTo(ID + ' .s08-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
+
+      tl_s07.fromTo(ID + ' .s08-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl_s07.fromTo(ID + ' .s08-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'center' }, 0.45);
+      tl_s07.fromTo(ID + ' .s08-label', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.55);
+      tl_s07.fromTo(ID + ' .s08-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl_s07.fromTo(ID + ' .s08-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl_s07.fromTo(ID + ' .s08-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
+
+      // Circle
+      tl_s07.fromTo(ID + ' .s08-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.8);
+      tl_s07.fromTo(ID + ' .s08-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 620px' }, 2.0);
+      tl_s07.fromTo(ID + ' .s08-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '960px 620px' }, 2.1);
+      tl_s07.fromTo(ID + ' .s08-unit', { strokeDashoffset: 2011 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 2.3);
+
+      // Point P (upper)
+      tl_s07.to(ID + ' .s08-rad-p', { opacity: 0.9, duration: 0.5 }, 3.6);
+      tl_s07.to(ID + ' .s08-arc-p', { opacity: 1, duration: 0.4 }, 3.8);
+      tl_s07.to(ID + ' .s08-arc-p-lbl', { opacity: 1, duration: 0.4 }, 3.95);
+      tl_s07.to(ID + ' .s08-p-halo', { opacity: 1, duration: 0.5 }, 4.0);
+      tl_s07.to(ID + ' .s08-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 4.05);
+      tl_s07.to(ID + ' .s08-p-lbl', { opacity: 1, duration: 0.5 }, 4.3);
+      tl_s07.to(ID + ' .s08-drop-cos-p', { opacity: 0.85, duration: 0.5 }, 4.4);
+      tl_s07.to(ID + ' .s08-drop-sin-p', { opacity: 0.85, duration: 0.5 }, 4.5);
+
+      // Mirror lines activate
+      tl_s07.to(ID + ' .s08-mirror-y', { opacity: 0.9, duration: 0.5 }, 5.0);
+      tl_s07.to(ID + ' .s08-mirror-x', { opacity: 0.9, duration: 0.5 }, 5.15);
+
+      // Point P' (lower, mirrored)
+      tl_s07.to(ID + ' .s08-rad-p2', { opacity: 0.9, duration: 0.5 }, 5.4);
+      tl_s07.to(ID + ' .s08-arc-p2', { opacity: 1, duration: 0.4 }, 5.55);
+      tl_s07.to(ID + ' .s08-arc-p2-lbl', { opacity: 1, duration: 0.4 }, 5.7);
+      tl_s07.to(ID + ' .s08-p2-halo', { opacity: 1, duration: 0.5 }, 5.7);
+      tl_s07.to(ID + ' .s08-p2', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 5.75);
+      tl_s07.to(ID + ' .s08-p2-lbl', { opacity: 1, duration: 0.5 }, 6.0);
+      tl_s07.to(ID + ' .s08-drop-cos-p2', { opacity: 0.85, duration: 0.5 }, 6.0);
+      tl_s07.to(ID + ' .s08-drop-sin-p2', { opacity: 0.85, duration: 0.5 }, 6.1);
+
+      // Highlight dots at symmetry points
+      tl_s07.fromTo(ID + ' .s08-hl-cos', { scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 6.8);
+      tl_s07.fromTo(ID + ' .s08-hl-sin-pos', { scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 7.0);
+      tl_s07.fromTo(ID + ' .s08-hl-sin-neg', { scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 7.2);
+
+      // Formula cards
+      tl_s07.fromTo(ID + ' .s08-card-cos', { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.4);
+      tl_s07.fromTo(ID + ' .s08-card-sin', { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.6);
+
+      // Pulse highlights
+      tl_s07.to([ID + ' .s08-hl-cos', ID + ' .s08-hl-sin-pos', ID + ' .s08-hl-sin-neg'],
+        { scale: 1.5, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut', transformOrigin: 'center' }, 9.0);
+
+      // Caption
+      tl_s07.fromTo(ID + ' .s08-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 10.4);
+      tl_s07.fromTo(ID + ' .s08-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 10.6);
+
+      tl_s07.set({}, {}, 12);
+      window.__timelines['scene-08-65f994'] = tl;
+    
+  if (typeof tl_s07 !== 'undefined') {
+    __master.add(tl_s07, 88);
+  }
+})();
+
+// --- Scene 9 (scene-09-3a8664) --- offset=100s dur=12s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s08 = gsap.timeline({ });
+      const ID = '#scene-09-3a8664';
+
+      // Atmosphere slow reveal
+      tl_s08.fromTo(ID + ' .s09-bg', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
+      tl_s08.fromTo(ID + ' .s09-grid-floor', { opacity: 0 }, { opacity: 0.4, duration: 1.6 }, 0.1);
+      tl_s08.fromTo(ID + ' .s09-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0);
+      tl_s08.fromTo(ID + ' .s09-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 2.0, transformOrigin: 'center' }, 0.3);
+      tl_s08.fromTo(ID + ' .s09-orb-c', { opacity: 0 }, { opacity: 1, duration: 2.2 }, 0.5);
+
+      // Chapter marker
+      tl_s08.fromTo(ID + ' .s09-chapter-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s08.fromTo(ID + ' .s09-chapter-text', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.5);
+
+      // Hero
+      tl_s08.fromTo(ID + ' .s09-hero-eyebrow', { opacity: 0, y: 20, letterSpacing: '0.6em' }, { opacity: 1, y: 0, letterSpacing: '0.4em', duration: 0.9, ease: 'power3.out' }, 1.0);
+      tl_s08.fromTo(ID + ' .s09-t1', { opacity: 0, y: 60, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out' }, 1.4);
+      tl_s08.fromTo(ID + ' .s09-t2', { opacity: 0, y: 80, scale: 0.9, filter: 'blur(14px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.3, ease: 'expo.out', transformOrigin: 'center' }, 1.8);
+      tl_s08.fromTo(ID + ' .s09-hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 2.6);
+      tl_s08.fromTo(ID + ' .s09-hero-accent', { width: 0 }, { width: 520, duration: 1.0, ease: 'power3.out' }, 3.4);
+
+      // Decorative rotating circle (upper right)
+      tl_s08.fromTo(ID + ' .s09-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 2.8);
+      tl_s08.fromTo(ID + ' .s09-ring-a', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 3.2);
+      tl_s08.fromTo(ID + ' .s09-ring-b', { opacity: 0 }, { opacity: 0.6, duration: 0.8 }, 3.4);
+      tl_s08.to(ID + ' .s09-rad', { opacity: 0.9, duration: 0.5 }, 3.6);
+      tl_s08.to(ID + ' .s09-p-halo', { opacity: 1, duration: 0.5 }, 3.7);
+      tl_s08.to(ID + ' .s09-p', { opacity: 1, duration: 0.5, ease: 'back.out(2)' }, 3.8);
+
+      // Drive rotor — continuous rotation over the remaining duration
+      const rotState = { a: 0 };
+      tl_s08.to(rotState, {
+        a: Math.PI * 4,
+        duration: 8.0,
+        ease: 'none',
+        onUpdate: () => {
+          const t = rotState.a;
+          const cx = Math.cos(t) * 120;
+          const cy = -Math.sin(t) * 120;
+          const rotor = document.querySelector(ID + ' .s09-rotor');
+          if (rotor) {
+            const rad = rotor.querySelector('.s09-rad');
+            const pt = rotor.querySelector('.s09-p');
+            const halo = rotor.querySelector('.s09-p-halo');
+            if (rad) { rad.setAttribute('x2', cx.toFixed(2)); rad.setAttribute('y2', cy.toFixed(2)); }
+            if (pt) { pt.setAttribute('cx', cx.toFixed(2)); pt.setAttribute('cy', cy.toFixed(2)); }
+            if (halo) { halo.setAttribute('cx', cx.toFixed(2)); halo.setAttribute('cy', cy.toFixed(2)); }
+          }
+        }
+      }, 3.9);
+
+      // Bottom wave
+      tl_s08.to(ID + ' .s09-wave', { opacity: 0.3, duration: 1.2 }, 4.5);
+
+      // Quote (progressive)
+      tl_s08.fromTo(ID + ' .s09-quote-mark', { opacity: 0, scale: 0.7 }, { opacity: 0.5, scale: 1, duration: 0.7, ease: 'back.out(1.8)', transformOrigin: 'center' }, 5.0);
+      tl_s08.fromTo(ID + ' .s09-quote-line-1', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, 5.2);
+      tl_s08.fromTo(ID + ' .s09-quote-line-2', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, 6.0);
+      tl_s08.fromTo(ID + ' .s09-quote-line-3', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, 6.8);
+
+      // Signature
+      tl_s08.fromTo(ID + ' .s09-sig-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center' }, 8.6);
+      tl_s08.fromTo(ID + ' .s09-sig-text', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 8.8);
+
+      // Final gentle halo pulse on the hero title (allowed: last scene)
+      tl_s08.to(ID + ' .s09-t2', { textShadow: '0 0 80px rgba(77, 208, 255, 0.8)', duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 9.2);
+
+      // Final fade to black as the video ends (last scene exit allowed)
+      tl_s08.to(ID + ' .s09-vignette', { opacity: 1.5, duration: 1.5, ease: 'power2.inOut' }, 10.3);
+
+      tl_s08.set({}, {}, 12);
+      window.__timelines['scene-09-3a8664'] = tl;
+    
+  if (typeof tl_s08 !== 'undefined') {
+    __master.add(tl_s08, 100);
+  }
+})();
+
+    // Lock master to the total duration so hyperframes knows exactly how
+    // long the video is.
+    __master.set({}, {}, 112);
+
+    window.__timelines["main"] = __master;
   </script>
 </body>
 </html>

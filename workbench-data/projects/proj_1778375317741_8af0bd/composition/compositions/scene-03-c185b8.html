@@ -1,444 +1,323 @@
 <template id="scene-03-c185b8-template">
   <div id="scene-03-c185b8" data-composition-id="scene-03-c185b8" data-width="1920" data-height="1080">
 
-    <!-- Background layers -->
-    <div class="bg"></div>
-    <div class="bg-grid"></div>
-    <div class="bg-vignette"></div>
+    <div class="s03-bg"></div>
+    <div class="s03-vignette"></div>
+    <div class="s03-orb s03-orb-a"></div>
+    <div class="s03-orb s03-orb-b"></div>
 
-    <!-- Text overlay (top-left) -->
-    <div class="text-layer">
-      <div class="eyebrow">单位圆 · 第三幕</div>
-      <h1 class="title">点在圆上旋转</h1>
-      <div class="subtitle">
-        横坐标 = <span class="cos-term">cos(θ)</span>
-        <span class="sep">·</span>
-        纵坐标 = <span class="sin-term">sin(θ)</span>
+    <!-- Header -->
+    <div class="s03-header">
+      <div class="s03-eyebrow">
+        <span class="s03-num">03</span>
+        <span class="s03-bar"></span>
+        <span class="s03-label">ROTATING POINT</span>
+      </div>
+      <h1 class="s03-title">
+        <span class="s03-t1">点在圆上</span>
+        <span class="s03-t2">旋转</span>
+      </h1>
+      <div class="s03-subtitle">角度 θ 变化 · 坐标随之<span class="s03-em">振荡</span></div>
+    </div>
+
+    <!-- Live coordinate readout -->
+    <div class="s03-readout">
+      <div class="s03-r-title">REAL-TIME</div>
+      <div class="s03-r-row s03-r-theta">
+        <span class="s03-r-k">θ</span>
+        <span class="s03-r-v s03-r-theta-val">0.00</span>
+        <span class="s03-r-u">rad</span>
+      </div>
+      <div class="s03-r-row s03-r-cos">
+        <span class="s03-r-k">cos θ</span>
+        <span class="s03-r-v s03-r-cos-val">+1.000</span>
+      </div>
+      <div class="s03-r-row s03-r-sin">
+        <span class="s03-r-k">sin θ</span>
+        <span class="s03-r-v s03-r-sin-val">+0.000</span>
       </div>
     </div>
 
-    <!-- Live numeric readout (top-right) -->
-    <div class="readout">
-      <div class="readout-title">实时坐标</div>
-      <div class="readout-row theta-row">
-        <span class="readout-label">θ</span>
-        <span class="readout-val theta-val">0.00</span>
-        <span class="readout-unit">rad</span>
-      </div>
-      <div class="readout-row cos-row">
-        <span class="readout-label">cos</span>
-        <span class="readout-val cos-val">+1.00</span>
-        <span class="readout-unit"></span>
-      </div>
-      <div class="readout-row sin-row">
-        <span class="readout-label">sin</span>
-        <span class="readout-val sin-val">+0.00</span>
-        <span class="readout-unit"></span>
-      </div>
-    </div>
+    <!-- Stage: unit circle with rotating point -->
+    <svg class="s03-stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s03-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s03-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="14" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s03-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s03-point-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="70%" stop-color="#fbbf24"/>
+          <stop offset="100%" stop-color="#f59e0b"/>
+        </radialGradient>
+      </defs>
 
-    <!-- Main SVG stage -->
-    <div class="stage">
-      <svg class="viz" viewBox="-540 -540 1080 1080" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="s03-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="s03-strong" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="10" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <radialGradient id="s03-point" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fffbeb"/>
-            <stop offset="60%" stop-color="#fbbf24"/>
-            <stop offset="100%" stop-color="#f59e0b"/>
-          </radialGradient>
-        </defs>
+      <g class="s03-circle-g" transform="translate(960, 600)">
+        <circle class="s03-halo" cx="0" cy="0" r="340" fill="url(#s03-halo)"/>
+        <line class="s03-ax-x" x1="-480" y1="0" x2="480" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="s03-ax-y" x1="0" y1="480" x2="0" y2="-480" stroke="#5b6e93" stroke-width="1.5"/>
+        <polygon class="s03-arr s03-arr-x" points="480,0 460,-8 460,8" fill="#5b6e93"/>
+        <polygon class="s03-arr s03-arr-y" points="0,-480 -8,-460 8,-460" fill="#5b6e93"/>
+        <text class="s03-ax-lbl" x="496" y="10" fill="#8da1c7" font-size="26" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="s03-ax-lbl" x="10" y="-488" fill="#8da1c7" font-size="26" font-style="italic" font-family="Georgia, serif">y</text>
 
-        <!-- Minor grid -->
-        <g class="grid" stroke="#1a2847" stroke-width="1" fill="none" opacity="0.55">
-          <line x1="-480" y1="-400" x2="480" y2="-400"/>
-          <line x1="-480" y1="-200" x2="480" y2="-200"/>
-          <line x1="-480" y1="200"  x2="480" y2="200"/>
-          <line x1="-480" y1="400"  x2="480" y2="400"/>
-          <line x1="-400" y1="-480" x2="-400" y2="480"/>
-          <line x1="-200" y1="-480" x2="-200" y2="480"/>
-          <line x1="200"  y1="-480" x2="200"  y2="480"/>
-          <line x1="400"  y1="-480" x2="400"  y2="480"/>
+        <!-- Tick labels -->
+        <text class="s03-tick" x="280" y="40" fill="#5b6e93" font-size="18" text-anchor="middle" font-family="JetBrains Mono, monospace">1</text>
+        <text class="s03-tick" x="-280" y="40" fill="#5b6e93" font-size="18" text-anchor="middle" font-family="JetBrains Mono, monospace">-1</text>
+
+        <circle class="s03-origin" cx="0" cy="0" r="5" fill="#e6edf9"/>
+
+        <!-- Unit circle -->
+        <circle class="s03-unit" cx="0" cy="0" r="280" fill="none" stroke="#4dd0ff" stroke-width="3.5"
+                stroke-dasharray="1760" stroke-dashoffset="1760" filter="url(#s03-glow)"/>
+
+        <!-- Rotating group: radius + drops + point -->
+        <g class="s03-rotor">
+          <line class="s03-radius" x1="0" y1="0" x2="280" y2="0" stroke="#ffffff" stroke-width="3" opacity="0.9"/>
+          <line class="s03-drop-x" x1="280" y1="0" x2="280" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 5" opacity="0.7"/>
+          <line class="s03-drop-y" x1="280" y1="0" x2="0" y2="0" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0.7"/>
+          <circle class="s03-p-halo" cx="280" cy="0" r="28" fill="#fbbf24" opacity="0.4" filter="url(#s03-glow-strong)"/>
+          <circle class="s03-p" cx="280" cy="0" r="12" fill="url(#s03-point-grad)" stroke="#fbbf24" stroke-width="3"/>
         </g>
 
-        <!-- Axes -->
-        <g class="axes">
-          <line class="axis axis-x" x1="-480" y1="0" x2="480" y2="0" stroke="#4c6491" stroke-width="2"/>
-          <line class="axis axis-y" x1="0" y1="480" x2="0" y2="-480" stroke="#4c6491" stroke-width="2"/>
-          <polygon class="arrow-x" points="480,0 465,-7 465,7" fill="#4c6491"/>
-          <polygon class="arrow-y" points="0,-480 -7,-465 7,-465" fill="#4c6491"/>
-          <text class="axis-label" x="495" y="30" font-size="24" fill="#93a6cc" font-family="serif" font-style="italic">x</text>
-          <text class="axis-label" x="10" y="-490" font-size="24" fill="#93a6cc" font-family="serif" font-style="italic">y</text>
-          <text class="tick-label" x="400" y="30" font-size="18" fill="#64748b" text-anchor="middle">1</text>
-          <text class="tick-label" x="-400" y="30" font-size="18" fill="#64748b" text-anchor="middle">-1</text>
-          <text class="tick-label" x="14" y="-395" font-size="18" fill="#64748b">1</text>
-          <text class="tick-label" x="14" y="410" font-size="18" fill="#64748b">-1</text>
-        </g>
+        <!-- cos segment (amber on x-axis) -->
+        <line class="s03-cos-seg" x1="0" y1="0" x2="280" y2="0" stroke="#fbbf24" stroke-width="7" stroke-linecap="round" filter="url(#s03-glow)"/>
+        <!-- sin segment (magenta on y-axis) -->
+        <line class="s03-sin-seg" x1="0" y1="0" x2="0" y2="0" stroke="#ff4d8f" stroke-width="7" stroke-linecap="round" filter="url(#s03-glow)"/>
 
-        <!-- Unit circle (drawn via stroke-dashoffset) -->
-        <circle class="unit-circle" cx="0" cy="0" r="400" fill="none"
-                stroke="#60a5fa" stroke-width="3"
-                stroke-dasharray="2513" stroke-dashoffset="2513"
-                filter="url(#s03-glow)"/>
+        <!-- Angle arc + label -->
+        <path class="s03-arc" d="M 60 0" fill="none" stroke="#c4b5fd" stroke-width="2.5"/>
+        <text class="s03-arc-lbl" x="80" y="-28" fill="#c4b5fd" font-size="32" font-style="italic" font-family="Georgia, serif" opacity="0">θ</text>
+      </g>
+    </svg>
 
-        <!-- Origin -->
-        <circle class="origin" cx="0" cy="0" r="5" fill="#cbd5e1"/>
-        <text class="origin-label" x="-14" y="22" font-size="18" fill="#94a3b8" text-anchor="end">O</text>
-
-        <!-- Angle arc & label -->
-        <path class="angle-arc" d="M 70 0" fill="none" stroke="#fbbf24" stroke-width="3" opacity="0"/>
-        <text class="angle-label" x="95" y="-10" font-size="32" fill="#fbbf24" font-family="serif" font-style="italic" opacity="0">θ</text>
-
-        <!-- Projection to x-axis (cos) -->
-        <line class="proj-x" x1="0" y1="0" x2="400" y2="0"
-              stroke="#22d3ee" stroke-width="3.5" stroke-dasharray="10 6" stroke-linecap="round"
-              opacity="0"/>
-        <!-- Projection to y (from point down to x-axis) (sin) -->
-        <line class="proj-y" x1="400" y1="0" x2="400" y2="0"
-              stroke="#f472b6" stroke-width="3.5" stroke-dasharray="10 6" stroke-linecap="round"
-              opacity="0"/>
-
-        <!-- Radius vector -->
-        <line class="radius-line" x1="0" y1="0" x2="400" y2="0"
-              stroke="#c4b5fd" stroke-width="2.5" stroke-linecap="round" opacity="0"/>
-
-        <!-- Rotating point -->
-        <circle class="point" cx="400" cy="0" r="0"
-                fill="url(#s03-point)" stroke="#fbbf24" stroke-width="2.5"
-                filter="url(#s03-strong)" opacity="0"/>
-
-        <!-- Value labels (follow projections) -->
-        <text class="cos-label" x="200" y="-15" font-size="26" fill="#22d3ee"
-              font-family="serif" font-style="italic" font-weight="700" text-anchor="middle" opacity="0">cos θ</text>
-        <text class="sin-label" x="420" y="0" font-size="26" fill="#f472b6"
-              font-family="serif" font-style="italic" font-weight="700" text-anchor="start" opacity="0">sin θ</text>
-      </svg>
-    </div>
-
-    <!-- Bottom caption -->
-    <div class="caption">
-      <span class="caption-text">匀速旋转 ·&nbsp; θ 连续变化 ·&nbsp; 横纵坐标随之振荡</span>
+    <!-- Caption -->
+    <div class="s03-caption">
+      <span class="s03-cap-dot"></span>
+      匀速旋转 · 横纵坐标就是 <em class="s03-cap-cos">cos θ</em> 与 <em class="s03-cap-sin">sin θ</em> 的<b>几何定义</b>
     </div>
 
     <style>
       #scene-03-c185b8 {
-        position: relative;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #04070f;
-        font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
-        color: #e2e8f0;
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #040813; color: #f1f5f9;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       }
-
-      #scene-03-c185b8 .bg {
+      #scene-03-c185b8 .s03-bg {
         position: absolute; inset: 0;
         background:
-          radial-gradient(ellipse at 50% 55%, #0d1b3c 0%, #070d22 45%, #04070f 85%);
+          radial-gradient(ellipse 1000px 700px at 50% 60%, rgba(77,208,255,0.16), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 22% 30%, rgba(251,191,36,0.08), transparent 65%),
+          radial-gradient(ellipse 700px 500px at 78% 30%, rgba(255,77,143,0.07), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #060b20 55%, #030612 100%);
       }
-
-      #scene-03-c185b8 .bg-grid {
+      #scene-03-c185b8 .s03-vignette {
         position: absolute; inset: 0;
-        background-image:
-          linear-gradient(to right, rgba(96, 165, 250, 0.08) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(96, 165, 250, 0.08) 1px, transparent 1px);
-        background-size: 72px 72px;
-        transform: perspective(1100px) rotateX(58deg) scale(2.1);
-        transform-origin: center 72%;
-        mask-image: radial-gradient(ellipse at center, black 25%, transparent 70%);
-        -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 70%);
-      }
-
-      #scene-03-c185b8 .bg-vignette {
-        position: absolute; inset: 0;
-        background:
-          radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.65) 100%);
         pointer-events: none;
       }
+      #scene-03-c185b8 .s03-orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-03-c185b8 .s03-orb-a {
+        width: 520px; height: 520px; left: -180px; top: -160px;
+        background: radial-gradient(circle, rgba(77,208,255,0.38), transparent 70%);
+      }
+      #scene-03-c185b8 .s03-orb-b {
+        width: 620px; height: 620px; right: -220px; bottom: -240px;
+        background: radial-gradient(circle, rgba(255,77,143,0.26), transparent 70%);
+      }
+      #scene-03-c185b8 .s03-header {
+        position: absolute; top: 88px; left: 128px; z-index: 10;
+      }
+      #scene-03-c185b8 .s03-eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 20px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-03-c185b8 .s03-num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 22px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35);
+        border-radius: 4px; letter-spacing: 0.12em;
+      }
+      #scene-03-c185b8 .s03-bar {
+        display: inline-block; width: 56px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-03-c185b8 .s03-label { color: #b5c4dd; }
+      #scene-03-c185b8 .s03-title {
+        margin-top: 18px; font-size: 140px; font-weight: 800; line-height: 0.98;
+        letter-spacing: -0.02em; color: #ffffff;
+        display: flex; gap: 22px; align-items: baseline;
+      }
+      #scene-03-c185b8 .s03-t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-03-c185b8 .s03-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 50%, #c4b5fd 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900;
+        text-shadow: 0 0 42px rgba(77,208,255,0.35);
+      }
+      #scene-03-c185b8 .s03-subtitle {
+        margin-top: 20px; font-size: 32px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300;
+      }
+      #scene-03-c185b8 .s03-em { color: #fbbf24; font-weight: 700; margin: 0 6px; padding: 0 6px; font-style: italic; }
 
-      #scene-03-c185b8 .stage {
-        position: absolute;
-        left: 50%;
-        top: 53%;
-        transform: translate(-50%, -50%);
-        width: 940px;
-        height: 940px;
+      /* Readout panel */
+      #scene-03-c185b8 .s03-readout {
+        position: absolute; right: 92px; top: 380px; width: 340px;
+        padding: 26px 28px;
+        background: rgba(10,18,36,0.72);
+        border: 1px solid rgba(77,208,255,0.25); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06), 0 0 60px rgba(77,208,255,0.06);
+        z-index: 8;
       }
+      #scene-03-c185b8 .s03-r-title {
+        font-size: 16px; letter-spacing: 0.4em; color: #4dd0ff; font-weight: 600; margin-bottom: 18px;
+      }
+      #scene-03-c185b8 .s03-r-row {
+        display: flex; align-items: baseline; justify-content: space-between;
+        padding: 12px 0; border-top: 1px solid rgba(77,208,255,0.12);
+        font-family: "JetBrains Mono", "SF Mono", monospace;
+      }
+      #scene-03-c185b8 .s03-r-row:first-of-type { border-top: none; }
+      #scene-03-c185b8 .s03-r-k {
+        color: #c4b5fd; font-size: 18px; letter-spacing: 0.08em; font-style: italic;
+        font-family: "Georgia", serif;
+      }
+      #scene-03-c185b8 .s03-r-v {
+        color: #f1f5f9; font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums;
+      }
+      #scene-03-c185b8 .s03-r-u {
+        color: #5b6e93; font-size: 18px; margin-left: 8px;
+      }
+      #scene-03-c185b8 .s03-r-theta .s03-r-v { color: #c4b5fd; }
+      #scene-03-c185b8 .s03-r-cos .s03-r-v,
+      #scene-03-c185b8 .s03-r-cos .s03-r-k { color: #fbbf24; }
+      #scene-03-c185b8 .s03-r-sin .s03-r-v,
+      #scene-03-c185b8 .s03-r-sin .s03-r-k { color: #ff4d8f; }
 
-      #scene-03-c185b8 .viz {
-        width: 100%;
-        height: 100%;
-        overflow: visible;
+      #scene-03-c185b8 .s03-stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
       }
-
-      #scene-03-c185b8 .text-layer {
-        position: absolute;
-        left: 96px;
-        top: 88px;
-        z-index: 10;
-        max-width: 700px;
+      #scene-03-c185b8 .s03-caption {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.08em; font-weight: 300;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
       }
-
-      #scene-03-c185b8 .eyebrow {
-        font-size: 20px;
-        letter-spacing: 10px;
-        color: #fbbf24;
-        font-weight: 600;
-        margin-bottom: 18px;
+      #scene-03-c185b8 .s03-cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 12px #4dd0ff;
       }
-
-      #scene-03-c185b8 .title {
-        font-size: 104px;
-        font-weight: 800;
-        letter-spacing: 4px;
-        line-height: 1;
-        background: linear-gradient(135deg, #fef9c3 0%, #fbbf24 45%, #f59e0b 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 0 28px rgba(251, 191, 36, 0.35));
-      }
-
-      #scene-03-c185b8 .subtitle {
-        font-size: 30px;
-        color: #94a3b8;
-        margin-top: 26px;
-        letter-spacing: 1px;
-      }
-      #scene-03-c185b8 .cos-term { color: #22d3ee; font-weight: 700; }
-      #scene-03-c185b8 .sin-term { color: #f472b6; font-weight: 700; }
-      #scene-03-c185b8 .sep { color: #475569; margin: 0 10px; }
-
-      #scene-03-c185b8 .caption {
-        position: absolute;
-        left: 50%;
-        bottom: 64px;
-        transform: translateX(-50%);
-        z-index: 10;
-      }
-      #scene-03-c185b8 .caption-text {
-        font-size: 26px;
-        color: #64748b;
-        letter-spacing: 4px;
-        padding: 14px 30px;
-        border-top: 1px solid rgba(100, 116, 139, 0.25);
-        border-bottom: 1px solid rgba(100, 116, 139, 0.25);
-      }
-
-      #scene-03-c185b8 .readout {
-        position: absolute;
-        right: 96px;
-        top: 110px;
-        z-index: 10;
-        padding: 24px 32px 20px 32px;
-        background: rgba(11, 21, 48, 0.55);
-        border: 1px solid rgba(96, 165, 250, 0.28);
-        border-radius: 14px;
-        min-width: 300px;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        box-shadow: 0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
-      }
-      #scene-03-c185b8 .readout-title {
-        font-size: 18px;
-        letter-spacing: 6px;
-        color: #64748b;
-        margin-bottom: 14px;
-        font-weight: 500;
-      }
-      #scene-03-c185b8 .readout-row {
-        display: flex;
-        align-items: baseline;
-        gap: 14px;
-        padding: 10px 0;
-        font-family: 'SF Mono', 'Monaco', Consolas, monospace;
-        font-size: 28px;
-      }
-      #scene-03-c185b8 .readout-row + .readout-row {
-        border-top: 1px solid rgba(96, 165, 250, 0.12);
-      }
-      #scene-03-c185b8 .readout-label {
-        color: #94a3b8;
-        font-weight: 300;
-        width: 52px;
-        font-style: italic;
-      }
-      #scene-03-c185b8 .readout-val {
-        color: #e2e8f0;
-        font-weight: 600;
-        font-variant-numeric: tabular-nums;
-        flex: 1;
-        text-align: right;
-      }
-      #scene-03-c185b8 .readout-unit {
-        color: #64748b;
-        font-size: 20px;
-        width: 48px;
-        text-align: right;
-      }
-      #scene-03-c185b8 .theta-row .readout-label { color: #fbbf24; }
-      #scene-03-c185b8 .cos-row .readout-val { color: #22d3ee; }
-      #scene-03-c185b8 .sin-row .readout-val { color: #f472b6; }
+      #scene-03-c185b8 .s03-cap-cos { color: #fbbf24; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-03-c185b8 .s03-cap-sin { color: #ff4d8f; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-03-c185b8 .s03-caption b { color: #4dd0ff; font-weight: 600; }
     </style>
 
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-03-c185b8';
+      const R = 280;
 
-      const PREFIX = '#scene-03-c185b8 ';
-      const R = 400;
-      const sceneDur = 12;
+      // Atmosphere
+      tl.fromTo(ID + ' .s03-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .s03-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.5, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .s03-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.7, transformOrigin: 'center' }, 0.2);
 
-      // --- Initial states (set via GSAP so timeline is self-contained) ---
-      gsap.set(PREFIX + '.text-layer',  { opacity: 0, y: 32 });
-      gsap.set(PREFIX + '.readout',     { opacity: 0, x: 48 });
-      gsap.set(PREFIX + '.caption',     { opacity: 0, y: 18 });
-      gsap.set(PREFIX + '.bg-grid',     { opacity: 0 });
-      gsap.set(PREFIX + '.grid',        { opacity: 0 });
-      gsap.set(PREFIX + '.axes',        { opacity: 0 });
-      gsap.set(PREFIX + '.origin',      { opacity: 0, scale: 0, transformOrigin: 'center center' });
-      gsap.set(PREFIX + '.origin-label',{ opacity: 0 });
+      // Header
+      tl.fromTo(ID + ' .s03-num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .s03-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'left' }, 0.45);
+      tl.fromTo(ID + ' .s03-label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, 0.55);
+      tl.fromTo(ID + ' .s03-t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.6);
+      tl.fromTo(ID + ' .s03-t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 0.85);
+      tl.fromTo(ID + ' .s03-subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
 
-      // --- Opening reveal (0.0 - 3.0s) ---
-      tl.to(PREFIX + '.bg-grid',    { opacity: 0.75, duration: 0.9, ease: 'power2.out' }, 0.0);
-      tl.to(PREFIX + '.text-layer', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 0.2);
-      tl.to(PREFIX + '.grid',       { opacity: 0.55, duration: 0.7 }, 0.6);
-      tl.to(PREFIX + '.axes',       { opacity: 1, duration: 0.7 }, 0.7);
-      tl.to(PREFIX + '.origin',     { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2.2)' }, 1.0);
-      tl.to(PREFIX + '.origin-label', { opacity: 1, duration: 0.4 }, 1.15);
-      tl.to(PREFIX + '.unit-circle',{ strokeDashoffset: 0, duration: 1.35, ease: 'power2.inOut' }, 1.1);
-      tl.to(PREFIX + '.readout',    { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }, 1.7);
-      tl.to(PREFIX + '.caption',    { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 2.4);
+      // Circle + axes
+      tl.fromTo(ID + ' .s03-halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 1.4);
+      tl.fromTo(ID + ' .s03-ax-x', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '960px 600px' }, 1.6);
+      tl.fromTo(ID + ' .s03-ax-y', { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '960px 600px' }, 1.7);
+      tl.fromTo(ID + ' .s03-arr-x', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.3);
+      tl.fromTo(ID + ' .s03-arr-y', { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.4);
+      tl.fromTo(ID + ' .s03-origin', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 2.0);
+      tl.fromTo(ID + ' .s03-unit', { strokeDashoffset: 1760 }, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, 2.0);
 
-      // Radius vector + point appear at angle 0
-      tl.to(PREFIX + '.radius-line', { opacity: 1, duration: 0.5 }, 2.3);
-      tl.to(PREFIX + '.point', { opacity: 1, attr: { r: 14 }, duration: 0.55, ease: 'back.out(2.4)' }, 2.5);
+      // Readout appears
+      tl.fromTo(ID + ' .s03-readout', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out' }, 2.6);
 
-      // Projections and labels
-      tl.to(PREFIX + '.proj-x',      { opacity: 0.85, duration: 0.5 }, 2.75);
-      tl.to(PREFIX + '.proj-y',      { opacity: 0.85, duration: 0.5 }, 2.85);
-      tl.to(PREFIX + '.cos-label',   { opacity: 1, duration: 0.4 }, 2.95);
-      tl.to(PREFIX + '.sin-label',   { opacity: 1, duration: 0.4 }, 3.05);
-      tl.to(PREFIX + '.angle-arc',   { opacity: 1, duration: 0.35 }, 3.05);
-      tl.to(PREFIX + '.angle-label', { opacity: 1, duration: 0.35 }, 3.05);
-
-      // --- Rotation (3.3s - 11.0s) --- two full revolutions, smooth linear ---
-      const rotateStart = 3.3;
-      const rotateEnd = 11.0;
-      const rotateDur = rotateEnd - rotateStart;
-      const totalRotations = 2;
-      const totalAngle = Math.PI * 2 * totalRotations;
-
-      const state = { angle: 0 };
-
-      const fmt = (n) => (n >= 0 ? '+' : '') + n.toFixed(2);
-
+      // Rotation: 0 → 2π over 7 seconds (3.2s to 10.2s)
+      const state = { theta: 0 };
       tl.to(state, {
-        angle: totalAngle,
-        duration: rotateDur,
+        theta: Math.PI * 2,
+        duration: 7.0,
         ease: 'none',
         onUpdate: () => {
-          // At playback time the template content is live in the document,
-          // so these qualified lookups resolve.
-          const theta = state.angle;
-          const cosT = Math.cos(theta);
-          const sinT = Math.sin(theta);
-          const cx = cosT * R;
-          const cy = -sinT * R; // SVG y is inverted relative to math
+          const t = state.theta;
+          const cx = Math.cos(t) * R;
+          const cy = -Math.sin(t) * R; // SVG y inverted
+          const rotor = document.querySelector(ID + ' .s03-rotor');
+          if (rotor) rotor.setAttribute('transform', 'rotate(' + (-t * 180 / Math.PI) + ')');
+          // Update segment endpoints
+          const cosSeg = document.querySelector(ID + ' .s03-cos-seg');
+          const sinSeg = document.querySelector(ID + ' .s03-sin-seg');
+          if (cosSeg) cosSeg.setAttribute('x2', cx.toFixed(2));
+          if (sinSeg) { sinSeg.setAttribute('x2', cx.toFixed(2)); sinSeg.setAttribute('y2', cy.toFixed(2)); }
+          // Update drop lines inside rotor (they rotate with it)
+          // Actually with rotor rotating, drops need special handling:
+          const dropX = document.querySelector(ID + ' .s03-drop-x');
+          const dropY = document.querySelector(ID + ' .s03-drop-y');
+          // reset x2 of drops back to R (local coords before rotation)
+          if (dropX) { dropX.setAttribute('x1', String(R)); dropX.setAttribute('y1', '0'); dropX.setAttribute('x2', String(R)); dropX.setAttribute('y2', '0'); }
+          if (dropY) { dropY.setAttribute('x1', String(R)); dropY.setAttribute('y1', '0'); dropY.setAttribute('x2', String(R)); dropY.setAttribute('y2', '0'); }
 
-          const point = document.querySelector(PREFIX + '.point');
-          if (point) {
-            point.setAttribute('cx', cx.toFixed(2));
-            point.setAttribute('cy', cy.toFixed(2));
-          }
-
-          const radius = document.querySelector(PREFIX + '.radius-line');
-          if (radius) {
-            radius.setAttribute('x2', cx.toFixed(2));
-            radius.setAttribute('y2', cy.toFixed(2));
-          }
-
-          const projX = document.querySelector(PREFIX + '.proj-x');
-          if (projX) { projX.setAttribute('x2', cx.toFixed(2)); }
-
-          const projY = document.querySelector(PREFIX + '.proj-y');
-          if (projY) {
-            projY.setAttribute('x1', cx.toFixed(2));
-            projY.setAttribute('x2', cx.toFixed(2));
-            projY.setAttribute('y2', cy.toFixed(2));
-          }
-
-          // cos label: midpoint of x-projection, flipped above/below x-axis
-          const cosLabel = document.querySelector(PREFIX + '.cos-label');
-          if (cosLabel) {
-            cosLabel.setAttribute('x', (cx / 2).toFixed(2));
-            // cy < 0 means point is ABOVE x-axis (in SVG), so put label BELOW (y positive)
-            cosLabel.setAttribute('y', cy < 0 ? '38' : '-18');
-          }
-
-          // sin label: beside the vertical projection, to the outside
-          const sinLabel = document.querySelector(PREFIX + '.sin-label');
-          if (sinLabel) {
-            const sideOffset = 18;
-            if (cx >= 0) {
-              sinLabel.setAttribute('x', (cx + sideOffset).toFixed(2));
-              sinLabel.setAttribute('text-anchor', 'start');
-            } else {
-              sinLabel.setAttribute('x', (cx - sideOffset).toFixed(2));
-              sinLabel.setAttribute('text-anchor', 'end');
-            }
-            sinLabel.setAttribute('y', (cy / 2 + 9).toFixed(2));
-          }
-
-          // Angle arc from +x axis to current angle (using modulo so it re-draws each revolution)
-          const modAngle = ((theta % (Math.PI * 2)) + (Math.PI * 2)) % (Math.PI * 2);
-          const arcR = 72;
-          const endX = Math.cos(modAngle) * arcR;
-          const endY = -Math.sin(modAngle) * arcR;
-          const largeArc = modAngle > Math.PI ? 1 : 0;
-          const arc = document.querySelector(PREFIX + '.angle-arc');
+          // Angle arc
+          const arc = document.querySelector(ID + ' .s03-arc');
           if (arc) {
-            arc.setAttribute('d',
-              'M ' + arcR + ' 0 A ' + arcR + ' ' + arcR + ' 0 ' + largeArc + ' 0 ' +
-              endX.toFixed(2) + ' ' + endY.toFixed(2));
+            const rArc = 60;
+            const endX = Math.cos(t) * rArc;
+            const endY = -Math.sin(t) * rArc;
+            const largeArc = t > Math.PI ? 1 : 0;
+            arc.setAttribute('d', 'M ' + rArc + ' 0 A ' + rArc + ' ' + rArc + ' 0 ' + largeArc + ' 0 ' + endX.toFixed(2) + ' ' + endY.toFixed(2));
           }
-
-          // θ label — placed on the bisector of the angle, outside the arc
-          const angleLabel = document.querySelector(PREFIX + '.angle-label');
-          if (angleLabel) {
-            const bisect = modAngle / 2;
-            const labelR = 108;
-            angleLabel.setAttribute('x', (Math.cos(bisect) * labelR).toFixed(2));
-            angleLabel.setAttribute('y', (-Math.sin(bisect) * labelR + 10).toFixed(2));
+          // Arc label position (bisect)
+          const arcLbl = document.querySelector(ID + ' .s03-arc-lbl');
+          if (arcLbl) {
+            const bisect = t / 2;
+            const rLbl = 96;
+            arcLbl.setAttribute('x', (Math.cos(bisect) * rLbl).toFixed(2));
+            arcLbl.setAttribute('y', (-Math.sin(bisect) * rLbl + 10).toFixed(2));
           }
-
-          // Numeric readout
-          const thetaVal = document.querySelector(PREFIX + '.theta-val');
-          if (thetaVal) thetaVal.textContent = modAngle.toFixed(2);
-          const cosVal = document.querySelector(PREFIX + '.cos-val');
-          if (cosVal) cosVal.textContent = fmt(cosT);
-          const sinVal = document.querySelector(PREFIX + '.sin-val');
-          if (sinVal) sinVal.textContent = fmt(sinT);
+          // Readout
+          const thetaEl = document.querySelector(ID + ' .s03-r-theta-val');
+          const cosEl = document.querySelector(ID + ' .s03-r-cos-val');
+          const sinEl = document.querySelector(ID + ' .s03-r-sin-val');
+          if (thetaEl) thetaEl.textContent = t.toFixed(2);
+          const fmt = n => (n >= 0 ? '+' : '') + n.toFixed(3);
+          if (cosEl) cosEl.textContent = fmt(Math.cos(t));
+          if (sinEl) sinEl.textContent = fmt(Math.sin(t));
         }
-      }, rotateStart);
+      }, 3.2);
 
-      // --- Closing fade (11.3 - 12.0s) ---
-      tl.to([
-        PREFIX + '.text-layer',
-        PREFIX + '.readout',
-        PREFIX + '.caption',
-        PREFIX + '.stage',
-        PREFIX + '.bg-grid'
-      ], { opacity: 0, duration: 0.7, ease: 'power2.in' }, sceneDur - 0.7);
+      // Arc label fades in
+      tl.to(ID + ' .s03-arc-lbl', { opacity: 1, duration: 0.5 }, 3.5);
 
-      window.__timelines["scene-03-c185b8"] = tl;
+      // Caption at the end
+      tl.fromTo(ID + ' .s03-caption', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 10.3);
+      tl.fromTo(ID + ' .s03-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 10.5);
+
+      tl.set({}, {}, 12);
+      window.__timelines['scene-03-c185b8'] = tl;
     </script>
   </div>
 </template>

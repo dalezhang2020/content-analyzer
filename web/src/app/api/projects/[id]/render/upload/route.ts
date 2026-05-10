@@ -1,22 +1,24 @@
 /**
  * POST /api/projects/{id}/render/upload
  *
- * Upload a locally-rendered MP4 to Vercel Blob and persist the URL on
- * the project. Used by the `workbench-render` Kiro skill after local
- * HyperFrames CLI render completes.
+ * Receive metadata for a locally-rendered MP4 that was uploaded DIRECTLY
+ * to Vercel Blob by the workbench-render Kiro skill (using the
+ * @vercel/blob SDK with BLOB_READ_WRITE_TOKEN). This route just writes
+ * the video URL to Neon — it does NOT accept the actual bytes.
  *
- * Body: raw video/mp4 bytes (Content-Type: video/mp4).
- * Query: none.
- * Response: { videoBlobUrl, sizeBytes }
+ * Why: Vercel serverless functions have a 4.5 MB body limit that's hard
+ * to raise. MP4s can be 10-50 MB. The solution is to have the CLI
+ * upload straight to Blob storage using its read-write token (which it
+ * already has in ~/.kiro/settings/workbench-render.env), then POST here
+ * with just the URL + size.
  *
- * Auth: a shared-secret token in the `x-workbench-render-token` header
- * checked against WORKBENCH_RENDER_TOKEN env. Without the token the
- * endpoint returns 401. The token is only needed when uploading from
- * outside Vercel (i.e. from the Kiro skill on the user's Mac).
+ * Body (application/json):
+ *   { videoBlobUrl: string, sizeBytes?: number }
+ *
+ * Auth: x-workbench-render-token header (shared secret).
  */
 
 import type { NextRequest } from "next/server";
-import { put } from "@vercel/blob";
 
 import {
   requireProjectIdFromParams,
@@ -32,10 +34,7 @@ type RouteContext = {
     | Promise<Record<string, string | string[]>>;
 };
 
-// The MP4 upload can be tens of MB — give it a bigger ceiling.
-export const maxDuration = 300;
-
-const MAX_UPLOAD_BYTES = 500 * 1024 * 1024; // 500 MB
+export const maxDuration = 30;
 
 export async function POST(
   req: NextRequest,
@@ -72,41 +71,31 @@ export async function POST(
       });
     }
 
-    // ---- Read body --------------------------------------------------
-    const contentType = req.headers.get("content-type") ?? "";
-    if (!contentType.startsWith("video/mp4") && !contentType.startsWith("application/octet-stream")) {
+    // ---- Parse body -------------------------------------------------
+    let body: { videoBlobUrl?: string; sizeBytes?: number };
+    try {
+      body = (await req.json()) as typeof body;
+    } catch {
       throw new WorkbenchError(
         ErrorCode.WRITE_FAILED,
-        `Unexpected content-type: ${contentType}. Expected video/mp4.`,
-      );
-    }
-    const contentLength = parseInt(req.headers.get("content-length") ?? "0", 10);
-    if (contentLength > MAX_UPLOAD_BYTES) {
-      throw new WorkbenchError(
-        ErrorCode.WRITE_FAILED,
-        `Video exceeds ${MAX_UPLOAD_BYTES} bytes`,
-      );
-    }
-    const arrayBuffer = await req.arrayBuffer();
-    const buf = Buffer.from(arrayBuffer);
-    if (buf.byteLength === 0) {
-      throw new WorkbenchError(ErrorCode.WRITE_FAILED, "Empty request body");
-    }
-    if (buf.byteLength > MAX_UPLOAD_BYTES) {
-      throw new WorkbenchError(
-        ErrorCode.WRITE_FAILED,
-        `Video exceeds ${MAX_UPLOAD_BYTES} bytes`,
+        "Invalid JSON body",
       );
     }
 
-    // ---- Upload to Vercel Blob -------------------------------------
-    const blobPath = `video/${projectId}/output.mp4`;
-    const { url: videoBlobUrl } = await put(blobPath, buf, {
-      access: "public",
-      contentType: "video/mp4",
-      addRandomSuffix: false,
-      allowOverwrite: true,
-    });
+    const videoBlobUrl = body.videoBlobUrl;
+    if (!videoBlobUrl || typeof videoBlobUrl !== "string") {
+      throw new WorkbenchError(
+        ErrorCode.WRITE_FAILED,
+        "videoBlobUrl is required",
+      );
+    }
+    if (!videoBlobUrl.startsWith("https://") || !videoBlobUrl.includes(".blob.vercel-storage.com")) {
+      throw new WorkbenchError(
+        ErrorCode.WRITE_FAILED,
+        "videoBlobUrl must be a Vercel Blob URL",
+        { provided: videoBlobUrl },
+      );
+    }
 
     // ---- Persist to Neon -------------------------------------------
     const finishedAt = new Date().toISOString();
@@ -139,7 +128,7 @@ export async function POST(
     return respondJson(
       {
         videoBlobUrl,
-        sizeBytes: buf.byteLength,
+        sizeBytes: body.sizeBytes ?? null,
         finishedAt,
       },
       200,
