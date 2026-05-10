@@ -286,6 +286,47 @@ export async function createProject(
 }
 
 /**
+ * Map legacy 8-stage values to the current 5-stage schema.
+ * "topic" → "brief" (before brief was generated)
+ * "qa" → "render" (after render, before published)
+ * "published" → "render" (treat as render-complete)
+ */
+function mapLegacyStage(stage: string): string {
+  const legacyMap: Record<string, string> = {
+    topic: "brief",
+    qa: "render",
+    published: "render",
+  };
+  return legacyMap[stage] ?? stage;
+}
+
+/**
+ * Filter a stageStatus object from Neon to only include the 5 valid stages.
+ * Legacy data may contain "topic", "qa", "published" from the old 8-stage schema.
+ */
+function filterStageStatus(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object") return raw;
+  const validStages = new Set(["brief", "storyboard", "composition", "audio", "render"]);
+  return Object.fromEntries(
+    Object.entries(raw as Record<string, unknown>).filter(([k]) => validStages.has(k))
+  );
+}
+
+/**
+ * Filter stageHistory entries to only include transitions between valid stages.
+ * Legacy entries with "topic", "qa", "published" are dropped.
+ */
+function filterStageHistory(raw: unknown): unknown {
+  if (!Array.isArray(raw)) return raw;
+  const validStages = new Set(["brief", "storyboard", "composition", "audio", "render"]);
+  return raw.filter((entry: unknown) => {
+    if (!entry || typeof entry !== "object") return false;
+    const e = entry as Record<string, unknown>;
+    return validStages.has(e.fromStage as string) && validStages.has(e.toStage as string);
+  });
+}
+
+/**
  * Read and validate the Project at `data/projects/{projectId}.json`.
  *
  * Error taxonomy:
@@ -369,9 +410,12 @@ export async function readProject(projectId: string): Promise<Project> {
         title: row.title,
         topic: row.topic,
         locale: row.locale,
-        stage: row.stage,
-        stageStatus: row.stage_status,
-        stageHistory: row.stage_history,
+        // Map legacy stages to valid 5-stage values
+        stage: mapLegacyStage(row.stage),
+        // Filter out legacy stage keys (topic/qa/published) from old 8-stage data
+        // so the 5-stage StageStatusMapSchema validates correctly.
+        stageStatus: filterStageStatus(row.stage_status),
+        stageHistory: filterStageHistory(row.stage_history),
         brief: row.brief,
         storyboard,
         artifacts: row.artifacts,
@@ -577,7 +621,7 @@ export async function listProjects(): Promise<ProjectSummary[]> {
       return rows.map((row) => ({
         projectId: row.project_id,
         title: row.title,
-        stage: row.stage as ProjectSummary["stage"],
+        stage: mapLegacyStage(row.stage) as ProjectSummary["stage"],
         updatedAt: row.updated_at,
         posterUrl: null, // poster not yet in Neon (Phase 3)
         videoUrl: row.video_blob_url ?? (row.artifacts?.videoPath ?? null),
