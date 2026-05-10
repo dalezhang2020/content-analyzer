@@ -157,9 +157,18 @@ export function assertNoPathTraversal(s: string): asserts s is string {
  * tests is observed. Lazy resolution also prevents a bad CWD at module load
  * time from crashing the whole workbench import graph.
  *
+ * Honours the `WORKBENCH_DATA_DIR` environment variable when set: accepts
+ * an absolute path to place project data outside the repo (e.g. a sibling
+ * directory at the monorepo root). If the env value is a relative path, it
+ * is resolved against `process.cwd()` just like the default `DATA_DIR`.
+ *
  * _Requirements: 2.1, 8.1_
  */
 export function getDataDirAbs(): string {
+  const override = process.env.WORKBENCH_DATA_DIR;
+  if (override && override.trim().length > 0) {
+    return path.resolve(process.cwd(), override);
+  }
   return path.resolve(process.cwd(), DATA_DIR);
 }
 

@@ -33,6 +33,8 @@
  */
 
 import { spawn } from "node:child_process";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 import {
   DEFAULT_LOCALE,
@@ -40,6 +42,7 @@ import {
   LLM_BRIEF_MAX_ATTEMPTS,
   LLM_STORYBOARD_MAX_ATTEMPTS,
   TIMEOUTS_MS,
+  VOICES,
 } from "./constants";
 import { ErrorCode, WorkbenchError } from "./errors";
 import { createLogger, type WorkbenchLogger } from "./logger";
@@ -540,7 +543,7 @@ function buildStoryboardMessages(
     `      "title": "string, 1-${LIMITS.SCENE_TITLE_MAX} chars",`,
     `      "narration": "string, 1-${LIMITS.SCENE_NARRATION_MAX} chars",`,
     `      "durationSec": "integer, ${LIMITS.SCENE_DURATION_MIN_STORYBOARD}-${LIMITS.SCENE_DURATION_MAX_STORYBOARD}",`,
-    `      "voice": "one of: alloy, echo, fable, onyx, nova, shimmer"`,
+    `      "voice": "one of: ${VOICES.join(", ")}"`,
     `    }`,
     `  ]`,
     `}`,
@@ -752,9 +755,58 @@ export async function generateStoryboardFromBrief(project: Project): Promise<{
 // Composition HTML generation
 // ---------------------------------------------------------------------------
 
+/**
+ * Cached reference template loaded from the HyperFrames source directory.
+ * Used as a few-shot example in the composition prompt so the LLM sees the
+ * exact shape of a valid `__timelines` registration, `.scene.clip` element,
+ * GSAP timeline body, and `<style>` block rather than trying to synthesise
+ * one from abstract rules.
+ *
+ * Resolution precedence (matches template-manager.ts):
+ *   1. `process.env.HYPERFRAMES_TEMPLATE_DIR`/index.html
+ *   2. `<cwd>/../linear-launch/index.html`
+ *   3. `<cwd>/../../linear-launch/index.html`
+ *
+ * Any resolution failure falls back to `null`, in which case the prompt
+ * reverts to the abstract-rules-only format. The cache is keyed by the
+ * resolved absolute path so changing `HYPERFRAMES_TEMPLATE_DIR` at runtime
+ * is observed (path-based invalidation, no TTL).
+ */
+let referenceTemplateCache: {
+  path: string;
+  html: string;
+} | null = null;
+
+async function loadReferenceTemplate(): Promise<string | null> {
+  const envDir = process.env.HYPERFRAMES_TEMPLATE_DIR;
+  const cwd = process.cwd();
+  const candidates = [
+    envDir ? path.resolve(cwd, envDir, "index.html") : null,
+    path.resolve(cwd, "..", "linear-launch", "index.html"),
+    path.resolve(cwd, "..", "..", "linear-launch", "index.html"),
+  ].filter((p): p is string => p !== null);
+
+  for (const abs of candidates) {
+    if (referenceTemplateCache?.path === abs) {
+      return referenceTemplateCache.html;
+    }
+    try {
+      const html = await readFile(abs, "utf8");
+      referenceTemplateCache = { path: abs, html };
+      return html;
+    } catch {
+      // try next candidate
+    }
+  }
+  // Invalidate stale cache entry whose file no longer exists.
+  referenceTemplateCache = null;
+  return null;
+}
+
 function buildCompositionMessages(
   project: Project,
   lintError: string | undefined,
+  referenceTemplate: string | null,
 ): LLMMessage[] {
   const storyboard = project.storyboard;
   // Caller guarantees storyboard is set — the helper below enforces it.
@@ -766,36 +818,66 @@ function buildCompositionMessages(
     "Return ONLY the HTML — no prose, no markdown fences, no explanation.",
     "",
     "Hard rules (output will be rejected if any rule is violated):",
-    "  1. Every timed element MUST have data-start, data-duration, and data-track-index attributes (seconds, floats allowed).",
-    "  2. Every visible timed element MUST include class=\"clip\".",
-    "  3. GSAP timelines MUST be constructed with { paused: true } and pushed to window.__timelines (an array you create if absent).",
+    "  1. Every timed scene MUST be a <div class=\"scene clip\"> with integer data-start, data-duration, and data-track-index attributes (seconds, floats allowed).",
+    "  2. The outer root element MUST be <div id=\"root\" data-composition-id=\"root\" data-start=\"0\" data-width=\"1920\" data-height=\"1080\">, and every <div class=\"scene clip\"> lives inside it.",
+    "  3. The <script> block MUST contain exactly one GSAP timeline constructed with `gsap.timeline({ paused: true })`, which is assigned to `window.__timelines[\"root\"]` after `window.__timelines = window.__timelines || {};`. DO NOT push into an array — `__timelines` is an object keyed by compositionId.",
     "  4. No Date.now(), no Math.random(), no fetch(), no XMLHttpRequest, no <iframe>, <object>, or <embed>.",
-    "  5. The root timeline duration MUST equal the sum of every scene's durationSec (tolerance ±0.5s).",
-    "  6. Scenes play sequentially on track 0; each scene's data-start equals the cumulative duration of previous scenes.",
-    `  7. Natural-language copy rendered to the viewer MUST be in locale "${locale}".`,
-    "  8. The document must be valid standalone HTML (<!doctype html>… <html>… </html>).",
+    "  5. Scenes play sequentially on track-index 1. Each scene's data-start equals the cumulative duration of every previous scene (not 0 except the first).",
+    "  6. The timeline's final `tl.set({}, {}, X)` X value MUST equal the sum of every scene's durationSec (closes the timeline to the exact total duration).",
+    `  7. Natural-language copy rendered to the viewer MUST be in locale "${locale}". All text content, labels, and tagline copy go through the narration and title fields.`,
+    "  8. The document MUST start with <!DOCTYPE html> and be valid standalone HTML.",
+    "  9. Load GSAP from `<script src=\"https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js\"></script>` before the timeline script.",
+    "  10. Target resolution is 1920x1080 — CSS MUST fit this viewport; use `position: absolute; top: 0; left: 0; width: 100%; height: 100%;` on `.scene`.",
   ].join("\n");
 
-  const user = [
-    "Generate the composition HTML for this storyboard:",
-    scenesJson,
-  ].join("\n");
+  // When a reference template is available, present it as a structural
+  // example BEFORE the user's storyboard. The LLM is instructed to mirror
+  // the structure exactly, substituting storyboard content for the demo
+  // content — this is significantly more reliable than rule recitation.
+  const messages: LLMMessage[] = [{ role: "system", content: system }];
 
-  const msgs: LLMMessage[] = [
-    { role: "system", content: system },
-    { role: "user", content: user },
-  ];
-
-  if (lintError) {
-    msgs.push({
+  if (referenceTemplate) {
+    messages.push({
       role: "user",
-      content: `Previous output failed lint with: ${snippet(
-        lintError,
-      )}. Fix the issues and regenerate the complete HTML document from scratch.`,
+      content: [
+        "Here is a reference HyperFrames composition that passes every lint rule.",
+        "Your job is to produce a composition with the SAME structure: same root attributes, same `<div class=\"scene clip\">` shape with cumulative data-start, same <style> organisation, same `__timelines[\"root\"]` registration pattern, same final `tl.set({}, {}, X)` duration-close.",
+        "Only the CONTENT of each scene (text, visual composition, animation choreography) should change to match the new storyboard.",
+        "",
+        "```html",
+        referenceTemplate,
+        "```",
+      ].join("\n"),
     });
   }
 
-  return msgs;
+  messages.push({
+    role: "user",
+    content: [
+      "Now generate a composition HTML for this storyboard:",
+      "",
+      "```json",
+      scenesJson,
+      "```",
+      "",
+      referenceTemplate
+        ? "Follow the reference template's structure exactly. Replace the demo content with scene-appropriate content. Use the scene's title and narration for the on-screen text."
+        : "",
+    ]
+      .filter((l) => l.length > 0)
+      .join("\n"),
+  });
+
+  if (lintError) {
+    messages.push({
+      role: "user",
+      content: `Previous output failed HyperFrames lint with:\n\n${snippet(
+        lintError,
+      )}\n\nFix every reported issue and regenerate the complete HTML document from scratch. Common causes: (a) missing \`window.__timelines[\"root\"]\` registration, (b) scenes missing \`class=\"clip\"\`, (c) data-start values not cumulative, (d) timeline duration not matching storyboard total.`,
+    });
+  }
+
+  return messages;
 }
 
 /**
@@ -818,9 +900,14 @@ export async function generateCompositionHtml(
   }
   const logger = createLogger(project.projectId, "composition");
 
-  await logger.info("composition_attempt", { repair: Boolean(lintError) });
+  const referenceTemplate = await loadReferenceTemplate();
+  await logger.info("composition_attempt", {
+    repair: Boolean(lintError),
+    referenceTemplateLoaded: referenceTemplate !== null,
+    referenceTemplateBytes: referenceTemplate?.length ?? 0,
+  });
 
-  const messages = buildCompositionMessages(project, lintError);
+  const messages = buildCompositionMessages(project, lintError, referenceTemplate);
 
   const raw = await callLLM(
     messages,

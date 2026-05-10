@@ -1,0 +1,125 @@
+{
+  "scenes": [
+    {
+      "sceneId": "sc_53c37704",
+      "index": 1,
+      "title": "引入：什么是三角函数？",
+      "narration": "三角函数，听起来抽象，但它其实藏在一个最简单的图形里——单位圆。今天，我们用3D视角，把它看个透彻。",
+      "durationSec": 10,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_8114e66c",
+      "index": 2,
+      "title": "单位圆登场",
+      "narration": "这是一个半径为1的圆，圆心在原点。圆上任意一点P，它的横坐标就是cos θ，纵坐标就是sin θ。",
+      "durationSec": 10,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_d0f99a29",
+      "index": 3,
+      "title": "角度驱动坐标变化",
+      "narration": "当角度θ从0开始增大，点P沿圆周旋转。注意看——纵坐标sin θ在上下波动，横坐标cos θ在左右摆动。",
+      "durationSec": 12,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_fda35eba",
+      "index": 4,
+      "title": "展开sin波形",
+      "narration": "现在，我们把圆\"拉直\"。将P点的纵坐标随角度的变化描绘出来，一条熟悉的波形曲线就自然浮现了——这就是正弦函数。",
+      "durationSec": 12,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_72ae5f1b",
+      "index": 5,
+      "title": "展开cos波形",
+      "narration": "同样地，横坐标随角度变化，描绘出余弦函数。它与正弦波形状完全相同，只是向左平移了90度。",
+      "durationSec": 10,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_7833e77a",
+      "index": 6,
+      "title": "3D视角：圆与波的统一",
+      "narration": "切换到3D视角！左边是旋转的单位圆，右边是展开的波形。你会发现，波形上的每一个点，都精确对应圆上的一个位置。它们本是同一件事。",
+      "durationSec": 14,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_195f422d",
+      "index": 7,
+      "title": "tan函数：切线的斜率",
+      "narration": "tan θ等于sin θ除以cos θ。在单位圆上，它对应过原点到P点连线的斜率——也就是圆上切线方向的陡峭程度。",
+      "durationSec": 11,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_b97efeef",
+      "index": 8,
+      "title": "tan的特殊行为",
+      "narration": "当θ趋近90度，cos θ趋近于0，tan θ趋向无穷大。这就是为什么tan函数在90度处有垂直渐近线——圆上的几何直接解释了这个奇点。",
+      "durationSec": 12,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_30744836",
+      "index": 9,
+      "title": "周期性：转一圈回原点",
+      "narration": "单位圆转满360度，点P回到起点。所以sin和cos的周期是2π——旋转一圈，波形重复一次。周期性不是规定，是圆的本质。",
+      "durationSec": 11,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_e2c4a360",
+      "index": 10,
+      "title": "对称性一目了然",
+      "narration": "sin是奇函数：关于原点对称。cos是偶函数：关于纵轴对称。在3D模型里，翻转圆的方向，对称性立刻显现。",
+      "durationSec": 10,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    },
+    {
+      "sceneId": "sc_dbe5031e",
+      "index": 11,
+      "title": "总结：三角函数的几何灵魂",
+      "narration": "三角函数的本质，是圆周运动在坐标轴上的投影。单位圆是它的心脏，波形是它的呼吸，周期与对称是它的骨架。记住这个3D图像，三角函数就不再抽象。",
+      "durationSec": 14,
+      "voice": "zh-CN-YunyangNeural",
+      "audioPath": null,
+      "qaNote": "",
+      "updatedAt": "2026-05-10T01:28:28.094Z"
+    }
+  ]
+}

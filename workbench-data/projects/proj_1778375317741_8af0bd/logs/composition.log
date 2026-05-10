@@ -1,0 +1,7 @@
+{"ts":"2026-05-10T01:29:15.059Z","level":"info","stage":"composition","event":"composition_attempt","repair":false}
+{"ts":"2026-05-10T01:30:38.605Z","level":"info","stage":"composition","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":90000,"responseFormat":"text","durationMs":83545}
+{"ts":"2026-05-10T01:30:38.607Z","level":"info","stage":"composition","event":"composition_success","bytes":18113}
+{"ts":"2026-05-10T01:30:39.488Z","level":"info","stage":"composition","event":"composition_attempt","repair":true}
+{"ts":"2026-05-10T01:31:55.741Z","level":"info","stage":"composition","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":90000,"responseFormat":"text","durationMs":76253}
+{"ts":"2026-05-10T01:31:55.743Z","level":"info","stage":"composition","event":"composition_success","bytes":18045}
+{"ts":"2026-05-10T01:42:08.469Z","level":"info","stage":"composition","event":"composition_attempt","repair":false}

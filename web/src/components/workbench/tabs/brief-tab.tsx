@@ -52,11 +52,13 @@ export function BriefTab({
   onProjectChanged,
 }: BriefTabProps): React.JSX.Element {
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [regenerating, setRegenerating] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const regenerate = useCallback(async () => {
-    setRegenerating(true);
+  // Shared generate/regenerate handler — `force: true` is only sent when
+  // the brief already exists (i.e. we're regenerating, not first-time).
+  const generate = useCallback(async (force = false) => {
+    setGenerating(true);
     setActionError(null);
     try {
       const res = await fetch(
@@ -64,11 +66,11 @@ export function BriefTab({
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ force: true }),
+          body: JSON.stringify({ force }),
         },
       );
       if (!res.ok) {
-        const msg = await extractErrorMessage(res, "重新生成失败");
+        const msg = await extractErrorMessage(res, force ? "重新生成失败" : "生成失败");
         setActionError(msg);
         return;
       }
@@ -76,15 +78,45 @@ export function BriefTab({
       onProjectChanged(updated);
       setConfirmOpen(false);
     } catch (err) {
-      setActionError(err instanceof Error ? err.message : "重新生成失败");
+      setActionError(err instanceof Error ? err.message : "生成失败");
     } finally {
-      setRegenerating(false);
+      setGenerating(false);
     }
   }, [project.projectId, onProjectChanged]);
 
   // -----------------------------------------------------------------------
-  // Gating
+  // Gating — topic stage: show a "generate brief" CTA instead of locking
+  // the tab entirely, since generating the brief IS the action that
+  // advances the project from topic → brief.
   // -----------------------------------------------------------------------
+  if (project.stage === "topic") {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+        <p className="text-sm font-medium text-foreground">
+          点击下方按钮，AI 将根据你的选题生成内容卡（Brief）
+        </p>
+        <p className="text-xs text-muted-foreground">
+          选题：{project.topic}
+        </p>
+        {actionError ? (
+          <div
+            role="alert"
+            className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+          >
+            {actionError}
+          </div>
+        ) : null}
+        <Button
+          type="button"
+          onClick={() => void generate(false)}
+          disabled={generating}
+        >
+          {generating ? "生成中…" : "生成 Brief"}
+        </Button>
+      </div>
+    );
+  }
+
   if (!canEnterTab("brief", project.stage)) {
     return (
       <EmptyStateCard
@@ -119,9 +151,9 @@ export function BriefTab({
               variant="outline"
               size="sm"
               onClick={() => setConfirmOpen(true)}
-              disabled={regenerating}
+              disabled={generating}
             >
-              {regenerating ? "重新生成中…" : "重新生成 Brief"}
+              {generating ? "重新生成中…" : "重新生成 Brief"}
             </Button>
           </div>
 
@@ -176,12 +208,12 @@ export function BriefTab({
         }
         confirmLabel="确认重新生成"
         destructive
-        busy={regenerating}
+        busy={generating}
         onConfirm={() => {
-          void regenerate();
+          void generate(true);
         }}
         onCancel={() => {
-          if (!regenerating) setConfirmOpen(false);
+          if (!generating) setConfirmOpen(false);
         }}
       />
     </div>

@@ -1,0 +1,15 @@
+{"ts":"2026-05-10T01:13:51.976Z","level":"info","stage":"brief","event":"brief_attempt","attempt":1}
+{"ts":"2026-05-10T01:13:53.107Z","level":"error","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":1130,"error":{"message":"***REDACTED***","name":"WorkbenchError"}}
+{"ts":"2026-05-10T01:13:53.108Z","level":"info","stage":"brief","event":"brief_attempt","attempt":2}
+{"ts":"2026-05-10T01:13:53.868Z","level":"error","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":760,"error":{"message":"***REDACTED***","name":"WorkbenchError"}}
+{"ts":"2026-05-10T01:13:53.869Z","level":"info","stage":"brief","event":"brief_attempt","attempt":3}
+{"ts":"2026-05-10T01:13:54.648Z","level":"error","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":779,"error":{"message":"***REDACTED***","name":"WorkbenchError"}}
+{"ts":"2026-05-10T01:16:13.224Z","level":"info","stage":"brief","event":"brief_attempt","attempt":1}
+{"ts":"2026-05-10T01:16:14.336Z","level":"error","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":1111,"error":{"message":"***REDACTED***","name":"WorkbenchError"}}
+{"ts":"2026-05-10T01:16:14.336Z","level":"info","stage":"brief","event":"brief_attempt","attempt":2}
+{"ts":"2026-05-10T01:16:15.281Z","level":"error","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":944,"error":{"message":"***REDACTED***","name":"WorkbenchError"}}
+{"ts":"2026-05-10T01:16:15.282Z","level":"info","stage":"brief","event":"brief_attempt","attempt":3}
+{"ts":"2026-05-10T01:16:16.105Z","level":"error","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":823,"error":{"message":"***REDACTED***","name":"WorkbenchError"}}
+{"ts":"2026-05-10T01:16:39.786Z","level":"info","stage":"brief","event":"brief_attempt","attempt":1}
+{"ts":"2026-05-10T01:16:53.104Z","level":"info","stage":"brief","event":"llm_call","provider":"kiro-cli","model":"***REDACTED***","timeoutMs":60000,"responseFormat":"json_object","durationMs":13317}
+{"ts":"2026-05-10T01:16:53.104Z","level":"info","stage":"brief","event":"brief_success","attempt":1}

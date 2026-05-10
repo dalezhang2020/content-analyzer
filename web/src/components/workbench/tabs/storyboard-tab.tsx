@@ -57,11 +57,11 @@ export function StoryboardTab({
   onSceneOpen,
 }: StoryboardTabProps): React.JSX.Element {
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [regenerating, setRegenerating] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const regenerate = useCallback(async () => {
-    setRegenerating(true);
+  const generate = useCallback(async (force = false) => {
+    setGenerating(true);
     setActionError(null);
     try {
       const res = await fetch(
@@ -69,11 +69,11 @@ export function StoryboardTab({
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ force: true }),
+          body: JSON.stringify({ force }),
         },
       );
       if (!res.ok) {
-        const msg = await extractErrorMessage(res, "重新生成失败");
+        const msg = await extractErrorMessage(res, force ? "重新生成失败" : "生成失败");
         setActionError(msg);
         return;
       }
@@ -84,13 +84,43 @@ export function StoryboardTab({
       onProjectChanged(body.project);
       setConfirmOpen(false);
     } catch (err) {
-      setActionError(err instanceof Error ? err.message : "重新生成失败");
+      setActionError(err instanceof Error ? err.message : "生成失败");
     } finally {
-      setRegenerating(false);
+      setGenerating(false);
     }
   }, [project.projectId, onProjectChanged]);
 
-  // Gating check
+  // stage=brief: show "generate storyboard" CTA (first-time generation is
+  // what advances the project brief → storyboard).
+  if (project.stage === "brief") {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+        <p className="text-sm font-medium text-foreground">
+          点击下方按钮，AI 将根据 Brief 生成分镜（Storyboard）
+        </p>
+        <p className="text-xs text-muted-foreground">
+          当前 Brief：{project.brief?.title ?? "（未生成）"}
+        </p>
+        {actionError ? (
+          <div
+            role="alert"
+            className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+          >
+            {actionError}
+          </div>
+        ) : null}
+        <Button
+          type="button"
+          onClick={() => void generate(false)}
+          disabled={generating}
+        >
+          {generating ? "生成中…" : "生成 Storyboard"}
+        </Button>
+      </div>
+    );
+  }
+
+  // Gating check for earlier stages (topic)
   if (!canEnterTab("storyboard", project.stage)) {
     return (
       <EmptyStateCard
@@ -127,9 +157,9 @@ export function StoryboardTab({
           variant="outline"
           size="sm"
           onClick={() => setConfirmOpen(true)}
-          disabled={regenerating}
+          disabled={generating}
         >
-          {regenerating ? "重新生成中…" : "重新生成 Storyboard"}
+          {generating ? "重新生成中…" : "重新生成 Storyboard"}
         </Button>
       </div>
 
@@ -192,12 +222,12 @@ export function StoryboardTab({
         }
         confirmLabel="确认重新生成"
         destructive
-        busy={regenerating}
+        busy={generating}
         onConfirm={() => {
-          void regenerate();
+          void generate(true);
         }}
         onCancel={() => {
-          if (!regenerating) setConfirmOpen(false);
+          if (!generating) setConfirmOpen(false);
         }}
       />
     </div>

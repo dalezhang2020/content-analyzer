@@ -55,10 +55,67 @@ export function HtmlTab({
   const [loadError, setLoadError] = useState<string | null>(null);
 
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [regenerating, setRegenerating] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
   const canEnter = canEnterTab("html", project.stage);
+
+  const generate = useCallback(async (force = false) => {
+    setGenerating(true);
+    setActionError(null);
+    try {
+      const res = await fetch(
+        `/api/projects/${encodeURIComponent(project.projectId)}/composition/generate`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ force }),
+        },
+      );
+      if (!res.ok) {
+        const msg = await extractErrorMessage(res, force ? "重新生成失败" : "生成失败");
+        setActionError(msg);
+        return;
+      }
+      const updated = (await res.json()) as Project;
+      onProjectChanged?.(updated);
+      setConfirmOpen(false);
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "生成失败");
+    } finally {
+      setGenerating(false);
+    }
+  }, [project.projectId, onProjectChanged]);
+
+  // stage=storyboard: show "generate HTML" CTA (first-time generation
+  // is what advances storyboard → composition).
+  if (project.stage === "storyboard") {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+        <p className="text-sm font-medium text-foreground">
+          点击下方按钮，AI 将根据分镜生成 HyperFrames HTML 场景
+        </p>
+        <p className="text-xs text-muted-foreground">
+          共 {project.storyboard?.scenes.length ?? 0} 个场景
+        </p>
+        {actionError ? (
+          <div
+            role="alert"
+            className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
+          >
+            {actionError}
+          </div>
+        ) : null}
+        <Button
+          type="button"
+          onClick={() => void generate(false)}
+          disabled={generating}
+        >
+          {generating ? "生成中…" : "生成 HTML"}
+        </Button>
+      </div>
+    );
+  }
 
   // -----------------------------------------------------------------------
   // Fetch HTML on mount (and whenever the composition artifact changes).
@@ -101,33 +158,6 @@ export function HtmlTab({
     };
     // `updatedAt` changes on every write, so refetch on project mutation.
   }, [project.projectId, project.updatedAt, canEnter]);
-
-  const regenerate = useCallback(async () => {
-    setRegenerating(true);
-    setActionError(null);
-    try {
-      const res = await fetch(
-        `/api/projects/${encodeURIComponent(project.projectId)}/composition/generate`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ force: true }),
-        },
-      );
-      if (!res.ok) {
-        const msg = await extractErrorMessage(res, "重新生成失败");
-        setActionError(msg);
-        return;
-      }
-      const updated = (await res.json()) as Project;
-      onProjectChanged?.(updated);
-      setConfirmOpen(false);
-    } catch (err) {
-      setActionError(err instanceof Error ? err.message : "重新生成失败");
-    } finally {
-      setRegenerating(false);
-    }
-  }, [project.projectId, onProjectChanged]);
 
   if (!canEnter) {
     return (
@@ -178,9 +208,9 @@ export function HtmlTab({
             variant="outline"
             size="sm"
             onClick={() => setConfirmOpen(true)}
-            disabled={regenerating}
+            disabled={generating}
           >
-            {regenerating ? "重新生成中…" : "重新生成 HTML"}
+            {generating ? "重新生成中…" : "重新生成 HTML"}
           </Button>
         </div>
       </div>
@@ -225,12 +255,12 @@ export function HtmlTab({
         }
         confirmLabel="确认重新生成"
         destructive
-        busy={regenerating}
+        busy={generating}
         onConfirm={() => {
-          void regenerate();
+          void generate(true);
         }}
         onCancel={() => {
-          if (!regenerating) setConfirmOpen(false);
+          if (!generating) setConfirmOpen(false);
         }}
       />
     </div>

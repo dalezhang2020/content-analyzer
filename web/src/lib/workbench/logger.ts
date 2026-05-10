@@ -25,7 +25,8 @@
 import path from "node:path";
 import { appendFile, mkdir, rename, stat, unlink } from "node:fs/promises";
 
-import { DATA_DIR, LIMITS, REGEX, STAGE_DIRS } from "./constants";
+import { LIMITS, REGEX, STAGE_DIRS } from "./constants";
+import { getDataDirAbs } from "./path-safety";
 import type { Stage } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -143,8 +144,7 @@ function resolveLogPath(projectId: string, stage: LoggerStage): string {
       : INVALID_PROJECT_BUCKET;
 
   return path.resolve(
-    process.cwd(),
-    DATA_DIR,
+    getDataDirAbs(),
     safeId,
     STAGE_DIRS.LOGS,
     `${stage}.log`,
