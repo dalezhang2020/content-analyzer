@@ -84,6 +84,7 @@ export function RenderTab({
   const [logLoading, setLogLoading] = useState(false);
 
   const esRef = useRef<EventSource | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const canEnter = canEnterTab("render", project.stage);
 
@@ -110,7 +111,65 @@ export function RenderTab({
       esRef.current.close();
       esRef.current = null;
     }
+    if (pollRef.current) {
+      clearInterval(pollRef.current);
+      pollRef.current = null;
+    }
   }, []);
+
+  // Vercel-mode polling against /render/status. Runs when streamUrl
+  // ends with "/status" (which startRender sets on Vercel).
+  const openPolling = useCallback(
+    (url: string) => {
+      closeStream();
+      setConnectionLost(false);
+
+      const tick = async () => {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) {
+            setConnectionLost(true);
+            return;
+          }
+          const job = (await res.json()) as {
+            status: string;
+            message?: string;
+            progress?: number;
+            videoBlobUrl?: string | null;
+            error?: string | null;
+          };
+          setConnectionLost(false);
+          if (typeof job.message === "string") setLatestLine(job.message);
+
+          // Map sandbox status → RenderStage for consistent UI
+          const s = job.status;
+          if (s === "queued" || s === "preparing") setRenderStage("starting");
+          else if (s === "rendering") setRenderStage("rendering");
+          else if (s === "uploading") setRenderStage("encoding");
+          else if (s === "succeeded") setRenderStage("done");
+          else if (s === "failed") setRenderStage("failed");
+
+          setHeartbeats((n) => n + 1);
+
+          if (s === "succeeded" || s === "failed") {
+            if (s === "failed" && job.error) {
+              setTerminalMessage(job.error);
+            }
+            closeStream();
+            setStreamUrl(null);
+            void refreshProject();
+          }
+        } catch {
+          setConnectionLost(true);
+        }
+      };
+
+      // Fire once immediately, then every 3s
+      void tick();
+      pollRef.current = setInterval(tick, 3000);
+    },
+    [closeStream, refreshProject],
+  );
 
   const openStream = useCallback(
     (url: string) => {
@@ -185,15 +244,20 @@ export function RenderTab({
   // Effects
   // -----------------------------------------------------------------------
 
-  // Open EventSource whenever `streamUrl` is set. Reconnect is performed
-  // by re-assigning the same `streamUrl` via `handleReconnect`.
+  // Open EventSource or polling whenever `streamUrl` is set.
+  // - URL ending in "/status" → polling (Vercel sandbox)
+  // - URL ending in "/stream" → SSE (local hyperframes CLI)
   useEffect(() => {
     if (!streamUrl) return;
-    openStream(streamUrl);
+    if (streamUrl.endsWith("/status")) {
+      openPolling(streamUrl);
+    } else {
+      openStream(streamUrl);
+    }
     return () => {
       closeStream();
     };
-  }, [streamUrl, openStream, closeStream]);
+  }, [streamUrl, openStream, openPolling, closeStream]);
 
   // Fetch render log tail on mount when no render is active.
   useEffect(() => {

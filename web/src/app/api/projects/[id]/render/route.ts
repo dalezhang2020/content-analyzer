@@ -28,7 +28,7 @@
  */
 
 import type { NextRequest } from "next/server";
-import { isLocalEnv, localOnlyResponse } from "@/lib/env";
+import { isLocalEnv } from "@/lib/env";
 
 import {
   requireProjectIdFromParams,
@@ -44,6 +44,10 @@ import {
   subscribeRender,
 } from "@/lib/workbench/render-service";
 import {
+  bootstrapRenderSandbox,
+  startRenderJob,
+} from "@/lib/workbench/sandbox-render";
+import {
   applyTransition,
   markStageFailed,
   markStageRunning,
@@ -56,13 +60,42 @@ type RouteContext = {
     | Promise<Record<string, string | string[]>>;
 };
 
+// Vercel function config: bootstrap (sandbox create + upload + ffmpeg install)
+// can take 60-120s. Keep a generous upper bound.
+export const maxDuration = 300;
+
 export async function POST(
   _req: NextRequest,
   ctx: RouteContext,
 ): Promise<Response> {
-  if (!isLocalEnv()) return localOnlyResponse("Video rendering (requires HyperFrames CLI)");
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
+
+    // On Vercel: delegate to sandbox-render (runs in Vercel Sandbox).
+    if (!isLocalEnv()) {
+      const project = await readProject(projectId);
+      if (project.stage !== "audio" && project.stage !== "render") {
+        throw new WorkbenchError(
+          ErrorCode.INVALID_STAGE,
+          "Render requires stage=audio or stage=render",
+          { currentStage: project.stage },
+        );
+      }
+      const job = await startRenderJob(projectId);
+      // Bootstrap the sandbox synchronously so the caller knows the
+      // render started. The hyperframes command itself is detached
+      // inside the sandbox — the status endpoint polls its exit code.
+      await bootstrapRenderSandbox(projectId);
+      return respondJson(
+        {
+          runId: job.jobId,
+          streamUrl: `/api/projects/${projectId}/render/status`,
+        },
+        202,
+      );
+    }
+
+    // ---- Local path (HyperFrames CLI subprocess + SSE) ---------------
 
     // ---- Fail-fast: one live render per project. ----------------------
     // This check intentionally sits *outside* `withProjectLock` so the
