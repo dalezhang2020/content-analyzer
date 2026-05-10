@@ -1,34 +1,15 @@
 /**
- * Video Creation Workbench — `POST /api/projects/{id}/render`.
+ * POST /api/projects/{id}/render
  *
- * Kicks off a HyperFrames render subprocess for the project and returns
- * `202 Accepted` with a `runId` + `streamUrl` the client can open as an
- * SSE source (see `./render/stream/route.ts`).
- *
- * Pipeline:
- *   1. Validate path param via `requireProjectIdFromParams`.
- *   2. **Fail-fast** 409 `RENDER_IN_PROGRESS` when an existing ActiveRender
- *      for this project is still `running` — we do NOT queue, because
- *      `render-service` enforces one live render per project at a time
- *      (Req 10.3, Property 21). This check runs **before** lock
- *      acquisition so a second caller never blocks on the first.
- *   3. Acquire `withProjectLock(projectId)` (409 `LOCK_BUSY` on contention).
- *   4. Stage guard: current stage must be exactly `audio`, else 409
- *      `INVALID_STAGE` with `details.currentStage`.
- *   5. `markStageRunning("render")` → persist.
- *   6. `startRender(project)` — returns `{ runId, active }` immediately
- *      while the subprocess continues in the background.
- *   7. Spawn a detached state-update task that consumes the render event
- *      stream until a terminal event (`stage: done` or `stage: failed`)
- *      arrives, then re-reads the Project, writes `artifacts.videoPath`
- *      + `applyTransition("render")` on success, or `markStageFailed`
- *      on failure. This task runs outside the lock so the render call
- *      can return `202` without holding the mutex for 180 s.
- *   8. Respond `202` with `{ runId, streamUrl }`.
+ * Local: starts a HyperFrames render subprocess, returns a streamUrl
+ *   for SSE progress updates.
+ * Vercel: returns 503 LOCAL_ONLY — rendering is performed in Kiro IDE
+ *   on the user's machine. The result (MP4 blob URL) is uploaded back
+ *   to Neon via the `workbench-render` Kiro skill.
  */
 
 import type { NextRequest } from "next/server";
-import { isLocalEnv } from "@/lib/env";
+import { isLocalEnv, localOnlyResponse } from "@/lib/env";
 
 import {
   requireProjectIdFromParams,
@@ -44,10 +25,6 @@ import {
   subscribeRender,
 } from "@/lib/workbench/render-service";
 import {
-  bootstrapRenderSandbox,
-  startRenderJob,
-} from "@/lib/workbench/sandbox-render";
-import {
   applyTransition,
   markStageFailed,
   markStageRunning,
@@ -60,48 +37,20 @@ type RouteContext = {
     | Promise<Record<string, string | string[]>>;
 };
 
-// Vercel function config: bootstrap (sandbox create + upload + ffmpeg install)
-// can take 60-120s. Keep a generous upper bound.
-export const maxDuration = 300;
-
 export async function POST(
   _req: NextRequest,
   ctx: RouteContext,
 ): Promise<Response> {
+  if (!isLocalEnv()) {
+    return localOnlyResponse(
+      "Video rendering is performed locally via HyperFrames CLI in Kiro IDE",
+    );
+  }
+
   try {
     const projectId = await requireProjectIdFromParams(ctx.params);
 
-    // On Vercel: delegate to sandbox-render (runs in Vercel Sandbox).
-    if (!isLocalEnv()) {
-      const project = await readProject(projectId);
-      if (project.stage !== "audio" && project.stage !== "render") {
-        throw new WorkbenchError(
-          ErrorCode.INVALID_STAGE,
-          "Render requires stage=audio or stage=render",
-          { currentStage: project.stage },
-        );
-      }
-      const job = await startRenderJob(projectId);
-      // Bootstrap the sandbox synchronously so the caller knows the
-      // render started. The hyperframes command itself is detached
-      // inside the sandbox — the status endpoint polls its exit code.
-      await bootstrapRenderSandbox(projectId);
-      return respondJson(
-        {
-          runId: job.jobId,
-          streamUrl: `/api/projects/${projectId}/render/status`,
-        },
-        202,
-      );
-    }
-
-    // ---- Local path (HyperFrames CLI subprocess + SSE) ---------------
-
-    // ---- Fail-fast: one live render per project. ----------------------
-    // This check intentionally sits *outside* `withProjectLock` so the
-    // second caller short-circuits with 409 RENDER_IN_PROGRESS without
-    // ever blocking on the lock slot. `render-service` is the authority
-    // on `status` — we trust its in-memory record.
+    // One live render per project.
     const existing = getActiveRender(projectId);
     if (existing && existing.status === "running") {
       throw new WorkbenchError(
@@ -114,12 +63,6 @@ export async function POST(
     const { runId } = await withProjectLock(projectId, async () => {
       const project = await readProject(projectId);
 
-      // Stage gate: `audio` is the canonical predecessor, but `render`
-      // itself is also accepted so a user who regressed to `render` (via
-      // StagePanel's "回退到此阶段") can retry the render step without
-      // being forced to regress further to `audio`. Any other stage
-      // (topic/brief/storyboard/composition/qa/published) is rejected —
-      // a render depends on `audio` having produced mp3s.
       if (project.stage !== "audio" && project.stage !== "render") {
         throw new WorkbenchError(
           ErrorCode.INVALID_STAGE,
@@ -128,20 +71,11 @@ export async function POST(
         );
       }
 
-      // Enter the `render` stage lifecycle (running). Persist so the UI
-      // sees a spinner the next time it polls.
       const running = markStageRunning(project, "render");
       await writeProject(running);
 
       const { runId: rid, active } = await startRender(running);
 
-      // Detached terminal-state handler. Reads the project fresh at the
-      // moment the render finishes so we pick up any concurrent edits
-      // (e.g. another lock holder that wrote between `writeProject`
-      // above and the terminal event), then applies success/failure
-      // status transitions. Runs outside the lock because renders can
-      // take up to `TIMEOUTS_MS.HYPERFRAMES_RENDER` (180 s) and we do
-      // not want to hold the project mutex that long.
       void (async () => {
         try {
           for await (const ev of subscribeRender(projectId)) {
@@ -163,14 +97,6 @@ export async function POST(
                 },
               };
               finalProject = markStageSucceeded(finalProject, "render");
-              // Advance project-level stage only when coming from the
-              // canonical `audio` predecessor. When the caller was
-              // already on `render` (manual retry after regression), the
-              // project-level stage is already correct — just refresh
-              // the `succeeded` status. A concurrent regression from QA
-              // could also have bumped us off `audio` underneath; in
-              // that case we skip the forward transition to avoid an
-              // illegal edge.
               if (finalProject.stage === "audio") {
                 finalProject = applyTransition(finalProject, "render");
               }
@@ -189,7 +115,6 @@ export async function POST(
             break;
           }
         } catch (bgErr) {
-          // Never let background errors crash the server — log and move on.
           console.error(
             "[render route] background state update failed:",
             bgErr,

@@ -1,28 +1,12 @@
 "use client";
 
 /**
- * RenderTab — spawn a HyperFrames render, follow its SSE progress
- * stream, and display the resulting mp4.
- *
- * Flow:
- *   1. Mount: if a video already exists, display it. Fetch log tail
- *      `GET /api/projects/{id}/logs/render?tail=200` in the background
- *      to populate the log preview.
- *   2. User clicks "开始渲染" → `POST /api/projects/{id}/render` →
- *      receives `{ runId, streamUrl }` → open `new EventSource(streamUrl)`.
- *   3. Progress updates come via named events:
- *        - `stage`: update the current stage label (starting / rendering
- *          / encoding / done / failed). Terminal events (done / failed)
- *          close the EventSource and re-fetch the project.
- *        - `line`: update the most-recent log line (1-line preview).
- *        - `heartbeat`: bump a heartbeat counter to pulse a liveness dot.
- *        - `error`: close the stream and surface the error message.
- *   4. If `EventSource.onerror` fires on an unclosed stream, show a
- *      "连接已断开，点击重试" banner with a manual reconnect button
- *      that reopens the same stream URL.
- *
- * Keep SSE handling local to the tab so there's no global EventSource
- * leak — `useEffect` cleanup closes the stream on unmount.
+ * RenderTab — two modes:
+ *   - Local (Kiro IDE): spawn hyperframes CLI subprocess, follow SSE
+ *     progress stream, and display the resulting mp4.
+ *   - Vercel: rendering is not available in the browser. Show the user
+ *     the Kiro skill command to run locally, and if a video is already
+ *     uploaded, play it.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -84,9 +68,19 @@ export function RenderTab({
   const [logLoading, setLogLoading] = useState(false);
 
   const esRef = useRef<EventSource | null>(null);
-  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const canEnter = canEnterTab("render", project.stage);
+
+  // Detect Vercel vs local Kiro at render time. We use hostname so the
+  // decision is purely client-side — no env var leakage, no hydration
+  // mismatch (the initial render on the server defaults to non-Vercel
+  // and useEffect corrects it on mount).
+  const [isVercel, setIsVercel] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsVercel(window.location.hostname.includes("vercel.app"));
+    }
+  }, []);
 
   // -----------------------------------------------------------------------
   // Helpers
@@ -102,7 +96,7 @@ export function RenderTab({
         onProjectChanged(updated);
       }
     } catch {
-      // ignore — the poll loop on the page will refresh anyway
+      // ignore
     }
   }, [project.projectId, onProjectChanged]);
 
@@ -111,65 +105,7 @@ export function RenderTab({
       esRef.current.close();
       esRef.current = null;
     }
-    if (pollRef.current) {
-      clearInterval(pollRef.current);
-      pollRef.current = null;
-    }
   }, []);
-
-  // Vercel-mode polling against /render/status. Runs when streamUrl
-  // ends with "/status" (which startRender sets on Vercel).
-  const openPolling = useCallback(
-    (url: string) => {
-      closeStream();
-      setConnectionLost(false);
-
-      const tick = async () => {
-        try {
-          const res = await fetch(url);
-          if (!res.ok) {
-            setConnectionLost(true);
-            return;
-          }
-          const job = (await res.json()) as {
-            status: string;
-            message?: string;
-            progress?: number;
-            videoBlobUrl?: string | null;
-            error?: string | null;
-          };
-          setConnectionLost(false);
-          if (typeof job.message === "string") setLatestLine(job.message);
-
-          // Map sandbox status → RenderStage for consistent UI
-          const s = job.status;
-          if (s === "queued" || s === "preparing") setRenderStage("starting");
-          else if (s === "rendering") setRenderStage("rendering");
-          else if (s === "uploading") setRenderStage("encoding");
-          else if (s === "succeeded") setRenderStage("done");
-          else if (s === "failed") setRenderStage("failed");
-
-          setHeartbeats((n) => n + 1);
-
-          if (s === "succeeded" || s === "failed") {
-            if (s === "failed" && job.error) {
-              setTerminalMessage(job.error);
-            }
-            closeStream();
-            setStreamUrl(null);
-            void refreshProject();
-          }
-        } catch {
-          setConnectionLost(true);
-        }
-      };
-
-      // Fire once immediately, then every 3s
-      void tick();
-      pollRef.current = setInterval(tick, 3000);
-    },
-    [closeStream, refreshProject],
-  );
 
   const openStream = useCallback(
     (url: string) => {
@@ -192,7 +128,7 @@ export function RenderTab({
             void refreshProject();
           }
         } catch {
-          // ignore malformed frame
+          /* ignore */
         }
       });
 
@@ -202,7 +138,7 @@ export function RenderTab({
           if (parsed.type !== "line") return;
           setLatestLine(parsed.line);
         } catch {
-          // ignore
+          /* ignore */
         }
       });
 
@@ -211,11 +147,6 @@ export function RenderTab({
       });
 
       es.addEventListener("error", (ev) => {
-        // Two cases here:
-        //   1. A named `error` SSE frame from the server (payload includes
-        //      type: "error"). Parse it and show the message.
-        //   2. A transport-layer onerror (no data). Treat as a dropped
-        //      connection and surface the reconnect banner.
         const messageEv = ev as MessageEvent<string | undefined>;
         const data = typeof messageEv.data === "string" ? messageEv.data : "";
         if (data.length > 0) {
@@ -230,10 +161,9 @@ export function RenderTab({
               return;
             }
           } catch {
-            // fall through
+            /* fall through */
           }
         }
-        // Transport drop — keep `streamUrl` so the user can retry.
         setConnectionLost(true);
       });
     },
@@ -243,24 +173,17 @@ export function RenderTab({
   // -----------------------------------------------------------------------
   // Effects
   // -----------------------------------------------------------------------
-
-  // Open EventSource or polling whenever `streamUrl` is set.
-  // - URL ending in "/status" → polling (Vercel sandbox)
-  // - URL ending in "/stream" → SSE (local hyperframes CLI)
   useEffect(() => {
     if (!streamUrl) return;
-    if (streamUrl.endsWith("/status")) {
-      openPolling(streamUrl);
-    } else {
-      openStream(streamUrl);
-    }
+    openStream(streamUrl);
     return () => {
       closeStream();
     };
-  }, [streamUrl, openStream, openPolling, closeStream]);
+  }, [streamUrl, openStream, closeStream]);
 
-  // Fetch render log tail on mount when no render is active.
+  // Local-only: fetch render log tail when no render is active.
   useEffect(() => {
+    if (isVercel) return;
     if (!canEnter) return;
     if (streamUrl) return;
 
@@ -281,7 +204,7 @@ export function RenderTab({
           setLogTail(Array.isArray(body.lines) ? body.lines : []);
         }
       } catch {
-        // ignore — log preview is best-effort
+        /* ignore */
       } finally {
         if (!cancelled) setLogLoading(false);
       }
@@ -290,7 +213,7 @@ export function RenderTab({
     return () => {
       cancelled = true;
     };
-  }, [project.projectId, project.updatedAt, canEnter, streamUrl]);
+  }, [isVercel, project.projectId, project.updatedAt, canEnter, streamUrl]);
 
   // -----------------------------------------------------------------------
   // Actions
@@ -327,8 +250,6 @@ export function RenderTab({
 
   const handleReconnect = useCallback(() => {
     if (!streamUrl) return;
-    // Force useEffect to re-run by briefly clearing then restoring the
-    // URL. `openStream` will close the old handle and open a fresh one.
     const url = streamUrl;
     setStreamUrl(null);
     setTimeout(() => setStreamUrl(url), 0);
@@ -355,8 +276,66 @@ export function RenderTab({
   const streaming = streamUrl !== null;
   const renderStatus = project.stageStatus.render.status;
 
-  // "启动" is disabled while a render is in flight OR while the render
-  // stage is already running server-side (e.g. page reloaded mid-render).
+  // ---------------------------------------------------------------------
+  // Vercel mode: show Kiro skill instructions + play existing video
+  // ---------------------------------------------------------------------
+  if (isVercel) {
+    return (
+      <div className="flex flex-col gap-4">
+        {videoPath ? (
+          <>
+            <video
+              key={videoPath}
+              controls
+              preload="metadata"
+              src={videoPath}
+              className="w-full rounded-lg border border-border bg-black aspect-video"
+            />
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border bg-muted/30 px-4 py-3 text-sm">
+              <div>
+                <div className="font-medium text-foreground">当前视频来自本地渲染</div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  想重新渲染，请在本地 Kiro IDE 中运行 skill
+                </div>
+              </div>
+              <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono">
+                #workbench-render {project.projectId}
+              </code>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+            <p className="text-sm font-medium text-foreground">
+              视频渲染需要在本地 Kiro IDE 中执行
+            </p>
+            <p className="text-xs text-muted-foreground max-w-md">
+              HyperFrames 渲染用你的 Mac GPU（Metal + VideoToolbox），比云端快 3-5 倍。
+              在 Kiro IDE 对话框中输入：
+            </p>
+            <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono text-left w-full max-w-sm">
+              #workbench-render {project.projectId}
+            </code>
+            <p className="text-xs text-muted-foreground">
+              Kiro 会在本地从 Neon 拉取内容，运行 hyperframes render，
+              然后自动上传 MP4 到 Vercel Blob。完成后刷新此页面即可播放。
+            </p>
+          </div>
+        )}
+
+        {renderFailed && renderError ? (
+          <StageFailureBanner
+            projectId={project.projectId}
+            stage="render"
+            error={renderError}
+          />
+        ) : null}
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------------
+  // Local mode (Kiro IDE): full SSE-driven render with progress UI
+  // ---------------------------------------------------------------------
   const startDisabled =
     starting || streaming || renderStatus === "running";
 
