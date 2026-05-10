@@ -79,6 +79,25 @@ describe("Sidebar", () => {
       const plansLink = screen.getByRole("link", { name: /Plans/i });
       expect(plansLink).toHaveAttribute("aria-current", "page");
     });
+
+    it("highlights 视频工作台 link when on /projects subpath", () => {
+      mockPathname.mockReturnValue("/projects");
+      render(<Sidebar />);
+
+      const workbenchLink = screen.getByRole("link", { name: /视频工作台/ });
+      expect(workbenchLink).toHaveAttribute("aria-current", "page");
+      expect(workbenchLink).toHaveAttribute("href", "/projects");
+
+      // Also verify activation on a detail subpath
+      mockPathname.mockReturnValue("/projects/proj_1234567890_abc123");
+      render(<Sidebar />);
+      const workbenchLinks = screen.getAllByRole("link", { name: /视频工作台/ });
+      // The second render appends to the document; take the last-rendered link.
+      expect(workbenchLinks[workbenchLinks.length - 1]).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+    });
   });
 
   describe("responsive collapse behavior", () => {

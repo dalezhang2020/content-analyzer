@@ -42,3 +42,9 @@ next-env.d.ts
 
 # generated videos
 /public/videos/
+
+# video-creation-workbench artifacts
+/data/projects/**
+/public/videos/project-*.mp4
+/public/videos/project-*.prev.mp4
+/public/videos/project-*.poster.jpg

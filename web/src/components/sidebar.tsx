@@ -8,6 +8,7 @@ import {
   FileText,
   History,
   ClipboardList,
+  Clapperboard,
   PanelLeftClose,
   PanelLeft,
 } from "lucide-react";
@@ -20,6 +21,7 @@ const navItems = [
   { href: "/analyze", label: "Analyze", icon: FileText },
   { href: "/history", label: "History", icon: History },
   { href: "/plans", label: "Plans", icon: ClipboardList },
+  { href: "/projects", label: "视频工作台", icon: Clapperboard },
 ];
 
 interface AdapterStatus {
