@@ -4,7 +4,7 @@
   "title": "什么是三角函数",
   "topic": "深度解析三角函数",
   "locale": "zh-CN",
-  "stage": "composition",
+  "stage": "audio",
   "stageStatus": {
     "brief": {
       "status": "succeeded",
@@ -25,7 +25,10 @@
       "attempts": 2
     },
     "audio": {
-      "status": "pending"
+      "status": "succeeded",
+      "startedAt": "2026-05-10T16:42:00.210Z",
+      "finishedAt": "2026-05-11T02:00:00.000Z",
+      "attempts": 1
     },
     "render": {
       "status": "pending"
@@ -41,7 +44,7 @@
     {
       "fromStage": "storyboard",
       "toStage": "composition",
-      "at": "2026-05-10T16:42:00.210Z",
+      "at": "2026-05-11T01:18:07.681Z",
       "result": "success"
     }
   ],
