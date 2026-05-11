@@ -14,7 +14,7 @@
 
   <!-- ================== scene-01-10ce9a (offset=0s, dur=12s) ================== -->
 
-  <div id="scene-01-10ce9a" data-composition-id="scene-01-10ce9a" data-width="1920" data-height="1080">
+  <div id="scene-01-10ce9a" data-composition-id="scene-01-10ce9a" data-width="1920" data-height="1080" class="clip" data-start="0" data-duration="12" data-track-index="1">
 
     <div class="p01-bg"></div>
     <div class="p01-vignette"></div>
@@ -158,7 +158,7 @@
 
   <!-- ================== scene-02-e043d9 (offset=12s, dur=15s) ================== -->
 
-  <div id="scene-02-e043d9" data-composition-id="scene-02-e043d9" data-width="1920" data-height="1080">
+  <div id="scene-02-e043d9" data-composition-id="scene-02-e043d9" data-width="1920" data-height="1080" class="clip" data-start="12" data-duration="15" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -455,7 +455,7 @@
 
   <!-- ================== scene-03-41d3a0 (offset=27s, dur=16s) ================== -->
 
-  <div id="scene-03-41d3a0" data-composition-id="scene-03-41d3a0" data-width="1920" data-height="1080">
+  <div id="scene-03-41d3a0" data-composition-id="scene-03-41d3a0" data-width="1920" data-height="1080" class="clip" data-start="27" data-duration="16" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -739,7 +739,7 @@
 
   <!-- ================== scene-04-a3eaf1 (offset=43s, dur=14s) ================== -->
 
-  <div id="scene-04-a3eaf1" data-composition-id="scene-04-a3eaf1" data-width="1920" data-height="1080">
+  <div id="scene-04-a3eaf1" data-composition-id="scene-04-a3eaf1" data-width="1920" data-height="1080" class="clip" data-start="43" data-duration="14" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -1007,7 +1007,7 @@
 
   <!-- ================== scene-05-36ee73 (offset=57s, dur=17s) ================== -->
 
-  <div id="scene-05-36ee73" data-composition-id="scene-05-36ee73" data-width="1920" data-height="1080">
+  <div id="scene-05-36ee73" data-composition-id="scene-05-36ee73" data-width="1920" data-height="1080" class="clip" data-start="57" data-duration="17" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -1257,7 +1257,7 @@
 
   <!-- ================== scene-06-15506c (offset=74s, dur=16s) ================== -->
 
-  <div id="scene-06-15506c" data-composition-id="scene-06-15506c" data-width="1920" data-height="1080">
+  <div id="scene-06-15506c" data-composition-id="scene-06-15506c" data-width="1920" data-height="1080" class="clip" data-start="74" data-duration="16" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -1497,7 +1497,7 @@
 
   <!-- ================== scene-07-e99741 (offset=90s, dur=15s) ================== -->
 
-  <div id="scene-07-e99741" data-composition-id="scene-07-e99741" data-width="1920" data-height="1080">
+  <div id="scene-07-e99741" data-composition-id="scene-07-e99741" data-width="1920" data-height="1080" class="clip" data-start="90" data-duration="15" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -1756,7 +1756,7 @@
 
   <!-- ================== scene-08-4d28db (offset=105s, dur=15s) ================== -->
 
-  <div id="scene-08-4d28db" data-composition-id="scene-08-4d28db" data-width="1920" data-height="1080">
+  <div id="scene-08-4d28db" data-composition-id="scene-08-4d28db" data-width="1920" data-height="1080" class="clip" data-start="105" data-duration="15" data-track-index="1">
 
     <div class="bg"></div>
     <div class="vignette"></div>
@@ -1996,39 +1996,10 @@
     window.__timelines = window.__timelines || {};
     const __master = gsap.timeline({ paused: true });
 
-    // Scene visibility: each scene root is display:none except during
-    // its own time window. Using display (not opacity/visibility) so
-    // that hidden scenes genuinely don't render and can't interfere
-    // with the active scene. GSAP set() at specific times will update
-    // display when master.seek() is called.
-    //
-    // Initial state: all scenes hidden (CSS default via display:none on
-    // body > [data-composition-id^="scene-"] won't work because the
-    // wrapping is inside #root). We use GSAP set at t=0 for all.
-    __master.set('[data-composition-id="scene-01-10ce9a"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-01-10ce9a"]', { display: 'block' }, 0);
-    __master.set('[data-composition-id="scene-01-10ce9a"]', { display: 'none' }, 12);
-    __master.set('[data-composition-id="scene-02-e043d9"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-02-e043d9"]', { display: 'block' }, 12);
-    __master.set('[data-composition-id="scene-02-e043d9"]', { display: 'none' }, 27);
-    __master.set('[data-composition-id="scene-03-41d3a0"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-03-41d3a0"]', { display: 'block' }, 27);
-    __master.set('[data-composition-id="scene-03-41d3a0"]', { display: 'none' }, 43);
-    __master.set('[data-composition-id="scene-04-a3eaf1"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-04-a3eaf1"]', { display: 'block' }, 43);
-    __master.set('[data-composition-id="scene-04-a3eaf1"]', { display: 'none' }, 57);
-    __master.set('[data-composition-id="scene-05-36ee73"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-05-36ee73"]', { display: 'block' }, 57);
-    __master.set('[data-composition-id="scene-05-36ee73"]', { display: 'none' }, 74);
-    __master.set('[data-composition-id="scene-06-15506c"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-06-15506c"]', { display: 'block' }, 74);
-    __master.set('[data-composition-id="scene-06-15506c"]', { display: 'none' }, 90);
-    __master.set('[data-composition-id="scene-07-e99741"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-07-e99741"]', { display: 'block' }, 90);
-    __master.set('[data-composition-id="scene-07-e99741"]', { display: 'none' }, 105);
-    __master.set('[data-composition-id="scene-08-4d28db"]', { display: 'none' }, 0);
-    __master.set('[data-composition-id="scene-08-4d28db"]', { display: 'block' }, 105);
-    __master.set('[data-composition-id="scene-08-4d28db"]', { display: 'none' }, 120);
+    // Scene visibility is managed by HyperFrames' clip mechanism:
+    // each scene root div has class="clip" + data-start + data-duration,
+    // so HyperFrames automatically shows/hides them at the right time.
+    // No manual display:none/block needed.
 
 
 // --- Scene 1 (scene-01-10ce9a) --- offset=0s dur=12s
@@ -2550,8 +2521,7 @@
   }
 })();
 
-    // Lock master to the total duration so hyperframes knows exactly how
-    // long the video is.
+    // Lock master to the total duration.
     __master.set({}, {}, 120);
 
     window.__timelines["main"] = __master;

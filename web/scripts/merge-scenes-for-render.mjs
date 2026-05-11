@@ -176,6 +176,14 @@ const indexHtml = `<!doctype html>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+    /* Shutter transition overlays */
+    .shutter-top, .shutter-bot {
+      position: fixed; left: 0; right: 0; height: 50%;
+      background: #030610; z-index: 9999;
+      transform: scaleY(0); pointer-events: none;
+    }
+    .shutter-top { top: 0; transform-origin: top center; }
+    .shutter-bot { bottom: 0; transform-origin: bottom center; }
   </style>
 </head>
 <body>
@@ -184,6 +192,10 @@ const indexHtml = `<!doctype html>
 ${sceneBlocks.join("\n")}
 
   </div>
+
+  <!-- Shutter transition elements -->
+  <div class="shutter-top" id="sh-top"></div>
+  <div class="shutter-bot" id="sh-bot"></div>
 
 ${audioElements.join("\n")}
 
@@ -194,7 +206,19 @@ ${audioElements.join("\n")}
     // Scene visibility is managed by HyperFrames' clip mechanism:
     // each scene root div has class="clip" + data-start + data-duration,
     // so HyperFrames automatically shows/hides them at the right time.
-    // No manual display:none/block needed.
+
+    // Shutter transitions between scenes (close → open):
+    // Each transition takes 0.7s total, centered on the scene boundary.
+${scenes.length > 1 ? scenes.slice(1).map((s, i) => {
+    const boundary = offsets[i + 1]; // time when scene i+1 starts
+    const closeStart = boundary - 0.35;
+    const openStart = boundary + 0.01;
+    return `    // Transition ${i + 1} → ${i + 2} at t=${boundary}s
+    __master.fromTo('#sh-top', { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: 'power3.in' }, ${closeStart.toFixed(2)});
+    __master.fromTo('#sh-bot', { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: 'power3.in' }, ${closeStart.toFixed(2)});
+    __master.to('#sh-top', { scaleY: 0, duration: 0.35, ease: 'power3.out' }, ${openStart.toFixed(2)});
+    __master.to('#sh-bot', { scaleY: 0, duration: 0.35, ease: 'power3.out' }, ${openStart.toFixed(2)});`;
+  }).join("\n") : "    // Single scene — no transitions needed."}
 
 ${timelineRegistrations.join("\n")}
 
