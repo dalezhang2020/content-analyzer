@@ -57,6 +57,31 @@ npx --yes hyperframes@0.5.5 render --output {outputPath} --fps 30
 
 in the project's `composition/` directory.
 
+## 7. Upload to Vercel Blob + notify API
+
+After render completes successfully:
+
+1. Upload mp4 to Vercel Blob using `@vercel/blob` SDK:
+   ```javascript
+   const { put } = require('@vercel/blob');
+   const buf = fs.readFileSync(outputPath);
+   const { url } = await put(`video/${projectId}/output.mp4`, buf, {
+     access: 'public',
+     token: BLOB_READ_WRITE_TOKEN,  // from `vercel env pull --environment=production`
+     allowOverwrite: true,
+   });
+   ```
+
+2. POST the blob URL to the Vercel API:
+   ```bash
+   curl -X POST "https://content-analyzer-web-dale-vercel.vercel.app/api/projects/{projectId}/render/upload" \
+     -H "Content-Type: application/json" \
+     -H "x-workbench-render-token: {token from ~/.kiro/settings/workbench-render.env}" \
+     -d '{"videoBlobUrl":"{blobUrl}","sizeBytes":{fileSize}}'
+   ```
+
+This writes `video_blob_url` to Neon and marks render as succeeded.
+
 ## Key insight
 
 The frontend TTS flow writes audio URLs to Neon (`scenes.audio_blob_url`) but does NOT automatically inject `<audio>` tags into the local `index.html`. The injection step is normally done by the `POST /api/projects/{id}/audio/generate` route, but when TTS is triggered from the frontend UI on Vercel, the local filesystem is not updated. Always check Neon as the source of truth for audio state.
