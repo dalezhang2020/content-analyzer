@@ -171,11 +171,7 @@
         right: 0;
         display: flex;
         justify-content: center;
-        gap: 40px;
-      }
-      .card-host {
-        width: 560px;
-        height: 720px;
+        gap: 36px;
       }
       .scene-2 .footnote {
         position: absolute;
@@ -191,6 +187,99 @@
       .scene-2 .footnote .hl {
         color: #d97706;
         font-weight: 500;
+      }
+
+      /* ========== Inline feature cards ========== */
+      .fc-root {
+        width: 540px;
+        height: 700px;
+        position: relative;
+        font-family: "Inter", system-ui, sans-serif;
+        color: #1c1917;
+        background: #fafaf9;
+        border: 1.5px solid #e7e5e4;
+        border-radius: 28px;
+        overflow: hidden;
+        padding: 48px 44px 52px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+      }
+      .fc-root .fc-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 6px;
+        width: 100%;
+        background: #d97706;
+        transform-origin: left center;
+      }
+      .fc-root .fc-badge {
+        align-self: flex-start;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #d97706;
+        padding: 8px 14px;
+        border: 1.5px solid #fcd34d;
+        border-radius: 999px;
+        background: #fffbeb;
+      }
+      .fc-root .fc-icon {
+        margin-top: 36px;
+        width: 88px;
+        height: 88px;
+        border-radius: 22px;
+        background: #1c1917;
+        color: #fef3c7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 46px;
+        font-weight: 700;
+      }
+      .fc-root .fc-title {
+        margin-top: 28px;
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1.05;
+      }
+      .fc-root .fc-body {
+        margin-top: 16px;
+        font-size: 20px;
+        line-height: 1.45;
+        color: #57534e;
+        max-width: 100%;
+      }
+      .fc-root .fc-meter {
+        margin-top: auto;
+        padding-top: 36px;
+      }
+      .fc-root .fc-meter-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #44403c;
+        margin-bottom: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .fc-root .fc-meter-track {
+        height: 10px;
+        background: #e7e5e4;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .fc-root .fc-meter-fill {
+        height: 100%;
+        width: 0%;
+        background: #d97706;
+        border-radius: 999px;
+        transform-origin: left center;
       }
 
       /* ========== Scene 3: Data viz ========== */
@@ -499,7 +588,7 @@
           </div>
         </div>
 
-        <!-- ========== Scene 2: Sub-comp cards (4.8 - 10.2s) ========== -->
+        <!-- ========== Scene 2: Inline cards (4.8 - 10.2s) ========== -->
         <div id="s2" class="scene scene-2 clip" data-start="4.8" data-duration="5.4" data-track-index="1">
           <div class="corner tl" style="color:#57534e">02 / 05</div>
           <div class="corner tr" style="color:#57534e">ONE SOURCE · THREE VIEWS</div>
@@ -512,33 +601,42 @@
           </h2>
 
           <div class="cards-row" id="s2-cards">
-            <div
-              class="card-host clip"
-              data-composition-id="card-a"
-              data-composition-src="compositions/feature-card.html"
-              data-variable-values='{"badge":"01 · CORE","icon":"⧗","title":"Deterministic","body":"Same HTML in → byte-identical MP4 out. CI-friendly, re-renderable, diffable.","meter":96}'
-              data-start="5.0"
-              data-duration="5.0"
-              data-track-index="0"
-            ></div>
-            <div
-              class="card-host clip"
-              data-composition-id="card-b"
-              data-composition-src="compositions/feature-card.html"
-              data-variable-values='{"badge":"02 · AUTHOR","icon":"◎","title":"HTML-Native","body":"Plain tags, CSS, GSAP. No DSL, no learning curve, no black box.","meter":82}'
-              data-start="5.25"
-              data-duration="4.95"
-              data-track-index="2"
-            ></div>
-            <div
-              class="card-host clip"
-              data-composition-id="card-c"
-              data-composition-src="compositions/feature-card.html"
-              data-variable-values='{"badge":"03 · SCALE","icon":"⌬","title":"Parametric","body":"Declare variables on &lt;html&gt;. Render the same source with any data.","meter":71}'
-              data-start="5.5"
-              data-duration="4.7"
-              data-track-index="3"
-            ></div>
+            <!-- Card A -->
+            <div class="fc-root" id="card-a">
+              <div class="fc-accent"></div>
+              <div class="fc-badge">01 · CORE</div>
+              <div class="fc-icon">⧗</div>
+              <h3 class="fc-title">Deterministic</h3>
+              <p class="fc-body">Same HTML in → byte-identical MP4 out. CI-friendly, re-renderable, diffable.</p>
+              <div class="fc-meter">
+                <div class="fc-meter-label"><span>SIGNAL</span><span class="fc-meter-value" data-target="96">0%</span></div>
+                <div class="fc-meter-track"><div class="fc-meter-fill" data-target="96"></div></div>
+              </div>
+            </div>
+            <!-- Card B -->
+            <div class="fc-root" id="card-b">
+              <div class="fc-accent"></div>
+              <div class="fc-badge">02 · AUTHOR</div>
+              <div class="fc-icon">◎</div>
+              <h3 class="fc-title">HTML-Native</h3>
+              <p class="fc-body">Plain tags, CSS, GSAP. No DSL, no learning curve, no black box.</p>
+              <div class="fc-meter">
+                <div class="fc-meter-label"><span>SIGNAL</span><span class="fc-meter-value" data-target="82">0%</span></div>
+                <div class="fc-meter-track"><div class="fc-meter-fill" data-target="82"></div></div>
+              </div>
+            </div>
+            <!-- Card C -->
+            <div class="fc-root" id="card-c">
+              <div class="fc-accent"></div>
+              <div class="fc-badge">03 · SCALE</div>
+              <div class="fc-icon">⌬</div>
+              <h3 class="fc-title">Parametric</h3>
+              <p class="fc-body">Declare variables on &lt;html&gt;. Render the same source with any data.</p>
+              <div class="fc-meter">
+                <div class="fc-meter-label"><span>SIGNAL</span><span class="fc-meter-value" data-target="71">0%</span></div>
+                <div class="fc-meter-track"><div class="fc-meter-fill" data-target="71"></div></div>
+              </div>
+            </div>
           </div>
 
           <div class="footnote" id="s2-foot">
@@ -778,7 +876,7 @@
         tl.to("#sh1-bot", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 4.82);
 
         // ========================================================
-        // SCENE 2: 4.8 - 10.2s  (cards auto-animate via sub-comp TL)
+        // SCENE 2: 4.8 - 10.2s  (inline cards with staggered entrance)
         // ========================================================
         tl.from("#s2-kicker", {
           y: -14, opacity: 0, duration: 0.5, ease: "power3.out",
@@ -786,11 +884,53 @@
         tl.from("#s2-title", {
           y: 40, opacity: 0, duration: 0.6, ease: "power3.out",
         }, 5.15);
+
+        // Card entrances — staggered
+        const cards = ["#card-a", "#card-b", "#card-c"];
+        cards.forEach((id, i) => {
+          const base = 5.4 + i * 0.25;
+          tl.from(id, {
+            y: 60, opacity: 0, duration: 0.65, ease: "power3.out",
+          }, base);
+          tl.from(id + " .fc-accent", {
+            scaleX: 0, duration: 0.5, ease: "expo.out",
+          }, base + 0.1);
+          tl.from(id + " .fc-badge", {
+            y: -16, opacity: 0, duration: 0.4, ease: "back.out(2)",
+          }, base + 0.2);
+          tl.from(id + " .fc-icon", {
+            scale: 0.5, opacity: 0, duration: 0.5, ease: "elastic.out(1, 0.6)",
+          }, base + 0.3);
+          tl.from(id + " .fc-title", {
+            y: 30, opacity: 0, duration: 0.45, ease: "power3.out",
+          }, base + 0.4);
+          tl.from(id + " .fc-body", {
+            y: 20, opacity: 0, duration: 0.4, ease: "power2.out",
+          }, base + 0.55);
+
+          // Meter fill animation
+          const fill = document.querySelector(id + " .fc-meter-fill");
+          const valEl = document.querySelector(id + " .fc-meter-value");
+          const target = Number(fill.dataset.target) || 0;
+          const cObj = { v: 0 };
+          tl.to(cObj, {
+            v: target,
+            duration: 1.0,
+            ease: "power2.out",
+            onUpdate() { valEl.textContent = Math.round(cObj.v) + "%"; },
+          }, base + 0.7);
+          tl.to(fill, {
+            width: target + "%",
+            duration: 1.0,
+            ease: "power2.out",
+          }, base + 0.7);
+        });
+
         tl.from("#s2-foot", {
           y: 20, opacity: 0, duration: 0.5, ease: "power2.out",
         }, 9.0);
 
-        // Shutter transition (scene 2 -> 3) — horizontal wipe via rotation
+        // Shutter transition (scene 2 -> 3)
         tl.set(["#sh2-top", "#sh2-bot"], { backgroundColor: "#0a0a0a" });
         tl.fromTo(
           "#sh2-top",

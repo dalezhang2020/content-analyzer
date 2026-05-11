@@ -132,7 +132,16 @@ for (let i = 0; i < scenes.length; i++) {
 
   // Keep scene content: replace the <script>...</script> inside inner
   // with nothing (we hoist all scripts out).
-  const contentWithoutScript = s.inner.replace(/<script>[\s\S]*?<\/script>/g, "");
+  // Also inject clip attributes on the scene root div so HyperFrames
+  // manages visibility automatically.
+  let contentWithoutScript = s.inner.replace(/<script>[\s\S]*?<\/script>/g, "");
+
+  // Inject class="clip" data-start data-duration data-track-index on the
+  // scene's root div (the one with data-composition-id).
+  contentWithoutScript = contentWithoutScript.replace(
+    new RegExp(`(<div[^>]*data-composition-id="${s.compId}"[^>]*)>`),
+    `$1 class="clip" data-start="${offset}" data-duration="${s.duration}" data-track-index="1">`,
+  );
 
   sceneBlocks.push(
     `  <!-- ================== ${s.compId} (offset=${offset}s, dur=${s.duration}s) ================== -->\n` +
@@ -182,30 +191,14 @@ ${audioElements.join("\n")}
     window.__timelines = window.__timelines || {};
     const __master = gsap.timeline({ paused: true });
 
-    // Scene visibility: each scene root is display:none except during
-    // its own time window. Using display (not opacity/visibility) so
-    // that hidden scenes genuinely don't render and can't interfere
-    // with the active scene. GSAP set() at specific times will update
-    // display when master.seek() is called.
-    //
-    // Initial state: all scenes hidden (CSS default via display:none on
-    // body > [data-composition-id^="scene-"] won't work because the
-    // wrapping is inside #root). We use GSAP set at t=0 for all.
-${scenes
-  .map((s, i) => {
-    const start = offsets[i];
-    const end = start + s.duration;
-    const sel = `[data-composition-id="${s.compId}"]`;
-    return `    __master.set('${sel}', { display: 'none' }, 0);
-    __master.set('${sel}', { display: 'block' }, ${start});
-    __master.set('${sel}', { display: 'none' }, ${end});`;
-  })
-  .join("\n")}
+    // Scene visibility is managed by HyperFrames' clip mechanism:
+    // each scene root div has class="clip" + data-start + data-duration,
+    // so HyperFrames automatically shows/hides them at the right time.
+    // No manual display:none/block needed.
 
 ${timelineRegistrations.join("\n")}
 
-    // Lock master to the total duration so hyperframes knows exactly how
-    // long the video is.
+    // Lock master to the total duration.
     __master.set({}, {}, ${totalDuration});
 
     window.__timelines["main"] = __master;
