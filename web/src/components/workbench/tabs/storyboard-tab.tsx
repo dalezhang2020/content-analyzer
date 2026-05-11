@@ -163,6 +163,10 @@ export function StoryboardTab({
     project.stageStatus.storyboard.status === "failed" &&
     storyboardError !== undefined;
 
+  const isVercel =
+    typeof window !== "undefined" &&
+    window.location.hostname.includes("vercel.app");
+
   return (
     <div className="flex flex-col gap-4">
       {storyboardFailed && storyboardError ? (
@@ -238,19 +242,38 @@ export function StoryboardTab({
 
       <ConfirmDialog
         open={confirmOpen}
-        title="重新生成 Storyboard？"
+        title={isVercel ? "在 Kiro IDE 中重新生成" : "重新生成 Storyboard？"}
         description={
-          <>
-            重新生成会覆盖当前的所有场景。已生成的{" "}
-            <span className="font-medium">HTML 与音频</span>{" "}
-            可能需要重新生成以保持一致。
-          </>
+          isVercel ? (
+            <div className="flex flex-col gap-3">
+              <p>
+                Storyboard 生成需要 LLM，只能在本地 Kiro IDE 中跑。请在 Kiro
+                对话框输入以下命令：
+              </p>
+              <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono break-all">
+                重新生成 {project.projectId} 的 Storyboard
+              </code>
+              <p className="text-xs text-muted-foreground">
+                完成后刷新此页面即可看到新的分镜。
+              </p>
+            </div>
+          ) : (
+            <>
+              重新生成会覆盖当前的所有场景。已生成的{" "}
+              <span className="font-medium">HTML 与音频</span>{" "}
+              可能需要重新生成以保持一致。
+            </>
+          )
         }
-        confirmLabel="确认重新生成"
-        destructive
+        confirmLabel={isVercel ? "知道了" : "确认重新生成"}
+        destructive={!isVercel}
         busy={generating}
         onConfirm={() => {
-          void generate(true);
+          if (isVercel) {
+            setConfirmOpen(false);
+          } else {
+            void generate(true);
+          }
         }}
         onCancel={() => {
           if (!generating) setConfirmOpen(false);
