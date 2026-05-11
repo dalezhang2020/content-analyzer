@@ -88,6 +88,33 @@ export function BriefTab({
   // rather than the read-only viewer.
   // -----------------------------------------------------------------------
   if (!project.brief) {
+    // On Vercel: Brief generation requires LLM (local Kiro). Show a
+    // command to run in Kiro IDE rather than a button that would fail
+    // with LOCAL_ONLY.
+    const isVercel =
+      typeof window !== "undefined" &&
+      window.location.hostname.includes("vercel.app");
+
+    if (isVercel) {
+      return (
+        <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+          <p className="text-sm font-medium text-foreground">
+            Brief 生成需要在本地 Kiro IDE 中执行
+          </p>
+          <p className="text-xs text-muted-foreground max-w-md">
+            Brief 生成会消耗 LLM token（Claude），只能在本地 Kiro 里跑。
+            在 Kiro IDE 对话框中输入：
+          </p>
+          <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono text-left w-full max-w-md break-all">
+            给 {project.projectId} 生成 Brief。选题：{project.topic}
+          </code>
+          <p className="text-xs text-muted-foreground">
+            Kiro 会调用 LLM 生成 Brief 并推送到数据库，完成后刷新此页面即可看到结果。
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
         <p className="text-sm font-medium text-foreground">
@@ -129,6 +156,10 @@ export function BriefTab({
   const briefError = project.stageStatus.brief.error;
   const briefFailed =
     project.stageStatus.brief.status === "failed" && briefError !== undefined;
+
+  const isVercel =
+    typeof window !== "undefined" &&
+    window.location.hostname.includes("vercel.app");
 
   return (
     <div className="flex flex-col gap-4">
@@ -196,19 +227,38 @@ export function BriefTab({
 
       <ConfirmDialog
         open={confirmOpen}
-        title="重新生成 Brief？"
+        title={isVercel ? "在 Kiro IDE 中重新生成" : "重新生成 Brief？"}
         description={
-          <>
-            重新生成会基于当前主题重新调用 LLM。后续的{" "}
-            <span className="font-medium">Storyboard、HTML、音频</span>{" "}
-            可能需要重新生成以保持一致。
-          </>
+          isVercel ? (
+            <div className="flex flex-col gap-3">
+              <p>
+                重新生成需要 LLM，只能在本地 Kiro IDE 中跑。请在 Kiro
+                对话框输入以下命令：
+              </p>
+              <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono break-all">
+                重新生成 {project.projectId} 的 Brief。选题：{project.topic}
+              </code>
+              <p className="text-xs text-muted-foreground">
+                完成后刷新此页面即可看到新的 Brief。
+              </p>
+            </div>
+          ) : (
+            <>
+              重新生成会基于当前主题重新调用 LLM。后续的{" "}
+              <span className="font-medium">Storyboard、HTML、音频</span>{" "}
+              可能需要重新生成以保持一致。
+            </>
+          )
         }
-        confirmLabel="确认重新生成"
-        destructive
+        confirmLabel={isVercel ? "知道了" : "确认重新生成"}
+        destructive={!isVercel}
         busy={generating}
         onConfirm={() => {
-          void generate(true);
+          if (isVercel) {
+            setConfirmOpen(false);
+          } else {
+            void generate(true);
+          }
         }}
         onCancel={() => {
           if (!generating) setConfirmOpen(false);

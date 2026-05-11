@@ -119,8 +119,10 @@ for (let i = 0; i < scenes.length; i++) {
     // strip paused: true / paused:true so the child timeline is driven
     // by the master when added. The master itself stays paused.
     .replace(/paused\s*:\s*true\s*,?\s*/g, "")
-    // skip the window.__timelines[...] = tl line (we handle globally)
-    .replace(/window\.__timelines\s*\[[^\]]+\]\s*=\s*tl_[a-z0-9]+\s*;?/g, "");
+    // skip the window.__timelines[...] = X line — whether the RHS is
+    // `tl` (naked, kept as-is by earlier replacements — broken!) or
+    // already-renamed `tl_sNN`. Match the full line and strip it.
+    .replace(/window\.__timelines\s*\[[^\]]+\]\s*=\s*[a-zA-Z_$][\w$]*\s*;?/g, "");
 
   // Also rename `state`/helper const/let variables that might clash across
   // scenes. Use a simple approach — we only wrap the rewritten block in an
@@ -180,22 +182,23 @@ ${audioElements.join("\n")}
     window.__timelines = window.__timelines || {};
     const __master = gsap.timeline({ paused: true });
 
-    // Scene visibility is driven by seek-safe tweens (not .call()),
-    // because hyperframes seeks frame-by-frame during render and .call()
-    // callbacks do not fire on seek.
+    // Scene visibility: each scene root is display:none except during
+    // its own time window. Using display (not opacity/visibility) so
+    // that hidden scenes genuinely don't render and can't interfere
+    // with the active scene. GSAP set() at specific times will update
+    // display when master.seek() is called.
     //
-    // For each scene, we:
-    //   1. Set opacity:0 visibility:hidden at t=0 (hidden by default)
-    //   2. Set opacity:1 visibility:visible at its start time
-    //   3. Set opacity:0 visibility:hidden at its end time (next scene)
+    // Initial state: all scenes hidden (CSS default via display:none on
+    // body > [data-composition-id^="scene-"] won't work because the
+    // wrapping is inside #root). We use GSAP set at t=0 for all.
 ${scenes
   .map((s, i) => {
     const start = offsets[i];
     const end = start + s.duration;
     const sel = `[data-composition-id="${s.compId}"]`;
-    return `    __master.set('${sel}', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('${sel}', { opacity: 1, visibility: 'visible' }, ${start});
-    __master.set('${sel}', { opacity: 0, visibility: 'hidden' }, ${end});`;
+    return `    __master.set('${sel}', { display: 'none' }, 0);
+    __master.set('${sel}', { display: 'block' }, ${start});
+    __master.set('${sel}', { display: 'none' }, ${end});`;
   })
   .join("\n")}
 

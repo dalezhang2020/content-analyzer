@@ -91,6 +91,34 @@ export function StoryboardTab({
   // stage=brief: show "generate storyboard" CTA (first-time generation is
   // what advances the project brief → storyboard).
   if (project.stage === "brief") {
+    // On Vercel: Storyboard generation requires LLM (local Kiro).
+    const isVercel =
+      typeof window !== "undefined" &&
+      window.location.hostname.includes("vercel.app");
+
+    if (isVercel) {
+      return (
+        <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+          <p className="text-sm font-medium text-foreground">
+            Storyboard 生成需要在本地 Kiro IDE 中执行
+          </p>
+          <p className="text-xs text-muted-foreground max-w-md">
+            分镜生成会消耗 LLM token，只能在本地 Kiro 里跑。
+            在 Kiro IDE 对话框中输入：
+          </p>
+          <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono text-left w-full max-w-md break-all">
+            给 {project.projectId} 生成 Storyboard
+          </code>
+          <p className="text-xs text-muted-foreground">
+            当前 Brief：{project.brief?.title ?? "（未生成）"}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Kiro 会基于 Brief 分镜，完成后刷新页面即可看到结果。
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
         <p className="text-sm font-medium text-foreground">

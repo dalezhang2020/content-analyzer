@@ -2272,41 +2272,42 @@
     window.__timelines = window.__timelines || {};
     const __master = gsap.timeline({ paused: true });
 
-    // Scene visibility is driven by seek-safe tweens (not .call()),
-    // because hyperframes seeks frame-by-frame during render and .call()
-    // callbacks do not fire on seek.
+    // Scene visibility: each scene root is display:none except during
+    // its own time window. Using display (not opacity/visibility) so
+    // that hidden scenes genuinely don't render and can't interfere
+    // with the active scene. GSAP set() at specific times will update
+    // display when master.seek() is called.
     //
-    // For each scene, we:
-    //   1. Set opacity:0 visibility:hidden at t=0 (hidden by default)
-    //   2. Set opacity:1 visibility:visible at its start time
-    //   3. Set opacity:0 visibility:hidden at its end time (next scene)
-    __master.set('[data-composition-id="scene-01-c6fdc7"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-01-c6fdc7"]', { opacity: 1, visibility: 'visible' }, 0);
-    __master.set('[data-composition-id="scene-01-c6fdc7"]', { opacity: 0, visibility: 'hidden' }, 10);
-    __master.set('[data-composition-id="scene-02-3e35eb"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-02-3e35eb"]', { opacity: 1, visibility: 'visible' }, 10);
-    __master.set('[data-composition-id="scene-02-3e35eb"]', { opacity: 0, visibility: 'hidden' }, 22);
-    __master.set('[data-composition-id="scene-03-c185b8"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-03-c185b8"]', { opacity: 1, visibility: 'visible' }, 22);
-    __master.set('[data-composition-id="scene-03-c185b8"]', { opacity: 0, visibility: 'hidden' }, 34);
-    __master.set('[data-composition-id="scene-04-de95b9"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-04-de95b9"]', { opacity: 1, visibility: 'visible' }, 34);
-    __master.set('[data-composition-id="scene-04-de95b9"]', { opacity: 0, visibility: 'hidden' }, 48);
-    __master.set('[data-composition-id="scene-05-f80eb7"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-05-f80eb7"]', { opacity: 1, visibility: 'visible' }, 48);
-    __master.set('[data-composition-id="scene-05-f80eb7"]', { opacity: 0, visibility: 'hidden' }, 61);
-    __master.set('[data-composition-id="scene-06-2d4304"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-06-2d4304"]', { opacity: 1, visibility: 'visible' }, 61);
-    __master.set('[data-composition-id="scene-06-2d4304"]', { opacity: 0, visibility: 'hidden' }, 75);
-    __master.set('[data-composition-id="scene-07-0d91b0"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-07-0d91b0"]', { opacity: 1, visibility: 'visible' }, 75);
-    __master.set('[data-composition-id="scene-07-0d91b0"]', { opacity: 0, visibility: 'hidden' }, 88);
-    __master.set('[data-composition-id="scene-08-65f994"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-08-65f994"]', { opacity: 1, visibility: 'visible' }, 88);
-    __master.set('[data-composition-id="scene-08-65f994"]', { opacity: 0, visibility: 'hidden' }, 100);
-    __master.set('[data-composition-id="scene-09-3a8664"]', { opacity: 0, visibility: 'hidden' }, 0);
-    __master.set('[data-composition-id="scene-09-3a8664"]', { opacity: 1, visibility: 'visible' }, 100);
-    __master.set('[data-composition-id="scene-09-3a8664"]', { opacity: 0, visibility: 'hidden' }, 112);
+    // Initial state: all scenes hidden (CSS default via display:none on
+    // body > [data-composition-id^="scene-"] won't work because the
+    // wrapping is inside #root). We use GSAP set at t=0 for all.
+    __master.set('[data-composition-id="scene-01-c6fdc7"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-01-c6fdc7"]', { display: 'block' }, 0);
+    __master.set('[data-composition-id="scene-01-c6fdc7"]', { display: 'none' }, 10);
+    __master.set('[data-composition-id="scene-02-3e35eb"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-02-3e35eb"]', { display: 'block' }, 10);
+    __master.set('[data-composition-id="scene-02-3e35eb"]', { display: 'none' }, 22);
+    __master.set('[data-composition-id="scene-03-c185b8"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-03-c185b8"]', { display: 'block' }, 22);
+    __master.set('[data-composition-id="scene-03-c185b8"]', { display: 'none' }, 34);
+    __master.set('[data-composition-id="scene-04-de95b9"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-04-de95b9"]', { display: 'block' }, 34);
+    __master.set('[data-composition-id="scene-04-de95b9"]', { display: 'none' }, 48);
+    __master.set('[data-composition-id="scene-05-f80eb7"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-05-f80eb7"]', { display: 'block' }, 48);
+    __master.set('[data-composition-id="scene-05-f80eb7"]', { display: 'none' }, 61);
+    __master.set('[data-composition-id="scene-06-2d4304"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-06-2d4304"]', { display: 'block' }, 61);
+    __master.set('[data-composition-id="scene-06-2d4304"]', { display: 'none' }, 75);
+    __master.set('[data-composition-id="scene-07-0d91b0"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-07-0d91b0"]', { display: 'block' }, 75);
+    __master.set('[data-composition-id="scene-07-0d91b0"]', { display: 'none' }, 88);
+    __master.set('[data-composition-id="scene-08-65f994"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-08-65f994"]', { display: 'block' }, 88);
+    __master.set('[data-composition-id="scene-08-65f994"]', { display: 'none' }, 100);
+    __master.set('[data-composition-id="scene-09-3a8664"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-09-3a8664"]', { display: 'block' }, 100);
+    __master.set('[data-composition-id="scene-09-3a8664"]', { display: 'none' }, 112);
 
 
 // --- Scene 1 (scene-01-c6fdc7) --- offset=0s dur=10s
@@ -2459,7 +2460,7 @@
       // Lock the scene to 10s
       tl_s00.set({}, {}, 10);
 
-      window.__timelines['scene-01-c6fdc7'] = tl;
+      
     
   if (typeof tl_s00 !== 'undefined') {
     __master.add(tl_s00, 0);
@@ -2649,7 +2650,7 @@
       // Ensure final frame holds everything visible until 12.0
       tl_s01.set({}, {}, 12);
 
-      window.__timelines['scene-02-3e35eb'] = tl;
+      
     
   if (typeof tl_s01 !== 'undefined') {
     __master.add(tl_s01, 10);
@@ -2750,7 +2751,7 @@
       tl_s02.fromTo(ID + ' .s03-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 10.5);
 
       tl_s02.set({}, {}, 12);
-      window.__timelines['scene-03-c185b8'] = tl;
+      
     
   if (typeof tl_s02 !== 'undefined') {
     __master.add(tl_s02, 22);
@@ -2831,7 +2832,7 @@
       tl_s03.fromTo(ID + ' .s04-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 12.6);
 
       tl_s03.set({}, {}, 14);
-      window.__timelines['scene-04-de95b9'] = tl;
+      
     
   if (typeof tl_s03 !== 'undefined') {
     __master.add(tl_s03, 34);
@@ -2910,7 +2911,7 @@
       tl_s04.fromTo(ID + ' .s05-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 11.4);
 
       tl_s04.set({}, {}, 13);
-      window.__timelines['scene-05-f80eb7'] = tl;
+      
     
   if (typeof tl_s04 !== 'undefined') {
     __master.add(tl_s04, 48);
@@ -2992,7 +2993,7 @@
       tl_s05.fromTo(ID + ' .s06-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 12.6);
 
       tl_s05.set({}, {}, 14);
-      window.__timelines['scene-06-2d4304'] = tl;
+      
     
   if (typeof tl_s05 !== 'undefined') {
     __master.add(tl_s05, 61);
@@ -3099,7 +3100,7 @@
       tl_s06.fromTo(ID + ' .s07-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 11.6);
 
       tl_s06.set({}, {}, 13);
-      window.__timelines['scene-07-0d91b0'] = tl;
+      
     
   if (typeof tl_s06 !== 'undefined') {
     __master.add(tl_s06, 75);
@@ -3172,7 +3173,7 @@
       tl_s07.fromTo(ID + ' .s08-cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 10.6);
 
       tl_s07.set({}, {}, 12);
-      window.__timelines['scene-08-65f994'] = tl;
+      
     
   if (typeof tl_s07 !== 'undefined') {
     __master.add(tl_s07, 88);
@@ -3254,7 +3255,7 @@
       tl_s08.to(ID + ' .s09-vignette', { opacity: 1.5, duration: 1.5, ease: 'power2.inOut' }, 10.3);
 
       tl_s08.set({}, {}, 12);
-      window.__timelines['scene-09-3a8664'] = tl;
+      
     
   if (typeof tl_s08 !== 'undefined') {
     __master.add(tl_s08, 100);
