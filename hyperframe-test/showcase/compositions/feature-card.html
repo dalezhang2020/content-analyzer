@@ -116,25 +116,26 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script>
       (function () {
-        function readVars(hostEl) {
+        // Read per-instance variables from the host element's data-variable-values.
+        // We deliberately do NOT call window.__hyperframes.getVariables() here —
+        // that returns the ROOT composition's variables, not this sub-comp's
+        // per-instance overrides.
+        function readHostVars() {
           try {
-            if (window.__hyperframes && typeof window.__hyperframes.getVariables === "function") {
-              return window.__hyperframes.getVariables();
-            }
-          } catch (e) {}
-          // Fallback: read per-instance overrides from the host element.
-          try {
-            const host =
-              hostEl ||
-              document.currentScript.closest("[data-variable-values]") ||
-              document.currentScript.getRootNode().host;
-            if (host && host.dataset && host.dataset.variableValues) {
-              return JSON.parse(host.dataset.variableValues);
+            const scriptEl = document.currentScript;
+            // Walk up from the script to find the instantiated host element
+            // that carries data-variable-values (or data-composition-id === feature-card).
+            let node = scriptEl && scriptEl.parentElement;
+            while (node) {
+              if (node.dataset && node.dataset.variableValues) {
+                return JSON.parse(node.dataset.variableValues);
+              }
+              node = node.parentElement;
             }
           } catch (e) {}
           return {};
         }
-        const vars = readVars();
+        const vars = readHostVars();
         const root = document.currentScript.parentElement;
         const card = root.querySelector(".fc-root");
 
