@@ -238,6 +238,9 @@ export function HtmlTab({
     generating;
 
   const previewUrl = `/api/projects/${encodeURIComponent(project.projectId)}/composition/html`;
+  const isVercel =
+    typeof window !== "undefined" &&
+    window.location.hostname.includes("vercel.app");
 
   return (
     <div className="flex flex-col gap-4">
@@ -317,19 +320,38 @@ export function HtmlTab({
 
       <ConfirmDialog
         open={confirmOpen}
-        title="重新生成 HTML？"
+        title={isVercel ? "在 Kiro IDE 中重新生成" : "重新生成 HTML？"}
         description={
-          <>
-            重新生成会覆盖当前的 HTML 场景。已生成的{" "}
-            <span className="font-medium">音频</span>{" "}
-            注入可能会被清理，需要重新运行音频生成。
-          </>
+          isVercel ? (
+            <div className="flex flex-col gap-3">
+              <p>
+                HTML 场景生成需要 LLM + HyperFrames，只能在本地 Kiro IDE 中跑。
+                请在 Kiro 对话框输入以下命令：
+              </p>
+              <code className="text-xs bg-muted px-3 py-2 rounded-md font-mono break-all">
+                #workbench-compose 给 {project.projectId} 生成 HTML
+              </code>
+              <p className="text-xs text-muted-foreground">
+                Kiro 会生成所有场景 HTML 并自动推送到数据库，完成后刷新此页面即可看到结果。
+              </p>
+            </div>
+          ) : (
+            <>
+              重新生成会覆盖当前的 HTML 场景。已生成的{" "}
+              <span className="font-medium">音频</span>{" "}
+              注入可能会被清理，需要重新运行音频生成。
+            </>
+          )
         }
-        confirmLabel="确认重新生成"
-        destructive
+        confirmLabel={isVercel ? "知道了" : "确认重新生成"}
+        destructive={!isVercel}
         busy={generating}
         onConfirm={() => {
-          void generate(true);
+          if (isVercel) {
+            setConfirmOpen(false);
+          } else {
+            void generate(true);
+          }
         }}
         onCancel={() => {
           if (!generating) setConfirmOpen(false);

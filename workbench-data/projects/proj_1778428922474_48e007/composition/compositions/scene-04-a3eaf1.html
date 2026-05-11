@@ -1,0 +1,318 @@
+<template id="scene-04-a3eaf1-template">
+  <div id="scene-04-a3eaf1" data-composition-id="scene-04-a3eaf1" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 04</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">角度的两种量法</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">04</span>
+        <span class="bar"></span>
+        <span class="label">DEGREES vs RADIANS</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">两种</span>
+        <span class="t2">量法</span>
+      </h1>
+      <div class="subtitle">同一个角,两种<em class="em">语言</em></div>
+    </div>
+
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s04-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="7" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s04-halo-deg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s04-halo-rad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- LEFT PANEL: Degrees circle centered at (440, 580) -->
+      <g class="deg-group" transform="translate(440, 580)">
+        <circle cx="0" cy="0" r="300" fill="url(#s04-halo-deg)"/>
+        <!-- Circle -->
+        <circle class="deg-circle" cx="0" cy="0" r="220" fill="none" stroke="#fbbf24" stroke-width="3.5" filter="url(#s04-glow)"/>
+        <!-- Degree tick marks every 30 degrees -->
+        <g class="deg-ticks" stroke="#fbbf24" opacity="0.6">
+          <line x1="0" y1="-220" x2="0" y2="-200" stroke-width="2.5"/>
+          <line x1="110" y1="-190.5" x2="100" y2="-173.2" stroke-width="1.5"/>
+          <line x1="190.5" y1="-110" x2="173.2" y2="-100" stroke-width="1.5"/>
+          <line x1="220" y1="0" x2="200" y2="0" stroke-width="2.5"/>
+          <line x1="190.5" y1="110" x2="173.2" y2="100" stroke-width="1.5"/>
+          <line x1="110" y1="190.5" x2="100" y2="173.2" stroke-width="1.5"/>
+          <line x1="0" y1="220" x2="0" y2="200" stroke-width="2.5"/>
+          <line x1="-110" y1="190.5" x2="-100" y2="173.2" stroke-width="1.5"/>
+          <line x1="-190.5" y1="110" x2="-173.2" y2="100" stroke-width="1.5"/>
+          <line x1="-220" y1="0" x2="-200" y2="0" stroke-width="2.5"/>
+          <line x1="-190.5" y1="-110" x2="-173.2" y2="-100" stroke-width="1.5"/>
+          <line x1="-110" y1="-190.5" x2="-100" y2="-173.2" stroke-width="1.5"/>
+        </g>
+        <!-- Axes -->
+        <line x1="-260" y1="0" x2="260" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <line x1="0" y1="260" x2="0" y2="-260" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <!-- Full rotation arc highlight -->
+        <circle class="deg-arc" cx="0" cy="0" r="180" fill="none" stroke="#fbbf24" stroke-width="6"
+                stroke-dasharray="1131" stroke-dashoffset="1131" opacity="0.5" filter="url(#s04-glow)"/>
+        <!-- Center dot -->
+        <circle cx="0" cy="0" r="5" fill="#fbbf24"/>
+        <!-- 360 label -->
+        <text class="deg-label" x="0" y="-260" fill="#fbbf24" font-size="52" font-weight="900"
+              text-anchor="middle" font-family="JetBrains Mono, monospace" filter="url(#s04-glow)">360°</text>
+        <!-- "一圈" label -->
+        <text x="0" y="290" fill="#fbbf24" font-size="28" text-anchor="middle" opacity="0.8"
+              font-family="PingFang SC, sans-serif" letter-spacing="0.2em">一圈 = 360 度</text>
+      </g>
+
+      <!-- EQUALS sign in center -->
+      <text class="eq-sign" x="960" y="600" fill="#8da1c7" font-size="100" font-weight="300"
+            text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif">=</text>
+
+      <!-- RIGHT PANEL: Radians circle centered at (1480, 580) -->
+      <g class="rad-group" transform="translate(1480, 580)">
+        <circle cx="0" cy="0" r="300" fill="url(#s04-halo-rad)"/>
+        <!-- Circle -->
+        <circle class="rad-circle" cx="0" cy="0" r="220" fill="none" stroke="#4dd0ff" stroke-width="3.5" filter="url(#s04-glow)"/>
+        <!-- Axes -->
+        <line x1="-260" y1="0" x2="260" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <line x1="0" y1="260" x2="0" y2="-260" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <!-- Radian arc highlight (full circle) -->
+        <circle class="rad-arc" cx="0" cy="0" r="180" fill="none" stroke="#4dd0ff" stroke-width="6"
+                stroke-dasharray="1131" stroke-dashoffset="1131" opacity="0.5" filter="url(#s04-glow)"/>
+        <!-- π/2 marks -->
+        <g class="rad-marks" fill="#4dd0ff" font-size="26" font-family="Georgia, serif" font-style="italic" opacity="0.8">
+          <text x="0" y="-234" text-anchor="middle">π/2</text>
+          <text x="234" y="8" text-anchor="start">0</text>
+          <text x="0" y="258" text-anchor="middle">3π/2</text>
+          <text x="-240" y="8" text-anchor="end">π</text>
+        </g>
+        <!-- Center dot -->
+        <circle cx="0" cy="0" r="5" fill="#4dd0ff"/>
+        <!-- 2π label -->
+        <text class="rad-label" x="0" y="-260" fill="#4dd0ff" font-size="52" font-weight="900"
+              text-anchor="middle" font-family="JetBrains Mono, monospace" filter="url(#s04-glow)">2π</text>
+        <!-- "一圈" label -->
+        <text x="0" y="290" fill="#4dd0ff" font-size="28" text-anchor="middle" opacity="0.8"
+              font-family="PingFang SC, sans-serif" letter-spacing="0.2em">一圈 = 2π 弧度</text>
+      </g>
+
+      <!-- Conversion formula at bottom center -->
+      <g class="conversion" transform="translate(960, 900)">
+        <rect x="-280" y="-36" width="560" height="72" rx="12"
+              fill="rgba(10,18,36,0.7)" stroke="rgba(77,208,255,0.2)" stroke-width="1"/>
+        <text x="0" y="10" fill="#d7e3f2" font-size="32" text-anchor="middle"
+              font-family="JetBrains Mono, monospace">180° = π rad</text>
+      </g>
+    </svg>
+
+    <!-- Panel labels -->
+    <div class="panel-deg">
+      <div class="pd-badge">度数制</div>
+      <div class="pd-desc">历史悠久，直觉友好</div>
+    </div>
+    <div class="panel-rad">
+      <div class="pr-badge">弧度制</div>
+      <div class="pr-desc">数学自然，公式简洁</div>
+    </div>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">两种量法都正确 — 只是选择不同的<em class="em-cyan">语言</em></span>
+    </div>
+
+    <style>
+      #scene-04-a3eaf1 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-04-a3eaf1 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 700px 600px at 25% 55%, rgba(251,191,36,0.12), transparent 60%),
+          radial-gradient(ellipse 700px 600px at 78% 55%, rgba(77,208,255,0.14), transparent 60%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-04-a3eaf1 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        pointer-events: none;
+      }
+      #scene-04-a3eaf1 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-04-a3eaf1 .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-04-a3eaf1 .orb-a {
+        width: 480px; height: 480px; left: -140px; top: 100px;
+        background: radial-gradient(circle, rgba(251,191,36,0.3), transparent 70%);
+      }
+      #scene-04-a3eaf1 .orb-b {
+        width: 480px; height: 480px; right: -140px; top: 100px;
+        background: radial-gradient(circle, rgba(77,208,255,0.3), transparent 70%);
+      }
+      #scene-04-a3eaf1 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-04-a3eaf1 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-04-a3eaf1 .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-04-a3eaf1 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-04-a3eaf1 .ch-sep { color: #5b6e93; }
+      #scene-04-a3eaf1 .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-04-a3eaf1 .header {
+        position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+        text-align: center; z-index: 10;
+      }
+      #scene-04-a3eaf1 .eyebrow {
+        display: flex; align-items: center; justify-content: center; gap: 18px;
+        font-size: 18px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-04-a3eaf1 .eyebrow .num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 20px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px;
+      }
+      #scene-04-a3eaf1 .eyebrow .bar {
+        display: inline-block; width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-04-a3eaf1 .title {
+        margin-top: 14px; font-size: 110px; font-weight: 800;
+        line-height: 0.98; letter-spacing: -0.02em;
+        display: flex; gap: 16px; align-items: baseline; justify-content: center;
+      }
+      #scene-04-a3eaf1 .title .t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-04-a3eaf1 .title .t2 {
+        background: linear-gradient(135deg, #fbbf24 0%, #ffffff 50%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; font-weight: 900;
+      }
+      #scene-04-a3eaf1 .subtitle {
+        margin-top: 12px; font-size: 26px; color: #9fb0cc; letter-spacing: 0.05em;
+      }
+      #scene-04-a3eaf1 .subtitle .em { color: #4dd0ff; font-weight: 600; margin: 0 4px; }
+      #scene-04-a3eaf1 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-04-a3eaf1 .panel-deg {
+        position: absolute; left: 200px; top: 130px; text-align: center; z-index: 8;
+      }
+      #scene-04-a3eaf1 .panel-rad {
+        position: absolute; right: 200px; top: 130px; text-align: center; z-index: 8;
+      }
+      #scene-04-a3eaf1 .pd-badge, #scene-04-a3eaf1 .pr-badge {
+        font-size: 22px; font-weight: 700; letter-spacing: 0.3em;
+        padding: 8px 20px; border-radius: 8px;
+      }
+      #scene-04-a3eaf1 .pd-badge {
+        color: #fbbf24; border: 1px solid rgba(251,191,36,0.4);
+        background: rgba(251,191,36,0.08);
+      }
+      #scene-04-a3eaf1 .pr-badge {
+        color: #4dd0ff; border: 1px solid rgba(77,208,255,0.4);
+        background: rgba(77,208,255,0.08);
+      }
+      #scene-04-a3eaf1 .pd-desc, #scene-04-a3eaf1 .pr-desc {
+        margin-top: 8px; font-size: 18px; color: #8da1c7; letter-spacing: 0.1em;
+      }
+      #scene-04-a3eaf1 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 34px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+      }
+      #scene-04-a3eaf1 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-04-a3eaf1 .em-cyan { color: #4dd0ff; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-04-a3eaf1';
+
+      tl.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      tl.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+      tl.fromTo(ID + ' .eyebrow .num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.7);
+      tl.fromTo(ID + ' .eyebrow .bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left center' }, 0.85);
+      tl.fromTo(ID + ' .eyebrow .label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, 0.95);
+      tl.fromTo(ID + ' .title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.1);
+      tl.fromTo(ID + ' .title .t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 1.35);
+      tl.fromTo(ID + ' .subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.9);
+
+      // Panel labels
+      tl.fromTo(ID + ' .panel-deg', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 2.2);
+      tl.fromTo(ID + ' .panel-rad', { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 2.2);
+
+      // Degrees circle draws in
+      tl.fromTo(ID + ' .deg-circle', { strokeDasharray: 1382, strokeDashoffset: 1382 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 2.5);
+      tl.fromTo(ID + ' .deg-ticks', { opacity: 0 }, { opacity: 0.6, duration: 0.6 }, 3.8);
+      tl.fromTo(ID + ' .deg-arc', { strokeDashoffset: 1131 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 3.5);
+      tl.fromTo(ID + ' .deg-label', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(1.8)', transformOrigin: 'center' }, 4.2);
+
+      // Radians circle draws in (slightly delayed)
+      tl.fromTo(ID + ' .rad-circle', { strokeDasharray: 1382, strokeDashoffset: 1382 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 3.0);
+      tl.fromTo(ID + ' .rad-marks', { opacity: 0 }, { opacity: 0.8, duration: 0.6 }, 4.3);
+      tl.fromTo(ID + ' .rad-arc', { strokeDashoffset: 1131 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 4.0);
+      tl.fromTo(ID + ' .rad-label', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(1.8)', transformOrigin: 'center' }, 4.7);
+
+      // Equals sign
+      tl.fromTo(ID + ' .eq-sign', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(2)', transformOrigin: 'center' }, 5.5);
+
+      // Conversion formula
+      tl.fromTo(ID + ' .conversion', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 6.5);
+
+      // Caption
+      tl.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 8.0);
+      tl.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 8.2);
+
+      // Subtle glow pulses
+      tl.to(ID + ' .deg-circle', { opacity: 0.9, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.0);
+      tl.to(ID + ' .rad-circle', { opacity: 0.9, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.3);
+
+      tl.set({}, {}, 14);
+      window.__timelines['scene-04-a3eaf1'] = tl;
+    </script>
+  </div>
+</template>

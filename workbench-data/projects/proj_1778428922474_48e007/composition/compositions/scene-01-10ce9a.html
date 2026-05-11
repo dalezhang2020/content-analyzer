@@ -1,0 +1,176 @@
+<template id="scene-01-10ce9a-template">
+  <div id="scene-01-10ce9a" data-composition-id="scene-01-10ce9a" data-width="1920" data-height="1080">
+
+    <div class="p01-bg"></div>
+    <div class="p01-vignette"></div>
+    <div class="p01-orb p01-orb-a"></div>
+    <div class="p01-orb p01-orb-b"></div>
+
+    <!-- Chapter badge -->
+    <div class="p01-chapter">
+      <div class="p01-ch-line"></div>
+      <div class="p01-ch-text">
+        <span class="p01-ch-num">CHAPTER 01</span>
+        <span class="p01-ch-sep">·</span>
+        <span class="p01-ch-label">开场</span>
+      </div>
+      <div class="p01-ch-line"></div>
+    </div>
+
+    <!-- Floating question marks -->
+    <div class="p01-q p01-q1">sin</div>
+    <div class="p01-q p01-q2">cos</div>
+    <div class="p01-q p01-q3">tan</div>
+    <div class="p01-q p01-q4">?</div>
+    <div class="p01-q p01-q5">?</div>
+
+    <!-- Main title -->
+    <div class="p01-hero">
+      <div class="p01-eyebrow">三角函数到底在讲什么</div>
+      <h1 class="p01-title">
+        <span class="p01-t1">换个角度</span>
+        <span class="p01-t2">只是一件事</span>
+      </h1>
+      <div class="p01-accent"></div>
+    </div>
+
+    <!-- Bottom hint -->
+    <div class="p01-hint">
+      <span class="p01-hint-dot"></span>
+      sin · cos · tan — 不是三件事，是同一件事的三个侧面
+    </div>
+
+    <style>
+      #scene-01-10ce9a {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      #scene-01-10ce9a .p01-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 28% 35%, rgba(77,208,255,0.22), transparent 60%),
+          radial-gradient(ellipse 1000px 700px at 72% 75%, rgba(255,77,143,0.14), transparent 60%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
+      }
+      #scene-01-10ce9a .p01-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.65) 100%);
+        pointer-events: none;
+      }
+      #scene-01-10ce9a .p01-orb {
+        position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      }
+      #scene-01-10ce9a .p01-orb-a {
+        width: 620px; height: 620px; left: -200px; top: -220px;
+        background: radial-gradient(circle, rgba(77,208,255,0.4), transparent 70%);
+      }
+      #scene-01-10ce9a .p01-orb-b {
+        width: 760px; height: 760px; right: -280px; bottom: -300px;
+        background: radial-gradient(circle, rgba(255,77,143,0.28), transparent 70%);
+      }
+      #scene-01-10ce9a .p01-chapter {
+        position: absolute; top: 92px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-01-10ce9a .p01-ch-line {
+        width: 120px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-01-10ce9a .p01-ch-text {
+        display: flex; align-items: center; gap: 16px;
+        padding: 10px 22px;
+        background: rgba(10,18,36,0.4);
+        border: 1px solid rgba(77,208,255,0.25); border-radius: 999px;
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-01-10ce9a .p01-ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 20px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-01-10ce9a .p01-ch-sep { color: #5b6e93; }
+      #scene-01-10ce9a .p01-ch-label { font-size: 20px; letter-spacing: 0.4em; color: #b5c4dd; }
+      #scene-01-10ce9a .p01-q {
+        position: absolute;
+        font-family: "Georgia", serif; font-weight: 700; pointer-events: none;
+      }
+      #scene-01-10ce9a .p01-q1 { left: 180px; top: 260px; font-size: 100px; color: rgba(255,77,143,0.3); font-style: italic; }
+      #scene-01-10ce9a .p01-q2 { right: 260px; top: 180px; font-size: 120px; color: rgba(251,191,36,0.3); font-style: italic; }
+      #scene-01-10ce9a .p01-q3 { left: 240px; bottom: 280px; font-size: 90px; color: rgba(77,208,255,0.3); font-style: italic; }
+      #scene-01-10ce9a .p01-q4 { right: 200px; bottom: 320px; font-size: 140px; color: rgba(200,163,255,0.25); }
+      #scene-01-10ce9a .p01-q5 { left: 50%; top: 44%; transform: translateX(-50%); font-size: 80px; color: rgba(77,208,255,0.2); }
+      #scene-01-10ce9a .p01-hero {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        text-align: center; z-index: 8;
+      }
+      #scene-01-10ce9a .p01-eyebrow {
+        font-size: 28px; letter-spacing: 0.4em; color: #4dd0ff; font-weight: 400;
+        margin-bottom: 28px; text-shadow: 0 0 20px rgba(77,208,255,0.4);
+      }
+      #scene-01-10ce9a .p01-title {
+        font-size: 150px; font-weight: 900; line-height: 1.02; letter-spacing: -0.02em;
+        display: flex; flex-direction: column; gap: 8px; align-items: center;
+      }
+      #scene-01-10ce9a .p01-t1 { color: #d9e4f5; font-weight: 200; font-size: 100px; }
+      #scene-01-10ce9a .p01-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 40%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900; font-size: 160px;
+        text-shadow: 0 0 60px rgba(77,208,255,0.5);
+      }
+      #scene-01-10ce9a .p01-accent {
+        margin: 28px auto 0; width: 0; height: 3px;
+        background: linear-gradient(90deg, transparent, #4dd0ff 30%, #ff4d8f 70%, transparent);
+        border-radius: 2px;
+      }
+      #scene-01-10ce9a .p01-hint {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 22px; color: #8da1c7; letter-spacing: 0.28em; font-weight: 300;
+        padding: 14px 30px;
+        background: rgba(10,18,36,0.5); border: 1px solid rgba(77,208,255,0.18);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-01-10ce9a .p01-hint-dot {
+        display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 12px #4dd0ff;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-01-10ce9a';
+
+      tl.fromTo(ID + ' .p01-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .p01-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .p01-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0.2);
+
+      tl.fromTo(ID + ' .p01-ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .p01-ch-text', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.5);
+
+      tl.fromTo(ID + ' .p01-q1', { opacity: 0, y: 30, rotation: -8 }, { opacity: 1, y: 0, rotation: 0, duration: 1.0, ease: 'power3.out' }, 0.8);
+      tl.fromTo(ID + ' .p01-q2', { opacity: 0, y: 30, rotation: 10 }, { opacity: 1, y: 0, rotation: 6, duration: 1.1, ease: 'power3.out' }, 1.0);
+      tl.fromTo(ID + ' .p01-q3', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 1.2);
+      tl.fromTo(ID + ' .p01-q4', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 1.0, ease: 'back.out(1.4)', transformOrigin: 'center' }, 1.4);
+      tl.fromTo(ID + ' .p01-q5', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'back.out(1.4)', transformOrigin: 'center' }, 1.6);
+
+      tl.fromTo(ID + ' .p01-eyebrow', { opacity: 0, y: 20, letterSpacing: '0.6em' }, { opacity: 1, y: 0, letterSpacing: '0.4em', duration: 0.9, ease: 'power3.out' }, 1.8);
+      tl.fromTo(ID + ' .p01-t1', { opacity: 0, y: 60, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out' }, 2.2);
+      tl.fromTo(ID + ' .p01-t2', { opacity: 0, y: 80, scale: 0.9, filter: 'blur(14px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.3, ease: 'expo.out', transformOrigin: 'center' }, 2.6);
+      tl.fromTo(ID + ' .p01-accent', { width: 0 }, { width: 480, duration: 1.0, ease: 'power3.out' }, 3.8);
+
+      tl.to([ID + ' .p01-q1', ID + ' .p01-q3', ID + ' .p01-q5'], { y: '-=14', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 4.5);
+      tl.to([ID + ' .p01-q2', ID + ' .p01-q4'], { y: '+=12', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 4.7);
+
+      tl.fromTo(ID + ' .p01-hint', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 5.5);
+      tl.fromTo(ID + ' .p01-hint-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 5.7);
+
+      tl.to(ID + ' .p01-t2', { textShadow: '0 0 80px rgba(77,208,255,0.8)', duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 9.2);
+
+      tl.set({}, {}, 12);
+      window.__timelines['scene-01-10ce9a'] = tl;
+    </script>
+  </div>
+</template>

@@ -1,51 +1,2560 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        margin: 0;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: #000;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      id="root"
-      data-composition-id="main"
-      data-start="0"
-      data-duration="10"
-      data-width="1920"
-      data-height="1080"
-    >
-      
-      
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-start="0" data-duration="120" data-width="1920" data-height="1080">
 
-      <!--
-        Add your clips here. Example:
-        <div id="title" class="clip" data-start="0" data-duration="5" data-track-index="1"
-             style="font-size: 64px; color: #fff; padding: 40px">
-          Hello World
-        </div>
-      -->
+  <!-- ================== scene-01-10ce9a (offset=0s, dur=12s) ================== -->
+
+  <div id="scene-01-10ce9a" data-composition-id="scene-01-10ce9a" data-width="1920" data-height="1080">
+
+    <div class="p01-bg"></div>
+    <div class="p01-vignette"></div>
+    <div class="p01-orb p01-orb-a"></div>
+    <div class="p01-orb p01-orb-b"></div>
+
+    <!-- Chapter badge -->
+    <div class="p01-chapter">
+      <div class="p01-ch-line"></div>
+      <div class="p01-ch-text">
+        <span class="p01-ch-num">CHAPTER 01</span>
+        <span class="p01-ch-sep">·</span>
+        <span class="p01-ch-label">开场</span>
+      </div>
+      <div class="p01-ch-line"></div>
     </div>
 
-    <script>
+    <!-- Floating question marks -->
+    <div class="p01-q p01-q1">sin</div>
+    <div class="p01-q p01-q2">cos</div>
+    <div class="p01-q p01-q3">tan</div>
+    <div class="p01-q p01-q4">?</div>
+    <div class="p01-q p01-q5">?</div>
+
+    <!-- Main title -->
+    <div class="p01-hero">
+      <div class="p01-eyebrow">三角函数到底在讲什么</div>
+      <h1 class="p01-title">
+        <span class="p01-t1">换个角度</span>
+        <span class="p01-t2">只是一件事</span>
+      </h1>
+      <div class="p01-accent"></div>
+    </div>
+
+    <!-- Bottom hint -->
+    <div class="p01-hint">
+      <span class="p01-hint-dot"></span>
+      sin · cos · tan — 不是三件事，是同一件事的三个侧面
+    </div>
+
+    <style>
+      #scene-01-10ce9a {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610; color: #f1f5f9;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      }
+      #scene-01-10ce9a .p01-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 28% 35%, rgba(77,208,255,0.22), transparent 60%),
+          radial-gradient(ellipse 1000px 700px at 72% 75%, rgba(255,77,143,0.14), transparent 60%),
+          linear-gradient(180deg, #030610 0%, #060b20 55%, #020409 100%);
+      }
+      #scene-01-10ce9a .p01-vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.65) 100%);
+        pointer-events: none;
+      }
+      #scene-01-10ce9a .p01-orb {
+        position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      }
+      #scene-01-10ce9a .p01-orb-a {
+        width: 620px; height: 620px; left: -200px; top: -220px;
+        background: radial-gradient(circle, rgba(77,208,255,0.4), transparent 70%);
+      }
+      #scene-01-10ce9a .p01-orb-b {
+        width: 760px; height: 760px; right: -280px; bottom: -300px;
+        background: radial-gradient(circle, rgba(255,77,143,0.28), transparent 70%);
+      }
+      #scene-01-10ce9a .p01-chapter {
+        position: absolute; top: 92px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-01-10ce9a .p01-ch-line {
+        width: 120px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-01-10ce9a .p01-ch-text {
+        display: flex; align-items: center; gap: 16px;
+        padding: 10px 22px;
+        background: rgba(10,18,36,0.4);
+        border: 1px solid rgba(77,208,255,0.25); border-radius: 999px;
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-01-10ce9a .p01-ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 20px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-01-10ce9a .p01-ch-sep { color: #5b6e93; }
+      #scene-01-10ce9a .p01-ch-label { font-size: 20px; letter-spacing: 0.4em; color: #b5c4dd; }
+      #scene-01-10ce9a .p01-q {
+        position: absolute;
+        font-family: "Georgia", serif; font-weight: 700; pointer-events: none;
+      }
+      #scene-01-10ce9a .p01-q1 { left: 180px; top: 260px; font-size: 100px; color: rgba(255,77,143,0.3); font-style: italic; }
+      #scene-01-10ce9a .p01-q2 { right: 260px; top: 180px; font-size: 120px; color: rgba(251,191,36,0.3); font-style: italic; }
+      #scene-01-10ce9a .p01-q3 { left: 240px; bottom: 280px; font-size: 90px; color: rgba(77,208,255,0.3); font-style: italic; }
+      #scene-01-10ce9a .p01-q4 { right: 200px; bottom: 320px; font-size: 140px; color: rgba(200,163,255,0.25); }
+      #scene-01-10ce9a .p01-q5 { left: 50%; top: 44%; transform: translateX(-50%); font-size: 80px; color: rgba(77,208,255,0.2); }
+      #scene-01-10ce9a .p01-hero {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        text-align: center; z-index: 8;
+      }
+      #scene-01-10ce9a .p01-eyebrow {
+        font-size: 28px; letter-spacing: 0.4em; color: #4dd0ff; font-weight: 400;
+        margin-bottom: 28px; text-shadow: 0 0 20px rgba(77,208,255,0.4);
+      }
+      #scene-01-10ce9a .p01-title {
+        font-size: 150px; font-weight: 900; line-height: 1.02; letter-spacing: -0.02em;
+        display: flex; flex-direction: column; gap: 8px; align-items: center;
+      }
+      #scene-01-10ce9a .p01-t1 { color: #d9e4f5; font-weight: 200; font-size: 100px; }
+      #scene-01-10ce9a .p01-t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #4dd0ff 40%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent;
+        font-weight: 900; font-size: 160px;
+        text-shadow: 0 0 60px rgba(77,208,255,0.5);
+      }
+      #scene-01-10ce9a .p01-accent {
+        margin: 28px auto 0; width: 0; height: 3px;
+        background: linear-gradient(90deg, transparent, #4dd0ff 30%, #ff4d8f 70%, transparent);
+        border-radius: 2px;
+      }
+      #scene-01-10ce9a .p01-hint {
+        position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 22px; color: #8da1c7; letter-spacing: 0.28em; font-weight: 300;
+        padding: 14px 30px;
+        background: rgba(10,18,36,0.5); border: 1px solid rgba(77,208,255,0.18);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-01-10ce9a .p01-hint-dot {
+        display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 12px #4dd0ff;
+      }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-02-e043d9 (offset=12s, dur=15s) ================== -->
+
+  <div id="scene-02-e043d9" data-composition-id="scene-02-e043d9" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <!-- Chapter badge -->
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 02</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">单位圆登场</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">02</span>
+        <span class="bar"></span>
+        <span class="label">THE UNIT CIRCLE</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">认识</span>
+        <span class="t2">单位圆</span>
+      </h1>
+      <div class="subtitle">半径为 <em class="em">1</em> · 圆心在原点</div>
+    </div>
+
+    <!-- Main SVG stage -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s02e-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s02e-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="14" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s02e-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.3"/>
+          <stop offset="40%" stop-color="#4dd0ff" stop-opacity="0.1"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s02e-point" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#fff6cc"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Dot grid -->
+      <g class="dot-grid" fill="#3a4a70" opacity="0.5">
+        <circle cx="480" cy="180" r="2"/><circle cx="960" cy="120" r="2"/>
+        <circle cx="1440" cy="180" r="2"/><circle cx="260" cy="540" r="2"/>
+        <circle cx="1660" cy="540" r="2"/><circle cx="480" cy="900" r="2"/>
+        <circle cx="960" cy="960" r="2"/><circle cx="1440" cy="900" r="2"/>
+      </g>
+
+      <!-- Circle group centered at (820, 580) -->
+      <g class="circle-group" transform="translate(820, 580)">
+        <!-- Halo -->
+        <circle class="halo" cx="0" cy="0" r="360" fill="url(#s02e-halo)"/>
+        <!-- Ghost rings -->
+        <circle class="ghost" cx="0" cy="0" r="270" fill="none" stroke="#253856" stroke-width="1" opacity="0.5"/>
+        <circle class="ghost" cx="0" cy="0" r="320" fill="none" stroke="#1e2c45" stroke-width="1" opacity="0.35"/>
+
+        <!-- Axes -->
+        <line class="axis axis-x" x1="-500" y1="0" x2="500" y2="0" stroke="#5b6e93" stroke-width="1.5" opacity="0.9"/>
+        <line class="axis axis-y" x1="0" y1="500" x2="0" y2="-500" stroke="#5b6e93" stroke-width="1.5" opacity="0.9"/>
+        <polygon class="ax-arrow" points="500,0 480,-8 480,8" fill="#5b6e93"/>
+        <polygon class="ax-arrow" points="0,-500 -8,-480 8,-480" fill="#5b6e93"/>
+        <text class="ax-lbl" x="516" y="10" fill="#8da1c7" font-size="28" font-style="italic" font-family="Georgia, serif">x</text>
+        <text class="ax-lbl" x="10" y="-508" fill="#8da1c7" font-size="28" font-style="italic" font-family="Georgia, serif">y</text>
+
+        <!-- Tick marks -->
+        <g class="ticks" fill="#5b6e93" font-size="22" font-family="JetBrains Mono, monospace">
+          <line x1="300" y1="-8" x2="300" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-300" y1="-8" x2="-300" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-8" y1="-300" x2="8" y2="-300" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-8" y1="300" x2="8" y2="300" stroke="#5b6e93" stroke-width="1.5"/>
+          <text x="298" y="40" text-anchor="middle">1</text>
+          <text x="-302" y="40" text-anchor="middle">−1</text>
+          <text x="-22" y="-294" text-anchor="end">1</text>
+          <text x="-22" y="310" text-anchor="end">−1</text>
+        </g>
+
+        <!-- Origin -->
+        <circle class="origin-dot" cx="0" cy="0" r="5" fill="#e6edf9"/>
+        <text class="origin-lbl" x="-18" y="24" fill="#8da1c7" font-size="20" text-anchor="end" font-style="italic" font-family="Georgia, serif">O</text>
+
+        <!-- Unit circle — hero, draws in via stroke-dashoffset -->
+        <circle class="unit-circle" cx="0" cy="0" r="300"
+                fill="none" stroke="#4dd0ff" stroke-width="4"
+                stroke-dasharray="1885" stroke-dashoffset="1885"
+                filter="url(#s02e-glow)"/>
+
+        <!-- Radius line to point at ~50° -->
+        <line class="radius" x1="0" y1="0" x2="193" y2="-230"
+              stroke="#ffffff" stroke-width="2.5" opacity="0.85" filter="url(#s02e-glow)"/>
+        <!-- Radius "1" label -->
+        <text class="radius-lbl" x="108" y="-130" fill="#d7e3f2" font-size="26" font-weight="600" font-style="italic" font-family="Georgia, serif">1</text>
+
+        <!-- Angle arc -->
+        <path class="arc" d="M 72 0 A 72 72 0 0 0 46.3 -55.7" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+        <text class="arc-lbl" x="64" y="-30" fill="#fbbf24" font-size="30" font-style="italic" font-family="Georgia, serif">θ</text>
+
+        <!-- Glowing point P -->
+        <circle class="point-halo" cx="193" cy="-230" r="26" fill="#4dd0ff" opacity="0.3" filter="url(#s02e-glow-strong)"/>
+        <circle class="point-p" cx="193" cy="-230" r="12" fill="url(#s02e-point)" stroke="#4dd0ff" stroke-width="3"/>
+        <text class="point-lbl" x="215" y="-248" fill="#f8fafc" font-size="24" font-weight="600" font-family="Georgia, serif">P</text>
+      </g>
+    </svg>
+
+    <!-- Label below circle -->
+    <div class="circle-label">单位圆</div>
+
+    <!-- Info panel -->
+    <div class="panel">
+      <div class="panel-title">UNIT CIRCLE</div>
+      <div class="panel-row">
+        <span class="k">圆心</span>
+        <span class="v">原点 O</span>
+      </div>
+      <div class="panel-row">
+        <span class="k">半径</span>
+        <span class="v cyan-v">r = 1</span>
+      </div>
+      <div class="panel-row">
+        <span class="k">方程</span>
+        <span class="v cyan-v">x² + y² = 1</span>
+      </div>
+      <div class="panel-row">
+        <span class="k">点 P</span>
+        <span class="v">(cos θ, sin θ)</span>
+      </div>
+    </div>
+
+    <!-- Bottom caption -->
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">半径为 1 的圆,圆心在原点 — 这就是<em class="em-cyan">单位圆</em></span>
+    </div>
+
+    <style>
+      #scene-02-e043d9 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
+        color: #f1f5f9; letter-spacing: 0.01em;
+      }
+      #scene-02-e043d9 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 700px at 45% 58%, rgba(77,208,255,0.2), transparent 60%),
+          radial-gradient(ellipse 600px 500px at 18% 28%, rgba(77,208,255,0.09), transparent 65%),
+          radial-gradient(ellipse 600px 500px at 82% 28%, rgba(255,77,143,0.06), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-02-e043d9 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);
+        pointer-events: none;
+      }
+      #scene-02-e043d9 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-02-e043d9 .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-02-e043d9 .orb-a {
+        width: 520px; height: 520px; left: -180px; top: -180px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
+      }
+      #scene-02-e043d9 .orb-b {
+        width: 620px; height: 620px; right: -220px; bottom: -240px;
+        background: radial-gradient(circle, rgba(255,77,143,0.22), transparent 70%);
+      }
+      /* Chapter badge */
+      #scene-02-e043d9 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-02-e043d9 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-02-e043d9 .ch-text {
+        display: flex; align-items: center; gap: 16px;
+        padding: 10px 22px;
+        background: rgba(10,18,36,0.4);
+        border: 1px solid rgba(77,208,255,0.25); border-radius: 999px;
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      }
+      #scene-02-e043d9 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-02-e043d9 .ch-sep { color: #5b6e93; }
+      #scene-02-e043d9 .ch-label { font-size: 18px; letter-spacing: 0.3em; color: #b5c4dd; }
+      /* Header */
+      #scene-02-e043d9 .header {
+        position: absolute; top: 130px; left: 1120px; z-index: 10; max-width: 700px;
+      }
+      #scene-02-e043d9 .eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 18px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-02-e043d9 .eyebrow .num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 20px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px;
+        letter-spacing: 0.12em;
+      }
+      #scene-02-e043d9 .eyebrow .bar {
+        display: inline-block; width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-02-e043d9 .title {
+        margin-top: 18px; font-size: 130px; font-weight: 800;
+        line-height: 0.98; letter-spacing: -0.02em; color: #ffffff;
+        display: flex; gap: 18px; align-items: baseline;
+      }
+      #scene-02-e043d9 .title .t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-02-e043d9 .title .t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 50%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; color: transparent; font-weight: 900;
+      }
+      #scene-02-e043d9 .subtitle {
+        margin-top: 18px; font-size: 30px; color: #9fb0cc;
+        letter-spacing: 0.05em; font-weight: 300;
+      }
+      #scene-02-e043d9 .subtitle .em { color: #4dd0ff; font-weight: 700; margin: 0 4px; }
+      /* Stage SVG */
+      #scene-02-e043d9 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      /* Circle label */
+      #scene-02-e043d9 .circle-label {
+        position: absolute; left: 820px; top: 940px;
+        transform: translateX(-50%);
+        font-size: 36px; font-weight: 700; letter-spacing: 0.25em;
+        color: #4dd0ff; text-shadow: 0 0 24px rgba(77,208,255,0.5);
+        z-index: 10;
+      }
+      /* Panel */
+      #scene-02-e043d9 .panel {
+        position: absolute; right: 80px; top: 360px; width: 360px;
+        padding: 28px 30px;
+        background: rgba(10,18,36,0.72);
+        border: 1px solid rgba(77,208,255,0.25); border-radius: 18px;
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+        z-index: 8;
+      }
+      #scene-02-e043d9 .panel-title {
+        font-size: 16px; letter-spacing: 0.35em; color: #4dd0ff;
+        font-weight: 600; margin-bottom: 20px;
+      }
+      #scene-02-e043d9 .panel-row {
+        display: flex; align-items: baseline; justify-content: space-between;
+        padding: 12px 0; border-top: 1px solid rgba(77,208,255,0.12);
+        font-family: "JetBrains Mono", monospace;
+      }
+      #scene-02-e043d9 .panel-row:first-of-type { border-top: none; }
+      #scene-02-e043d9 .panel-row .k { color: #8da1c7; font-size: 16px; font-family: "PingFang SC", sans-serif; }
+      #scene-02-e043d9 .panel-row .v { color: #f1f5f9; font-size: 22px; font-weight: 700; }
+      #scene-02-e043d9 .panel-row .cyan-v { color: #4dd0ff; font-style: italic; }
+      /* Caption */
+      #scene-02-e043d9 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 34px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        z-index: 10;
+      }
+      #scene-02-e043d9 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-02-e043d9 .em-cyan { color: #4dd0ff; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-03-41d3a0 (offset=27s, dur=16s) ================== -->
+
+  <div id="scene-03-41d3a0" data-composition-id="scene-03-41d3a0" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 03</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">sin 与 cos 的本质</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">03</span>
+        <span class="bar"></span>
+        <span class="label">SIN &amp; COS DEFINED</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">坐标</span>
+        <span class="t2">就是答案</span>
+      </h1>
+      <div class="subtitle">单位圆上的点 = 三角函数的<em class="em">定义</em></div>
+    </div>
+
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s03-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s03-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="14" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s03-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s03-point" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#fff6cc"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </radialGradient>
+      </defs>
+
+      <g class="circle-group" transform="translate(680, 560)">
+        <circle class="halo" cx="0" cy="0" r="340" fill="url(#s03-halo)"/>
+        <circle class="ghost" cx="0" cy="0" r="260" fill="none" stroke="#253856" stroke-width="1" opacity="0.5"/>
+
+        <!-- Axes -->
+        <line class="axis axis-x" x1="-460" y1="0" x2="460" y2="0" stroke="#5b6e93" stroke-width="1.5"/>
+        <line class="axis axis-y" x1="0" y1="460" x2="0" y2="-460" stroke="#5b6e93" stroke-width="1.5"/>
+        <polygon points="460,0 440,-7 440,7" fill="#5b6e93"/>
+        <polygon points="0,-460 -7,-440 7,-440" fill="#5b6e93"/>
+        <text x="476" y="10" fill="#8da1c7" font-size="26" font-style="italic" font-family="Georgia, serif">x</text>
+        <text x="10" y="-468" fill="#8da1c7" font-size="26" font-style="italic" font-family="Georgia, serif">y</text>
+
+        <!-- Tick marks -->
+        <g fill="#5b6e93" font-size="20" font-family="JetBrains Mono, monospace">
+          <line x1="280" y1="-7" x2="280" y2="7" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-280" y1="-7" x2="-280" y2="7" stroke="#5b6e93" stroke-width="1.5"/>
+          <line x1="-7" y1="-280" x2="7" y2="-280" stroke="#5b6e93" stroke-width="1.5"/>
+          <text x="278" y="36" text-anchor="middle">1</text>
+          <text x="-282" y="36" text-anchor="middle">-1</text>
+          <text x="-20" y="-274" text-anchor="end">1</text>
+        </g>
+
+        <circle cx="0" cy="0" r="5" fill="#e6edf9"/>
+        <text x="-18" y="24" fill="#8da1c7" font-size="18" text-anchor="end" font-style="italic" font-family="Georgia, serif">O</text>
+
+        <!-- Unit circle -->
+        <circle class="unit-circle" cx="0" cy="0" r="280" fill="none" stroke="#4dd0ff" stroke-width="3" opacity="0.7" filter="url(#s03-glow)"/>
+
+        <!-- Point P at 60 degrees: cos60=0.5, sin60=0.866 => x=140, y=-242.5 -->
+        <!-- Radius line -->
+        <line class="radius" x1="0" y1="0" x2="140" y2="-242.5" stroke="#ffffff" stroke-width="2.5" opacity="0.8" filter="url(#s03-glow)"/>
+        <!-- Angle arc -->
+        <path class="arc" d="M 65 0 A 65 65 0 0 0 32.5 -56.3" fill="none" stroke="#fbbf24" stroke-width="2"/>
+        <text x="58" y="-28" fill="#fbbf24" font-size="28" font-style="italic" font-family="Georgia, serif">θ</text>
+
+        <!-- cos projection: amber dashed vertical from P to x-axis -->
+        <line class="cos-drop" x1="140" y1="-242.5" x2="140" y2="0"
+              stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.9"/>
+        <!-- cos segment on x-axis -->
+        <line class="cos-seg" x1="0" y1="0" x2="140" y2="0"
+              stroke="#fbbf24" stroke-width="8" stroke-linecap="round" filter="url(#s03-glow)"/>
+        <text class="cos-lbl" x="70" y="46" fill="#fbbf24" font-size="36" font-weight="700" font-style="italic" text-anchor="middle" font-family="Georgia, serif">cos θ</text>
+
+        <!-- sin projection: magenta dashed horizontal from P to y-axis -->
+        <line class="sin-drop" x1="140" y1="-242.5" x2="0" y2="-242.5"
+              stroke="#ff4d8f" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.9"/>
+        <!-- sin segment on y-axis -->
+        <line class="sin-seg" x1="0" y1="0" x2="0" y2="-242.5"
+              stroke="#ff4d8f" stroke-width="8" stroke-linecap="round" filter="url(#s03-glow)"/>
+        <text class="sin-lbl" x="-40" y="-112" fill="#ff4d8f" font-size="36" font-weight="700" font-style="italic" text-anchor="end" font-family="Georgia, serif">sin θ</text>
+
+        <!-- Point P -->
+        <circle class="point-halo" cx="140" cy="-242.5" r="24" fill="#fbbf24" opacity="0.35" filter="url(#s03-glow-strong)"/>
+        <circle class="point-p" cx="140" cy="-242.5" r="11" fill="url(#s03-point)" stroke="#fbbf24" stroke-width="3"/>
+        <text class="point-lbl" x="160" y="-258" fill="#f8fafc" font-size="22" font-weight="600" font-family="Georgia, serif">P</text>
+
+        <!-- Projection dots on axes -->
+        <circle class="cos-dot" cx="140" cy="0" r="7" fill="#fbbf24" filter="url(#s03-glow)"/>
+        <circle class="sin-dot" cx="0" cy="-242.5" r="7" fill="#ff4d8f" filter="url(#s03-glow)"/>
+      </g>
+    </svg>
+
+    <!-- Formula card on right -->
+    <div class="formula-card">
+      <div class="fc-title">三角函数定义</div>
+      <div class="fc-row">
+        <span class="fc-label cos-label">cos θ</span>
+        <span class="fc-eq">=</span>
+        <span class="fc-def">点 P 的 x 坐标</span>
+      </div>
+      <div class="fc-row">
+        <span class="fc-label sin-label">sin θ</span>
+        <span class="fc-eq">=</span>
+        <span class="fc-def">点 P 的 y 坐标</span>
+      </div>
+      <div class="fc-divider"></div>
+      <div class="fc-formula">P = (cos θ, sin θ)</div>
+      <div class="fc-note">单位圆上任意一点</div>
+    </div>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">x 轴投影 = <em class="em-amber">cos θ</em>，y 轴投影 = <em class="em-magenta">sin θ</em></span>
+    </div>
+
+    <style>
+      #scene-03-41d3a0 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9; letter-spacing: 0.01em;
+      }
+      #scene-03-41d3a0 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 900px 700px at 38% 55%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 500px at 75% 45%, rgba(255,77,143,0.12), transparent 60%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-03-41d3a0 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.7) 100%);
+        pointer-events: none;
+      }
+      #scene-03-41d3a0 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-03-41d3a0 .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-03-41d3a0 .orb-a {
+        width: 500px; height: 500px; left: -160px; top: -160px;
+        background: radial-gradient(circle, rgba(77,208,255,0.32), transparent 70%);
+      }
+      #scene-03-41d3a0 .orb-b {
+        width: 580px; height: 580px; right: -200px; bottom: -220px;
+        background: radial-gradient(circle, rgba(255,77,143,0.28), transparent 70%);
+      }
+      #scene-03-41d3a0 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-03-41d3a0 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-03-41d3a0 .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-03-41d3a0 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-03-41d3a0 .ch-sep { color: #5b6e93; }
+      #scene-03-41d3a0 .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-03-41d3a0 .header {
+        position: absolute; top: 130px; left: 1160px; z-index: 10; max-width: 680px;
+      }
+      #scene-03-41d3a0 .eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 18px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-03-41d3a0 .eyebrow .num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 20px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px;
+      }
+      #scene-03-41d3a0 .eyebrow .bar {
+        display: inline-block; width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-03-41d3a0 .title {
+        margin-top: 18px; font-size: 120px; font-weight: 800;
+        line-height: 0.98; letter-spacing: -0.02em;
+        display: flex; gap: 16px; align-items: baseline;
+      }
+      #scene-03-41d3a0 .title .t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-03-41d3a0 .title .t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #ffb3cc 50%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; font-weight: 900;
+      }
+      #scene-03-41d3a0 .subtitle {
+        margin-top: 16px; font-size: 28px; color: #9fb0cc; letter-spacing: 0.05em; font-weight: 300;
+      }
+      #scene-03-41d3a0 .subtitle .em { color: #ff4d8f; font-weight: 600; margin: 0 4px; }
+      #scene-03-41d3a0 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-03-41d3a0 .formula-card {
+        position: absolute; right: 72px; top: 340px; width: 400px;
+        padding: 30px 32px;
+        background: rgba(10,18,36,0.78);
+        border: 1px solid rgba(77,208,255,0.22); border-radius: 20px;
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+        z-index: 8;
+      }
+      #scene-03-41d3a0 .fc-title {
+        font-size: 16px; letter-spacing: 0.35em; color: #4dd0ff;
+        font-weight: 600; margin-bottom: 24px;
+      }
+      #scene-03-41d3a0 .fc-row {
+        display: flex; align-items: center; gap: 16px;
+        padding: 14px 0; border-top: 1px solid rgba(77,208,255,0.1);
+      }
+      #scene-03-41d3a0 .fc-row:first-of-type { border-top: none; }
+      #scene-03-41d3a0 .fc-label {
+        font-family: "Georgia", serif; font-style: italic; font-size: 32px; font-weight: 700;
+        min-width: 90px;
+      }
+      #scene-03-41d3a0 .cos-label { color: #fbbf24; }
+      #scene-03-41d3a0 .sin-label { color: #ff4d8f; }
+      #scene-03-41d3a0 .fc-eq { color: #8da1c7; font-size: 28px; }
+      #scene-03-41d3a0 .fc-def { color: #d7e3f2; font-size: 22px; letter-spacing: 0.05em; }
+      #scene-03-41d3a0 .fc-divider {
+        height: 1px; background: linear-gradient(90deg, transparent, rgba(77,208,255,0.3), transparent);
+        margin: 18px 0;
+      }
+      #scene-03-41d3a0 .fc-formula {
+        font-family: "Georgia", serif; font-style: italic; font-size: 30px;
+        color: #4dd0ff; text-align: center; font-weight: 600;
+        text-shadow: 0 0 18px rgba(77,208,255,0.4);
+      }
+      #scene-03-41d3a0 .fc-note {
+        font-size: 18px; color: #8da1c7; text-align: center; margin-top: 10px;
+        letter-spacing: 0.1em;
+      }
+      #scene-03-41d3a0 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 34px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+      }
+      #scene-03-41d3a0 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-03-41d3a0 .em-amber { color: #fbbf24; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-03-41d3a0 .em-magenta { color: #ff4d8f; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-04-a3eaf1 (offset=43s, dur=14s) ================== -->
+
+  <div id="scene-04-a3eaf1" data-composition-id="scene-04-a3eaf1" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 04</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">角度的两种量法</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">04</span>
+        <span class="bar"></span>
+        <span class="label">DEGREES vs RADIANS</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">两种</span>
+        <span class="t2">量法</span>
+      </h1>
+      <div class="subtitle">同一个角,两种<em class="em">语言</em></div>
+    </div>
+
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s04-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="7" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s04-halo-deg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s04-halo-rad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- LEFT PANEL: Degrees circle centered at (440, 580) -->
+      <g class="deg-group" transform="translate(440, 580)">
+        <circle cx="0" cy="0" r="300" fill="url(#s04-halo-deg)"/>
+        <!-- Circle -->
+        <circle class="deg-circle" cx="0" cy="0" r="220" fill="none" stroke="#fbbf24" stroke-width="3.5" filter="url(#s04-glow)"/>
+        <!-- Degree tick marks every 30 degrees -->
+        <g class="deg-ticks" stroke="#fbbf24" opacity="0.6">
+          <line x1="0" y1="-220" x2="0" y2="-200" stroke-width="2.5"/>
+          <line x1="110" y1="-190.5" x2="100" y2="-173.2" stroke-width="1.5"/>
+          <line x1="190.5" y1="-110" x2="173.2" y2="-100" stroke-width="1.5"/>
+          <line x1="220" y1="0" x2="200" y2="0" stroke-width="2.5"/>
+          <line x1="190.5" y1="110" x2="173.2" y2="100" stroke-width="1.5"/>
+          <line x1="110" y1="190.5" x2="100" y2="173.2" stroke-width="1.5"/>
+          <line x1="0" y1="220" x2="0" y2="200" stroke-width="2.5"/>
+          <line x1="-110" y1="190.5" x2="-100" y2="173.2" stroke-width="1.5"/>
+          <line x1="-190.5" y1="110" x2="-173.2" y2="100" stroke-width="1.5"/>
+          <line x1="-220" y1="0" x2="-200" y2="0" stroke-width="2.5"/>
+          <line x1="-190.5" y1="-110" x2="-173.2" y2="-100" stroke-width="1.5"/>
+          <line x1="-110" y1="-190.5" x2="-100" y2="-173.2" stroke-width="1.5"/>
+        </g>
+        <!-- Axes -->
+        <line x1="-260" y1="0" x2="260" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <line x1="0" y1="260" x2="0" y2="-260" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <!-- Full rotation arc highlight -->
+        <circle class="deg-arc" cx="0" cy="0" r="180" fill="none" stroke="#fbbf24" stroke-width="6"
+                stroke-dasharray="1131" stroke-dashoffset="1131" opacity="0.5" filter="url(#s04-glow)"/>
+        <!-- Center dot -->
+        <circle cx="0" cy="0" r="5" fill="#fbbf24"/>
+        <!-- 360 label -->
+        <text class="deg-label" x="0" y="-260" fill="#fbbf24" font-size="52" font-weight="900"
+              text-anchor="middle" font-family="JetBrains Mono, monospace" filter="url(#s04-glow)">360°</text>
+        <!-- "一圈" label -->
+        <text x="0" y="290" fill="#fbbf24" font-size="28" text-anchor="middle" opacity="0.8"
+              font-family="PingFang SC, sans-serif" letter-spacing="0.2em">一圈 = 360 度</text>
+      </g>
+
+      <!-- EQUALS sign in center -->
+      <text class="eq-sign" x="960" y="600" fill="#8da1c7" font-size="100" font-weight="300"
+            text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif">=</text>
+
+      <!-- RIGHT PANEL: Radians circle centered at (1480, 580) -->
+      <g class="rad-group" transform="translate(1480, 580)">
+        <circle cx="0" cy="0" r="300" fill="url(#s04-halo-rad)"/>
+        <!-- Circle -->
+        <circle class="rad-circle" cx="0" cy="0" r="220" fill="none" stroke="#4dd0ff" stroke-width="3.5" filter="url(#s04-glow)"/>
+        <!-- Axes -->
+        <line x1="-260" y1="0" x2="260" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <line x1="0" y1="260" x2="0" y2="-260" stroke="#5b6e93" stroke-width="1.2" opacity="0.7"/>
+        <!-- Radian arc highlight (full circle) -->
+        <circle class="rad-arc" cx="0" cy="0" r="180" fill="none" stroke="#4dd0ff" stroke-width="6"
+                stroke-dasharray="1131" stroke-dashoffset="1131" opacity="0.5" filter="url(#s04-glow)"/>
+        <!-- π/2 marks -->
+        <g class="rad-marks" fill="#4dd0ff" font-size="26" font-family="Georgia, serif" font-style="italic" opacity="0.8">
+          <text x="0" y="-234" text-anchor="middle">π/2</text>
+          <text x="234" y="8" text-anchor="start">0</text>
+          <text x="0" y="258" text-anchor="middle">3π/2</text>
+          <text x="-240" y="8" text-anchor="end">π</text>
+        </g>
+        <!-- Center dot -->
+        <circle cx="0" cy="0" r="5" fill="#4dd0ff"/>
+        <!-- 2π label -->
+        <text class="rad-label" x="0" y="-260" fill="#4dd0ff" font-size="52" font-weight="900"
+              text-anchor="middle" font-family="JetBrains Mono, monospace" filter="url(#s04-glow)">2π</text>
+        <!-- "一圈" label -->
+        <text x="0" y="290" fill="#4dd0ff" font-size="28" text-anchor="middle" opacity="0.8"
+              font-family="PingFang SC, sans-serif" letter-spacing="0.2em">一圈 = 2π 弧度</text>
+      </g>
+
+      <!-- Conversion formula at bottom center -->
+      <g class="conversion" transform="translate(960, 900)">
+        <rect x="-280" y="-36" width="560" height="72" rx="12"
+              fill="rgba(10,18,36,0.7)" stroke="rgba(77,208,255,0.2)" stroke-width="1"/>
+        <text x="0" y="10" fill="#d7e3f2" font-size="32" text-anchor="middle"
+              font-family="JetBrains Mono, monospace">180° = π rad</text>
+      </g>
+    </svg>
+
+    <!-- Panel labels -->
+    <div class="panel-deg">
+      <div class="pd-badge">度数制</div>
+      <div class="pd-desc">历史悠久，直觉友好</div>
+    </div>
+    <div class="panel-rad">
+      <div class="pr-badge">弧度制</div>
+      <div class="pr-desc">数学自然，公式简洁</div>
+    </div>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">两种量法都正确 — 只是选择不同的<em class="em-cyan">语言</em></span>
+    </div>
+
+    <style>
+      #scene-04-a3eaf1 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-04-a3eaf1 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 700px 600px at 25% 55%, rgba(251,191,36,0.12), transparent 60%),
+          radial-gradient(ellipse 700px 600px at 78% 55%, rgba(77,208,255,0.14), transparent 60%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-04-a3eaf1 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        pointer-events: none;
+      }
+      #scene-04-a3eaf1 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-04-a3eaf1 .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-04-a3eaf1 .orb-a {
+        width: 480px; height: 480px; left: -140px; top: 100px;
+        background: radial-gradient(circle, rgba(251,191,36,0.3), transparent 70%);
+      }
+      #scene-04-a3eaf1 .orb-b {
+        width: 480px; height: 480px; right: -140px; top: 100px;
+        background: radial-gradient(circle, rgba(77,208,255,0.3), transparent 70%);
+      }
+      #scene-04-a3eaf1 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-04-a3eaf1 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-04-a3eaf1 .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-04-a3eaf1 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-04-a3eaf1 .ch-sep { color: #5b6e93; }
+      #scene-04-a3eaf1 .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-04-a3eaf1 .header {
+        position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+        text-align: center; z-index: 10;
+      }
+      #scene-04-a3eaf1 .eyebrow {
+        display: flex; align-items: center; justify-content: center; gap: 18px;
+        font-size: 18px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-04-a3eaf1 .eyebrow .num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 20px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px;
+      }
+      #scene-04-a3eaf1 .eyebrow .bar {
+        display: inline-block; width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-04-a3eaf1 .title {
+        margin-top: 14px; font-size: 110px; font-weight: 800;
+        line-height: 0.98; letter-spacing: -0.02em;
+        display: flex; gap: 16px; align-items: baseline; justify-content: center;
+      }
+      #scene-04-a3eaf1 .title .t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-04-a3eaf1 .title .t2 {
+        background: linear-gradient(135deg, #fbbf24 0%, #ffffff 50%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; font-weight: 900;
+      }
+      #scene-04-a3eaf1 .subtitle {
+        margin-top: 12px; font-size: 26px; color: #9fb0cc; letter-spacing: 0.05em;
+      }
+      #scene-04-a3eaf1 .subtitle .em { color: #4dd0ff; font-weight: 600; margin: 0 4px; }
+      #scene-04-a3eaf1 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-04-a3eaf1 .panel-deg {
+        position: absolute; left: 200px; top: 130px; text-align: center; z-index: 8;
+      }
+      #scene-04-a3eaf1 .panel-rad {
+        position: absolute; right: 200px; top: 130px; text-align: center; z-index: 8;
+      }
+      #scene-04-a3eaf1 .pd-badge, #scene-04-a3eaf1 .pr-badge {
+        font-size: 22px; font-weight: 700; letter-spacing: 0.3em;
+        padding: 8px 20px; border-radius: 8px;
+      }
+      #scene-04-a3eaf1 .pd-badge {
+        color: #fbbf24; border: 1px solid rgba(251,191,36,0.4);
+        background: rgba(251,191,36,0.08);
+      }
+      #scene-04-a3eaf1 .pr-badge {
+        color: #4dd0ff; border: 1px solid rgba(77,208,255,0.4);
+        background: rgba(77,208,255,0.08);
+      }
+      #scene-04-a3eaf1 .pd-desc, #scene-04-a3eaf1 .pr-desc {
+        margin-top: 8px; font-size: 18px; color: #8da1c7; letter-spacing: 0.1em;
+      }
+      #scene-04-a3eaf1 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 34px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+      }
+      #scene-04-a3eaf1 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-04-a3eaf1 .em-cyan { color: #4dd0ff; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-05-36ee73 (offset=57s, dur=17s) ================== -->
+
+  <div id="scene-05-36ee73" data-composition-id="scene-05-36ee73" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 05</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">为什么弧度是默认</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <!-- Big title -->
+    <div class="hero-title">弧度更自然</div>
+
+    <!-- Formula comparison cards -->
+    <div class="cards-wrap">
+      <!-- Good card: radians -->
+      <div class="card card-good">
+        <div class="card-badge good-badge">弧度制 ✓</div>
+        <div class="card-formula">
+          <span class="df">d</span><span class="dx">/dx</span>
+          <span class="func cyan">(sin x)</span>
+          <span class="eq"> = </span>
+          <span class="result cyan">cos x</span>
+        </div>
+        <div class="card-note">导数公式干净，无多余系数</div>
+      </div>
+
+      <!-- VS divider -->
+      <div class="vs-badge">VS</div>
+
+      <!-- Bad card: degrees -->
+      <div class="card card-bad">
+        <div class="card-badge bad-badge">度数制 ✗</div>
+        <div class="card-formula">
+          <span class="df">d</span><span class="dx">/dx</span>
+          <span class="func red">(sin x°)</span>
+          <span class="eq"> = </span>
+          <span class="result red strike">(π/180) cos x°</span>
+        </div>
+        <div class="card-note">多出一个系数 π/180，公式变复杂</div>
+      </div>
+    </div>
+
+    <!-- Insight box -->
+    <div class="insight">
+      <div class="insight-icon">∴</div>
+      <div class="insight-text">
+        <div class="insight-main">弧度让微积分公式保持最简形式</div>
+        <div class="insight-sub">这是数学选择弧度作为默认单位的根本原因</div>
+      </div>
+    </div>
+
+    <!-- SVG decorative element: derivative visualization -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s05-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Decorative sine wave (right side, subtle) -->
+      <g class="deco-wave" opacity="0.15" transform="translate(1600, 540)">
+        <path d="M -200 0 C -150 -120, -100 -120, -50 0 C 0 120, 50 120, 100 0 C 150 -120, 200 -120, 250 0"
+              fill="none" stroke="#4dd0ff" stroke-width="3"/>
+        <path d="M -200 0 C -150 -80, -100 -80, -50 0 C 0 80, 50 80, 100 0 C 150 -80, 200 -80, 250 0"
+              fill="none" stroke="#ff4d8f" stroke-width="3" transform="translate(0, 40)"/>
+      </g>
+      <!-- Decorative grid lines -->
+      <g class="deco-grid" stroke="#1e2c45" stroke-width="1" opacity="0.4">
+        <line x1="0" y1="200" x2="1920" y2="200"/>
+        <line x1="0" y1="400" x2="1920" y2="400"/>
+        <line x1="0" y1="600" x2="1920" y2="600"/>
+        <line x1="0" y1="800" x2="1920" y2="800"/>
+      </g>
+    </svg>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">用弧度时，<em class="em-cyan">d/dx(sin x) = cos x</em>，公式最简洁</span>
+    </div>
+
+    <style>
+      #scene-05-36ee73 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-05-36ee73 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 700px at 50% 45%, rgba(77,208,255,0.15), transparent 60%),
+          radial-gradient(ellipse 600px 500px at 15% 25%, rgba(77,208,255,0.08), transparent 65%),
+          radial-gradient(ellipse 600px 500px at 85% 75%, rgba(255,77,143,0.08), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-05-36ee73 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        pointer-events: none;
+      }
+      #scene-05-36ee73 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-05-36ee73 .orb {
+        position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      }
+      #scene-05-36ee73 .orb-a {
+        width: 600px; height: 600px; left: -200px; top: -200px;
+        background: radial-gradient(circle, rgba(77,208,255,0.3), transparent 70%);
+      }
+      #scene-05-36ee73 .orb-b {
+        width: 500px; height: 500px; right: -160px; bottom: -160px;
+        background: radial-gradient(circle, rgba(255,77,143,0.22), transparent 70%);
+      }
+      #scene-05-36ee73 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-05-36ee73 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-05-36ee73 .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-05-36ee73 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-05-36ee73 .ch-sep { color: #5b6e93; }
+      #scene-05-36ee73 .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-05-36ee73 .hero-title {
+        position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+        font-size: 140px; font-weight: 900; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 40%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center; z-index: 10; white-space: nowrap;
+      }
+      #scene-05-36ee73 .cards-wrap {
+        position: absolute; top: 330px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 48px; z-index: 10;
+      }
+      #scene-05-36ee73 .card {
+        width: 620px; padding: 36px 40px; border-radius: 20px;
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      }
+      #scene-05-36ee73 .card-good {
+        background: rgba(10,28,36,0.8);
+        border: 1.5px solid rgba(77,208,255,0.4);
+        box-shadow: 0 0 60px rgba(77,208,255,0.12), 0 24px 64px rgba(0,0,0,0.5);
+      }
+      #scene-05-36ee73 .card-bad {
+        background: rgba(28,10,18,0.8);
+        border: 1.5px solid rgba(255,77,143,0.25);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+        opacity: 0.85;
+      }
+      #scene-05-36ee73 .card-badge {
+        font-size: 18px; font-weight: 700; letter-spacing: 0.2em;
+        padding: 6px 16px; border-radius: 6px; display: inline-block; margin-bottom: 20px;
+      }
+      #scene-05-36ee73 .good-badge { color: #4dd0ff; background: rgba(77,208,255,0.1); border: 1px solid rgba(77,208,255,0.3); }
+      #scene-05-36ee73 .bad-badge { color: #ff4d8f; background: rgba(255,77,143,0.08); border: 1px solid rgba(255,77,143,0.25); }
+      #scene-05-36ee73 .card-formula {
+        font-family: "Georgia", "Times New Roman", serif; font-style: italic;
+        font-size: 44px; font-weight: 600; letter-spacing: 0.02em;
+        display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px;
+        margin-bottom: 16px;
+      }
+      #scene-05-36ee73 .df { color: #d7e3f2; font-size: 40px; }
+      #scene-05-36ee73 .dx { color: #8da1c7; font-size: 32px; }
+      #scene-05-36ee73 .func { font-size: 40px; }
+      #scene-05-36ee73 .eq { color: #8da1c7; font-size: 36px; margin: 0 4px; }
+      #scene-05-36ee73 .result { font-size: 44px; font-weight: 700; }
+      #scene-05-36ee73 .cyan { color: #4dd0ff; }
+      #scene-05-36ee73 .red { color: #ff4d8f; }
+      #scene-05-36ee73 .strike {
+        text-decoration: line-through;
+        text-decoration-color: rgba(255,77,143,0.8);
+        text-decoration-thickness: 3px;
+        opacity: 0.7;
+      }
+      #scene-05-36ee73 .card-note {
+        font-size: 20px; color: #8da1c7; letter-spacing: 0.05em;
+      }
+      #scene-05-36ee73 .vs-badge {
+        font-family: "JetBrains Mono", monospace; font-size: 36px; font-weight: 900;
+        color: #5b6e93; letter-spacing: 0.1em;
+        padding: 16px 20px; border: 1px solid rgba(91,110,147,0.3);
+        border-radius: 12px; background: rgba(10,18,36,0.5);
+        flex-shrink: 0;
+      }
+      #scene-05-36ee73 .insight {
+        position: absolute; bottom: 160px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 24px;
+        padding: 24px 40px;
+        background: rgba(10,18,36,0.75);
+        border: 1px solid rgba(77,208,255,0.2); border-radius: 16px;
+        backdrop-filter: blur(12px); z-index: 10;
+        max-width: 900px;
+      }
+      #scene-05-36ee73 .insight-icon {
+        font-size: 60px; color: #4dd0ff; font-family: "Georgia", serif;
+        line-height: 1; flex-shrink: 0;
+        text-shadow: 0 0 20px rgba(77,208,255,0.5);
+      }
+      #scene-05-36ee73 .insight-main {
+        font-size: 28px; font-weight: 700; color: #f1f5f9; letter-spacing: 0.05em;
+        margin-bottom: 6px;
+      }
+      #scene-05-36ee73 .insight-sub {
+        font-size: 20px; color: #8da1c7; letter-spacing: 0.05em;
+      }
+      #scene-05-36ee73 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-05-36ee73 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 24px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 14px 30px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+      }
+      #scene-05-36ee73 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-05-36ee73 .em-cyan { color: #4dd0ff; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-06-15506c (offset=74s, dur=16s) ================== -->
+
+  <div id="scene-06-15506c" data-composition-id="scene-06-15506c" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 06</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">旋转的两个投影</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">06</span>
+        <span class="bar"></span>
+        <span class="label">TWO PROJECTIONS</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">同一个</span>
+        <span class="t2">运动</span>
+      </h1>
+      <div class="subtitle">两条曲线,<em class="em">一个来源</em></div>
+    </div>
+
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s06-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s06-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="14" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s06-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- LEFT: Tilted ellipse (3D perspective unit circle) centered at (420, 560) -->
+      <g class="ellipse-group" transform="translate(420, 560)">
+        <circle cx="0" cy="0" r="280" fill="url(#s06-halo)"/>
+        <!-- Tilted ellipse (perspective) -->
+        <ellipse class="tilt-ellipse" cx="0" cy="0" rx="220" ry="100"
+                 fill="none" stroke="#4dd0ff" stroke-width="3"
+                 transform="rotate(-20)"
+                 stroke-dasharray="1005" stroke-dashoffset="1005"
+                 filter="url(#s06-glow)"/>
+        <!-- Vertical axis of ellipse -->
+        <line x1="0" y1="-280" x2="0" y2="280" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+        <!-- Horizontal axis -->
+        <line x1="-280" y1="0" x2="280" y2="0" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+        <!-- Rotating point on ellipse at ~60 degrees -->
+        <!-- At 60 deg on ellipse rx=220 ry=100 rotated -20: approximate position -->
+        <circle class="ellipse-point-halo" cx="80" cy="-130" r="22" fill="#fbbf24" opacity="0.35" filter="url(#s06-glow-strong)"/>
+        <circle class="ellipse-point" cx="80" cy="-130" r="10" fill="#fbbf24" stroke="#ffffff" stroke-width="2.5"/>
+        <!-- Projection lines from point -->
+        <line class="proj-x" x1="80" y1="-130" x2="80" y2="0" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6 5" opacity="0.8"/>
+        <line class="proj-y" x1="80" y1="-130" x2="0" y2="-130" stroke="#ff4d8f" stroke-width="2" stroke-dasharray="6 5" opacity="0.8"/>
+        <!-- Projection dots -->
+        <circle class="proj-dot-x" cx="80" cy="0" r="7" fill="#fbbf24" filter="url(#s06-glow)"/>
+        <circle class="proj-dot-y" cx="0" cy="-130" r="7" fill="#ff4d8f" filter="url(s06-glow)"/>
+        <!-- Labels -->
+        <text x="0" y="-310" fill="#4dd0ff" font-size="26" text-anchor="middle" font-family="PingFang SC, sans-serif" letter-spacing="0.1em">单位圆 (3D视角)</text>
+        <text x="100" y="30" fill="#fbbf24" font-size="22" font-style="italic" font-family="Georgia, serif">cos</text>
+        <text x="-50" y="-140" fill="#ff4d8f" font-size="22" font-style="italic" font-family="Georgia, serif">sin</text>
+      </g>
+
+      <!-- Arrow connecting left to right -->
+      <g class="arrow-group" transform="translate(760, 560)">
+        <line x1="0" y1="0" x2="120" y2="0" stroke="#5b6e93" stroke-width="2" opacity="0.7"/>
+        <polygon points="120,0 100,-8 100,8" fill="#5b6e93" opacity="0.7"/>
+        <text x="60" y="-16" fill="#8da1c7" font-size="20" text-anchor="middle" letter-spacing="0.1em">展开</text>
+      </g>
+
+      <!-- RIGHT: Time axis with sin and cos waves, starting at x=920 -->
+      <g class="waves-group" transform="translate(920, 560)">
+        <!-- Time axis -->
+        <line class="time-axis" x1="0" y1="0" x2="860" y2="0" stroke="#5b6e93" stroke-width="1.5" opacity="0.8"/>
+        <polygon points="860,0 840,-7 840,7" fill="#5b6e93" opacity="0.8"/>
+        <text x="876" y="8" fill="#8da1c7" font-size="24" font-style="italic" font-family="Georgia, serif">t</text>
+
+        <!-- Y axis -->
+        <line x1="0" y1="-280" x2="0" y2="280" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+
+        <!-- Tick marks at π, 2π -->
+        <line x1="215" y1="-8" x2="215" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="430" y1="-8" x2="430" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="645" y1="-8" x2="645" y2="8" stroke="#5b6e93" stroke-width="1.5"/>
+        <text x="215" y="32" fill="#8da1c7" font-size="20" text-anchor="middle" font-family="Georgia, serif" font-style="italic">π</text>
+        <text x="430" y="32" fill="#8da1c7" font-size="20" text-anchor="middle" font-family="Georgia, serif" font-style="italic">2π</text>
+
+        <!-- cos wave (amber) — draws in via stroke-dashoffset -->
+        <path class="cos-wave" d="M 0 -200 C 53.75 -200, 53.75 200, 107.5 200 C 161.25 200, 161.25 -200, 215 -200 C 268.75 -200, 268.75 200, 322.5 200 C 376.25 200, 376.25 -200, 430 -200 C 483.75 -200, 483.75 200, 537.5 200 C 591.25 200, 591.25 -200, 645 -200 C 698.75 -200, 698.75 200, 752.5 200 C 806.25 200, 806.25 -200, 860 -200"
+              fill="none" stroke="#fbbf24" stroke-width="4"
+              stroke-dasharray="2400" stroke-dashoffset="2400"
+              filter="url(#s06-glow)"/>
+
+        <!-- sin wave (magenta) — draws in via stroke-dashoffset -->
+        <path class="sin-wave" d="M 0 0 C 53.75 -200, 53.75 -200, 107.5 0 C 161.25 200, 161.25 200, 215 0 C 268.75 -200, 268.75 -200, 322.5 0 C 376.25 200, 376.25 200, 430 0 C 483.75 -200, 483.75 -200, 537.5 0 C 591.25 200, 591.25 200, 645 0 C 698.75 -200, 698.75 -200, 752.5 0 C 806.25 200, 806.25 200, 860 0"
+              fill="none" stroke="#ff4d8f" stroke-width="4"
+              stroke-dasharray="2400" stroke-dashoffset="2400"
+              filter="url(#s06-glow)"/>
+
+        <!-- Wave labels -->
+        <text class="cos-wave-lbl" x="860" y="-215" fill="#fbbf24" font-size="28" font-weight="700" font-style="italic" font-family="Georgia, serif">cos θ</text>
+        <text class="sin-wave-lbl" x="860" y="-15" fill="#ff4d8f" font-size="28" font-weight="700" font-style="italic" font-family="Georgia, serif">sin θ</text>
+      </g>
+    </svg>
+
+    <!-- Bottom label -->
+    <div class="bottom-label">同一个运动的两面</div>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">x 坐标 → <em class="em-amber">cos 曲线</em>，y 坐标 → <em class="em-magenta">sin 曲线</em></span>
+    </div>
+
+    <style>
+      #scene-06-15506c {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-06-15506c .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 800px 600px at 25% 55%, rgba(77,208,255,0.16), transparent 60%),
+          radial-gradient(ellipse 900px 600px at 75% 55%, rgba(255,77,143,0.1), transparent 60%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-06-15506c .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        pointer-events: none;
+      }
+      #scene-06-15506c .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-06-15506c .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-06-15506c .orb-a {
+        width: 500px; height: 500px; left: -160px; top: -160px;
+        background: radial-gradient(circle, rgba(77,208,255,0.3), transparent 70%);
+      }
+      #scene-06-15506c .orb-b {
+        width: 580px; height: 580px; right: -200px; bottom: -200px;
+        background: radial-gradient(circle, rgba(255,77,143,0.22), transparent 70%);
+      }
+      #scene-06-15506c .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-06-15506c .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-06-15506c .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-06-15506c .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-06-15506c .ch-sep { color: #5b6e93; }
+      #scene-06-15506c .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-06-15506c .header {
+        position: absolute; top: 130px; left: 100px; z-index: 10; max-width: 600px;
+      }
+      #scene-06-15506c .eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 18px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-06-15506c .eyebrow .num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 20px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px;
+      }
+      #scene-06-15506c .eyebrow .bar {
+        display: inline-block; width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-06-15506c .title {
+        margin-top: 16px; font-size: 120px; font-weight: 800;
+        line-height: 0.98; letter-spacing: -0.02em;
+        display: flex; gap: 16px; align-items: baseline;
+      }
+      #scene-06-15506c .title .t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-06-15506c .title .t2 {
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 50%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; font-weight: 900;
+      }
+      #scene-06-15506c .subtitle {
+        margin-top: 14px; font-size: 26px; color: #9fb0cc; letter-spacing: 0.05em;
+      }
+      #scene-06-15506c .subtitle .em { color: #4dd0ff; font-weight: 600; margin: 0 4px; }
+      #scene-06-15506c .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-06-15506c .bottom-label {
+        position: absolute; left: 50%; bottom: 140px; transform: translateX(-50%);
+        font-size: 32px; font-weight: 700; letter-spacing: 0.3em;
+        color: #4dd0ff; text-shadow: 0 0 20px rgba(77,208,255,0.4);
+        z-index: 10; white-space: nowrap;
+      }
+      #scene-06-15506c .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 34px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+      }
+      #scene-06-15506c .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-06-15506c .em-amber { color: #fbbf24; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-06-15506c .em-magenta { color: #ff4d8f; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-07-e99741 (offset=90s, dur=15s) ================== -->
+
+  <div id="scene-07-e99741" data-composition-id="scene-07-e99741" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 07</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">相位差 90 度的来源</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <div class="header">
+      <div class="eyebrow">
+        <span class="num">07</span>
+        <span class="bar"></span>
+        <span class="label">PHASE SHIFT</span>
+      </div>
+      <h1 class="title">
+        <span class="t1">相位差</span>
+        <span class="t2">π/2</span>
+      </h1>
+      <div class="subtitle">cos 先到峰值，sin <em class="em">慢四分之一圈</em></div>
+    </div>
+
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s07-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s07-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="12" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Wave display area, centered vertically at y=540 -->
+      <!-- Axes -->
+      <line class="t-axis" x1="200" y1="540" x2="1780" y2="540" stroke="#5b6e93" stroke-width="1.5" opacity="0.8"/>
+      <polygon points="1780,540 1760,533 1760,547" fill="#5b6e93" opacity="0.8"/>
+      <text x="1796" y="548" fill="#8da1c7" font-size="24" font-style="italic" font-family="Georgia, serif">t</text>
+
+      <!-- Y axis -->
+      <line x1="240" y1="260" x2="240" y2="820" stroke="#5b6e93" stroke-width="1.2" opacity="0.6"/>
+
+      <!-- Tick marks: 0, π/2, π, 3π/2, 2π -->
+      <!-- Period = 4 * (π/2 segments). Let 1 segment = 190px. So π/2 at 430, π at 620, 3π/2 at 810, 2π at 1000 -->
+      <g fill="#8da1c7" font-size="22" font-family="Georgia, serif" font-style="italic">
+        <line x1="430" y1="533" x2="430" y2="547" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="620" y1="533" x2="620" y2="547" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="810" y1="533" x2="810" y2="547" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="1000" y1="533" x2="1000" y2="547" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="1190" y1="533" x2="1190" y2="547" stroke="#5b6e93" stroke-width="1.5"/>
+        <line x1="1380" y1="533" x2="1380" y2="547" stroke="#5b6e93" stroke-width="1.5"/>
+        <text x="430" y="572" text-anchor="middle">π/2</text>
+        <text x="620" y="572" text-anchor="middle">π</text>
+        <text x="810" y="572" text-anchor="middle">3π/2</text>
+        <text x="1000" y="572" text-anchor="middle">2π</text>
+        <text x="1190" y="572" text-anchor="middle">5π/2</text>
+        <text x="1380" y="572" text-anchor="middle">3π</text>
+      </g>
+
+      <!-- cos wave (amber) — starts at peak (t=0, y=max) -->
+      <!-- cos: y = -200*cos(t), starting at -200 (peak up) at t=0 -->
+      <!-- Using cubic bezier approximation for cosine: period = 760px (2π) -->
+      <path class="cos-wave"
+            d="M 240 340 C 334 340, 334 740, 430 740 C 526 740, 526 340, 620 340 C 716 340, 716 740, 810 740 C 906 740, 906 340, 1000 340 C 1096 340, 1096 740, 1190 740 C 1286 740, 1286 340, 1380 340 C 1476 340, 1476 740, 1570 740"
+            fill="none" stroke="#fbbf24" stroke-width="5"
+            stroke-dasharray="3000" stroke-dashoffset="3000"
+            filter="url(#s07-glow)"/>
+
+      <!-- sin wave (magenta) — starts at 0 (t=0, y=0), peaks at π/2 -->
+      <!-- sin: y = -200*sin(t), starts at 0 -->
+      <path class="sin-wave"
+            d="M 240 540 C 334 340, 334 340, 430 540 C 526 740, 526 740, 620 540 C 716 340, 716 340, 810 540 C 906 740, 906 740, 1000 540 C 1096 340, 1096 340, 1190 540 C 1286 740, 1286 740, 1380 540 C 1476 340, 1476 340, 1570 540"
+            fill="none" stroke="#ff4d8f" stroke-width="5"
+            stroke-dasharray="3000" stroke-dashoffset="3000"
+            filter="url(#s07-glow)"/>
+
+      <!-- Peak markers -->
+      <!-- cos peak at t=0 (x=240) -->
+      <circle class="cos-peak" cx="240" cy="340" r="9" fill="#fbbf24" filter="url(#s07-glow-strong)"/>
+      <!-- sin peak at t=π/2 (x=430) -->
+      <circle class="sin-peak" cx="430" cy="340" r="9" fill="#ff4d8f" filter="url(#s07-glow-strong)"/>
+
+      <!-- Phase shift arrow -->
+      <g class="phase-arrow" transform="translate(240, 290)">
+        <line x1="0" y1="0" x2="190" y2="0" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+        <polygon points="190,0 170,-7 170,7" fill="#ffffff" opacity="0.8"/>
+        <polygon points="0,0 20,-7 20,7" fill="#ffffff" opacity="0.8"/>
+        <text x="95" y="-14" fill="#ffffff" font-size="24" text-anchor="middle" font-family="Georgia, serif" font-style="italic">π/2</text>
+      </g>
+
+      <!-- Phase shift label box -->
+      <g class="phase-label" transform="translate(335, 200)">
+        <rect x="-120" y="-30" width="240" height="60" rx="10"
+              fill="rgba(10,18,36,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="0" y="10" fill="#ffffff" font-size="26" text-anchor="middle" font-weight="700"
+              font-family="JetBrains Mono, monospace">相位差 π/2</text>
+      </g>
+
+      <!-- Wave labels on right -->
+      <text class="cos-lbl" x="1590" y="345" fill="#fbbf24" font-size="30" font-weight="700" font-style="italic" font-family="Georgia, serif">cos θ</text>
+      <text class="sin-lbl" x="1590" y="545" fill="#ff4d8f" font-size="30" font-weight="700" font-style="italic" font-family="Georgia, serif">sin θ</text>
+
+      <!-- Vertical dashed line at cos peak -->
+      <line class="peak-line-cos" x1="240" y1="340" x2="240" y2="540" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.6"/>
+      <!-- Vertical dashed line at sin peak -->
+      <line class="peak-line-sin" x1="430" y1="340" x2="430" y2="540" stroke="#ff4d8f" stroke-width="1.5" stroke-dasharray="6 5" opacity="0.6"/>
+    </svg>
+
+    <!-- Insight card -->
+    <div class="insight-card">
+      <div class="ic-icon">∵</div>
+      <div class="ic-body">
+        <div class="ic-main">x 先到最大 → cos 先到峰值</div>
+        <div class="ic-main">y 后到最大 → sin 慢 π/2</div>
+      </div>
+    </div>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text"><em class="em-amber">cos</em> 领先 <em class="em-magenta">sin</em> 恰好四分之一圈 — 这就是相位差 π/2 的几何来源</span>
+    </div>
+
+    <style>
+      #scene-07-e99741 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-07-e99741 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 800px 600px at 20% 50%, rgba(251,191,36,0.1), transparent 60%),
+          radial-gradient(ellipse 800px 600px at 80% 50%, rgba(255,77,143,0.1), transparent 60%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-07-e99741 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        pointer-events: none;
+      }
+      #scene-07-e99741 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-07-e99741 .orb {
+        position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+      }
+      #scene-07-e99741 .orb-a {
+        width: 480px; height: 480px; left: -140px; top: 100px;
+        background: radial-gradient(circle, rgba(251,191,36,0.25), transparent 70%);
+      }
+      #scene-07-e99741 .orb-b {
+        width: 480px; height: 480px; right: -140px; top: 100px;
+        background: radial-gradient(circle, rgba(255,77,143,0.25), transparent 70%);
+      }
+      #scene-07-e99741 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-07-e99741 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-07-e99741 .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-07-e99741 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-07-e99741 .ch-sep { color: #5b6e93; }
+      #scene-07-e99741 .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-07-e99741 .header {
+        position: absolute; top: 130px; left: 100px; z-index: 10; max-width: 600px;
+      }
+      #scene-07-e99741 .eyebrow {
+        display: flex; align-items: center; gap: 18px;
+        font-size: 18px; letter-spacing: 0.32em; color: #8da1c7; font-weight: 500;
+      }
+      #scene-07-e99741 .eyebrow .num {
+        color: #fbbf24; font-family: "JetBrains Mono", monospace; font-size: 20px;
+        padding: 4px 10px; border: 1px solid rgba(251,191,36,0.35); border-radius: 4px;
+      }
+      #scene-07-e99741 .eyebrow .bar {
+        display: inline-block; width: 48px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-07-e99741 .title {
+        margin-top: 16px; font-size: 110px; font-weight: 800;
+        line-height: 0.98; letter-spacing: -0.02em;
+        display: flex; gap: 16px; align-items: baseline;
+      }
+      #scene-07-e99741 .title .t1 { color: #d9e4f5; font-weight: 200; }
+      #scene-07-e99741 .title .t2 {
+        background: linear-gradient(135deg, #fbbf24 0%, #ffffff 50%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; font-weight: 900;
+        font-family: "Georgia", serif; font-style: italic;
+      }
+      #scene-07-e99741 .subtitle {
+        margin-top: 14px; font-size: 26px; color: #9fb0cc; letter-spacing: 0.05em;
+      }
+      #scene-07-e99741 .subtitle .em { color: #ff4d8f; font-weight: 600; margin: 0 4px; }
+      #scene-07-e99741 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-07-e99741 .insight-card {
+        position: absolute; right: 80px; top: 200px;
+        display: flex; align-items: flex-start; gap: 20px;
+        padding: 24px 28px;
+        background: rgba(10,18,36,0.78);
+        border: 1px solid rgba(77,208,255,0.2); border-radius: 16px;
+        backdrop-filter: blur(12px); z-index: 10; max-width: 380px;
+      }
+      #scene-07-e99741 .ic-icon {
+        font-size: 52px; color: #4dd0ff; font-family: "Georgia", serif;
+        line-height: 1; flex-shrink: 0;
+        text-shadow: 0 0 18px rgba(77,208,255,0.5);
+      }
+      #scene-07-e99741 .ic-main {
+        font-size: 22px; color: #d7e3f2; letter-spacing: 0.05em;
+        margin-bottom: 10px; line-height: 1.5;
+      }
+      #scene-07-e99741 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 24px; color: #e2e8f0; letter-spacing: 0.05em;
+        padding: 14px 30px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+        white-space: nowrap;
+      }
+      #scene-07-e99741 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-07-e99741 .em-amber { color: #fbbf24; font-weight: 700; font-style: italic; margin: 0 4px; }
+      #scene-07-e99741 .em-magenta { color: #ff4d8f; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    
+  </div>
+
+  <!-- ================== scene-08-4d28db (offset=105s, dur=15s) ================== -->
+
+  <div id="scene-08-4d28db" data-composition-id="scene-08-4d28db" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 08</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">收尾</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <!-- Decorative rotating unit circle (upper right) -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s08-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s08-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="16" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s08-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s08-point" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#fff6cc"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </radialGradient>
+        <!-- Fade to black gradient for exit -->
+        <linearGradient id="s08-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#030610" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#030610" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Decorative grid -->
+      <g class="deco-grid" stroke="#1e2c45" stroke-width="1" opacity="0.3">
+        <line x1="0" y1="270" x2="1920" y2="270"/>
+        <line x1="0" y1="540" x2="1920" y2="540"/>
+        <line x1="0" y1="810" x2="1920" y2="810"/>
+        <line x1="480" y1="0" x2="480" y2="1080"/>
+        <line x1="960" y1="0" x2="960" y2="1080"/>
+        <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      </g>
+
+      <!-- Decorative unit circle (upper right, large, subtle) -->
+      <g class="deco-circle" transform="translate(1580, 280)">
+        <circle cx="0" cy="0" r="320" fill="url(#s08-halo)"/>
+        <circle cx="0" cy="0" r="240" fill="none" stroke="#4dd0ff" stroke-width="2" opacity="0.35" filter="url(#s08-glow)"/>
+        <!-- Ghost rings -->
+        <circle cx="0" cy="0" r="180" fill="none" stroke="#253856" stroke-width="1" opacity="0.4"/>
+        <circle cx="0" cy="0" r="290" fill="none" stroke="#1e2c45" stroke-width="1" opacity="0.3"/>
+        <!-- Axes -->
+        <line x1="-300" y1="0" x2="300" y2="0" stroke="#5b6e93" stroke-width="1" opacity="0.5"/>
+        <line x1="0" y1="-300" x2="0" y2="300" stroke="#5b6e93" stroke-width="1" opacity="0.5"/>
+        <!-- Rotating radius line at ~45 degrees -->
+        <line class="deco-radius" x1="0" y1="0" x2="170" y2="-170" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+        <!-- Rotating point -->
+        <circle class="deco-point-halo" cx="170" cy="-170" r="20" fill="#fbbf24" opacity="0.3" filter="url(#s08-glow-strong)"/>
+        <circle class="deco-point" cx="170" cy="-170" r="9" fill="url(#s08-point)" stroke="#fbbf24" stroke-width="2.5"/>
+        <!-- cos/sin projections (subtle) -->
+        <line x1="170" y1="-170" x2="170" y2="0" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.4"/>
+        <line x1="170" y1="-170" x2="0" y2="-170" stroke="#ff4d8f" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.4"/>
+      </g>
+
+      <!-- Fade overlay for exit (last scene) -->
+      <rect class="fade-overlay" x="0" y="0" width="1920" height="1080" fill="url(#s08-fade)" opacity="0"/>
+    </svg>
+
+    <!-- Main quote text -->
+    <div class="quote-wrap">
+      <div class="quote-line1">公式</div>
+      <div class="quote-line2">变成几何</div>
+      <div class="quote-accent"></div>
+    </div>
+
+    <!-- Key insight cards -->
+    <div class="insights">
+      <div class="insight-item">
+        <span class="ii-icon cyan">○</span>
+        <span class="ii-text">单位圆上的坐标 = 三角函数的本质</span>
+      </div>
+      <div class="insight-item">
+        <span class="ii-icon amber">→</span>
+        <span class="ii-text">cos θ = x 坐标，sin θ = y 坐标</span>
+      </div>
+      <div class="insight-item">
+        <span class="ii-icon magenta">∿</span>
+        <span class="ii-text">两条波形，来自同一个旋转运动</span>
+      </div>
+    </div>
+
+    <!-- Bottom caption / closing statement -->
+    <div class="closing">
+      <div class="closing-inner">
+        <span class="cl-dot"></span>
+        <span class="cl-text">三角函数不是要背的符号 — 看清这一点，公式就变成了几何</span>
+      </div>
+    </div>
+
+    <style>
+      #scene-08-4d28db {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-08-4d28db .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1200px 800px at 35% 50%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 600px at 85% 30%, rgba(77,208,255,0.1), transparent 60%),
+          radial-gradient(ellipse 600px 500px at 15% 80%, rgba(255,77,143,0.08), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-08-4d28db .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.75) 100%);
+        pointer-events: none;
+      }
+      #scene-08-4d28db .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-08-4d28db .orb {
+        position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      }
+      #scene-08-4d28db .orb-a {
+        width: 700px; height: 700px; left: -250px; top: -250px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
+      }
+      #scene-08-4d28db .orb-b {
+        width: 600px; height: 600px; right: -200px; bottom: -200px;
+        background: radial-gradient(circle, rgba(255,77,143,0.2), transparent 70%);
+      }
+      #scene-08-4d28db .orb-c {
+        width: 400px; height: 400px; left: 40%; top: 60%;
+        background: radial-gradient(circle, rgba(251,191,36,0.1), transparent 70%);
+      }
+      #scene-08-4d28db .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-08-4d28db .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-08-4d28db .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-08-4d28db .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-08-4d28db .ch-sep { color: #5b6e93; }
+      #scene-08-4d28db .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-08-4d28db .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      /* Main quote */
+      #scene-08-4d28db .quote-wrap {
+        position: absolute; top: 160px; left: 120px; z-index: 10;
+      }
+      #scene-08-4d28db .quote-line1 {
+        font-size: 100px; font-weight: 200; color: #d9e4f5;
+        letter-spacing: -0.01em; line-height: 1.0;
+      }
+      #scene-08-4d28db .quote-line2 {
+        font-size: 160px; font-weight: 900; line-height: 0.95;
+        letter-spacing: -0.03em;
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 35%, #4dd0ff 70%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      #scene-08-4d28db .quote-accent {
+        margin-top: 20px; width: 0; height: 4px;
+        background: linear-gradient(90deg, #4dd0ff, #ff4d8f, transparent);
+        border-radius: 2px;
+      }
+      /* Insight items */
+      #scene-08-4d28db .insights {
+        position: absolute; left: 120px; bottom: 200px; z-index: 10;
+        display: flex; flex-direction: column; gap: 20px;
+      }
+      #scene-08-4d28db .insight-item {
+        display: flex; align-items: center; gap: 20px;
+        font-size: 26px; color: #d7e3f2; letter-spacing: 0.05em;
+      }
+      #scene-08-4d28db .ii-icon {
+        font-size: 32px; font-weight: 700; width: 40px; text-align: center;
+        flex-shrink: 0;
+      }
+      #scene-08-4d28db .ii-icon.cyan { color: #4dd0ff; text-shadow: 0 0 14px rgba(77,208,255,0.6); }
+      #scene-08-4d28db .ii-icon.amber { color: #fbbf24; text-shadow: 0 0 14px rgba(251,191,36,0.6); }
+      #scene-08-4d28db .ii-icon.magenta { color: #ff4d8f; text-shadow: 0 0 14px rgba(255,77,143,0.6); }
+      /* Closing caption */
+      #scene-08-4d28db .closing {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        z-index: 10;
+      }
+      #scene-08-4d28db .closing-inner {
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.65); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px);
+        white-space: nowrap;
+      }
+      #scene-08-4d28db .cl-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff; flex-shrink: 0;
+      }
+    </style>
+
+    
+  </div>
+
+
+  </div>
+
+
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    const __master = gsap.timeline({ paused: true });
+
+    // Scene visibility: each scene root is display:none except during
+    // its own time window. Using display (not opacity/visibility) so
+    // that hidden scenes genuinely don't render and can't interfere
+    // with the active scene. GSAP set() at specific times will update
+    // display when master.seek() is called.
+    //
+    // Initial state: all scenes hidden (CSS default via display:none on
+    // body > [data-composition-id^="scene-"] won't work because the
+    // wrapping is inside #root). We use GSAP set at t=0 for all.
+    __master.set('[data-composition-id="scene-01-10ce9a"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-01-10ce9a"]', { display: 'block' }, 0);
+    __master.set('[data-composition-id="scene-01-10ce9a"]', { display: 'none' }, 12);
+    __master.set('[data-composition-id="scene-02-e043d9"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-02-e043d9"]', { display: 'block' }, 12);
+    __master.set('[data-composition-id="scene-02-e043d9"]', { display: 'none' }, 27);
+    __master.set('[data-composition-id="scene-03-41d3a0"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-03-41d3a0"]', { display: 'block' }, 27);
+    __master.set('[data-composition-id="scene-03-41d3a0"]', { display: 'none' }, 43);
+    __master.set('[data-composition-id="scene-04-a3eaf1"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-04-a3eaf1"]', { display: 'block' }, 43);
+    __master.set('[data-composition-id="scene-04-a3eaf1"]', { display: 'none' }, 57);
+    __master.set('[data-composition-id="scene-05-36ee73"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-05-36ee73"]', { display: 'block' }, 57);
+    __master.set('[data-composition-id="scene-05-36ee73"]', { display: 'none' }, 74);
+    __master.set('[data-composition-id="scene-06-15506c"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-06-15506c"]', { display: 'block' }, 74);
+    __master.set('[data-composition-id="scene-06-15506c"]', { display: 'none' }, 90);
+    __master.set('[data-composition-id="scene-07-e99741"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-07-e99741"]', { display: 'block' }, 90);
+    __master.set('[data-composition-id="scene-07-e99741"]', { display: 'none' }, 105);
+    __master.set('[data-composition-id="scene-08-4d28db"]', { display: 'none' }, 0);
+    __master.set('[data-composition-id="scene-08-4d28db"]', { display: 'block' }, 105);
+    __master.set('[data-composition-id="scene-08-4d28db"]', { display: 'none' }, 120);
+
+
+// --- Scene 1 (scene-01-10ce9a) --- offset=0s dur=12s
+(function() {
+
       window.__timelines = window.__timelines || {};
-      const tl = gsap.timeline({ paused: true });
-      // Example: tl.from("#title", { opacity: 0, y: -50, duration: 1 }, 0);
-      window.__timelines["main"] = tl;
-    </script>
-  </body>
+      const tl_s00 = gsap.timeline({ });
+      const ID = '#scene-01-10ce9a';
+
+      tl_s00.fromTo(ID + ' .p01-bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s00.fromTo(ID + ' .p01-orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0);
+      tl_s00.fromTo(ID + ' .p01-orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0.2);
+
+      tl_s00.fromTo(ID + ' .p01-ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s00.fromTo(ID + ' .p01-ch-text', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.5);
+
+      tl_s00.fromTo(ID + ' .p01-q1', { opacity: 0, y: 30, rotation: -8 }, { opacity: 1, y: 0, rotation: 0, duration: 1.0, ease: 'power3.out' }, 0.8);
+      tl_s00.fromTo(ID + ' .p01-q2', { opacity: 0, y: 30, rotation: 10 }, { opacity: 1, y: 0, rotation: 6, duration: 1.1, ease: 'power3.out' }, 1.0);
+      tl_s00.fromTo(ID + ' .p01-q3', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 1.2);
+      tl_s00.fromTo(ID + ' .p01-q4', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 1.0, ease: 'back.out(1.4)', transformOrigin: 'center' }, 1.4);
+      tl_s00.fromTo(ID + ' .p01-q5', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'back.out(1.4)', transformOrigin: 'center' }, 1.6);
+
+      tl_s00.fromTo(ID + ' .p01-eyebrow', { opacity: 0, y: 20, letterSpacing: '0.6em' }, { opacity: 1, y: 0, letterSpacing: '0.4em', duration: 0.9, ease: 'power3.out' }, 1.8);
+      tl_s00.fromTo(ID + ' .p01-t1', { opacity: 0, y: 60, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'expo.out' }, 2.2);
+      tl_s00.fromTo(ID + ' .p01-t2', { opacity: 0, y: 80, scale: 0.9, filter: 'blur(14px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.3, ease: 'expo.out', transformOrigin: 'center' }, 2.6);
+      tl_s00.fromTo(ID + ' .p01-accent', { width: 0 }, { width: 480, duration: 1.0, ease: 'power3.out' }, 3.8);
+
+      tl_s00.to([ID + ' .p01-q1', ID + ' .p01-q3', ID + ' .p01-q5'], { y: '-=14', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 4.5);
+      tl_s00.to([ID + ' .p01-q2', ID + ' .p01-q4'], { y: '+=12', duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 4.7);
+
+      tl_s00.fromTo(ID + ' .p01-hint', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 5.5);
+      tl_s00.fromTo(ID + ' .p01-hint-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 5.7);
+
+      tl_s00.to(ID + ' .p01-t2', { textShadow: '0 0 80px rgba(77,208,255,0.8)', duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 9.2);
+
+      tl_s00.set({}, {}, 12);
+      
+    
+  if (typeof tl_s00 !== 'undefined') {
+    __master.add(tl_s00, 0);
+  }
+})();
+
+// --- Scene 2 (scene-02-e043d9) --- offset=12s dur=15s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s01 = gsap.timeline({ });
+      const ID = '#scene-02-e043d9';
+
+      // Beat 0 — atmosphere
+      tl_s01.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0);
+      tl_s01.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, ease: 'power2.out', transformOrigin: 'center' }, 0);
+      tl_s01.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, ease: 'power2.out', transformOrigin: 'center' }, 0.2);
+      tl_s01.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+      tl_s01.fromTo(ID + ' .dot-grid', { opacity: 0 }, { opacity: 1, duration: 1.2 }, 0.4);
+
+      // Beat 1 — chapter badge + header
+      tl_s01.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, ease: 'power3.out', stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s01.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.5);
+      tl_s01.fromTo(ID + ' .eyebrow .num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.7);
+      tl_s01.fromTo(ID + ' .eyebrow .bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power3.out', transformOrigin: 'left center' }, 0.85);
+      tl_s01.fromTo(ID + ' .eyebrow .label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, 0.95);
+      tl_s01.fromTo(ID + ' .title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.1);
+      tl_s01.fromTo(ID + ' .title .t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 1.35);
+      tl_s01.fromTo(ID + ' .subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.9);
+
+      // Beat 2 — geometry materializes
+      tl_s01.fromTo(ID + ' .halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.3, ease: 'power2.out', transformOrigin: 'center' }, 2.0);
+      tl_s01.fromTo(ID + ' .ghost', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.9, ease: 'power2.out', stagger: 0.1, transformOrigin: 'center' }, 2.2);
+      tl_s01.fromTo(ID + ' .axis-x', { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'power3.out', transformOrigin: '820px 580px' }, 2.4);
+      tl_s01.fromTo(ID + ' .axis-y', { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: 'power3.out', transformOrigin: '820px 580px' }, 2.5);
+      tl_s01.fromTo(ID + ' .ax-arrow', { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 }, 3.2);
+      tl_s01.fromTo(ID + ' .ax-lbl', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, transformOrigin: 'center' }, 3.3);
+      tl_s01.fromTo(ID + ' .origin-dot', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2.4)', transformOrigin: 'center' }, 2.8);
+      tl_s01.fromTo(ID + ' .origin-lbl', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 3.0);
+      tl_s01.fromTo(ID + ' .ticks', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.3);
+
+      // Beat 3 — unit circle draws in (the hero moment)
+      tl_s01.fromTo(ID + ' .unit-circle',
+        { strokeDashoffset: 1885 },
+        { strokeDashoffset: 0, duration: 2.0, ease: 'power2.inOut' }, 3.0);
+
+      // Beat 4 — radius, angle, point P
+      tl_s01.fromTo(ID + ' .radius', { opacity: 0, scaleX: 0 }, { opacity: 0.9, scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '820px 580px' }, 5.2);
+      tl_s01.fromTo(ID + ' .radius-lbl', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.4 }, 5.75);
+      tl_s01.fromTo(ID + ' .arc', { opacity: 0, strokeDasharray: 100, strokeDashoffset: 100 }, { opacity: 1, strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }, 5.5);
+      tl_s01.fromTo(ID + ' .arc-lbl', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 5.9);
+      tl_s01.fromTo(ID + ' .point-halo', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(2.2)', transformOrigin: '1013px 350px' }, 5.8);
+      tl_s01.fromTo(ID + ' .point-p', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.8)', transformOrigin: '1013px 350px' }, 5.95);
+      tl_s01.to(ID + ' .point-halo', { scale: 1.35, opacity: 0.5, duration: 0.9, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: '1013px 350px' }, 6.5);
+      tl_s01.fromTo(ID + ' .point-lbl', { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, 6.2);
+
+      // Beat 5 — circle label + panel
+      tl_s01.fromTo(ID + ' .circle-label', { opacity: 0, y: 20, letterSpacing: '0.4em' }, { opacity: 1, y: 0, letterSpacing: '0.25em', duration: 0.8, ease: 'power3.out' }, 7.0);
+      tl_s01.fromTo(ID + ' .panel', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 7.5);
+      tl_s01.fromTo(ID + ' .panel-title', { opacity: 0, letterSpacing: '0.5em' }, { opacity: 1, letterSpacing: '0.35em', duration: 0.6 }, 7.9);
+      tl_s01.fromTo(ID + ' .panel-row', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.14, ease: 'power3.out' }, 8.1);
+
+      // Beat 6 — caption
+      tl_s01.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 9.5);
+      tl_s01.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 9.7);
+
+      // Subtle halo breathe
+      tl_s01.to(ID + ' .halo', { opacity: 1.2, duration: 1.0, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 11.5);
+
+      // Lock duration at 15s
+      tl_s01.set({}, {}, 15);
+      
+    
+  if (typeof tl_s01 !== 'undefined') {
+    __master.add(tl_s01, 12);
+  }
+})();
+
+// --- Scene 3 (scene-03-41d3a0) --- offset=27s dur=16s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s02 = gsap.timeline({ });
+      const ID = '#scene-03-41d3a0';
+
+      tl_s02.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s02.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl_s02.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl_s02.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      tl_s02.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s02.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+      tl_s02.fromTo(ID + ' .eyebrow .num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.7);
+      tl_s02.fromTo(ID + ' .eyebrow .bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left center' }, 0.85);
+      tl_s02.fromTo(ID + ' .eyebrow .label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, 0.95);
+      tl_s02.fromTo(ID + ' .title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.1);
+      tl_s02.fromTo(ID + ' .title .t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 1.35);
+      tl_s02.fromTo(ID + ' .subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.9);
+
+      // Circle and axes
+      tl_s02.fromTo(ID + ' .halo', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 1.2, transformOrigin: 'center' }, 2.0);
+      tl_s02.fromTo(ID + ' .axis-x', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '680px 560px' }, 2.3);
+      tl_s02.fromTo(ID + ' .axis-y', { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '680px 560px' }, 2.4);
+      tl_s02.fromTo(ID + ' .unit-circle', { opacity: 0 }, { opacity: 0.7, duration: 0.8 }, 2.8);
+
+      // Radius and point P
+      tl_s02.fromTo(ID + ' .radius', { opacity: 0, scaleX: 0 }, { opacity: 0.8, scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '680px 560px' }, 3.5);
+      tl_s02.fromTo(ID + ' .arc', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 3.9);
+      tl_s02.fromTo(ID + ' .point-halo', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(2.2)', transformOrigin: '820px 317.5px' }, 4.0);
+      tl_s02.fromTo(ID + ' .point-p', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.8)', transformOrigin: '820px 317.5px' }, 4.15);
+      tl_s02.fromTo(ID + ' .point-lbl', { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: 0.4 }, 4.5);
+
+      // cos projection (amber)
+      tl_s02.fromTo(ID + ' .cos-drop', { opacity: 0, scaleY: 0 }, { opacity: 0.9, scaleY: 1, duration: 0.6, ease: 'power2.out', transformOrigin: '820px 560px' }, 5.2);
+      tl_s02.fromTo(ID + ' .cos-seg', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '680px 560px' }, 5.6);
+      tl_s02.fromTo(ID + ' .cos-dot', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: '820px 560px' }, 6.1);
+      tl_s02.fromTo(ID + ' .cos-lbl', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, 6.2);
+
+      // sin projection (magenta)
+      tl_s02.fromTo(ID + ' .sin-drop', { opacity: 0, scaleX: 0 }, { opacity: 0.9, scaleX: 1, duration: 0.6, ease: 'power2.out', transformOrigin: '820px 317.5px' }, 6.8);
+      tl_s02.fromTo(ID + ' .sin-seg', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '680px 560px' }, 7.2);
+      tl_s02.fromTo(ID + ' .sin-dot', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: '680px 317.5px' }, 7.7);
+      tl_s02.fromTo(ID + ' .sin-lbl', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.5 }, 7.8);
+
+      // Formula card
+      tl_s02.fromTo(ID + ' .formula-card', { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 8.5);
+      tl_s02.fromTo(ID + ' .fc-title', { opacity: 0, letterSpacing: '0.5em' }, { opacity: 1, letterSpacing: '0.35em', duration: 0.6 }, 8.9);
+      tl_s02.fromTo(ID + ' .fc-row', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.15 }, 9.1);
+      tl_s02.fromTo(ID + ' .fc-divider', { scaleX: 0 }, { scaleX: 1, duration: 0.6, transformOrigin: 'center' }, 9.7);
+      tl_s02.fromTo(ID + ' .fc-formula', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, 9.9);
+      tl_s02.fromTo(ID + ' .fc-note', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 10.3);
+
+      // Caption
+      tl_s02.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 11.0);
+      tl_s02.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 11.2);
+
+      // Point pulse
+      tl_s02.to(ID + ' .point-halo', { scale: 1.3, opacity: 0.5, duration: 1.0, yoyo: true, repeat: 2, ease: 'sine.inOut', transformOrigin: '820px 317.5px' }, 12.0);
+
+      tl_s02.set({}, {}, 16);
+      
+    
+  if (typeof tl_s02 !== 'undefined') {
+    __master.add(tl_s02, 27);
+  }
+})();
+
+// --- Scene 4 (scene-04-a3eaf1) --- offset=43s dur=14s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s03 = gsap.timeline({ });
+      const ID = '#scene-04-a3eaf1';
+
+      tl_s03.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s03.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl_s03.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl_s03.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      tl_s03.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s03.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+      tl_s03.fromTo(ID + ' .eyebrow .num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.7);
+      tl_s03.fromTo(ID + ' .eyebrow .bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left center' }, 0.85);
+      tl_s03.fromTo(ID + ' .eyebrow .label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, 0.95);
+      tl_s03.fromTo(ID + ' .title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.1);
+      tl_s03.fromTo(ID + ' .title .t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 1.35);
+      tl_s03.fromTo(ID + ' .subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.9);
+
+      // Panel labels
+      tl_s03.fromTo(ID + ' .panel-deg', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 2.2);
+      tl_s03.fromTo(ID + ' .panel-rad', { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 2.2);
+
+      // Degrees circle draws in
+      tl_s03.fromTo(ID + ' .deg-circle', { strokeDasharray: 1382, strokeDashoffset: 1382 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 2.5);
+      tl_s03.fromTo(ID + ' .deg-ticks', { opacity: 0 }, { opacity: 0.6, duration: 0.6 }, 3.8);
+      tl_s03.fromTo(ID + ' .deg-arc', { strokeDashoffset: 1131 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 3.5);
+      tl_s03.fromTo(ID + ' .deg-label', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(1.8)', transformOrigin: 'center' }, 4.2);
+
+      // Radians circle draws in (slightly delayed)
+      tl_s03.fromTo(ID + ' .rad-circle', { strokeDasharray: 1382, strokeDashoffset: 1382 }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }, 3.0);
+      tl_s03.fromTo(ID + ' .rad-marks', { opacity: 0 }, { opacity: 0.8, duration: 0.6 }, 4.3);
+      tl_s03.fromTo(ID + ' .rad-arc', { strokeDashoffset: 1131 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 4.0);
+      tl_s03.fromTo(ID + ' .rad-label', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(1.8)', transformOrigin: 'center' }, 4.7);
+
+      // Equals sign
+      tl_s03.fromTo(ID + ' .eq-sign', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.7, ease: 'back.out(2)', transformOrigin: 'center' }, 5.5);
+
+      // Conversion formula
+      tl_s03.fromTo(ID + ' .conversion', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 6.5);
+
+      // Caption
+      tl_s03.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 8.0);
+      tl_s03.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 8.2);
+
+      // Subtle glow pulses
+      tl_s03.to(ID + ' .deg-circle', { opacity: 0.9, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.0);
+      tl_s03.to(ID + ' .rad-circle', { opacity: 0.9, duration: 0.8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.3);
+
+      tl_s03.set({}, {}, 14);
+      
+    
+  if (typeof tl_s03 !== 'undefined') {
+    __master.add(tl_s03, 43);
+  }
+})();
+
+// --- Scene 5 (scene-05-36ee73) --- offset=57s dur=17s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s04 = gsap.timeline({ });
+      const ID = '#scene-05-36ee73';
+
+      tl_s04.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s04.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl_s04.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl_s04.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+      tl_s04.fromTo(ID + ' .deco-grid', { opacity: 0 }, { opacity: 0.4, duration: 1.2 }, 0.3);
+
+      tl_s04.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s04.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+
+      // Hero title
+      tl_s04.fromTo(ID + ' .hero-title',
+        { opacity: 0, y: 60, filter: 'blur(12px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out' }, 0.8);
+
+      // Good card slides in from left
+      tl_s04.fromTo(ID + ' .card-good',
+        { opacity: 0, x: -80 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 2.2);
+      tl_s04.fromTo(ID + ' .good-badge',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'left center' }, 2.6);
+      tl_s04.fromTo(ID + ' .card-good .card-formula',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 2.9);
+      tl_s04.fromTo(ID + ' .card-good .card-note',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 }, 3.4);
+
+      // VS badge
+      tl_s04.fromTo(ID + ' .vs-badge',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: 'center' }, 3.8);
+
+      // Bad card slides in from right
+      tl_s04.fromTo(ID + ' .card-bad',
+        { opacity: 0, x: 80 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 4.2);
+      tl_s04.fromTo(ID + ' .bad-badge',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'left center' }, 4.6);
+      tl_s04.fromTo(ID + ' .card-bad .card-formula',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 4.9);
+      tl_s04.fromTo(ID + ' .card-bad .card-note',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 }, 5.4);
+
+      // Insight box
+      tl_s04.fromTo(ID + ' .insight',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 7.0);
+      tl_s04.fromTo(ID + ' .insight-icon',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: 'center' }, 7.3);
+      tl_s04.fromTo(ID + ' .insight-main',
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.6 }, 7.5);
+      tl_s04.fromTo(ID + ' .insight-sub',
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.6 }, 7.8);
+
+      // Deco wave
+      tl_s04.fromTo(ID + ' .deco-wave',
+        { opacity: 0 },
+        { opacity: 0.15, duration: 1.5 }, 3.0);
+
+      // Caption
+      tl_s04.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 10.0);
+      tl_s04.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 10.2);
+
+      // Good card glow pulse
+      tl_s04.to(ID + ' .card-good', { boxShadow: '0 0 80px rgba(77,208,255,0.25), 0 24px 64px rgba(0,0,0,0.5)', duration: 1.0, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 12.0);
+
+      tl_s04.set({}, {}, 17);
+      
+    
+  if (typeof tl_s04 !== 'undefined') {
+    __master.add(tl_s04, 57);
+  }
+})();
+
+// --- Scene 6 (scene-06-15506c) --- offset=74s dur=16s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s05 = gsap.timeline({ });
+      const ID = '#scene-06-15506c';
+
+      tl_s05.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s05.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl_s05.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl_s05.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      tl_s05.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s05.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+      tl_s05.fromTo(ID + ' .eyebrow .num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.7);
+      tl_s05.fromTo(ID + ' .eyebrow .bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left center' }, 0.85);
+      tl_s05.fromTo(ID + ' .eyebrow .label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, 0.95);
+      tl_s05.fromTo(ID + ' .title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.1);
+      tl_s05.fromTo(ID + ' .title .t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 1.35);
+      tl_s05.fromTo(ID + ' .subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.9);
+
+      // Ellipse group
+      tl_s05.fromTo(ID + ' .ellipse-group', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 2.2);
+      tl_s05.fromTo(ID + ' .tilt-ellipse', { strokeDashoffset: 1005 }, { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' }, 2.4);
+      tl_s05.fromTo(ID + ' .ellipse-point-halo', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: 'center' }, 3.7);
+      tl_s05.fromTo(ID + ' .ellipse-point', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.8)', transformOrigin: 'center' }, 3.85);
+      tl_s05.fromTo(ID + ' .proj-x', { opacity: 0, scaleY: 0 }, { opacity: 0.8, scaleY: 1, duration: 0.5, transformOrigin: '500px 430px' }, 4.2);
+      tl_s05.fromTo(ID + ' .proj-y', { opacity: 0, scaleX: 0 }, { opacity: 0.8, scaleX: 1, duration: 0.5, transformOrigin: '500px 430px' }, 4.4);
+      tl_s05.fromTo(ID + ' .proj-dot-x', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 4.6);
+      tl_s05.fromTo(ID + ' .proj-dot-y', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)', transformOrigin: 'center' }, 4.7);
+
+      // Arrow
+      tl_s05.fromTo(ID + ' .arrow-group', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.6 }, 5.2);
+
+      // Time axis
+      tl_s05.fromTo(ID + ' .time-axis', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '920px 560px' }, 5.8);
+
+      // cos wave draws in
+      tl_s05.fromTo(ID + ' .cos-wave', { strokeDashoffset: 2400 }, { strokeDashoffset: 0, duration: 2.0, ease: 'power2.inOut' }, 6.3);
+      tl_s05.fromTo(ID + ' .cos-wave-lbl', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5 }, 8.0);
+
+      // sin wave draws in (slightly after)
+      tl_s05.fromTo(ID + ' .sin-wave', { strokeDashoffset: 2400 }, { strokeDashoffset: 0, duration: 2.0, ease: 'power2.inOut' }, 7.0);
+      tl_s05.fromTo(ID + ' .sin-wave-lbl', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5 }, 8.7);
+
+      // Bottom label
+      tl_s05.fromTo(ID + ' .bottom-label', { opacity: 0, y: 16, letterSpacing: '0.5em' }, { opacity: 1, y: 0, letterSpacing: '0.3em', duration: 0.8 }, 10.0);
+
+      // Caption
+      tl_s05.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 11.0);
+      tl_s05.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 11.2);
+
+      // Point pulse
+      tl_s05.to(ID + ' .ellipse-point-halo', { scale: 1.3, opacity: 0.5, duration: 0.9, yoyo: true, repeat: 2, ease: 'sine.inOut', transformOrigin: 'center' }, 12.5);
+
+      tl_s05.set({}, {}, 16);
+      
+    
+  if (typeof tl_s05 !== 'undefined') {
+    __master.add(tl_s05, 74);
+  }
+})();
+
+// --- Scene 7 (scene-07-e99741) --- offset=90s dur=15s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s06 = gsap.timeline({ });
+      const ID = '#scene-07-e99741';
+
+      tl_s06.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl_s06.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl_s06.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl_s06.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+
+      tl_s06.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl_s06.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+      tl_s06.fromTo(ID + ' .eyebrow .num', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: 'center' }, 0.7);
+      tl_s06.fromTo(ID + ' .eyebrow .bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, transformOrigin: 'left center' }, 0.85);
+      tl_s06.fromTo(ID + ' .eyebrow .label', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, 0.95);
+      tl_s06.fromTo(ID + ' .title .t1', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 1.1);
+      tl_s06.fromTo(ID + ' .title .t2', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.0, ease: 'expo.out' }, 1.35);
+      tl_s06.fromTo(ID + ' .subtitle', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 1.9);
+
+      // Axes
+      tl_s06.fromTo(ID + ' .t-axis', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power3.out', transformOrigin: '200px 540px' }, 2.2);
+
+      // cos wave draws in first
+      tl_s06.fromTo(ID + ' .cos-wave', { strokeDashoffset: 3000 }, { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut' }, 2.8);
+      tl_s06.fromTo(ID + ' .cos-peak', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 3.0);
+      tl_s06.fromTo(ID + ' .peak-line-cos', { opacity: 0, scaleY: 0 }, { opacity: 0.6, scaleY: 1, duration: 0.4, transformOrigin: '240px 340px' }, 3.2);
+      tl_s06.fromTo(ID + ' .cos-lbl', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5 }, 4.8);
+
+      // sin wave draws in after
+      tl_s06.fromTo(ID + ' .sin-wave', { strokeDashoffset: 3000 }, { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut' }, 3.8);
+      tl_s06.fromTo(ID + ' .sin-peak', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2.5)', transformOrigin: 'center' }, 4.2);
+      tl_s06.fromTo(ID + ' .peak-line-sin', { opacity: 0, scaleY: 0 }, { opacity: 0.6, scaleY: 1, duration: 0.4, transformOrigin: '430px 340px' }, 4.4);
+      tl_s06.fromTo(ID + ' .sin-lbl', { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.5 }, 5.8);
+
+      // Phase shift arrow
+      tl_s06.fromTo(ID + ' .phase-arrow', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.7, ease: 'power3.out', transformOrigin: '240px 290px' }, 6.5);
+      tl_s06.fromTo(ID + ' .phase-label', { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.6 }, 7.0);
+
+      // Insight card
+      tl_s06.fromTo(ID + ' .insight-card', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 8.0);
+      tl_s06.fromTo(ID + ' .ic-icon', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'center' }, 8.3);
+      tl_s06.fromTo(ID + ' .ic-main', { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.2 }, 8.5);
+
+      // Caption
+      tl_s06.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 10.5);
+      tl_s06.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 10.7);
+
+      // Peak pulse
+      tl_s06.to(ID + ' .cos-peak', { scale: 1.5, opacity: 0.7, duration: 0.6, yoyo: true, repeat: 2, ease: 'sine.inOut', transformOrigin: 'center' }, 12.0);
+      tl_s06.to(ID + ' .sin-peak', { scale: 1.5, opacity: 0.7, duration: 0.6, yoyo: true, repeat: 2, ease: 'sine.inOut', transformOrigin: 'center' }, 12.3);
+
+      tl_s06.set({}, {}, 15);
+      
+    
+  if (typeof tl_s06 !== 'undefined') {
+    __master.add(tl_s06, 90);
+  }
+})();
+
+// --- Scene 8 (scene-08-4d28db) --- offset=105s dur=15s
+(function() {
+
+      window.__timelines = window.__timelines || {};
+      const tl_s07 = gsap.timeline({ });
+      const ID = '#scene-08-4d28db';
+
+      // Atmosphere
+      tl_s07.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
+      tl_s07.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0);
+      tl_s07.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 2.0, transformOrigin: 'center' }, 0.2);
+      tl_s07.fromTo(ID + ' .orb-c', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.4);
+      tl_s07.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+      tl_s07.fromTo(ID + ' .deco-grid', { opacity: 0 }, { opacity: 0.3, duration: 1.5 }, 0.3);
+
+      // Chapter badge
+      tl_s07.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.4);
+      tl_s07.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.6);
+
+      // Decorative circle
+      tl_s07.fromTo(ID + ' .deco-circle', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.5, ease: 'power2.out', transformOrigin: 'center' }, 0.8);
+      tl_s07.to(ID + ' .deco-radius', { rotation: 360, duration: 8, ease: 'none', repeat: -1, transformOrigin: '1580px 280px' }, 2.0);
+      tl_s07.to(ID + ' .deco-point', { rotation: 360, duration: 8, ease: 'none', repeat: -1, transformOrigin: '1580px 280px' }, 2.0);
+      tl_s07.to(ID + ' .deco-point-halo', { rotation: 360, duration: 8, ease: 'none', repeat: -1, transformOrigin: '1580px 280px' }, 2.0);
+
+      // Main quote — the hero
+      tl_s07.fromTo(ID + ' .quote-line1',
+        { opacity: 0, y: 50, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'power3.out' }, 1.2);
+      tl_s07.fromTo(ID + ' .quote-line2',
+        { opacity: 0, y: 80, filter: 'blur(14px)', scale: 0.95 },
+        { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 1.3, ease: 'expo.out', transformOrigin: 'left center' }, 1.7);
+      tl_s07.fromTo(ID + ' .quote-accent',
+        { width: 0 },
+        { width: 560, duration: 1.0, ease: 'power3.out' }, 2.8);
+
+      // Insight items stagger in
+      tl_s07.fromTo(ID + ' .insight-item',
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.7, stagger: 0.25, ease: 'power3.out' }, 4.5);
+
+      // Closing caption
+      tl_s07.fromTo(ID + ' .closing-inner',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 7.5);
+      tl_s07.fromTo(ID + ' .cl-dot',
+        { scale: 0 },
+        { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 7.8);
+
+      // Decorative point pulse
+      tl_s07.to(ID + ' .deco-point-halo', { opacity: 0.6, scale: 1.4, duration: 1.0, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: 'center' }, 9.0);
+
+      // Fade to black at the end (last scene exit animation)
+      tl_s07.fromTo(ID + ' .fade-overlay',
+        { opacity: 0 },
+        { opacity: 1, duration: 2.5, ease: 'power2.in' }, 12.0);
+
+      // Lock duration at 15s
+      tl_s07.set({}, {}, 15);
+      
+    
+  if (typeof tl_s07 !== 'undefined') {
+    __master.add(tl_s07, 105);
+  }
+})();
+
+    // Lock master to the total duration so hyperframes knows exactly how
+    // long the video is.
+    __master.set({}, {}, 120);
+
+    window.__timelines["main"] = __master;
+  </script>
+</body>
 </html>

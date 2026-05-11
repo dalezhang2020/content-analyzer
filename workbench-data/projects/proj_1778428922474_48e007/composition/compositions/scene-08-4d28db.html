@@ -1,0 +1,290 @@
+<template id="scene-08-4d28db-template">
+  <div id="scene-08-4d28db" data-composition-id="scene-08-4d28db" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 08</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">收尾</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <!-- Decorative rotating unit circle (upper right) -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s08-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="s08-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="16" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="s08-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#4dd0ff" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#4dd0ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="s08-point" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="60%" stop-color="#fff6cc"/>
+          <stop offset="100%" stop-color="#fbbf24"/>
+        </radialGradient>
+        <!-- Fade to black gradient for exit -->
+        <linearGradient id="s08-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#030610" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#030610" stop-opacity="1"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Decorative grid -->
+      <g class="deco-grid" stroke="#1e2c45" stroke-width="1" opacity="0.3">
+        <line x1="0" y1="270" x2="1920" y2="270"/>
+        <line x1="0" y1="540" x2="1920" y2="540"/>
+        <line x1="0" y1="810" x2="1920" y2="810"/>
+        <line x1="480" y1="0" x2="480" y2="1080"/>
+        <line x1="960" y1="0" x2="960" y2="1080"/>
+        <line x1="1440" y1="0" x2="1440" y2="1080"/>
+      </g>
+
+      <!-- Decorative unit circle (upper right, large, subtle) -->
+      <g class="deco-circle" transform="translate(1580, 280)">
+        <circle cx="0" cy="0" r="320" fill="url(#s08-halo)"/>
+        <circle cx="0" cy="0" r="240" fill="none" stroke="#4dd0ff" stroke-width="2" opacity="0.35" filter="url(#s08-glow)"/>
+        <!-- Ghost rings -->
+        <circle cx="0" cy="0" r="180" fill="none" stroke="#253856" stroke-width="1" opacity="0.4"/>
+        <circle cx="0" cy="0" r="290" fill="none" stroke="#1e2c45" stroke-width="1" opacity="0.3"/>
+        <!-- Axes -->
+        <line x1="-300" y1="0" x2="300" y2="0" stroke="#5b6e93" stroke-width="1" opacity="0.5"/>
+        <line x1="0" y1="-300" x2="0" y2="300" stroke="#5b6e93" stroke-width="1" opacity="0.5"/>
+        <!-- Rotating radius line at ~45 degrees -->
+        <line class="deco-radius" x1="0" y1="0" x2="170" y2="-170" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+        <!-- Rotating point -->
+        <circle class="deco-point-halo" cx="170" cy="-170" r="20" fill="#fbbf24" opacity="0.3" filter="url(#s08-glow-strong)"/>
+        <circle class="deco-point" cx="170" cy="-170" r="9" fill="url(#s08-point)" stroke="#fbbf24" stroke-width="2.5"/>
+        <!-- cos/sin projections (subtle) -->
+        <line x1="170" y1="-170" x2="170" y2="0" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.4"/>
+        <line x1="170" y1="-170" x2="0" y2="-170" stroke="#ff4d8f" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.4"/>
+      </g>
+
+      <!-- Fade overlay for exit (last scene) -->
+      <rect class="fade-overlay" x="0" y="0" width="1920" height="1080" fill="url(#s08-fade)" opacity="0"/>
+    </svg>
+
+    <!-- Main quote text -->
+    <div class="quote-wrap">
+      <div class="quote-line1">公式</div>
+      <div class="quote-line2">变成几何</div>
+      <div class="quote-accent"></div>
+    </div>
+
+    <!-- Key insight cards -->
+    <div class="insights">
+      <div class="insight-item">
+        <span class="ii-icon cyan">○</span>
+        <span class="ii-text">单位圆上的坐标 = 三角函数的本质</span>
+      </div>
+      <div class="insight-item">
+        <span class="ii-icon amber">→</span>
+        <span class="ii-text">cos θ = x 坐标，sin θ = y 坐标</span>
+      </div>
+      <div class="insight-item">
+        <span class="ii-icon magenta">∿</span>
+        <span class="ii-text">两条波形，来自同一个旋转运动</span>
+      </div>
+    </div>
+
+    <!-- Bottom caption / closing statement -->
+    <div class="closing">
+      <div class="closing-inner">
+        <span class="cl-dot"></span>
+        <span class="cl-text">三角函数不是要背的符号 — 看清这一点，公式就变成了几何</span>
+      </div>
+    </div>
+
+    <style>
+      #scene-08-4d28db {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-08-4d28db .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1200px 800px at 35% 50%, rgba(77,208,255,0.18), transparent 60%),
+          radial-gradient(ellipse 700px 600px at 85% 30%, rgba(77,208,255,0.1), transparent 60%),
+          radial-gradient(ellipse 600px 500px at 15% 80%, rgba(255,77,143,0.08), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-08-4d28db .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.75) 100%);
+        pointer-events: none;
+      }
+      #scene-08-4d28db .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-08-4d28db .orb {
+        position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      }
+      #scene-08-4d28db .orb-a {
+        width: 700px; height: 700px; left: -250px; top: -250px;
+        background: radial-gradient(circle, rgba(77,208,255,0.35), transparent 70%);
+      }
+      #scene-08-4d28db .orb-b {
+        width: 600px; height: 600px; right: -200px; bottom: -200px;
+        background: radial-gradient(circle, rgba(255,77,143,0.2), transparent 70%);
+      }
+      #scene-08-4d28db .orb-c {
+        width: 400px; height: 400px; left: 40%; top: 60%;
+        background: radial-gradient(circle, rgba(251,191,36,0.1), transparent 70%);
+      }
+      #scene-08-4d28db .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-08-4d28db .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-08-4d28db .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-08-4d28db .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-08-4d28db .ch-sep { color: #5b6e93; }
+      #scene-08-4d28db .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-08-4d28db .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      /* Main quote */
+      #scene-08-4d28db .quote-wrap {
+        position: absolute; top: 160px; left: 120px; z-index: 10;
+      }
+      #scene-08-4d28db .quote-line1 {
+        font-size: 100px; font-weight: 200; color: #d9e4f5;
+        letter-spacing: -0.01em; line-height: 1.0;
+      }
+      #scene-08-4d28db .quote-line2 {
+        font-size: 160px; font-weight: 900; line-height: 0.95;
+        letter-spacing: -0.03em;
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 35%, #4dd0ff 70%, #ff4d8f 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      #scene-08-4d28db .quote-accent {
+        margin-top: 20px; width: 0; height: 4px;
+        background: linear-gradient(90deg, #4dd0ff, #ff4d8f, transparent);
+        border-radius: 2px;
+      }
+      /* Insight items */
+      #scene-08-4d28db .insights {
+        position: absolute; left: 120px; bottom: 200px; z-index: 10;
+        display: flex; flex-direction: column; gap: 20px;
+      }
+      #scene-08-4d28db .insight-item {
+        display: flex; align-items: center; gap: 20px;
+        font-size: 26px; color: #d7e3f2; letter-spacing: 0.05em;
+      }
+      #scene-08-4d28db .ii-icon {
+        font-size: 32px; font-weight: 700; width: 40px; text-align: center;
+        flex-shrink: 0;
+      }
+      #scene-08-4d28db .ii-icon.cyan { color: #4dd0ff; text-shadow: 0 0 14px rgba(77,208,255,0.6); }
+      #scene-08-4d28db .ii-icon.amber { color: #fbbf24; text-shadow: 0 0 14px rgba(251,191,36,0.6); }
+      #scene-08-4d28db .ii-icon.magenta { color: #ff4d8f; text-shadow: 0 0 14px rgba(255,77,143,0.6); }
+      /* Closing caption */
+      #scene-08-4d28db .closing {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        z-index: 10;
+      }
+      #scene-08-4d28db .closing-inner {
+        display: flex; align-items: center; gap: 14px;
+        font-size: 26px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 16px 36px;
+        background: rgba(10,18,36,0.65); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px);
+        white-space: nowrap;
+      }
+      #scene-08-4d28db .cl-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff; flex-shrink: 0;
+      }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-08-4d28db';
+
+      // Atmosphere
+      tl.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
+      tl.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.8, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 2.0, transformOrigin: 'center' }, 0.2);
+      tl.fromTo(ID + ' .orb-c', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.4);
+      tl.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+      tl.fromTo(ID + ' .deco-grid', { opacity: 0 }, { opacity: 0.3, duration: 1.5 }, 0.3);
+
+      // Chapter badge
+      tl.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.4);
+      tl.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.6);
+
+      // Decorative circle
+      tl.fromTo(ID + ' .deco-circle', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.5, ease: 'power2.out', transformOrigin: 'center' }, 0.8);
+      tl.to(ID + ' .deco-radius', { rotation: 360, duration: 8, ease: 'none', repeat: -1, transformOrigin: '1580px 280px' }, 2.0);
+      tl.to(ID + ' .deco-point', { rotation: 360, duration: 8, ease: 'none', repeat: -1, transformOrigin: '1580px 280px' }, 2.0);
+      tl.to(ID + ' .deco-point-halo', { rotation: 360, duration: 8, ease: 'none', repeat: -1, transformOrigin: '1580px 280px' }, 2.0);
+
+      // Main quote — the hero
+      tl.fromTo(ID + ' .quote-line1',
+        { opacity: 0, y: 50, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'power3.out' }, 1.2);
+      tl.fromTo(ID + ' .quote-line2',
+        { opacity: 0, y: 80, filter: 'blur(14px)', scale: 0.95 },
+        { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1, duration: 1.3, ease: 'expo.out', transformOrigin: 'left center' }, 1.7);
+      tl.fromTo(ID + ' .quote-accent',
+        { width: 0 },
+        { width: 560, duration: 1.0, ease: 'power3.out' }, 2.8);
+
+      // Insight items stagger in
+      tl.fromTo(ID + ' .insight-item',
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.7, stagger: 0.25, ease: 'power3.out' }, 4.5);
+
+      // Closing caption
+      tl.fromTo(ID + ' .closing-inner',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 7.5);
+      tl.fromTo(ID + ' .cl-dot',
+        { scale: 0 },
+        { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 7.8);
+
+      // Decorative point pulse
+      tl.to(ID + ' .deco-point-halo', { opacity: 0.6, scale: 1.4, duration: 1.0, yoyo: true, repeat: 3, ease: 'sine.inOut', transformOrigin: 'center' }, 9.0);
+
+      // Fade to black at the end (last scene exit animation)
+      tl.fromTo(ID + ' .fade-overlay',
+        { opacity: 0 },
+        { opacity: 1, duration: 2.5, ease: 'power2.in' }, 12.0);
+
+      // Lock duration at 15s
+      tl.set({}, {}, 15);
+      window.__timelines['scene-08-4d28db'] = tl;
+    </script>
+  </div>
+</template>

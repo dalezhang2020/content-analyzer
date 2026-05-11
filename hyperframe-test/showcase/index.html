@@ -1,0 +1,1034 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    {"id":"headline","type":"string","label":"Headline","default":"HTML is the source of truth for video."},
+    {"id":"kicker","type":"string","label":"Kicker","default":"HYPERFRAMES SHOWCASE · v0.5"},
+    {"id":"accent","type":"color","label":"Accent","default":"#d97706"}
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0a0a0a;
+        font-family: "Inter", system-ui, sans-serif;
+        color: #fafaf9;
+      }
+
+      /* ========== root stage ========== */
+      #stage {
+        position: absolute;
+        inset: 0;
+      }
+
+      /* Grain — deterministic SVG turbulence, no Math.random */
+      .grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter>\
+<rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        background-size: 400px 400px;
+        opacity: 0.06;
+        mix-blend-mode: overlay;
+        z-index: 999;
+      }
+
+      /* ========== Scene base ========== */
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        will-change: transform, opacity, clip-path;
+      }
+
+      /* ========== Scene 1: Kinetic title ========== */
+      .scene-1 {
+        background: radial-gradient(ellipse at 50% 60%, #1c1917 0%, #0a0a0a 70%);
+      }
+      .kicker {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0.4em;
+        color: #fcd34d;
+        opacity: 0.9;
+      }
+      .kicker-dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #d97706;
+        margin: 0 16px -1px;
+        vertical-align: middle;
+      }
+      .hero-wrap {
+        text-align: center;
+        padding: 0 120px;
+      }
+      .hero {
+        font-size: 156px;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        line-height: 0.96;
+        color: #fafaf9;
+      }
+      .hero .word {
+        display: inline-block;
+        margin: 0 12px;
+      }
+      .hero .ch {
+        display: inline-block;
+        will-change: transform, opacity;
+      }
+      .hero .accent-word {
+        color: #fbbf24;
+        position: relative;
+      }
+      .hero-underline {
+        margin: 28px auto 0;
+        width: 900px;
+        height: 6px;
+      }
+      .hero-underline rect {
+        fill: #d97706;
+      }
+      .hero-tag {
+        margin-top: 40px;
+        font-size: 26px;
+        font-weight: 500;
+        color: #d6d3d1;
+        letter-spacing: -0.005em;
+      }
+      .corner {
+        position: absolute;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        color: #d6d3d1;
+      }
+      .corner.tl { top: 40px; left: 60px; }
+      .corner.tr { top: 40px; right: 60px; }
+      .corner.bl { bottom: 40px; left: 60px; }
+      .corner.br { bottom: 40px; right: 60px; font-variant-numeric: tabular-nums; }
+
+      /* ========== Scene 2: Sub-comp cards ========== */
+      .scene-2 {
+        background: #fafaf9;
+        color: #1c1917;
+      }
+      .scene-2 .bg-word {
+        position: absolute;
+        top: 96px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        color: #d97706;
+      }
+      .scene-2 .section-title {
+        position: absolute;
+        top: 140px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 70px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: #1c1917;
+      }
+      .cards-row {
+        position: absolute;
+        top: 260px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+      }
+      .card-host {
+        width: 560px;
+        height: 720px;
+      }
+      .scene-2 .footnote {
+        position: absolute;
+        bottom: 52px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        color: #44403c;
+        letter-spacing: 0;
+      }
+      .scene-2 .footnote .hl {
+        color: #d97706;
+        font-weight: 500;
+      }
+
+      /* ========== Scene 3: Data viz ========== */
+      .scene-3 {
+        background: #0a0a0a;
+        color: #fafaf9;
+      }
+      .scene-3 .s3-label {
+        position: absolute;
+        top: 100px;
+        left: 120px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        color: #fbbf24;
+      }
+      .scene-3 .s3-title {
+        position: absolute;
+        top: 150px;
+        left: 120px;
+        font-size: 92px;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        line-height: 1;
+      }
+      .s3-sub {
+        position: absolute;
+        top: 260px;
+        left: 120px;
+        font-size: 26px;
+        font-weight: 400;
+        color: #e7e5e4;
+        max-width: 780px;
+      }
+      .counter-wrap {
+        position: absolute;
+        top: 460px;
+        left: 120px;
+        display: flex;
+        align-items: baseline;
+        gap: 22px;
+      }
+      .counter {
+        font-size: 240px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: #fbbf24;
+        font-variant-numeric: tabular-nums;
+      }
+      .counter-unit {
+        font-size: 64px;
+        font-weight: 600;
+        color: #fafaf9;
+        letter-spacing: -0.02em;
+      }
+      .counter-foot {
+        position: absolute;
+        top: 740px;
+        left: 120px;
+        font-size: 22px;
+        color: #d6d3d1;
+        max-width: 720px;
+        line-height: 1.45;
+      }
+
+      .bars {
+        position: absolute;
+        top: 380px;
+        right: 120px;
+        width: 680px;
+      }
+      .bar-row {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        margin-bottom: 28px;
+      }
+      .bar-label {
+        width: 200px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #d6d3d1;
+        font-variant-numeric: tabular-nums;
+      }
+      .bar-track {
+        flex: 1;
+        height: 18px;
+        background: #292524;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        transform-origin: left center;
+      }
+      .bar-fill.amber { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+      .bar-fill.ink   { background: linear-gradient(90deg, #57534e, #a8a29e); }
+      .bar-val {
+        width: 90px;
+        text-align: right;
+        font-size: 22px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: #fafaf9;
+      }
+
+      .stamp {
+        position: absolute;
+        bottom: 90px;
+        right: 120px;
+        padding: 14px 24px;
+        border: 2px solid #fbbf24;
+        border-radius: 999px;
+        color: #fbbf24;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      /* ========== Scene 4: Code drives demo ========== */
+      .scene-4 {
+        background: #1c1917;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .s4-code-pane {
+        position: relative;
+        padding: 120px 80px 80px 120px;
+        background: #0a0a0a;
+        border-right: 1px solid #292524;
+        overflow: hidden;
+      }
+      .s4-code-label {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.28em;
+        color: #d6d3d1;
+        margin-bottom: 28px;
+      }
+      .s4-code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 28px;
+        line-height: 1.55;
+        color: #e7e5e4;
+        white-space: pre;
+        min-height: 600px;
+      }
+      .s4-code .tok-key { color: #fbbf24; }
+      .s4-code .tok-str { color: #a3e635; }
+      .s4-code .tok-num { color: #f472b6; }
+      .s4-code .tok-fn  { color: #60a5fa; }
+      .s4-code .tok-com { color: #57534e; font-style: italic; }
+      .s4-caret {
+        display: inline-block;
+        width: 14px;
+        height: 32px;
+        background: #fbbf24;
+        vertical-align: -4px;
+        margin-left: 2px;
+      }
+
+      .s4-preview-pane {
+        position: relative;
+        padding: 120px 120px 80px 80px;
+        background: radial-gradient(ellipse at 70% 30%, #292524 0%, #1c1917 70%);
+      }
+      .s4-preview-label {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        color: #fbbf24;
+        margin-bottom: 28px;
+      }
+      .s4-ring-wrap {
+        position: relative;
+        width: 560px;
+        height: 560px;
+        margin: 20px auto 0;
+      }
+      .s4-ring {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .s4-ring .track { stroke: #292524; fill: none; stroke-width: 24; }
+      .s4-ring .fill  { stroke: #fbbf24; fill: none; stroke-width: 24; stroke-linecap: round; }
+      .s4-ring-center {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fafaf9;
+      }
+      .s4-ring-num {
+        font-size: 160px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        font-variant-numeric: tabular-nums;
+        color: #fbbf24;
+        line-height: 1;
+      }
+      .s4-ring-cap {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        color: #e7e5e4;
+        margin-top: 16px;
+        text-transform: uppercase;
+      }
+
+      /* ========== Scene 5: Logo outro ========== */
+      .scene-5 {
+        background: #0a0a0a;
+      }
+      .s5-brand {
+        text-align: center;
+        position: relative;
+      }
+      .s5-logo {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto 40px;
+      }
+      .s5-wordmark {
+        font-size: 128px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: #fafaf9;
+        line-height: 1;
+      }
+      .s5-wordmark .frames {
+        color: #fbbf24;
+      }
+      .s5-tag {
+        margin-top: 32px;
+        font-size: 28px;
+        font-weight: 500;
+        color: #e7e5e4;
+        letter-spacing: -0.005em;
+      }
+      .s5-meta {
+        margin-top: 48px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        color: #a8a29e;
+      }
+      .s5-meta .sep {
+        color: #d97706;
+        margin: 0 14px;
+      }
+
+      /* Shutter transitions — each scene owns its own pair */
+      .shutter {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: #fbbf24;
+        z-index: 500;
+        transform: scaleY(0);
+      }
+      .shutter.top { top: 0; height: 50%; transform-origin: top center; }
+      .shutter.bot { bottom: 0; height: 50%; transform-origin: bottom center; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="22"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="stage">
+        <!-- ========== Scene 1: Kinetic title (0 - 4.8s) ========== -->
+        <div id="s1" class="scene scene-1 clip" data-start="0" data-duration="4.8" data-track-index="1">
+          <div class="corner tl">01 / 05</div>
+          <div class="corner tr">OPEN SOURCE</div>
+          <div class="corner bl">1920 × 1080 · 30FPS</div>
+          <div class="corner br">T+00:00</div>
+
+          <div class="kicker" id="s1-kicker">
+            <span class="k-left"></span>
+            <span class="kicker-dot"></span>
+            <span class="k-right">DETERMINISTIC RENDER</span>
+          </div>
+
+          <div class="hero-wrap">
+            <div class="hero" id="s1-hero">
+              <!-- filled in by script from `headline` variable -->
+            </div>
+            <svg class="hero-underline" viewBox="0 0 900 6" preserveAspectRatio="none">
+              <rect id="s1-under" x="0" y="0" width="900" height="6" rx="3"/>
+            </svg>
+            <div class="hero-tag" id="s1-tag">
+              Write HTML · CSS · GSAP — render byte-identical MP4.
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Scene 2: Sub-comp cards (4.8 - 10.2s) ========== -->
+        <div id="s2" class="scene scene-2 clip" data-start="4.8" data-duration="5.4" data-track-index="1">
+          <div class="corner tl" style="color:#57534e">02 / 05</div>
+          <div class="corner tr" style="color:#57534e">ONE SOURCE · THREE VIEWS</div>
+          <div class="corner bl" style="color:#57534e">SUB-COMPOSITIONS</div>
+          <div class="corner br" style="color:#57534e">data-variable-values</div>
+
+          <div class="bg-word" id="s2-kicker">REUSABLE COMPONENTS</div>
+          <h2 class="section-title" id="s2-title">
+            One sub-composition. Three instances.
+          </h2>
+
+          <div class="cards-row" id="s2-cards">
+            <div
+              class="card-host clip"
+              data-composition-id="card-a"
+              data-composition-src="compositions/feature-card.html"
+              data-variable-values='{"badge":"01 · CORE","icon":"⧗","title":"Deterministic","body":"Same HTML in → byte-identical MP4 out. CI-friendly, re-renderable, diffable.","meter":96}'
+              data-start="0.2"
+              data-duration="5.0"
+              data-track-index="0"
+            ></div>
+            <div
+              class="card-host clip"
+              data-composition-id="card-b"
+              data-composition-src="compositions/feature-card.html"
+              data-variable-values='{"badge":"02 · AUTHOR","icon":"◎","title":"HTML-Native","body":"Plain tags, CSS, GSAP. No DSL, no learning curve, no black box.","meter":82}'
+              data-start="0.45"
+              data-duration="4.75"
+              data-track-index="2"
+            ></div>
+            <div
+              class="card-host clip"
+              data-composition-id="card-c"
+              data-composition-src="compositions/feature-card.html"
+              data-variable-values='{"badge":"03 · SCALE","icon":"⌬","title":"Parametric","body":"Declare variables on &lt;html&gt;. Render the same source with any data.","meter":71}'
+              data-start="0.7"
+              data-duration="4.5"
+              data-track-index="3"
+            ></div>
+          </div>
+
+          <div class="footnote" id="s2-foot">
+            <span class="hl">npx hyperframes render</span> --variables '{"title":"Q4","theme":"dark"}'
+          </div>
+        </div>
+
+        <!-- ========== Scene 3: Data viz (10.2 - 15.4s) ========== -->
+        <div id="s3" class="scene scene-3 clip" data-start="10.2" data-duration="5.2" data-track-index="1">
+          <div class="s3-label">03 / 05 · THE NUMBERS</div>
+          <h2 class="s3-title">Render. Ship. Repeat.</h2>
+          <div class="s3-sub">
+            Every frame is a function of the DOM at time t. No hidden state, no flaky replays.
+          </div>
+
+          <div class="counter-wrap">
+            <div class="counter" id="s3-counter">0</div>
+            <div class="counter-unit" id="s3-unit">× faster iteration</div>
+          </div>
+          <div class="counter-foot">
+            Edit a hex code → hot-reload in the browser.
+            Render to MP4 when ready — no re-compiling the engine, ever.
+          </div>
+
+          <div class="bars" id="s3-bars">
+            <div class="bar-row">
+              <div class="bar-label">Author HTML</div>
+              <div class="bar-track"><div class="bar-fill amber" data-target="95"></div></div>
+              <div class="bar-val">0.3s</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Preview</div>
+              <div class="bar-track"><div class="bar-fill amber" data-target="78"></div></div>
+              <div class="bar-val">0.8s</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Lint + inspect</div>
+              <div class="bar-track"><div class="bar-fill ink" data-target="52"></div></div>
+              <div class="bar-val">2.1s</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Render MP4</div>
+              <div class="bar-track"><div class="bar-fill ink" data-target="35"></div></div>
+              <div class="bar-val">18s</div>
+            </div>
+          </div>
+
+          <div class="stamp" id="s3-stamp">BYTE-IDENTICAL</div>
+        </div>
+
+        <!-- ========== Scene 4: Code drives demo (15.4 - 19.4s) ========== -->
+        <div id="s4" class="scene scene-4 clip" data-start="15.4" data-duration="4" data-track-index="1">
+          <div class="s4-code-pane">
+            <div class="s4-code-label">index.html · scene-04</div>
+            <pre class="s4-code"><span id="s4-typed"></span><span class="s4-caret" id="s4-caret"></span></pre>
+          </div>
+
+          <div class="s4-preview-pane">
+            <div class="s4-preview-label">LIVE PREVIEW</div>
+            <div class="s4-ring-wrap">
+              <svg class="s4-ring" viewBox="0 0 240 240">
+                <circle class="track" cx="120" cy="120" r="104"></circle>
+                <circle
+                  id="s4-ring-fill"
+                  class="fill"
+                  cx="120"
+                  cy="120"
+                  r="104"
+                  stroke-dasharray="653.45"
+                  stroke-dashoffset="653.45"
+                ></circle>
+              </svg>
+              <div class="s4-ring-center">
+                <div class="s4-ring-num" id="s4-num">0</div>
+                <div class="s4-ring-cap">% rendered</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========== Scene 5: Logo outro (19.4 - 22s) ========== -->
+        <div id="s5" class="scene scene-5 clip" data-start="19.4" data-duration="2.6" data-track-index="1">
+          <div class="s5-brand">
+            <svg class="s5-logo" viewBox="0 0 120 120">
+              <rect id="s5-box" x="12" y="12" width="96" height="96" rx="20"
+                    fill="none" stroke="#fbbf24" stroke-width="4"/>
+              <path id="s5-chev" d="M40 50 L60 70 L80 50"
+                    fill="none" stroke="#fafaf9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle id="s5-dot" cx="60" cy="60" r="6" fill="#d97706"/>
+            </svg>
+            <div class="s5-wordmark">
+              <span>hyper</span><span class="frames">frames</span>
+            </div>
+            <div class="s5-tag" id="s5-tag">HTML → MP4. Nothing more.</div>
+            <div class="s5-meta">
+              <span>heygen.com/hyperframes</span>
+              <span class="sep">·</span>
+              <span>open source · MIT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- shutter layer lives above scenes -->
+      <div class="shutter top" id="sh1-top"></div>
+      <div class="shutter bot" id="sh1-bot"></div>
+      <div class="shutter top" id="sh2-top"></div>
+      <div class="shutter bot" id="sh2-bot"></div>
+      <div class="shutter top" id="sh3-top"></div>
+      <div class="shutter bot" id="sh3-bot"></div>
+      <div class="shutter top" id="sh4-top"></div>
+      <div class="shutter bot" id="sh4-bot"></div>
+
+      <div class="grain"></div>
+    </div>
+
+    <script>
+      (function () {
+        // Defensive variable reader — works in validate's lighter runtime too.
+        function readVars() {
+          try {
+            if (window.__hyperframes && typeof window.__hyperframes.getVariables === "function") {
+              return window.__hyperframes.getVariables();
+            }
+          } catch (e) {}
+          // Fallback: read defaults from the <html> data-composition-variables declaration.
+          try {
+            const raw = document.documentElement.getAttribute("data-composition-variables");
+            if (raw) {
+              const decls = JSON.parse(raw);
+              const out = {};
+              for (const d of decls) out[d.id] = d.default;
+              return out;
+            }
+          } catch (e) {}
+          return {};
+        }
+        const vars = readVars();
+
+        // ----- Scene 1 typography split -----
+        const headline = vars.headline || "HTML is the source of truth for video.";
+        // Choose which word(s) to accent — last word by default.
+        const heroEl = document.getElementById("s1-hero");
+        const words = headline.trim().split(/\s+/);
+        const accentIndex = words.length - 1;
+        heroEl.innerHTML = words
+          .map((w, wi) => {
+            const chars = w
+              .split("")
+              .map((c) => `<span class="ch">${c === " " ? "&nbsp;" : c}</span>`)
+              .join("");
+            const cls = wi === accentIndex ? "word accent-word" : "word";
+            return `<span class="${cls}">${chars}</span>`;
+          })
+          .join(" ");
+
+        const kickerParts = (vars.kicker || "HYPERFRAMES SHOWCASE · v0.5").split("·");
+        document.querySelector("#s1-kicker .k-left").textContent = (kickerParts[0] || "").trim();
+        if (kickerParts[1]) {
+          document.querySelector("#s1-kicker .k-right").textContent = kickerParts[1].trim();
+        }
+
+        // ----- Apply accent color from variable -----
+        const accent = vars.accent || "#d97706";
+        document.querySelectorAll(".kicker-dot").forEach((el) => (el.style.background = accent));
+        document.getElementById("s1-under").setAttribute("fill", accent);
+
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // ========================================================
+        // SCENE 1: 0 - 4.8s
+        // ========================================================
+        tl.from("#s1 .corner.tl, #s1 .corner.tr", {
+          y: -20, opacity: 0, duration: 0.45, ease: "power2.out", stagger: 0.06,
+        }, 0.1);
+        tl.from("#s1 .corner.bl, #s1 .corner.br", {
+          y: 20, opacity: 0, duration: 0.45, ease: "power2.out", stagger: 0.06,
+        }, 0.15);
+
+        tl.from("#s1-kicker .k-left, #s1-kicker .k-right", {
+          opacity: 0, y: -10, duration: 0.4, ease: "power1.out", stagger: 0.06,
+        }, 0.25);
+        tl.from("#s1-kicker .kicker-dot", {
+          scale: 0, opacity: 0, duration: 0.45, ease: "back.out(2.4)",
+        }, 0.5);
+
+        // Stagger characters
+        tl.from("#s1-hero .word .ch", {
+          yPercent: 120,
+          opacity: 0,
+          duration: 0.5,
+          ease: "expo.out",
+          stagger: { each: 0.025, from: "start" },
+        }, 0.6);
+
+        // Accent word color pulse
+        tl.fromTo(
+          "#s1-hero .accent-word",
+          { color: "#fafaf9" },
+          { color: accent, duration: 0.6, ease: "power2.out" },
+          1.6
+        );
+
+        // Underline sweep
+        tl.from("#s1-under", {
+          attr: { width: 0 },
+          duration: 0.9,
+          ease: "expo.inOut",
+          transformOrigin: "left center",
+        }, 1.4);
+
+        tl.from("#s1-tag", {
+          y: 20, opacity: 0, duration: 0.55, ease: "power3.out",
+        }, 1.9);
+
+        // Subtle parallax drift on whole scene
+        tl.to("#s1 .hero-wrap", {
+          y: -20, duration: 3.8, ease: "none",
+        }, 0.5);
+
+        // Shutter transition OUT (scene 1 -> 2)
+        tl.fromTo(
+          "#sh1-top",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.32, ease: "power3.in" },
+          4.48
+        );
+        tl.fromTo(
+          "#sh1-bot",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.32, ease: "power3.in" },
+          4.48
+        );
+        // reopen into scene 2 (they now reveal scene 2 underneath)
+        tl.to("#sh1-top", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 4.82);
+        tl.to("#sh1-bot", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 4.82);
+
+        // ========================================================
+        // SCENE 2: 4.8 - 10.2s  (cards auto-animate via sub-comp TL)
+        // ========================================================
+        tl.from("#s2-kicker", {
+          y: -14, opacity: 0, duration: 0.5, ease: "power3.out",
+        }, 5.0);
+        tl.from("#s2-title", {
+          y: 40, opacity: 0, duration: 0.6, ease: "power3.out",
+        }, 5.15);
+        tl.from("#s2-foot", {
+          y: 20, opacity: 0, duration: 0.5, ease: "power2.out",
+        }, 9.0);
+
+        // Shutter transition (scene 2 -> 3) — horizontal wipe via rotation
+        tl.set(["#sh2-top", "#sh2-bot"], { backgroundColor: "#0a0a0a" });
+        tl.fromTo(
+          "#sh2-top",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.3, ease: "power3.in" },
+          9.88
+        );
+        tl.fromTo(
+          "#sh2-bot",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.3, ease: "power3.in" },
+          9.88
+        );
+        tl.to("#sh2-top", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 10.22);
+        tl.to("#sh2-bot", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 10.22);
+
+        // ========================================================
+        // SCENE 3: 10.2 - 15.4s
+        // ========================================================
+        tl.from("#s3 .s3-label", {
+          y: -10, opacity: 0, duration: 0.4, ease: "power2.out",
+        }, 10.35);
+        tl.from("#s3 .s3-title", {
+          y: 40, opacity: 0, duration: 0.6, ease: "power3.out",
+        }, 10.45);
+        tl.from("#s3 .s3-sub", {
+          y: 24, opacity: 0, duration: 0.5, ease: "power2.out",
+        }, 10.6);
+
+        // Counter 0 -> 10
+        const counterEl = document.getElementById("s3-counter");
+        const counterObj = { v: 0 };
+        tl.from("#s3-counter, #s3-unit", {
+          y: 30, opacity: 0, duration: 0.5, ease: "power3.out",
+        }, 10.75);
+        tl.to(counterObj, {
+          v: 10,
+          duration: 1.8,
+          ease: "power2.out",
+          onUpdate() {
+            counterEl.textContent = Math.round(counterObj.v);
+          },
+        }, 10.9);
+
+        tl.from("#s3 .counter-foot", {
+          y: 20, opacity: 0, duration: 0.5, ease: "power1.out",
+        }, 11.4);
+
+        // Bars
+        const barFills = document.querySelectorAll("#s3-bars .bar-fill");
+        barFills.forEach((bar, i) => {
+          const target = Number(bar.dataset.target);
+          tl.from("#s3-bars .bar-row:nth-child(" + (i + 1) + ")", {
+            x: 40, opacity: 0, duration: 0.5, ease: "power2.out",
+          }, 11.0 + i * 0.12);
+          tl.to(bar, {
+            width: target + "%",
+            duration: 1.0,
+            ease: "expo.out",
+          }, 11.3 + i * 0.12);
+        });
+
+        // Stamp
+        tl.from("#s3-stamp", {
+          scale: 0.6, opacity: 0, rotation: -8, duration: 0.6, ease: "back.out(2.2)",
+        }, 13.8);
+
+        // Shutter scene 3 -> 4
+        tl.set(["#sh3-top", "#sh3-bot"], { backgroundColor: "#1c1917" });
+        tl.fromTo(
+          "#sh3-top",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.3, ease: "power3.in" },
+          15.08
+        );
+        tl.fromTo(
+          "#sh3-bot",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.3, ease: "power3.in" },
+          15.08
+        );
+        tl.to("#sh3-top", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 15.42);
+        tl.to("#sh3-bot", { scaleY: 0, duration: 0.38, ease: "power3.out" }, 15.42);
+
+        // ========================================================
+        // SCENE 4: 15.4 - 19.4s — code types, ring updates
+        // ========================================================
+        // The "script" we type. Tokenized HTML.
+        const codeLines = [
+          '<span class="tok-com">&lt;!-- live preview --&gt;</span>',
+          '<span class="tok-key">&lt;div</span> <span class="tok-fn">class</span>=<span class="tok-str">"ring"</span>',
+          '     <span class="tok-fn">data-start</span>=<span class="tok-str">"0"</span>',
+          '     <span class="tok-fn">data-duration</span>=<span class="tok-str">"4"</span>',
+          '     <span class="tok-fn">data-track-index</span>=<span class="tok-num">2</span>',
+          '<span class="tok-key">&gt;</span>',
+          '  <span class="tok-key">&lt;circle</span> <span class="tok-fn">cx</span>=<span class="tok-num">120</span>',
+          '           <span class="tok-fn">r</span>=<span class="tok-num">104</span>',
+          '           <span class="tok-fn">stroke</span>=<span class="tok-str">"#fbbf24"</span> <span class="tok-key">/&gt;</span>',
+          '<span class="tok-key">&lt;/div&gt;</span>',
+        ];
+        const fullHTML = codeLines.join("\n");
+        const typedEl = document.getElementById("s4-typed");
+
+        // Build a parallel "plain" version to slice character by character
+        // using raw text length, while rendering tokenized HTML progressively.
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = fullHTML;
+        const plainText = tempDiv.textContent;
+        const totalChars = plainText.length;
+
+        const typer = { i: 0 };
+        tl.from("#s4 .s4-code-label, #s4 .s4-preview-label", {
+          opacity: 0, y: -10, duration: 0.4, ease: "power2.out", stagger: 0.08,
+        }, 15.55);
+
+        tl.to(typer, {
+          i: totalChars,
+          duration: 2.6,
+          ease: "none",
+          onUpdate() {
+            const n = Math.floor(typer.i);
+            // Walk the source HTML string and emit up to n rendered characters
+            let out = "";
+            let seen = 0;
+            let inTag = false;
+            for (let k = 0; k < fullHTML.length; k++) {
+              const ch = fullHTML[k];
+              if (ch === "<") inTag = true;
+              out += ch;
+              if (!inTag) seen++;
+              if (ch === ">") inTag = false;
+              // Handle HTML entities &lt; &gt; &amp; — they count as 1 char
+              if (!inTag && ch === ";" && k > 0) {
+                // entity ended, already counted the ';' — roll back to 1 char
+                // (already incremented above, ok)
+              }
+              if (seen >= n) break;
+            }
+            typedEl.innerHTML = out;
+          },
+        }, 15.7);
+
+        // Caret blink (finite)
+        tl.to("#s4-caret", {
+          opacity: 0,
+          duration: 0.35,
+          ease: "steps(1)",
+          repeat: Math.max(0, Math.floor(3.8 / 0.7) - 1),
+          yoyo: true,
+        }, 15.6);
+
+        // Ring fill + number
+        const ringFill = document.getElementById("s4-ring-fill");
+        const numEl = document.getElementById("s4-num");
+        const circumference = 2 * Math.PI * 104; // 653.45
+
+        tl.from("#s4 .s4-ring-wrap", {
+          scale: 0.85, opacity: 0, duration: 0.55, ease: "back.out(1.8)",
+        }, 15.8);
+
+        const ringObj = { p: 0 };
+        tl.to(ringObj, {
+          p: 100,
+          duration: 2.8,
+          ease: "power2.inOut",
+          onUpdate() {
+            const pct = ringObj.p;
+            numEl.textContent = Math.round(pct);
+            ringFill.setAttribute(
+              "stroke-dashoffset",
+              (circumference * (1 - pct / 100)).toFixed(2)
+            );
+          },
+        }, 15.9);
+
+        // Shutter scene 4 -> 5
+        tl.set(["#sh4-top", "#sh4-bot"], { backgroundColor: "#fbbf24" });
+        tl.fromTo(
+          "#sh4-top",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.28, ease: "power3.in" },
+          19.08
+        );
+        tl.fromTo(
+          "#sh4-bot",
+          { scaleY: 0 },
+          { scaleY: 1, duration: 0.28, ease: "power3.in" },
+          19.08
+        );
+        tl.to("#sh4-top", { scaleY: 0, duration: 0.36, ease: "power3.out" }, 19.4);
+        tl.to("#sh4-bot", { scaleY: 0, duration: 0.36, ease: "power3.out" }, 19.4);
+
+        // ========================================================
+        // SCENE 5: 19.4 - 22s — logo + wordmark + fade
+        // ========================================================
+        tl.from("#s5-box", {
+          scale: 0,
+          rotation: -60,
+          opacity: 0,
+          transformOrigin: "center center",
+          duration: 0.65,
+          ease: "back.out(1.9)",
+        }, 19.55);
+        tl.from("#s5-chev", {
+          scale: 0,
+          opacity: 0,
+          transformOrigin: "center center",
+          duration: 0.45,
+          ease: "back.out(2.4)",
+        }, 19.9);
+        tl.from("#s5-dot", {
+          scale: 0,
+          opacity: 0,
+          transformOrigin: "center center",
+          duration: 0.35,
+          ease: "elastic.out(1, 0.55)",
+        }, 20.15);
+
+        tl.from("#s5 .s5-wordmark span:first-child", {
+          x: -30, opacity: 0, duration: 0.5, ease: "power3.out",
+        }, 20.1);
+        tl.from("#s5 .s5-wordmark .frames", {
+          x: 30, opacity: 0, duration: 0.5, ease: "power3.out",
+        }, 20.2);
+        tl.from("#s5-tag", {
+          y: 20, opacity: 0, duration: 0.5, ease: "power2.out",
+        }, 20.5);
+        tl.from("#s5 .s5-meta", {
+          y: 15, opacity: 0, duration: 0.45, ease: "power1.out",
+        }, 20.75);
+
+        // Final fade to black (only exit allowed is on last scene)
+        tl.to("#s5 .s5-brand", {
+          opacity: 0, y: -20, duration: 0.6, ease: "power2.in",
+        }, 21.3);
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>

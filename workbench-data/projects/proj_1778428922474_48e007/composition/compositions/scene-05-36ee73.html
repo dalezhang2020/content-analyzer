@@ -1,0 +1,329 @@
+<template id="scene-05-36ee73-template">
+  <div id="scene-05-36ee73" data-composition-id="scene-05-36ee73" data-width="1920" data-height="1080">
+
+    <div class="bg"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+
+    <div class="chapter">
+      <div class="ch-line"></div>
+      <div class="ch-text">
+        <span class="ch-num">CHAPTER 05</span>
+        <span class="ch-sep">·</span>
+        <span class="ch-label">为什么弧度是默认</span>
+      </div>
+      <div class="ch-line"></div>
+    </div>
+
+    <!-- Big title -->
+    <div class="hero-title">弧度更自然</div>
+
+    <!-- Formula comparison cards -->
+    <div class="cards-wrap">
+      <!-- Good card: radians -->
+      <div class="card card-good">
+        <div class="card-badge good-badge">弧度制 ✓</div>
+        <div class="card-formula">
+          <span class="df">d</span><span class="dx">/dx</span>
+          <span class="func cyan">(sin x)</span>
+          <span class="eq"> = </span>
+          <span class="result cyan">cos x</span>
+        </div>
+        <div class="card-note">导数公式干净，无多余系数</div>
+      </div>
+
+      <!-- VS divider -->
+      <div class="vs-badge">VS</div>
+
+      <!-- Bad card: degrees -->
+      <div class="card card-bad">
+        <div class="card-badge bad-badge">度数制 ✗</div>
+        <div class="card-formula">
+          <span class="df">d</span><span class="dx">/dx</span>
+          <span class="func red">(sin x°)</span>
+          <span class="eq"> = </span>
+          <span class="result red strike">(π/180) cos x°</span>
+        </div>
+        <div class="card-note">多出一个系数 π/180，公式变复杂</div>
+      </div>
+    </div>
+
+    <!-- Insight box -->
+    <div class="insight">
+      <div class="insight-icon">∴</div>
+      <div class="insight-text">
+        <div class="insight-main">弧度让微积分公式保持最简形式</div>
+        <div class="insight-sub">这是数学选择弧度作为默认单位的根本原因</div>
+      </div>
+    </div>
+
+    <!-- SVG decorative element: derivative visualization -->
+    <svg class="stage" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="s05-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Decorative sine wave (right side, subtle) -->
+      <g class="deco-wave" opacity="0.15" transform="translate(1600, 540)">
+        <path d="M -200 0 C -150 -120, -100 -120, -50 0 C 0 120, 50 120, 100 0 C 150 -120, 200 -120, 250 0"
+              fill="none" stroke="#4dd0ff" stroke-width="3"/>
+        <path d="M -200 0 C -150 -80, -100 -80, -50 0 C 0 80, 50 80, 100 0 C 150 -80, 200 -80, 250 0"
+              fill="none" stroke="#ff4d8f" stroke-width="3" transform="translate(0, 40)"/>
+      </g>
+      <!-- Decorative grid lines -->
+      <g class="deco-grid" stroke="#1e2c45" stroke-width="1" opacity="0.4">
+        <line x1="0" y1="200" x2="1920" y2="200"/>
+        <line x1="0" y1="400" x2="1920" y2="400"/>
+        <line x1="0" y1="600" x2="1920" y2="600"/>
+        <line x1="0" y1="800" x2="1920" y2="800"/>
+      </g>
+    </svg>
+
+    <div class="caption">
+      <span class="cap-dot"></span>
+      <span class="cap-text">用弧度时，<em class="em-cyan">d/dx(sin x) = cos x</em>，公式最简洁</span>
+    </div>
+
+    <style>
+      #scene-05-36ee73 {
+        position: relative; width: 1920px; height: 1080px; overflow: hidden;
+        background: #030610;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        color: #f1f5f9;
+      }
+      #scene-05-36ee73 .bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 1000px 700px at 50% 45%, rgba(77,208,255,0.15), transparent 60%),
+          radial-gradient(ellipse 600px 500px at 15% 25%, rgba(77,208,255,0.08), transparent 65%),
+          radial-gradient(ellipse 600px 500px at 85% 75%, rgba(255,77,143,0.08), transparent 65%),
+          linear-gradient(180deg, #040813 0%, #050a1a 55%, #030612 100%);
+      }
+      #scene-05-36ee73 .vignette {
+        position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.72) 100%);
+        pointer-events: none;
+      }
+      #scene-05-36ee73 .grain {
+        position: absolute; inset: 0;
+        background-image: linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+        background-size: 3px 3px; opacity: 0.5; pointer-events: none;
+      }
+      #scene-05-36ee73 .orb {
+        position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+      }
+      #scene-05-36ee73 .orb-a {
+        width: 600px; height: 600px; left: -200px; top: -200px;
+        background: radial-gradient(circle, rgba(77,208,255,0.3), transparent 70%);
+      }
+      #scene-05-36ee73 .orb-b {
+        width: 500px; height: 500px; right: -160px; bottom: -160px;
+        background: radial-gradient(circle, rgba(255,77,143,0.22), transparent 70%);
+      }
+      #scene-05-36ee73 .chapter {
+        position: absolute; top: 52px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 30px; z-index: 10;
+      }
+      #scene-05-36ee73 .ch-line {
+        width: 100px; height: 1px;
+        background: linear-gradient(90deg, transparent, #5b6e93, transparent);
+      }
+      #scene-05-36ee73 .ch-text {
+        display: flex; align-items: center; gap: 16px; padding: 10px 22px;
+        background: rgba(10,18,36,0.4); border: 1px solid rgba(77,208,255,0.25);
+        border-radius: 999px; backdrop-filter: blur(6px);
+      }
+      #scene-05-36ee73 .ch-num {
+        font-family: "JetBrains Mono", monospace; font-size: 18px;
+        letter-spacing: 0.3em; color: #4dd0ff; font-weight: 600;
+      }
+      #scene-05-36ee73 .ch-sep { color: #5b6e93; }
+      #scene-05-36ee73 .ch-label { font-size: 18px; letter-spacing: 0.25em; color: #b5c4dd; }
+      #scene-05-36ee73 .hero-title {
+        position: absolute; top: 130px; left: 50%; transform: translateX(-50%);
+        font-size: 140px; font-weight: 900; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff 0%, #9ed6ff 40%, #4dd0ff 100%);
+        -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center; z-index: 10; white-space: nowrap;
+      }
+      #scene-05-36ee73 .cards-wrap {
+        position: absolute; top: 330px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 48px; z-index: 10;
+      }
+      #scene-05-36ee73 .card {
+        width: 620px; padding: 36px 40px; border-radius: 20px;
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      }
+      #scene-05-36ee73 .card-good {
+        background: rgba(10,28,36,0.8);
+        border: 1.5px solid rgba(77,208,255,0.4);
+        box-shadow: 0 0 60px rgba(77,208,255,0.12), 0 24px 64px rgba(0,0,0,0.5);
+      }
+      #scene-05-36ee73 .card-bad {
+        background: rgba(28,10,18,0.8);
+        border: 1.5px solid rgba(255,77,143,0.25);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+        opacity: 0.85;
+      }
+      #scene-05-36ee73 .card-badge {
+        font-size: 18px; font-weight: 700; letter-spacing: 0.2em;
+        padding: 6px 16px; border-radius: 6px; display: inline-block; margin-bottom: 20px;
+      }
+      #scene-05-36ee73 .good-badge { color: #4dd0ff; background: rgba(77,208,255,0.1); border: 1px solid rgba(77,208,255,0.3); }
+      #scene-05-36ee73 .bad-badge { color: #ff4d8f; background: rgba(255,77,143,0.08); border: 1px solid rgba(255,77,143,0.25); }
+      #scene-05-36ee73 .card-formula {
+        font-family: "Georgia", "Times New Roman", serif; font-style: italic;
+        font-size: 44px; font-weight: 600; letter-spacing: 0.02em;
+        display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px;
+        margin-bottom: 16px;
+      }
+      #scene-05-36ee73 .df { color: #d7e3f2; font-size: 40px; }
+      #scene-05-36ee73 .dx { color: #8da1c7; font-size: 32px; }
+      #scene-05-36ee73 .func { font-size: 40px; }
+      #scene-05-36ee73 .eq { color: #8da1c7; font-size: 36px; margin: 0 4px; }
+      #scene-05-36ee73 .result { font-size: 44px; font-weight: 700; }
+      #scene-05-36ee73 .cyan { color: #4dd0ff; }
+      #scene-05-36ee73 .red { color: #ff4d8f; }
+      #scene-05-36ee73 .strike {
+        text-decoration: line-through;
+        text-decoration-color: rgba(255,77,143,0.8);
+        text-decoration-thickness: 3px;
+        opacity: 0.7;
+      }
+      #scene-05-36ee73 .card-note {
+        font-size: 20px; color: #8da1c7; letter-spacing: 0.05em;
+      }
+      #scene-05-36ee73 .vs-badge {
+        font-family: "JetBrains Mono", monospace; font-size: 36px; font-weight: 900;
+        color: #5b6e93; letter-spacing: 0.1em;
+        padding: 16px 20px; border: 1px solid rgba(91,110,147,0.3);
+        border-radius: 12px; background: rgba(10,18,36,0.5);
+        flex-shrink: 0;
+      }
+      #scene-05-36ee73 .insight {
+        position: absolute; bottom: 160px; left: 50%; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 24px;
+        padding: 24px 40px;
+        background: rgba(10,18,36,0.75);
+        border: 1px solid rgba(77,208,255,0.2); border-radius: 16px;
+        backdrop-filter: blur(12px); z-index: 10;
+        max-width: 900px;
+      }
+      #scene-05-36ee73 .insight-icon {
+        font-size: 60px; color: #4dd0ff; font-family: "Georgia", serif;
+        line-height: 1; flex-shrink: 0;
+        text-shadow: 0 0 20px rgba(77,208,255,0.5);
+      }
+      #scene-05-36ee73 .insight-main {
+        font-size: 28px; font-weight: 700; color: #f1f5f9; letter-spacing: 0.05em;
+        margin-bottom: 6px;
+      }
+      #scene-05-36ee73 .insight-sub {
+        font-size: 20px; color: #8da1c7; letter-spacing: 0.05em;
+      }
+      #scene-05-36ee73 .stage {
+        position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+      }
+      #scene-05-36ee73 .caption {
+        position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+        display: flex; align-items: center; gap: 14px;
+        font-size: 24px; color: #e2e8f0; letter-spacing: 0.06em;
+        padding: 14px 30px;
+        background: rgba(10,18,36,0.6); border: 1px solid rgba(148,163,184,0.2);
+        border-radius: 999px; backdrop-filter: blur(6px); z-index: 10;
+      }
+      #scene-05-36ee73 .cap-dot {
+        display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+        background: #4dd0ff; box-shadow: 0 0 14px #4dd0ff;
+      }
+      #scene-05-36ee73 .em-cyan { color: #4dd0ff; font-weight: 700; font-style: italic; margin: 0 4px; }
+    </style>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const ID = '#scene-05-36ee73';
+
+      tl.fromTo(ID + ' .bg', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0);
+      tl.fromTo(ID + ' .orb-a', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.4, transformOrigin: 'center' }, 0);
+      tl.fromTo(ID + ' .orb-b', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 1.6, transformOrigin: 'center' }, 0.2);
+      tl.fromTo(ID + ' .grain', { opacity: 0 }, { opacity: 0.5, duration: 1.0 }, 0.1);
+      tl.fromTo(ID + ' .deco-grid', { opacity: 0 }, { opacity: 0.4, duration: 1.2 }, 0.3);
+
+      tl.fromTo(ID + ' .ch-line', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, transformOrigin: 'center' }, 0.3);
+      tl.fromTo(ID + ' .ch-text', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.5 }, 0.5);
+
+      // Hero title
+      tl.fromTo(ID + ' .hero-title',
+        { opacity: 0, y: 60, filter: 'blur(12px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'expo.out' }, 0.8);
+
+      // Good card slides in from left
+      tl.fromTo(ID + ' .card-good',
+        { opacity: 0, x: -80 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 2.2);
+      tl.fromTo(ID + ' .good-badge',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'left center' }, 2.6);
+      tl.fromTo(ID + ' .card-good .card-formula',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 2.9);
+      tl.fromTo(ID + ' .card-good .card-note',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 }, 3.4);
+
+      // VS badge
+      tl.fromTo(ID + ' .vs-badge',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: 'center' }, 3.8);
+
+      // Bad card slides in from right
+      tl.fromTo(ID + ' .card-bad',
+        { opacity: 0, x: 80 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, 4.2);
+      tl.fromTo(ID + ' .bad-badge',
+        { opacity: 0, scale: 0.7 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)', transformOrigin: 'left center' }, 4.6);
+      tl.fromTo(ID + ' .card-bad .card-formula',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 4.9);
+      tl.fromTo(ID + ' .card-bad .card-note',
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 }, 5.4);
+
+      // Insight box
+      tl.fromTo(ID + ' .insight',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, 7.0);
+      tl.fromTo(ID + ' .insight-icon',
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', transformOrigin: 'center' }, 7.3);
+      tl.fromTo(ID + ' .insight-main',
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.6 }, 7.5);
+      tl.fromTo(ID + ' .insight-sub',
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.6 }, 7.8);
+
+      // Deco wave
+      tl.fromTo(ID + ' .deco-wave',
+        { opacity: 0 },
+        { opacity: 0.15, duration: 1.5 }, 3.0);
+
+      // Caption
+      tl.fromTo(ID + ' .caption', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.8 }, 10.0);
+      tl.fromTo(ID + ' .cap-dot', { scale: 0 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: 'center' }, 10.2);
+
+      // Good card glow pulse
+      tl.to(ID + ' .card-good', { boxShadow: '0 0 80px rgba(77,208,255,0.25), 0 24px 64px rgba(0,0,0,0.5)', duration: 1.0, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 12.0);
+
+      tl.set({}, {}, 17);
+      window.__timelines['scene-05-36ee73'] = tl;
+    </script>
+  </div>
+</template>
